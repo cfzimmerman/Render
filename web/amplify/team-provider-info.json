@@ -1,0 +1,187 @@
+{
+  "mdev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-mobile-mdev-142654-authRole",
+      "UnauthRoleArn": "arn:aws:iam::280592462047:role/amplify-mobile-mdev-142654-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::280592462047:role/amplify-mobile-mdev-142654-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-mobile-mdev-142654-deployment",
+      "UnauthRoleName": "amplify-mobile-mdev-142654-unauthRole",
+      "StackName": "amplify-mobile-mdev-142654",
+      "StackId": "arn:aws:cloudformation:us-east-1:280592462047:stack/amplify-mobile-mdev-142654/7ad53320-db97-11ec-9244-0ae9d50c5f35",
+      "AmplifyAppId": "d88kw0i3xs9f9",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-mobile-mdev-142654-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    },
+    "categories": {
+      "function": {
+        "MobileCreateAuthChallenge": {
+          "deploymentBucketName": "amplify-mobile-mdev-142654-deployment",
+          "s3Key": "amplify-builds/MobileCreateAuthChallenge-6537302b2f536555346c-build.zip"
+        },
+        "MobileDefineAuthChallenge": {
+          "deploymentBucketName": "amplify-mobile-mdev-142654-deployment",
+          "s3Key": "amplify-builds/MobileDefineAuthChallenge-7a41792f4751356c4f62-build.zip"
+        },
+        "MobilePreSignup": {
+          "deploymentBucketName": "amplify-mobile-mdev-142654-deployment",
+          "s3Key": "amplify-builds/MobilePreSignup-4a43613472344a482f39-build.zip"
+        },
+        "MobileVerifyAuthChallengeResponse": {
+          "deploymentBucketName": "amplify-mobile-mdev-142654-deployment",
+          "s3Key": "amplify-builds/MobileVerifyAuthChallengeResponse-41354d72756d6a553372-build.zip"
+        }
+      },
+      "auth": {
+        "Mobile": {}
+      }
+    }
+  },
+  "mstaging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-mobile-mstaging-133004-authRole",
+      "UnauthRoleArn": "arn:aws:iam::280592462047:role/amplify-mobile-mstaging-133004-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::280592462047:role/amplify-mobile-mstaging-133004-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-mobile-mstaging-133004-deployment",
+      "UnauthRoleName": "amplify-mobile-mstaging-133004-unauthRole",
+      "StackName": "amplify-mobile-mstaging-133004",
+      "StackId": "arn:aws:cloudformation:us-east-1:280592462047:stack/amplify-mobile-mstaging-133004/60096150-dac6-11ec-b280-0ae05fad2151",
+      "AmplifyAppId": "d88kw0i3xs9f9",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-mobile-mstaging-133004-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    },
+    "categories": {
+      "function": {
+        "MobileCreateAuthChallenge": {
+          "deploymentBucketName": "amplify-mobile-mstaging-133004-deployment",
+          "s3Key": "amplify-builds/MobileCreateAuthChallenge-6537302b2f536555346c-build.zip"
+        },
+        "MobileDefineAuthChallenge": {
+          "deploymentBucketName": "amplify-mobile-mstaging-133004-deployment",
+          "s3Key": "amplify-builds/MobileDefineAuthChallenge-6e744e5a78564e323341-build.zip"
+        },
+        "MobileVerifyAuthChallengeResponse": {
+          "deploymentBucketName": "amplify-mobile-mstaging-133004-deployment",
+          "s3Key": "amplify-builds/MobileVerifyAuthChallengeResponse-41354d72756d6a553372-build.zip"
+        },
+        "MobilePreSignup": {
+          "deploymentBucketName": "amplify-mobile-mstaging-133004-deployment",
+          "s3Key": "amplify-builds/MobilePreSignup-6b6b59417a4f57744a52-build.zip"
+        }
+      },
+      "auth": {
+        "Mobile": {}
+      },
+      "storage": {
+        "mobilee0d2691a": {
+          "bucketName": "mobile-storage133004-mstaging",
+          "region": "us-east-1"
+        }
+      }
+    }
+  },
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-mobile-staging-211804-authRole",
+      "UnauthRoleArn": "arn:aws:iam::280592462047:role/amplify-mobile-staging-211804-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::280592462047:role/amplify-mobile-staging-211804-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-mobile-staging-211804-deployment",
+      "UnauthRoleName": "amplify-mobile-staging-211804-unauthRole",
+      "StackName": "amplify-mobile-staging-211804",
+      "StackId": "arn:aws:cloudformation:us-east-1:280592462047:stack/amplify-mobile-staging-211804/18388100-9037-11ec-b102-0ad5212d4725",
+      "AmplifyAppId": "d88kw0i3xs9f9",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-mobile-staging-211804-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    },
+    "categories": {
+      "auth": {
+        "Mobile": {}
+      },
+      "function": {
+        "OTPEmailWatcher": {
+          "deploymentBucketName": "amplify-mobile-staging-211804-deployment",
+          "s3Key": "amplify-builds/OTPEmailWatcher-78573459716368776349-build.zip"
+        },
+        "MobileCreateAuthChallenge": {
+          "deploymentBucketName": "amplify-mobile-staging-211804-deployment",
+          "s3Key": "amplify-builds/MobileCreateAuthChallenge-6537302b2f536555346c-build.zip"
+        },
+        "MobileDefineAuthChallenge": {
+          "deploymentBucketName": "amplify-mobile-staging-211804-deployment",
+          "s3Key": "amplify-builds/MobileDefineAuthChallenge-6e744e5a78564e323341-build.zip"
+        },
+        "MobileVerifyAuthChallengeResponse": {
+          "deploymentBucketName": "amplify-mobile-staging-211804-deployment",
+          "s3Key": "amplify-builds/MobileVerifyAuthChallengeResponse-41354d72756d6a553372-build.zip"
+        },
+        "MobilePreSignup": {
+          "deploymentBucketName": "amplify-mobile-staging-211804-deployment",
+          "s3Key": "amplify-builds/MobilePreSignup-6b6b59417a4f57744a52-build.zip"
+        }
+      }
+    }
+  },
+  "webstaging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-mobile-webstaging-194112-authRole",
+      "UnauthRoleArn": "arn:aws:iam::280592462047:role/amplify-mobile-webstaging-194112-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::280592462047:role/amplify-mobile-webstaging-194112-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-mobile-webstaging-194112-deployment",
+      "UnauthRoleName": "amplify-mobile-webstaging-194112-unauthRole",
+      "StackName": "amplify-mobile-webstaging-194112",
+      "StackId": "arn:aws:cloudformation:us-east-1:280592462047:stack/amplify-mobile-webstaging-194112/0fe4c4e0-d57a-11ec-bd44-0ea3d261e169",
+      "AmplifyAppId": "d88kw0i3xs9f9",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-mobile-webstaging-194112-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    },
+    "categories": {
+      "auth": {
+        "Mobile": {},
+        "webstagingauth": {}
+      },
+      "function": {
+        "OTPEmailWatcher": {},
+        "webstagingauthCreateAuthChallenge": {
+          "deploymentBucketName": "amplify-mobile-webstaging-194112-deployment",
+          "s3Key": "amplify-builds/webstagingauthCreateAuthChallenge-54672f54535650366367-build.zip"
+        },
+        "webstagingauthDefineAuthChallenge": {
+          "deploymentBucketName": "amplify-mobile-webstaging-194112-deployment",
+          "s3Key": "amplify-builds/webstagingauthDefineAuthChallenge-2b725a6e415a6a525565-build.zip"
+        },
+        "webstagingauthPreSignup": {
+          "deploymentBucketName": "amplify-mobile-webstaging-194112-deployment",
+          "s3Key": "amplify-builds/webstagingauthPreSignup-725978384874696d5252-build.zip"
+        },
+        "webstagingauthVerifyAuthChallengeResponse": {
+          "deploymentBucketName": "amplify-mobile-webstaging-194112-deployment",
+          "s3Key": "amplify-builds/webstagingauthVerifyAuthChallengeResponse-79562f504c4b314a7357-build.zip"
+        }
+      }
+    }
+  },
+  "wstaging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-mobile-wstaging-232547-authRole",
+      "UnauthRoleArn": "arn:aws:iam::280592462047:role/amplify-mobile-wstaging-232547-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::280592462047:role/amplify-mobile-wstaging-232547-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-mobile-wstaging-232547-deployment",
+      "UnauthRoleName": "amplify-mobile-wstaging-232547-unauthRole",
+      "StackName": "amplify-mobile-wstaging-232547",
+      "StackId": "arn:aws:cloudformation:us-east-1:280592462047:stack/amplify-mobile-wstaging-232547/9721c1c0-db19-11ec-a002-0abe4db38135",
+      "AmplifyAppId": "d88kw0i3xs9f9"
+    },
+    "categories": {
+      "function": {
+        "OTPEmailWatcher": {},
+        "MobileCreateAuthChallenge": {},
+        "MobileDefineAuthChallenge": {},
+        "MobileVerifyAuthChallengeResponse": {},
+        "MobilePreSignup": {}
+      },
+      "auth": {
+        "Mobile": {}
+      }
+    }
+  }
+}

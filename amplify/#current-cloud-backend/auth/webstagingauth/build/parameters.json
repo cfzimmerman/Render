@@ -1,0 +1,108 @@
+{
+  "identityPoolName": "webstagingauth",
+  "allowUnauthenticatedIdentities": false,
+  "resourceNameTruncated": "mobile4b8fe532",
+  "userPoolName": "webstagingauth",
+  "autoVerifiedAttributes": [
+    "phone_number"
+  ],
+  "mfaConfiguration": "OFF",
+  "mfaTypes": [
+    "SMS Text Message"
+  ],
+  "smsAuthenticationMessage": "Your authentication code is {####}",
+  "smsVerificationMessage": "Your verification code is {####}",
+  "emailVerificationSubject": "Your verification code",
+  "emailVerificationMessage": "Your verification code is {####}",
+  "defaultPasswordPolicy": false,
+  "passwordPolicyMinLength": 8,
+  "passwordPolicyCharacters": [],
+  "requiredAttributes": [
+    "email"
+  ],
+  "aliasAttributes": [],
+  "userpoolClientGenerateSecret": false,
+  "userpoolClientRefreshTokenValidity": 30,
+  "userpoolClientWriteAttributes": [
+    "email"
+  ],
+  "userpoolClientReadAttributes": [
+    "email"
+  ],
+  "userpoolClientLambdaRole": "websta4b8fe532_userpoolclient_lambda_role",
+  "userpoolClientSetAttributes": true,
+  "sharedId": "4b8fe532",
+  "resourceName": "webstagingauth",
+  "authSelections": "identityPoolAndUserPool",
+  "useDefault": "manual",
+  "thirdPartyAuth": false,
+  "usernameAttributes": [
+    "email"
+  ],
+  "userPoolGroups": false,
+  "adminQueries": false,
+  "triggers": "{\"CreateAuthChallenge\":[\"boilerplate-create-challenge\"],\"DefineAuthChallenge\":[\"boilerplate-define-challenge\"],\"PreSignup\":[\"custom\"],\"VerifyAuthChallengeResponse\":[\"boilerplate-verify\"]}",
+  "hostedUI": false,
+  "userPoolGroupList": [],
+  "serviceName": "Cognito",
+  "usernameCaseSensitive": false,
+  "useEnabledMfas": true,
+  "authRoleArn": {
+    "Fn::GetAtt": [
+      "AuthRole",
+      "Arn"
+    ]
+  },
+  "unauthRoleArn": {
+    "Fn::GetAtt": [
+      "UnauthRole",
+      "Arn"
+    ]
+  },
+  "breakCircularDependency": true,
+  "dependsOn": [
+    {
+      "category": "function",
+      "resourceName": "webstagingauthCreateAuthChallenge",
+      "triggerProvider": "Cognito",
+      "attributes": [
+        "Arn",
+        "Name"
+      ]
+    },
+    {
+      "category": "function",
+      "resourceName": "webstagingauthDefineAuthChallenge",
+      "triggerProvider": "Cognito",
+      "attributes": [
+        "Arn",
+        "Name"
+      ]
+    },
+    {
+      "category": "function",
+      "resourceName": "webstagingauthPreSignup",
+      "triggerProvider": "Cognito",
+      "attributes": [
+        "Arn",
+        "Name"
+      ]
+    },
+    {
+      "category": "function",
+      "resourceName": "webstagingauthVerifyAuthChallengeResponse",
+      "triggerProvider": "Cognito",
+      "attributes": [
+        "Arn",
+        "Name"
+      ]
+    }
+  ],
+  "permissions": [],
+  "authTriggerConnections": [
+    "{\"triggerType\":\"CreateAuthChallenge\",\"lambdaFunctionName\":\"webstagingauthCreateAuthChallenge\"}",
+    "{\"triggerType\":\"DefineAuthChallenge\",\"lambdaFunctionName\":\"webstagingauthDefineAuthChallenge\"}",
+    "{\"triggerType\":\"PreSignUp\",\"lambdaFunctionName\":\"webstagingauthPreSignup\"}",
+    "{\"triggerType\":\"VerifyAuthChallengeResponse\",\"lambdaFunctionName\":\"webstagingauthVerifyAuthChallengeResponse\"}"
+  ]
+}

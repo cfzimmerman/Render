@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "scripts": {
+    "mobile": "cd mobile && yarn start",
+    "mobile-android": "cd mobile && yarn android",
+    "mobile-ios": "cd mobile && yarn ios",
+    "mobile-web": "cd mobile && yarn web",
+    "web": "cd web && yarn start",
+    "web-build": "cd web && yarn build",
+    "web-lint": "cd web && yarn lint"
+  },
+  "workspaces": [
+    "render-web",
+    "render-mobile"
+  ]
+}

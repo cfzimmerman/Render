@@ -1,0 +1,10 @@
+.absoluteButtonContainer {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.absoluteButton {
+  width: 11.25rem;
+}

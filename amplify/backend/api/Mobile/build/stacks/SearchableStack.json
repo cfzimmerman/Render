@@ -1,0 +1,1088 @@
+{
+  "Description": "An auto-generated nested stack for searchable.",
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Mappings": {
+    "LayerResourceMapping": {
+      "ap-northeast-1": {
+        "layerRegion": "arn:aws:lambda:ap-northeast-1:249908578461:layer:AWSLambda-Python-AWS-SDK:1"
+      },
+      "us-east-1": {
+        "layerRegion": "arn:aws:lambda:us-east-1:668099181075:layer:AWSLambda-Python-AWS-SDK:1"
+      },
+      "ap-southeast-1": {
+        "layerRegion": "arn:aws:lambda:ap-southeast-1:468957933125:layer:AWSLambda-Python-AWS-SDK:1"
+      },
+      "eu-west-1": {
+        "layerRegion": "arn:aws:lambda:eu-west-1:399891621064:layer:AWSLambda-Python-AWS-SDK:1"
+      },
+      "us-west-1": {
+        "layerRegion": "arn:aws:lambda:us-west-1:325793726646:layer:AWSLambda-Python-AWS-SDK:1"
+      },
+      "ap-east-1": {
+        "layerRegion": "arn:aws:lambda:ap-east-1:118857876118:layer:AWSLambda-Python-AWS-SDK:1"
+      },
+      "ap-northeast-2": {
+        "layerRegion": "arn:aws:lambda:ap-northeast-2:296580773974:layer:AWSLambda-Python-AWS-SDK:1"
+      },
+      "ap-northeast-3": {
+        "layerRegion": "arn:aws:lambda:ap-northeast-3:961244031340:layer:AWSLambda-Python-AWS-SDK:1"
+      },
+      "ap-south-1": {
+        "layerRegion": "arn:aws:lambda:ap-south-1:631267018583:layer:AWSLambda-Python-AWS-SDK:1"
+      },
+      "ap-southeast-2": {
+        "layerRegion": "arn:aws:lambda:ap-southeast-2:817496625479:layer:AWSLambda-Python-AWS-SDK:1"
+      },
+      "ca-central-1": {
+        "layerRegion": "arn:aws:lambda:ca-central-1:778625758767:layer:AWSLambda-Python-AWS-SDK:1"
+      },
+      "eu-central-1": {
+        "layerRegion": "arn:aws:lambda:eu-central-1:292169987271:layer:AWSLambda-Python-AWS-SDK:1"
+      },
+      "eu-north-1": {
+        "layerRegion": "arn:aws:lambda:eu-north-1:642425348156:layer:AWSLambda-Python-AWS-SDK:1"
+      },
+      "eu-west-2": {
+        "layerRegion": "arn:aws:lambda:eu-west-2:142628438157:layer:AWSLambda-Python-AWS-SDK:1"
+      },
+      "eu-west-3": {
+        "layerRegion": "arn:aws:lambda:eu-west-3:959311844005:layer:AWSLambda-Python-AWS-SDK:1"
+      },
+      "sa-east-1": {
+        "layerRegion": "arn:aws:lambda:sa-east-1:640010853179:layer:AWSLambda-Python-AWS-SDK:1"
+      },
+      "us-east-2": {
+        "layerRegion": "arn:aws:lambda:us-east-2:259788987135:layer:AWSLambda-Python-AWS-SDK:1"
+      },
+      "us-west-2": {
+        "layerRegion": "arn:aws:lambda:us-west-2:420165488524:layer:AWSLambda-Python-AWS-SDK:1"
+      },
+      "cn-north-1": {
+        "layerRegion": "arn:aws-cn:lambda:cn-north-1:683298794825:layer:AWSLambda-Python-AWS-SDK:1"
+      },
+      "cn-northwest-1": {
+        "layerRegion": "arn:aws-cn:lambda:cn-northwest-1:382066503313:layer:AWSLambda-Python-AWS-SDK:1"
+      },
+      "us-gov-west-1": {
+        "layerRegion": "arn:aws-us-gov:lambda:us-gov-west-1:556739011827:layer:AWSLambda-Python-AWS-SDK:1"
+      },
+      "us-gov-east-1": {
+        "layerRegion": "arn:aws-us-gov:lambda:us-gov-east-1:138526772879:layer:AWSLambda-Python-AWS-SDK:1"
+      },
+      "me-south-1": {
+        "layerRegion": "arn:aws:lambda:me-south-1:507411403535:layer:AWSLambda-Python-AWS-SDK:1"
+      }
+    }
+  },
+  "Conditions": {
+    "HasEnvironmentParameter": {
+      "Fn::Not": [
+        {
+          "Fn::Equals": [
+            {
+              "Ref": "referencetotransformerrootstackenv10C5A902Ref"
+            },
+            "NONE"
+          ]
+        }
+      ]
+    }
+  },
+  "Parameters": {
+    "OpenSearchAccessIAMRoleName": {
+      "Type": "String",
+      "Default": "AppSyncOpenSearchRole",
+      "Description": "The name of the IAM role assumed by AppSync for OpenSearch."
+    },
+    "OpenSearchStreamingLambdaHandlerName": {
+      "Type": "String",
+      "Default": "python_streaming_function.lambda_handler",
+      "Description": "The name of the lambda handler."
+    },
+    "OpenSearchStreamingLambdaRuntime": {
+      "Type": "String",
+      "Default": "python3.6",
+      "Description": "The lambda runtime                 (https://docs.aws.amazon.com/lambda/latest/dg/API_CreateFunction.html#SSS-CreateFunction-request-Runtime)"
+    },
+    "OpenSearchStreamingFunctionName": {
+      "Type": "String",
+      "Default": "DdbToEsFn",
+      "Description": "The name of the streaming lambda function."
+    },
+    "OpenSearchStreamBatchSize": {
+      "Type": "Number",
+      "Default": 100,
+      "Description": "The maximum number of records to stream to OpenSearch per batch."
+    },
+    "OpenSearchStreamMaximumBatchingWindowInSeconds": {
+      "Type": "Number",
+      "Default": 1,
+      "Description": "The maximum amount of time in seconds to wait for DynamoDB stream records before sending to streaming lambda."
+    },
+    "OpenSearchStreamingIAMRoleName": {
+      "Type": "String",
+      "Default": "SearchLambdaIAMRole",
+      "Description": "The name of the streaming lambda function IAM role."
+    },
+    "OpenSearchDebugStreamingLambda": {
+      "Type": "Number",
+      "Default": 1,
+      "AllowedValues": [
+        "0",
+        "1"
+      ],
+      "Description": "Enable debug logs for the Dynamo -> OpenSearch streaming lambda."
+    },
+    "OpenSearchInstanceCount": {
+      "Type": "Number",
+      "Default": 1,
+      "Description": "The number of instances to launch into the OpenSearch domain."
+    },
+    "OpenSearchInstanceType": {
+      "Type": "String",
+      "Default": "t2.small.elasticsearch",
+      "AllowedValues": [
+        "t2.small.elasticsearch",
+        "t2.medium.elasticsearch",
+        "c4.large.elasticsearch",
+        "c4.xlarge.elasticsearch",
+        "c4.2xlarge.elasticsearch",
+        "c4.4xlarge.elasticsearch",
+        "c4.8xlarge.elasticsearch",
+        "m3.medium.elasticsearch",
+        "m3.large.elasticsearch",
+        "m3.xlarge.elasticsearch",
+        "m3.2xlarge.elasticsearch",
+        "m4.large.elasticsearch",
+        "m4.xlarge.elasticsearch",
+        "m4.2xlarge.elasticsearch",
+        "m4.4xlarge.elasticsearch",
+        "m4.10xlarge.elasticsearch",
+        "r3.large.elasticsearch",
+        "r3.xlarge.elasticsearch",
+        "r3.2xlarge.elasticsearch",
+        "r3.4xlarge.elasticsearch",
+        "r3.8xlarge.elasticsearch",
+        "r4.large.elasticsearch",
+        "r4.xlarge.elasticsearch",
+        "r4.2xlarge.elasticsearch",
+        "r4.4xlarge.elasticsearch",
+        "r4.8xlarge.elasticsearch",
+        "r4.16xlarge.elasticsearch",
+        "i2.xlarge.elasticsearch",
+        "i2.2xlarge.elasticsearch",
+        "i3.large.elasticsearch",
+        "i3.xlarge.elasticsearch",
+        "i3.2xlarge.elasticsearch",
+        "i3.4xlarge.elasticsearch",
+        "i3.8xlarge.elasticsearch",
+        "i3.16xlarge.elasticsearch",
+        "r6gd.12xlarge.elasticsearch",
+        "ultrawarm1.xlarge.elasticsearch",
+        "m5.4xlarge.elasticsearch",
+        "t3.xlarge.elasticsearch",
+        "m6g.xlarge.elasticsearch",
+        "m6g.12xlarge.elasticsearch",
+        "t2.micro.elasticsearch",
+        "r6gd.16xlarge.elasticsearch",
+        "d2.2xlarge.elasticsearch",
+        "t3.micro.elasticsearch",
+        "m5.large.elasticsearch",
+        "d2.4xlarge.elasticsearch",
+        "t3.small.elasticsearch",
+        "c5.2xlarge.elasticsearch",
+        "c6g.2xlarge.elasticsearch",
+        "d2.8xlarge.elasticsearch",
+        "c5.4xlarge.elasticsearch",
+        "t4g.medium.elasticsearch",
+        "c6g.4xlarge.elasticsearch",
+        "c6g.xlarge.elasticsearch",
+        "c6g.12xlarge.elasticsearch"
+      ],
+      "Description": "The type of instance to launch into the OpenSearch domain."
+    },
+    "OpenSearchEBSVolumeGB": {
+      "Type": "Number",
+      "Default": 10,
+      "Description": "The size in GB of the EBS volumes that contain our data."
+    },
+    "referencetotransformerrootstackenv10C5A902Ref": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackPostsNestedStackPostsNestedStackResource672835F0OutputstransformerrootstackPostsPostsTableE9E020A0StreamArn": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackUsersNestedStackUsersNestedStackResourceE236D5BCOutputstransformerrootstackUsersUsersTable31F796E6StreamArn": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
+      "Type": "String"
+    }
+  },
+  "Resources": {
+    "OpenSearchDomain": {
+      "Type": "AWS::Elasticsearch::Domain",
+      "Properties": {
+        "CognitoOptions": {
+          "Enabled": false
+        },
+        "DomainEndpointOptions": {
+          "EnforceHTTPS": false,
+          "TLSSecurityPolicy": "Policy-Min-TLS-1-0-2019-07"
+        },
+        "DomainName": {
+          "Fn::If": [
+            "HasEnvironmentParameter",
+            {
+              "Ref": "AWS::NoValue"
+            },
+            {
+              "Fn::Join": [
+                "",
+                [
+                  "d",
+                  {
+                    "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+                  }
+                ]
+              ]
+            }
+          ]
+        },
+        "EBSOptions": {
+          "EBSEnabled": true,
+          "VolumeSize": {
+            "Ref": "OpenSearchEBSVolumeGB"
+          },
+          "VolumeType": "gp2"
+        },
+        "ElasticsearchClusterConfig": {
+          "InstanceCount": {
+            "Ref": "OpenSearchInstanceCount"
+          },
+          "InstanceType": {
+            "Ref": "OpenSearchInstanceType"
+          }
+        },
+        "ElasticsearchVersion": "7.10",
+        "EncryptionAtRestOptions": {
+          "Enabled": false
+        },
+        "LogPublishingOptions": {},
+        "NodeToNodeEncryptionOptions": {
+          "Enabled": false
+        }
+      },
+      "UpdateReplacePolicy": "Retain",
+      "DeletionPolicy": "Retain"
+    },
+    "OpenSearchAccessIAMRole6A1D9CC5": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "appsync.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "RoleName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "OpenSearchStreamingIAMRoleName"
+              },
+              "0ba773-",
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "-",
+              {
+                "Ref": "referencetotransformerrootstackenv10C5A902Ref"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    "OpenSearchAccessIAMRoleDefaultPolicyA7270E78": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "es:ESHttpGet",
+                "es:ESHttpHead",
+                "es:ESHttpDelete",
+                "es:ESHttpPost",
+                "es:ESHttpPut",
+                "es:ESHttpPatch"
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "OpenSearchDomain",
+                    "Arn"
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "OpenSearchDomain",
+                          "Arn"
+                        ]
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "OpenSearchAccessIAMRoleDefaultPolicyA7270E78",
+        "Roles": [
+          {
+            "Ref": "OpenSearchAccessIAMRole6A1D9CC5"
+          }
+        ]
+      }
+    },
+    "OpenSearchDataSourceB206F4EE": {
+      "Type": "AWS::AppSync::DataSource",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "Name": "OpenSearchDataSource",
+        "Type": "AMAZON_ELASTICSEARCH",
+        "ElasticsearchConfig": {
+          "AwsRegion": {
+            "Fn::Select": [
+              3,
+              {
+                "Fn::Split": [
+                  ":",
+                  {
+                    "Fn::GetAtt": [
+                      "OpenSearchDomain",
+                      "Arn"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "Endpoint": {
+            "Fn::Join": [
+              "",
+              [
+                "https://",
+                {
+                  "Fn::GetAtt": [
+                    "OpenSearchDomain",
+                    "DomainEndpoint"
+                  ]
+                }
+              ]
+            ]
+          }
+        },
+        "ServiceRoleArn": {
+          "Fn::GetAtt": [
+            "OpenSearchAccessIAMRole6A1D9CC5",
+            "Arn"
+          ]
+        }
+      }
+    },
+    "OpenSearchStreamingLambdaIAMRole7802F5E2": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "RoleName": {
+          "Fn::Join": [
+            "",
+            [
+              "d41d8c-",
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "-",
+              {
+                "Ref": "referencetotransformerrootstackenv10C5A902Ref"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    "OpenSearchStreamingLambdaIAMRoleDefaultPolicyB1F2399B": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "es:ESHttpDelete",
+                "es:ESHttpPost",
+                "es:ESHttpPut",
+                "es:ESHttpPatch"
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "OpenSearchDomain",
+                    "Arn"
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "OpenSearchDomain",
+                          "Arn"
+                        ]
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": "dynamodb:ListStreams",
+              "Effect": "Allow",
+              "Resource": "*"
+            },
+            {
+              "Action": [
+                "dynamodb:DescribeStream",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator"
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Ref": "referencetotransformerrootstackPostsNestedStackPostsNestedStackResource672835F0OutputstransformerrootstackPostsPostsTableE9E020A0StreamArn"
+              }
+            },
+            {
+              "Action": [
+                "dynamodb:DescribeStream",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator"
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Ref": "referencetotransformerrootstackUsersNestedStackUsersNestedStackResourceE236D5BCOutputstransformerrootstackUsersUsersTable31F796E6StreamArn"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "OpenSearchStreamingLambdaIAMRoleDefaultPolicyB1F2399B",
+        "Roles": [
+          {
+            "Ref": "OpenSearchStreamingLambdaIAMRole7802F5E2"
+          }
+        ]
+      }
+    },
+    "CloudwatchLogsAccessA1F9AA39": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+              ],
+              "Effect": "Allow",
+              "Resource": "arn:aws:logs:*:*:*"
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "CloudwatchLogsAccessA1F9AA39",
+        "Roles": [
+          {
+            "Ref": "OpenSearchStreamingLambdaIAMRole7802F5E2"
+          }
+        ]
+      }
+    },
+    "OpenSearchStreamingLambdaFunction6ED4A1FD": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+          },
+          "S3Key": {
+            "Fn::Join": [
+              "",
+              [
+                {
+                  "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+                },
+                "/functions/OpenSearchStreamingLambdaFunction.zip"
+              ]
+            ]
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "OpenSearchStreamingLambdaIAMRole7802F5E2",
+            "Arn"
+          ]
+        },
+        "Environment": {
+          "Variables": {
+            "OPENSEARCH_ENDPOINT": {
+              "Fn::Join": [
+                "",
+                [
+                  "https://",
+                  {
+                    "Fn::GetAtt": [
+                      "OpenSearchDomain",
+                      "DomainEndpoint"
+                    ]
+                  }
+                ]
+              ]
+            },
+            "OPENSEARCH_REGION": {
+              "Fn::Select": [
+                3,
+                {
+                  "Fn::Split": [
+                    ":",
+                    {
+                      "Fn::GetAtt": [
+                        "OpenSearchDomain",
+                        "Arn"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "DEBUG": {
+              "Ref": "OpenSearchDebugStreamingLambda"
+            },
+            "OPENSEARCH_USE_EXTERNAL_VERSIONING": "false"
+          }
+        },
+        "Handler": {
+          "Ref": "OpenSearchStreamingLambdaHandlerName"
+        },
+        "Layers": [
+          {
+            "Fn::FindInMap": [
+              "LayerResourceMapping",
+              {
+                "Ref": "AWS::Region"
+              },
+              "layerRegion"
+            ]
+          }
+        ],
+        "Runtime": "python3.6"
+      },
+      "DependsOn": [
+        "OpenSearchStreamingLambdaIAMRoleDefaultPolicyB1F2399B",
+        "OpenSearchStreamingLambdaIAMRole7802F5E2"
+      ]
+    },
+    "SearchablePostsLambdaMapping350E8F6E": {
+      "Type": "AWS::Lambda::EventSourceMapping",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "OpenSearchStreamingLambdaFunction6ED4A1FD"
+        },
+        "BatchSize": {
+          "Ref": "OpenSearchStreamBatchSize"
+        },
+        "Enabled": true,
+        "EventSourceArn": {
+          "Ref": "referencetotransformerrootstackPostsNestedStackPostsNestedStackResource672835F0OutputstransformerrootstackPostsPostsTableE9E020A0StreamArn"
+        },
+        "MaximumBatchingWindowInSeconds": {
+          "Ref": "OpenSearchStreamMaximumBatchingWindowInSeconds"
+        },
+        "StartingPosition": "LATEST"
+      }
+    },
+    "SearchableUsersLambdaMapping7940A889": {
+      "Type": "AWS::Lambda::EventSourceMapping",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "OpenSearchStreamingLambdaFunction6ED4A1FD"
+        },
+        "BatchSize": {
+          "Ref": "OpenSearchStreamBatchSize"
+        },
+        "Enabled": true,
+        "EventSourceArn": {
+          "Ref": "referencetotransformerrootstackUsersNestedStackUsersNestedStackResourceE236D5BCOutputstransformerrootstackUsersUsersTable31F796E6StreamArn"
+        },
+        "MaximumBatchingWindowInSeconds": {
+          "Ref": "OpenSearchStreamMaximumBatchingWindowInSeconds"
+        },
+        "StartingPosition": "LATEST"
+      }
+    },
+    "QuerysearchPostsauth0FunctionQuerysearchPostsauth0FunctionAppSyncFunction19666517": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "QuerysearchPostsauth0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Query.searchPosts.auth.1.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson({})"
+      }
+    },
+    "QuerysearchPostspostAuth0FunctionQuerysearchPostspostAuth0FunctionAppSyncFunctionDD2DF74A": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "QuerysearchPostspostAuth0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Query.searchPosts.postAuth.1.res.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson({})"
+      }
+    },
+    "QuerySearchPostsDataResolverFnQuerySearchPostsDataResolverFnAppSyncFunctionC5880DB4": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Fn::GetAtt": [
+            "OpenSearchDataSourceB206F4EE",
+            "Name"
+          ]
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "QuerySearchPostsDataResolverFn",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Query.searchPosts.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Query.searchPosts.res.vtl"
+            ]
+          ]
+        }
+      }
+    },
+    "SearchPostsResolver": {
+      "Type": "AWS::AppSync::Resolver",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "FieldName": "searchPosts",
+        "TypeName": "Query",
+        "Kind": "PIPELINE",
+        "PipelineConfig": {
+          "Functions": [
+            {
+              "Fn::GetAtt": [
+                "QuerysearchPostsauth0FunctionQuerysearchPostsauth0FunctionAppSyncFunction19666517",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "QuerysearchPostspostAuth0FunctionQuerysearchPostspostAuth0FunctionAppSyncFunctionDD2DF74A",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "QuerySearchPostsDataResolverFnQuerySearchPostsDataResolverFnAppSyncFunctionC5880DB4",
+                "FunctionId"
+              ]
+            }
+          ]
+        },
+        "RequestMappingTemplate": {
+          "Fn::Join": [
+            "",
+            [
+              "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"searchPosts\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_ELASTICSEARCH\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"endpoint\", \"https://",
+              {
+                "Fn::GetAtt": [
+                  "OpenSearchDomain",
+                  "DomainEndpoint"
+                ]
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
+      }
+    },
+    "QuerysearchUsersauth0FunctionQuerysearchUsersauth0FunctionAppSyncFunctionBAECB410": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "QuerysearchUsersauth0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Query.searchUsers.auth.1.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson({})"
+      }
+    },
+    "QuerysearchUserspostAuth0FunctionQuerysearchUserspostAuth0FunctionAppSyncFunction2B7E7C3D": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "QuerysearchUserspostAuth0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Query.searchUsers.postAuth.1.res.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson({})"
+      }
+    },
+    "QuerySearchUsersDataResolverFnQuerySearchUsersDataResolverFnAppSyncFunctionFDEEDF81": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Fn::GetAtt": [
+            "OpenSearchDataSourceB206F4EE",
+            "Name"
+          ]
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "QuerySearchUsersDataResolverFn",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Query.searchUsers.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Query.searchUsers.res.vtl"
+            ]
+          ]
+        }
+      }
+    },
+    "SearchUsersResolver": {
+      "Type": "AWS::AppSync::Resolver",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "FieldName": "searchUsers",
+        "TypeName": "Query",
+        "Kind": "PIPELINE",
+        "PipelineConfig": {
+          "Functions": [
+            {
+              "Fn::GetAtt": [
+                "QuerysearchUsersauth0FunctionQuerysearchUsersauth0FunctionAppSyncFunctionBAECB410",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "QuerysearchUserspostAuth0FunctionQuerysearchUserspostAuth0FunctionAppSyncFunction2B7E7C3D",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "QuerySearchUsersDataResolverFnQuerySearchUsersDataResolverFnAppSyncFunctionFDEEDF81",
+                "FunctionId"
+              ]
+            }
+          ]
+        },
+        "RequestMappingTemplate": {
+          "Fn::Join": [
+            "",
+            [
+              "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"searchUsers\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_ELASTICSEARCH\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"endpoint\", \"https://",
+              {
+                "Fn::GetAtt": [
+                  "OpenSearchDomain",
+                  "DomainEndpoint"
+                ]
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
+      }
+    }
+  },
+  "Outputs": {
+    "OpenSearchDomainArn": {
+      "Description": "OpenSearch instance Domain ARN.",
+      "Value": {
+        "Fn::GetAtt": [
+          "OpenSearchDomain",
+          "Arn"
+        ]
+      },
+      "Export": {
+        "Name": {
+          "Fn::Join": [
+            ":",
+            [
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "GetAtt:OpenSearch:DomainArn"
+            ]
+          ]
+        }
+      }
+    },
+    "OpenSearchDomainEndpoint": {
+      "Description": "OpenSearch instance Domain Endpoint.",
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "https://",
+            {
+              "Fn::GetAtt": [
+                "OpenSearchDomain",
+                "DomainEndpoint"
+              ]
+            }
+          ]
+        ]
+      },
+      "Export": {
+        "Name": {
+          "Fn::Join": [
+            ":",
+            [
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "GetAtt:OpenSearch:DomainEndpoint"
+            ]
+          ]
+        }
+      }
+    }
+  }
+}

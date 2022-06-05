@@ -1,0 +1,6 @@
+.expo/
+.expo-shared/
+.idea/
+.vscode/
+amplify/
+node_modules/

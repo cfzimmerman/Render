@@ -1,0 +1,891 @@
+
+type PostViewTracker @aws_iam @aws_api_key {
+  id: ID!
+  postsID: ID
+  Posts: Posts
+  viewerID: ID
+  Users: Users
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type UserRelationships @aws_iam @aws_api_key {
+  id: ID!
+  createdAt: String!
+  receivercognitosub: String
+  sendercognitosub: String
+  usersID: ID!
+  Users: Users
+  updatedAt: AWSDateTime!
+}
+
+type UserExtras @aws_iam @aws_api_key {
+  id: ID!
+  cognitosub: String
+  firstvaultupload: Boolean
+  usersID: ID
+  Users: Users
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Posts @aws_iam @aws_api_key {
+  id: ID!
+  aspectratio: Float
+  cognitosub: String!
+  contentdate: AWSDateTime
+  contentkey: String
+  contenttype: String
+  createdAt: String!
+  posttext: String
+  publicpost: Boolean
+  publicpostdate: AWSDateTime
+  sizeinbytes: Int
+  thumbnailkey: String
+  type: String
+  usersID: ID!
+  Users: Users
+  PostViewTrackers(filter: ModelPostViewTrackerFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelPostViewTrackerConnection
+  updatedAt: AWSDateTime!
+}
+
+type UserOTP @aws_iam @aws_api_key {
+  id: ID!
+  currentotp: String
+  userdisplayname: String
+  useremail: String
+  usersID: ID
+  Users: Users
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Users @aws_iam @aws_api_key {
+  id: ID!
+  acceptedtos: Boolean
+  addedcount: Int
+  addedmecount: Int
+  birthday: AWSDate
+  cognitosub: String
+  displayname: String
+  email: AWSEmail
+  emailconfirmed: Boolean
+  firstvaultupload: Boolean
+  fullyauthenticated: Boolean
+  gamertag: String
+  mostrecentpublicpost: AWSDateTime
+  password: String
+  pfp: String
+  storagesizeinbytes: Float
+  type: String
+  userextrasID: ID
+  UserExtras: UserExtras
+  userotpID: ID
+  UserOTP: UserOTP
+  Posts(filter: ModelPostsFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelPostsConnection
+  PostViewTrackers(filter: ModelPostViewTrackerFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelPostViewTrackerConnection
+  UserRelationships(filter: ModelUserRelationshipsFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelUserRelationshipsConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type SearchablePostsConnection @aws_api_key @aws_iam {
+  items: [Posts]!
+  nextToken: String
+  total: Int
+  aggregateItems: [SearchableAggregateResult]!
+}
+
+type SearchableAggregateResult @aws_iam @aws_api_key {
+  name: String!
+  result: SearchableAggregateGenericResult
+}
+
+type SearchableAggregateScalarResult @aws_iam @aws_api_key {
+  value: Float!
+}
+
+type SearchableAggregateBucketResult @aws_iam @aws_api_key {
+  buckets: [SearchableAggregateBucketResultItem]
+}
+
+type SearchableAggregateBucketResultItem @aws_iam @aws_api_key {
+  key: String!
+  doc_count: Int!
+}
+
+union SearchableAggregateGenericResult = SearchableAggregateScalarResult | SearchableAggregateBucketResult
+
+type Query {
+  getPostViewTracker(id: ID!): PostViewTracker @aws_api_key @aws_iam
+  listPostViewTrackers(filter: ModelPostViewTrackerFilterInput, limit: Int, nextToken: String): ModelPostViewTrackerConnection @aws_api_key @aws_iam
+  postViewByPostID(postsID: ID!, viewerID: ModelIDKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelPostViewTrackerFilterInput, limit: Int, nextToken: String): ModelPostViewTrackerConnection @aws_api_key @aws_iam
+  getUserRelationships(id: ID!): UserRelationships @aws_api_key @aws_iam
+  listUserRelationships(filter: ModelUserRelationshipsFilterInput, limit: Int, nextToken: String): ModelUserRelationshipsConnection @aws_api_key @aws_iam
+  relationshipsByReceiverDate(receivercognitosub: String!, createdAt: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelUserRelationshipsFilterInput, limit: Int, nextToken: String): ModelUserRelationshipsConnection @aws_api_key @aws_iam
+  relationshipsBySenderDate(sendercognitosub: String!, createdAt: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelUserRelationshipsFilterInput, limit: Int, nextToken: String): ModelUserRelationshipsConnection @aws_api_key @aws_iam
+  verifyAddedUser(sendercognitosub: String!, receivercognitosub: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelUserRelationshipsFilterInput, limit: Int, nextToken: String): ModelUserRelationshipsConnection @aws_api_key @aws_iam
+  addedUsersByCurrentUser(sendercognitosub: String!, sortDirection: ModelSortDirection, filter: ModelUserRelationshipsFilterInput, limit: Int, nextToken: String): ModelUserRelationshipsConnection @aws_api_key @aws_iam
+  getUserExtras(id: ID!): UserExtras @aws_api_key @aws_iam
+  listUserExtras(filter: ModelUserExtrasFilterInput, limit: Int, nextToken: String): ModelUserExtrasConnection @aws_api_key @aws_iam
+  getPosts(id: ID!): Posts @aws_api_key @aws_iam
+  listPosts(filter: ModelPostsFilterInput, limit: Int, nextToken: String): ModelPostsConnection @aws_api_key @aws_iam
+  postsByCreatedDate(cognitosub: String!, createdAt: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelPostsFilterInput, limit: Int, nextToken: String): ModelPostsConnection @aws_api_key @aws_iam
+  postsByPostedDate(cognitosub: String!, publicpostdate: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelPostsFilterInput, limit: Int, nextToken: String): ModelPostsConnection @aws_api_key @aws_iam
+  postsByContentDate(cognitosub: String!, contentdate: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelPostsFilterInput, limit: Int, nextToken: String): ModelPostsConnection @aws_api_key @aws_iam
+  postsByContentKey(contentkey: String!, sortDirection: ModelSortDirection, filter: ModelPostsFilterInput, limit: Int, nextToken: String): ModelPostsConnection @aws_api_key @aws_iam
+  postsByPublicDate(type: String!, publicpostdate: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelPostsFilterInput, limit: Int, nextToken: String): ModelPostsConnection @aws_api_key @aws_iam
+  searchPosts(filter: SearchablePostsFilterInput, sort: [SearchablePostsSortInput], limit: Int, nextToken: String, from: Int, aggregates: [SearchablePostsAggregationInput]): SearchablePostsConnection @aws_api_key @aws_iam
+  getUserOTP(id: ID!): UserOTP @aws_api_key @aws_iam
+  listUserOTPS(filter: ModelUserOTPFilterInput, limit: Int, nextToken: String): ModelUserOTPConnection @aws_api_key @aws_iam
+  getUsers(id: ID!): Users @aws_api_key @aws_iam
+  listUsers(filter: ModelUsersFilterInput, limit: Int, nextToken: String): ModelUsersConnection @aws_api_key @aws_iam
+  userByCognitosub(cognitosub: String!, sortDirection: ModelSortDirection, filter: ModelUsersFilterInput, limit: Int, nextToken: String): ModelUsersConnection @aws_api_key @aws_iam
+  userByEmail(email: AWSEmail!, sortDirection: ModelSortDirection, filter: ModelUsersFilterInput, limit: Int, nextToken: String): ModelUsersConnection @aws_api_key @aws_iam
+  userByGamertag(gamertag: String!, sortDirection: ModelSortDirection, filter: ModelUsersFilterInput, limit: Int, nextToken: String): ModelUsersConnection @aws_api_key @aws_iam
+  searchByGamertag(type: String!, gamertag: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelUsersFilterInput, limit: Int, nextToken: String): ModelUsersConnection @aws_api_key @aws_iam
+  searchUsers(filter: SearchableUsersFilterInput, sort: [SearchableUsersSortInput], limit: Int, nextToken: String, from: Int, aggregates: [SearchableUsersAggregationInput]): SearchableUsersConnection @aws_api_key @aws_iam
+}
+
+type SearchableUsersConnection @aws_api_key @aws_iam {
+  items: [Users]!
+  nextToken: String
+  total: Int
+  aggregateItems: [SearchableAggregateResult]!
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelPostViewTrackerConnection @aws_api_key @aws_iam {
+  items: [PostViewTracker]!
+  nextToken: String
+}
+
+input ModelPostViewTrackerFilterInput {
+  id: ModelIDInput
+  postsID: ModelIDInput
+  viewerID: ModelIDInput
+  and: [ModelPostViewTrackerFilterInput]
+  or: [ModelPostViewTrackerFilterInput]
+  not: ModelPostViewTrackerFilterInput
+}
+
+input ModelPostViewTrackerConditionInput {
+  postsID: ModelIDInput
+  viewerID: ModelIDInput
+  and: [ModelPostViewTrackerConditionInput]
+  or: [ModelPostViewTrackerConditionInput]
+  not: ModelPostViewTrackerConditionInput
+}
+
+input CreatePostViewTrackerInput {
+  id: ID
+  postsID: ID
+  viewerID: ID
+}
+
+input UpdatePostViewTrackerInput {
+  id: ID!
+  postsID: ID
+  viewerID: ID
+}
+
+input DeletePostViewTrackerInput {
+  id: ID!
+}
+
+type Mutation {
+  createPostViewTracker(input: CreatePostViewTrackerInput!, condition: ModelPostViewTrackerConditionInput): PostViewTracker @aws_api_key @aws_iam
+  updatePostViewTracker(input: UpdatePostViewTrackerInput!, condition: ModelPostViewTrackerConditionInput): PostViewTracker @aws_api_key @aws_iam
+  deletePostViewTracker(input: DeletePostViewTrackerInput!, condition: ModelPostViewTrackerConditionInput): PostViewTracker @aws_api_key @aws_iam
+  createUserRelationships(input: CreateUserRelationshipsInput!, condition: ModelUserRelationshipsConditionInput): UserRelationships @aws_api_key @aws_iam
+  updateUserRelationships(input: UpdateUserRelationshipsInput!, condition: ModelUserRelationshipsConditionInput): UserRelationships @aws_api_key @aws_iam
+  deleteUserRelationships(input: DeleteUserRelationshipsInput!, condition: ModelUserRelationshipsConditionInput): UserRelationships @aws_api_key @aws_iam
+  createUserExtras(input: CreateUserExtrasInput!, condition: ModelUserExtrasConditionInput): UserExtras @aws_api_key @aws_iam
+  updateUserExtras(input: UpdateUserExtrasInput!, condition: ModelUserExtrasConditionInput): UserExtras @aws_api_key @aws_iam
+  deleteUserExtras(input: DeleteUserExtrasInput!, condition: ModelUserExtrasConditionInput): UserExtras @aws_api_key @aws_iam
+  createPosts(input: CreatePostsInput!, condition: ModelPostsConditionInput): Posts @aws_api_key @aws_iam
+  updatePosts(input: UpdatePostsInput!, condition: ModelPostsConditionInput): Posts @aws_api_key @aws_iam
+  deletePosts(input: DeletePostsInput!, condition: ModelPostsConditionInput): Posts @aws_api_key @aws_iam
+  createUserOTP(input: CreateUserOTPInput!, condition: ModelUserOTPConditionInput): UserOTP @aws_api_key @aws_iam
+  updateUserOTP(input: UpdateUserOTPInput!, condition: ModelUserOTPConditionInput): UserOTP @aws_api_key @aws_iam
+  deleteUserOTP(input: DeleteUserOTPInput!, condition: ModelUserOTPConditionInput): UserOTP @aws_api_key @aws_iam
+  createUsers(input: CreateUsersInput!, condition: ModelUsersConditionInput): Users @aws_api_key @aws_iam
+  updateUsers(input: UpdateUsersInput!, condition: ModelUsersConditionInput): Users @aws_api_key @aws_iam
+  deleteUsers(input: DeleteUsersInput!, condition: ModelUsersConditionInput): Users @aws_api_key @aws_iam
+}
+
+type Subscription {
+  onCreatePostViewTracker: PostViewTracker @aws_subscribe(mutations: ["createPostViewTracker"]) @aws_api_key @aws_iam
+  onUpdatePostViewTracker: PostViewTracker @aws_subscribe(mutations: ["updatePostViewTracker"]) @aws_api_key @aws_iam
+  onDeletePostViewTracker: PostViewTracker @aws_subscribe(mutations: ["deletePostViewTracker"]) @aws_api_key @aws_iam
+  onCreateUserRelationships: UserRelationships @aws_subscribe(mutations: ["createUserRelationships"]) @aws_api_key @aws_iam
+  onUpdateUserRelationships: UserRelationships @aws_subscribe(mutations: ["updateUserRelationships"]) @aws_api_key @aws_iam
+  onDeleteUserRelationships: UserRelationships @aws_subscribe(mutations: ["deleteUserRelationships"]) @aws_api_key @aws_iam
+  onCreateUserExtras: UserExtras @aws_subscribe(mutations: ["createUserExtras"]) @aws_api_key @aws_iam
+  onUpdateUserExtras: UserExtras @aws_subscribe(mutations: ["updateUserExtras"]) @aws_api_key @aws_iam
+  onDeleteUserExtras: UserExtras @aws_subscribe(mutations: ["deleteUserExtras"]) @aws_api_key @aws_iam
+  onCreatePosts: Posts @aws_subscribe(mutations: ["createPosts"]) @aws_api_key @aws_iam
+  onUpdatePosts: Posts @aws_subscribe(mutations: ["updatePosts"]) @aws_api_key @aws_iam
+  onDeletePosts: Posts @aws_subscribe(mutations: ["deletePosts"]) @aws_api_key @aws_iam
+  onCreateUserOTP: UserOTP @aws_subscribe(mutations: ["createUserOTP"]) @aws_api_key @aws_iam
+  onUpdateUserOTP: UserOTP @aws_subscribe(mutations: ["updateUserOTP"]) @aws_api_key @aws_iam
+  onDeleteUserOTP: UserOTP @aws_subscribe(mutations: ["deleteUserOTP"]) @aws_api_key @aws_iam
+  onCreateUsers: Users @aws_subscribe(mutations: ["createUsers"]) @aws_api_key @aws_iam
+  onUpdateUsers: Users @aws_subscribe(mutations: ["updateUsers"]) @aws_api_key @aws_iam
+  onDeleteUsers: Users @aws_subscribe(mutations: ["deleteUsers"]) @aws_api_key @aws_iam
+}
+
+type ModelUserRelationshipsConnection @aws_api_key @aws_iam {
+  items: [UserRelationships]!
+  nextToken: String
+}
+
+input ModelUserRelationshipsFilterInput {
+  id: ModelIDInput
+  createdAt: ModelStringInput
+  receivercognitosub: ModelStringInput
+  sendercognitosub: ModelStringInput
+  usersID: ModelIDInput
+  and: [ModelUserRelationshipsFilterInput]
+  or: [ModelUserRelationshipsFilterInput]
+  not: ModelUserRelationshipsFilterInput
+}
+
+input ModelUserRelationshipsConditionInput {
+  createdAt: ModelStringInput
+  receivercognitosub: ModelStringInput
+  sendercognitosub: ModelStringInput
+  usersID: ModelIDInput
+  and: [ModelUserRelationshipsConditionInput]
+  or: [ModelUserRelationshipsConditionInput]
+  not: ModelUserRelationshipsConditionInput
+}
+
+input CreateUserRelationshipsInput {
+  id: ID
+  createdAt: String
+  receivercognitosub: String
+  sendercognitosub: String
+  usersID: ID!
+}
+
+input UpdateUserRelationshipsInput {
+  id: ID!
+  createdAt: String
+  receivercognitosub: String
+  sendercognitosub: String
+  usersID: ID
+}
+
+input DeleteUserRelationshipsInput {
+  id: ID!
+}
+
+type ModelUserExtrasConnection @aws_api_key @aws_iam {
+  items: [UserExtras]!
+  nextToken: String
+}
+
+input ModelUserExtrasFilterInput {
+  id: ModelIDInput
+  cognitosub: ModelStringInput
+  firstvaultupload: ModelBooleanInput
+  usersID: ModelIDInput
+  and: [ModelUserExtrasFilterInput]
+  or: [ModelUserExtrasFilterInput]
+  not: ModelUserExtrasFilterInput
+}
+
+input ModelUserExtrasConditionInput {
+  cognitosub: ModelStringInput
+  firstvaultupload: ModelBooleanInput
+  usersID: ModelIDInput
+  and: [ModelUserExtrasConditionInput]
+  or: [ModelUserExtrasConditionInput]
+  not: ModelUserExtrasConditionInput
+}
+
+input CreateUserExtrasInput {
+  id: ID
+  cognitosub: String
+  firstvaultupload: Boolean
+  usersID: ID
+}
+
+input UpdateUserExtrasInput {
+  id: ID!
+  cognitosub: String
+  firstvaultupload: Boolean
+  usersID: ID
+}
+
+input DeleteUserExtrasInput {
+  id: ID!
+}
+
+type ModelPostsConnection @aws_api_key @aws_iam {
+  items: [Posts]!
+  nextToken: String
+}
+
+input ModelPostsFilterInput {
+  id: ModelIDInput
+  aspectratio: ModelFloatInput
+  cognitosub: ModelStringInput
+  contentdate: ModelStringInput
+  contentkey: ModelStringInput
+  contenttype: ModelStringInput
+  createdAt: ModelStringInput
+  posttext: ModelStringInput
+  publicpost: ModelBooleanInput
+  publicpostdate: ModelStringInput
+  sizeinbytes: ModelIntInput
+  thumbnailkey: ModelStringInput
+  type: ModelStringInput
+  usersID: ModelIDInput
+  and: [ModelPostsFilterInput]
+  or: [ModelPostsFilterInput]
+  not: ModelPostsFilterInput
+}
+
+input ModelPostsConditionInput {
+  aspectratio: ModelFloatInput
+  cognitosub: ModelStringInput
+  contentdate: ModelStringInput
+  contentkey: ModelStringInput
+  contenttype: ModelStringInput
+  createdAt: ModelStringInput
+  posttext: ModelStringInput
+  publicpost: ModelBooleanInput
+  publicpostdate: ModelStringInput
+  sizeinbytes: ModelIntInput
+  thumbnailkey: ModelStringInput
+  type: ModelStringInput
+  usersID: ModelIDInput
+  and: [ModelPostsConditionInput]
+  or: [ModelPostsConditionInput]
+  not: ModelPostsConditionInput
+}
+
+input CreatePostsInput {
+  id: ID
+  aspectratio: Float
+  cognitosub: String!
+  contentdate: AWSDateTime
+  contentkey: String
+  contenttype: String
+  createdAt: String
+  posttext: String
+  publicpost: Boolean
+  publicpostdate: AWSDateTime
+  sizeinbytes: Int
+  thumbnailkey: String
+  type: String
+  usersID: ID!
+}
+
+input UpdatePostsInput {
+  id: ID!
+  aspectratio: Float
+  cognitosub: String
+  contentdate: AWSDateTime
+  contentkey: String
+  contenttype: String
+  createdAt: String
+  posttext: String
+  publicpost: Boolean
+  publicpostdate: AWSDateTime
+  sizeinbytes: Int
+  thumbnailkey: String
+  type: String
+  usersID: ID
+}
+
+input DeletePostsInput {
+  id: ID!
+}
+
+type ModelUserOTPConnection @aws_api_key @aws_iam {
+  items: [UserOTP]!
+  nextToken: String
+}
+
+input ModelUserOTPFilterInput {
+  id: ModelIDInput
+  currentotp: ModelStringInput
+  userdisplayname: ModelStringInput
+  useremail: ModelStringInput
+  usersID: ModelIDInput
+  and: [ModelUserOTPFilterInput]
+  or: [ModelUserOTPFilterInput]
+  not: ModelUserOTPFilterInput
+}
+
+input ModelUserOTPConditionInput {
+  currentotp: ModelStringInput
+  userdisplayname: ModelStringInput
+  useremail: ModelStringInput
+  usersID: ModelIDInput
+  and: [ModelUserOTPConditionInput]
+  or: [ModelUserOTPConditionInput]
+  not: ModelUserOTPConditionInput
+}
+
+input CreateUserOTPInput {
+  id: ID
+  currentotp: String
+  userdisplayname: String
+  useremail: String
+  usersID: ID
+}
+
+input UpdateUserOTPInput {
+  id: ID!
+  currentotp: String
+  userdisplayname: String
+  useremail: String
+  usersID: ID
+}
+
+input DeleteUserOTPInput {
+  id: ID!
+}
+
+type ModelUsersConnection @aws_api_key @aws_iam {
+  items: [Users]!
+  nextToken: String
+}
+
+input ModelUsersFilterInput {
+  id: ModelIDInput
+  acceptedtos: ModelBooleanInput
+  addedcount: ModelIntInput
+  addedmecount: ModelIntInput
+  birthday: ModelStringInput
+  cognitosub: ModelStringInput
+  displayname: ModelStringInput
+  email: ModelStringInput
+  emailconfirmed: ModelBooleanInput
+  firstvaultupload: ModelBooleanInput
+  fullyauthenticated: ModelBooleanInput
+  gamertag: ModelStringInput
+  mostrecentpublicpost: ModelStringInput
+  password: ModelStringInput
+  pfp: ModelStringInput
+  storagesizeinbytes: ModelFloatInput
+  type: ModelStringInput
+  userextrasID: ModelIDInput
+  userotpID: ModelIDInput
+  and: [ModelUsersFilterInput]
+  or: [ModelUsersFilterInput]
+  not: ModelUsersFilterInput
+}
+
+input ModelUsersConditionInput {
+  acceptedtos: ModelBooleanInput
+  addedcount: ModelIntInput
+  addedmecount: ModelIntInput
+  birthday: ModelStringInput
+  cognitosub: ModelStringInput
+  displayname: ModelStringInput
+  email: ModelStringInput
+  emailconfirmed: ModelBooleanInput
+  firstvaultupload: ModelBooleanInput
+  fullyauthenticated: ModelBooleanInput
+  gamertag: ModelStringInput
+  mostrecentpublicpost: ModelStringInput
+  password: ModelStringInput
+  pfp: ModelStringInput
+  storagesizeinbytes: ModelFloatInput
+  type: ModelStringInput
+  userextrasID: ModelIDInput
+  userotpID: ModelIDInput
+  and: [ModelUsersConditionInput]
+  or: [ModelUsersConditionInput]
+  not: ModelUsersConditionInput
+}
+
+input CreateUsersInput {
+  id: ID
+  acceptedtos: Boolean
+  addedcount: Int
+  addedmecount: Int
+  birthday: AWSDate
+  cognitosub: String
+  displayname: String
+  email: AWSEmail
+  emailconfirmed: Boolean
+  firstvaultupload: Boolean
+  fullyauthenticated: Boolean
+  gamertag: String
+  mostrecentpublicpost: AWSDateTime
+  password: String
+  pfp: String
+  storagesizeinbytes: Float
+  type: String
+  userextrasID: ID
+  userotpID: ID
+}
+
+input UpdateUsersInput {
+  id: ID!
+  acceptedtos: Boolean
+  addedcount: Int
+  addedmecount: Int
+  birthday: AWSDate
+  cognitosub: String
+  displayname: String
+  email: AWSEmail
+  emailconfirmed: Boolean
+  firstvaultupload: Boolean
+  fullyauthenticated: Boolean
+  gamertag: String
+  mostrecentpublicpost: AWSDateTime
+  password: String
+  pfp: String
+  storagesizeinbytes: Float
+  type: String
+  userextrasID: ID
+  userotpID: ID
+}
+
+input DeleteUsersInput {
+  id: ID!
+}
+
+input ModelIDKeyConditionInput {
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  between: [ID]
+  beginsWith: ID
+}
+
+input ModelStringKeyConditionInput {
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  between: [String]
+  beginsWith: String
+}
+
+input SearchableStringFilterInput {
+  ne: String
+  gt: String
+  lt: String
+  gte: String
+  lte: String
+  eq: String
+  match: String
+  matchPhrase: String
+  matchPhrasePrefix: String
+  multiMatch: String
+  exists: Boolean
+  wildcard: String
+  regexp: String
+  range: [String]
+}
+
+input SearchableIntFilterInput {
+  ne: Int
+  gt: Int
+  lt: Int
+  gte: Int
+  lte: Int
+  eq: Int
+  range: [Int]
+}
+
+input SearchableFloatFilterInput {
+  ne: Float
+  gt: Float
+  lt: Float
+  gte: Float
+  lte: Float
+  eq: Float
+  range: [Float]
+}
+
+input SearchableBooleanFilterInput {
+  eq: Boolean
+  ne: Boolean
+}
+
+input SearchableIDFilterInput {
+  ne: ID
+  gt: ID
+  lt: ID
+  gte: ID
+  lte: ID
+  eq: ID
+  match: ID
+  matchPhrase: ID
+  matchPhrasePrefix: ID
+  multiMatch: ID
+  exists: Boolean
+  wildcard: ID
+  regexp: ID
+  range: [ID]
+}
+
+input SearchablePostsFilterInput {
+  id: SearchableIDFilterInput
+  aspectratio: SearchableFloatFilterInput
+  cognitosub: SearchableStringFilterInput
+  contentdate: SearchableStringFilterInput
+  contentkey: SearchableStringFilterInput
+  contenttype: SearchableStringFilterInput
+  createdAt: SearchableStringFilterInput
+  posttext: SearchableStringFilterInput
+  publicpost: SearchableBooleanFilterInput
+  publicpostdate: SearchableStringFilterInput
+  sizeinbytes: SearchableIntFilterInput
+  thumbnailkey: SearchableStringFilterInput
+  type: SearchableStringFilterInput
+  usersID: SearchableIDFilterInput
+  updatedAt: SearchableStringFilterInput
+  and: [SearchablePostsFilterInput]
+  or: [SearchablePostsFilterInput]
+  not: SearchablePostsFilterInput
+}
+
+enum SearchableSortDirection {
+  asc
+  desc
+}
+
+enum SearchablePostsSortableFields {
+  id
+  aspectratio
+  cognitosub
+  contentdate
+  contentkey
+  contenttype
+  createdAt
+  posttext
+  publicpost
+  publicpostdate
+  sizeinbytes
+  thumbnailkey
+  type
+  usersID
+  updatedAt
+}
+
+input SearchablePostsSortInput {
+  field: SearchablePostsSortableFields
+  direction: SearchableSortDirection
+}
+
+enum SearchableAggregateType {
+  terms
+  avg
+  min
+  max
+  sum
+}
+
+enum SearchablePostsAggregateField {
+  id
+  aspectratio
+  cognitosub
+  contentdate
+  contentkey
+  contenttype
+  createdAt
+  posttext
+  publicpost
+  publicpostdate
+  sizeinbytes
+  thumbnailkey
+  type
+  usersID
+  updatedAt
+}
+
+input SearchablePostsAggregationInput {
+  name: String!
+  type: SearchableAggregateType!
+  field: SearchablePostsAggregateField!
+}
+
+input SearchableUsersFilterInput {
+  id: SearchableIDFilterInput
+  acceptedtos: SearchableBooleanFilterInput
+  addedcount: SearchableIntFilterInput
+  addedmecount: SearchableIntFilterInput
+  birthday: SearchableStringFilterInput
+  cognitosub: SearchableStringFilterInput
+  displayname: SearchableStringFilterInput
+  email: SearchableStringFilterInput
+  emailconfirmed: SearchableBooleanFilterInput
+  firstvaultupload: SearchableBooleanFilterInput
+  fullyauthenticated: SearchableBooleanFilterInput
+  gamertag: SearchableStringFilterInput
+  mostrecentpublicpost: SearchableStringFilterInput
+  password: SearchableStringFilterInput
+  pfp: SearchableStringFilterInput
+  storagesizeinbytes: SearchableFloatFilterInput
+  type: SearchableStringFilterInput
+  userextrasID: SearchableIDFilterInput
+  userotpID: SearchableIDFilterInput
+  createdAt: SearchableStringFilterInput
+  updatedAt: SearchableStringFilterInput
+  and: [SearchableUsersFilterInput]
+  or: [SearchableUsersFilterInput]
+  not: SearchableUsersFilterInput
+}
+
+enum SearchableUsersSortableFields {
+  id
+  acceptedtos
+  addedcount
+  addedmecount
+  birthday
+  cognitosub
+  displayname
+  email
+  emailconfirmed
+  firstvaultupload
+  fullyauthenticated
+  gamertag
+  mostrecentpublicpost
+  password
+  pfp
+  storagesizeinbytes
+  type
+  userextrasID
+  userotpID
+  createdAt
+  updatedAt
+}
+
+input SearchableUsersSortInput {
+  field: SearchableUsersSortableFields
+  direction: SearchableSortDirection
+}
+
+enum SearchableUsersAggregateField {
+  id
+  acceptedtos
+  addedcount
+  addedmecount
+  birthday
+  cognitosub
+  displayname
+  email
+  emailconfirmed
+  firstvaultupload
+  fullyauthenticated
+  gamertag
+  mostrecentpublicpost
+  password
+  pfp
+  storagesizeinbytes
+  type
+  userextrasID
+  userotpID
+  createdAt
+  updatedAt
+}
+
+input SearchableUsersAggregationInput {
+  name: String!
+  type: SearchableAggregateType!
+  field: SearchableUsersAggregateField!
+}
+

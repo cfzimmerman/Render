@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "Render",
+    "slug": "Render",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000028"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "userInterfaceStyle": "automatic",
+      "requireFullScreen": true,
+      "bundleIdentifier": "com.render.render",
+      "buildNumber": "0.1.1"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#000028"
+      },
+      "userInterfaceStyle": "automatic",
+      "package": "com.render.render",
+      "versionCode": 1
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow Render to access your photos.",
+          "savePhotosPermission": "Allow Render to save photos.",
+          "isAccessMediaLocationEnabled": false
+        }
+      ]
+    ]
+  }
+}

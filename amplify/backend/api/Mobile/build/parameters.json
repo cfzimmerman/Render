@@ -1,0 +1,13 @@
+{
+    "AppSyncApiName": "Mobile",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "S3DeploymentBucket": "amplify-mobile-staging-211804-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/aa36f041d562945ba4a89979b10aaeea892a4ff8"
+}
