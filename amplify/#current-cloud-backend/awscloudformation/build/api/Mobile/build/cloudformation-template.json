@@ -123,7 +123,7 @@
           ]
         },
         "Description": "api key description",
-        "Expires": 1655877441
+        "Expires": 1657062486
       }
     },
     "GraphQLAPINONEDS95A13CF0": {
@@ -292,82 +292,6 @@
         "GraphQLAPITransformerSchema3CB2AE18"
       ]
     },
-    "UserExtras": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": {
-          "Fn::Join": [
-            "",
-            [
-              "https://s3.",
-              {
-                "Ref": "AWS::Region"
-              },
-              ".",
-              {
-                "Ref": "AWS::URLSuffix"
-              },
-              "/",
-              {
-                "Ref": "S3DeploymentBucket"
-              },
-              "/",
-              {
-                "Ref": "S3DeploymentRootKey"
-              },
-              "/stacks/UserExtras.json"
-            ]
-          ]
-        },
-        "Parameters": {
-          "DynamoDBModelTableReadIOPS": {
-            "Ref": "DynamoDBModelTableReadIOPS"
-          },
-          "DynamoDBModelTableWriteIOPS": {
-            "Ref": "DynamoDBModelTableWriteIOPS"
-          },
-          "DynamoDBBillingMode": {
-            "Ref": "DynamoDBBillingMode"
-          },
-          "DynamoDBEnablePointInTimeRecovery": {
-            "Ref": "DynamoDBEnablePointInTimeRecovery"
-          },
-          "DynamoDBEnableServerSideEncryption": {
-            "Ref": "DynamoDBEnableServerSideEncryption"
-          },
-          "referencetotransformerrootstackenv10C5A902Ref": {
-            "Ref": "env"
-          },
-          "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
-            "Fn::GetAtt": [
-              "GraphQLAPI",
-              "ApiId"
-            ]
-          },
-          "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-            "Fn::GetAtt": [
-              "GraphQLAPINONEDS95A13CF0",
-              "Name"
-            ]
-          },
-          "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
-            "Ref": "S3DeploymentBucket"
-          },
-          "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
-            "Ref": "S3DeploymentRootKey"
-          },
-          "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
-            "Ref": "authRoleName"
-          },
-          "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
-            "Ref": "unauthRoleName"
-          }
-        }
-      },
-      "DependsOn": [
-        "GraphQLAPITransformerSchema3CB2AE18"
-      ]
-    },
     "Posts": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
@@ -392,82 +316,6 @@
                 "Ref": "S3DeploymentRootKey"
               },
               "/stacks/Posts.json"
-            ]
-          ]
-        },
-        "Parameters": {
-          "DynamoDBModelTableReadIOPS": {
-            "Ref": "DynamoDBModelTableReadIOPS"
-          },
-          "DynamoDBModelTableWriteIOPS": {
-            "Ref": "DynamoDBModelTableWriteIOPS"
-          },
-          "DynamoDBBillingMode": {
-            "Ref": "DynamoDBBillingMode"
-          },
-          "DynamoDBEnablePointInTimeRecovery": {
-            "Ref": "DynamoDBEnablePointInTimeRecovery"
-          },
-          "DynamoDBEnableServerSideEncryption": {
-            "Ref": "DynamoDBEnableServerSideEncryption"
-          },
-          "referencetotransformerrootstackenv10C5A902Ref": {
-            "Ref": "env"
-          },
-          "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
-            "Fn::GetAtt": [
-              "GraphQLAPI",
-              "ApiId"
-            ]
-          },
-          "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-            "Fn::GetAtt": [
-              "GraphQLAPINONEDS95A13CF0",
-              "Name"
-            ]
-          },
-          "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
-            "Ref": "S3DeploymentBucket"
-          },
-          "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
-            "Ref": "S3DeploymentRootKey"
-          },
-          "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
-            "Ref": "authRoleName"
-          },
-          "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
-            "Ref": "unauthRoleName"
-          }
-        }
-      },
-      "DependsOn": [
-        "GraphQLAPITransformerSchema3CB2AE18"
-      ]
-    },
-    "UserOTP": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": {
-          "Fn::Join": [
-            "",
-            [
-              "https://s3.",
-              {
-                "Ref": "AWS::Region"
-              },
-              ".",
-              {
-                "Ref": "AWS::URLSuffix"
-              },
-              "/",
-              {
-                "Ref": "S3DeploymentBucket"
-              },
-              "/",
-              {
-                "Ref": "S3DeploymentRootKey"
-              },
-              "/stacks/UserOTP.json"
             ]
           ]
         },
@@ -695,30 +543,6 @@
               "UserRelationships",
               "Outputs.transformerrootstackUserRelationshipsUserRelationshipsTable3E466CDCRef"
             ]
-          },
-          "referencetotransformerrootstackUserExtrasNestedStackUserExtrasNestedStackResource01052DF4OutputstransformerrootstackUserExtrasUserExtrasDataSource37AB5E73Name": {
-            "Fn::GetAtt": [
-              "UserExtras",
-              "Outputs.transformerrootstackUserExtrasUserExtrasDataSource37AB5E73Name"
-            ]
-          },
-          "referencetotransformerrootstackUserExtrasNestedStackUserExtrasNestedStackResource01052DF4OutputstransformerrootstackUserExtrasUserExtrasTable77983F83Ref": {
-            "Fn::GetAtt": [
-              "UserExtras",
-              "Outputs.transformerrootstackUserExtrasUserExtrasTable77983F83Ref"
-            ]
-          },
-          "referencetotransformerrootstackUserOTPNestedStackUserOTPNestedStackResource6D7D7BDAOutputstransformerrootstackUserOTPUserOTPDataSource92AD4F90Name": {
-            "Fn::GetAtt": [
-              "UserOTP",
-              "Outputs.transformerrootstackUserOTPUserOTPDataSource92AD4F90Name"
-            ]
-          },
-          "referencetotransformerrootstackUserOTPNestedStackUserOTPNestedStackResource6D7D7BDAOutputstransformerrootstackUserOTPUserOTPTableDFA47BCBRef": {
-            "Fn::GetAtt": [
-              "UserOTP",
-              "Outputs.transformerrootstackUserOTPUserOTPTableDFA47BCBRef"
-            ]
           }
         }
       },
@@ -726,8 +550,6 @@
         "GraphQLAPITransformerSchema3CB2AE18",
         "Posts",
         "PostViewTracker",
-        "UserExtras",
-        "UserOTP",
         "UserRelationships",
         "Users"
       ]
@@ -850,9 +672,7 @@
         "GraphQLAPITransformerSchema3CB2AE18",
         "PostViewTracker",
         "UserRelationships",
-        "UserExtras",
         "Posts",
-        "UserOTP",
         "Users",
         "ConnectionStack",
         "SearchableStack"

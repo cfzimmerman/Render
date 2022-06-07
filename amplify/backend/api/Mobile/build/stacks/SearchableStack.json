@@ -313,7 +313,7 @@
               {
                 "Ref": "OpenSearchStreamingIAMRoleName"
               },
-              "0ba773-",
+              "962e07-",
               {
                 "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
               },

@@ -1,128 +1,26 @@
 {
   "providers": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-mobile-staging-211804-authRole",
-      "UnauthRoleArn": "arn:aws:iam::280592462047:role/amplify-mobile-staging-211804-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::280592462047:role/amplify-mobile-staging-211804-authRole",
+      "AuthRoleName": "amplify-mobile-monostage-180223-authRole",
+      "UnauthRoleArn": "arn:aws:iam::280592462047:role/amplify-mobile-monostage-180223-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::280592462047:role/amplify-mobile-monostage-180223-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-mobile-staging-211804-deployment",
-      "UnauthRoleName": "amplify-mobile-staging-211804-unauthRole",
-      "StackName": "amplify-mobile-staging-211804",
-      "StackId": "arn:aws:cloudformation:us-east-1:280592462047:stack/amplify-mobile-staging-211804/18388100-9037-11ec-b102-0ad5212d4725",
+      "DeploymentBucketName": "amplify-mobile-monostage-180223-deployment",
+      "UnauthRoleName": "amplify-mobile-monostage-180223-unauthRole",
+      "StackName": "amplify-mobile-monostage-180223",
+      "StackId": "arn:aws:cloudformation:us-east-1:280592462047:stack/amplify-mobile-monostage-180223/91f82ea0-e523-11ec-a533-128e6a1cd335",
       "AmplifyAppId": "d88kw0i3xs9f9",
-      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-mobile-staging-211804-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
-    }
-  },
-  "function": {
-    "webstagingauthCreateAuthChallenge": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "lastBuildTimeStamp": "2022-05-23T04:49:13.854Z",
-      "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2022-05-23T04:49:13.908Z",
-      "distZipFilename": "webstagingauthCreateAuthChallenge-69674554474431744a62-build.zip",
-      "s3Bucket": {
-        "deploymentBucketName": "amplify-mobile-staging-211804-deployment",
-        "s3Key": "amplify-builds/webstagingauthCreateAuthChallenge-69674554474431744a62-build.zip"
-      },
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-mobile-staging-211804-deployment/amplify-cfn-templates/function/webstagingauthCreateAuthChallenge-cloudformation-template.json",
-        "logicalId": "functionwebstagingauthCreateAuthChallenge"
-      },
-      "lastPushTimeStamp": "2022-05-23T05:01:47.152Z",
-      "output": {
-        "Region": "us-east-1",
-        "Arn": "arn:aws:lambda:us-east-1:280592462047:function:webstagingauthCreateAuthChallenge-staging",
-        "Name": "webstagingauthCreateAuthChallenge-staging",
-        "LambdaExecutionRole": "webstagingauthCreateAuthChallenge-staging"
-      },
-      "lastPushDirHash": "WtyD8XlDM2AyuHC5SLpheR9XYMg="
-    },
-    "webstagingauthDefineAuthChallenge": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "lastBuildTimeStamp": "2022-05-23T04:49:13.854Z",
-      "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2022-05-23T04:49:13.912Z",
-      "distZipFilename": "webstagingauthDefineAuthChallenge-2b725a6e415a6a525565-build.zip",
-      "s3Bucket": {
-        "deploymentBucketName": "amplify-mobile-staging-211804-deployment",
-        "s3Key": "amplify-builds/webstagingauthDefineAuthChallenge-2b725a6e415a6a525565-build.zip"
-      },
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-mobile-staging-211804-deployment/amplify-cfn-templates/function/webstagingauthDefineAuthChallenge-cloudformation-template.json",
-        "logicalId": "functionwebstagingauthDefineAuthChallenge"
-      },
-      "lastPushTimeStamp": "2022-05-23T05:01:47.152Z",
-      "output": {
-        "Region": "us-east-1",
-        "Arn": "arn:aws:lambda:us-east-1:280592462047:function:webstagingauthDefineAuthChallenge-staging",
-        "Name": "webstagingauthDefineAuthChallenge-staging",
-        "LambdaExecutionRole": "webstagingauthDefineAuthChallenge-staging"
-      },
-      "lastPushDirHash": "WOBePteKotcYYDqJg1sJzgQhJz0="
-    },
-    "webstagingauthPreSignup": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "lastBuildTimeStamp": "2022-05-23T04:49:13.855Z",
-      "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2022-05-23T04:49:13.914Z",
-      "distZipFilename": "webstagingauthPreSignup-725978384874696d5252-build.zip",
-      "s3Bucket": {
-        "deploymentBucketName": "amplify-mobile-staging-211804-deployment",
-        "s3Key": "amplify-builds/webstagingauthPreSignup-725978384874696d5252-build.zip"
-      },
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-mobile-staging-211804-deployment/amplify-cfn-templates/function/webstagingauthPreSignup-cloudformation-template.json",
-        "logicalId": "functionwebstagingauthPreSignup"
-      },
-      "lastPushTimeStamp": "2022-05-23T05:01:47.152Z",
-      "output": {
-        "Region": "us-east-1",
-        "Arn": "arn:aws:lambda:us-east-1:280592462047:function:webstagingauthPreSignup-staging",
-        "Name": "webstagingauthPreSignup-staging",
-        "LambdaExecutionRole": "webstagingauthPreSignup-staging"
-      },
-      "lastPushDirHash": "x2OtrBxyR2gD7DLIe6xbIWxByi4="
-    },
-    "webstagingauthVerifyAuthChallengeResponse": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "lastBuildTimeStamp": "2022-05-23T04:49:13.856Z",
-      "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2022-05-23T04:49:14.102Z",
-      "distZipFilename": "webstagingauthVerifyAuthChallengeResponse-79562f504c4b314a7357-build.zip",
-      "s3Bucket": {
-        "deploymentBucketName": "amplify-mobile-staging-211804-deployment",
-        "s3Key": "amplify-builds/webstagingauthVerifyAuthChallengeResponse-79562f504c4b314a7357-build.zip"
-      },
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-mobile-staging-211804-deployment/amplify-cfn-templates/function/webstagingauthVerifyAuthChallengeResponse-cloudformation-template.json",
-        "logicalId": "functionwebstagingauthVerifyAuthChallengeResponse"
-      },
-      "lastPushTimeStamp": "2022-05-23T05:01:47.152Z",
-      "output": {
-        "Region": "us-east-1",
-        "Arn": "arn:aws:lambda:us-east-1:280592462047:function:webstagingauthVerifyAuthChallengeResponse-staging",
-        "Name": "webstagingauthVerifyAuthChallengeResponse-staging",
-        "LambdaExecutionRole": "webstagingauthVerifyAuthChallengeResponse-staging"
-      },
-      "lastPushDirHash": "Du3wCEUFZVkcRIUafJDcn3jujNY="
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-mobile-monostage-180223-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     }
   },
   "auth": {
-    "webstagingauth": {
+    "Mobile": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [
         {
           "category": "function",
-          "resourceName": "webstagingauthCreateAuthChallenge",
+          "resourceName": "MobileCreateAuthChallenge",
           "triggerProvider": "Cognito",
           "attributes": [
             "Arn",
@@ -131,7 +29,7 @@
         },
         {
           "category": "function",
-          "resourceName": "webstagingauthDefineAuthChallenge",
+          "resourceName": "MobileDefineAuthChallenge",
           "triggerProvider": "Cognito",
           "attributes": [
             "Arn",
@@ -140,7 +38,7 @@
         },
         {
           "category": "function",
-          "resourceName": "webstagingauthPreSignup",
+          "resourceName": "MobileVerifyAuthChallengeResponse",
           "triggerProvider": "Cognito",
           "attributes": [
             "Arn",
@@ -149,7 +47,7 @@
         },
         {
           "category": "function",
-          "resourceName": "webstagingauthVerifyAuthChallengeResponse",
+          "resourceName": "MobilePreSignup",
           "triggerProvider": "Cognito",
           "attributes": [
             "Arn",
@@ -157,7 +55,7 @@
           ]
         }
       ],
-      "customAuth": true,
+      "customAuth": false,
       "frontendAuthConfig": {
         "socialProviders": [],
         "usernameAttributes": [
@@ -175,25 +73,170 @@
           "SMS"
         ],
         "verificationMechanisms": [
-          "PHONE_NUMBER"
+          "EMAIL"
         ]
       },
       "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-mobile-staging-211804-deployment/amplify-cfn-templates/auth/webstagingauth-cloudformation-template.json",
-        "logicalId": "authwebstagingauth"
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-mobile-monostage-180223-deployment/amplify-cfn-templates/auth/Mobile-cloudformation-template.json",
+        "logicalId": "authMobile"
       },
-      "lastPushTimeStamp": "2022-05-23T05:01:47.152Z",
+      "lastPushTimeStamp": "2022-06-05T23:31:09.515Z",
       "output": {
-        "CreatedSNSRole": "arn:aws:iam::280592462047:role/sns4b8fe532211804-staging",
-        "UserPoolId": "us-east-1_fX2ZVggR7",
-        "AppClientIDWeb": "4fsuk41773ii1840rec7692kv8",
-        "AppClientID": "7sbecuhhg139m2j0s17pomgu5d",
-        "IdentityPoolId": "us-east-1:abcc1dc2-b321-42db-ac67-7ea6d04eabf7",
-        "UserPoolArn": "arn:aws:cognito-idp:us-east-1:280592462047:userpool/us-east-1_fX2ZVggR7",
-        "IdentityPoolName": "webstagingauth__staging",
-        "UserPoolName": "webstagingauth"
+        "UserPoolId": "us-east-1_uepp8IKLm",
+        "AppClientIDWeb": "3n2ivgdcsmdtmhui2s0nseil1l",
+        "AppClientID": "2ij1cg02cq2nd7nhfkaaic509",
+        "IdentityPoolId": "us-east-1:18dfc356-4857-41ab-b25a-3f6979908786",
+        "UserPoolArn": "arn:aws:cognito-idp:us-east-1:280592462047:userpool/us-east-1_uepp8IKLm",
+        "IdentityPoolName": "testAuthIdentityPool__monostage",
+        "UserPoolName": "Mobile"
       },
-      "lastPushDirHash": "Iw3DAdbbXaPH/Wa/3xjiOxERdPk="
+      "lastPushDirHash": "bPg0nr1cKRUa2tBsXTZtcstNvcs="
+    }
+  },
+  "api": {
+    "Mobile": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 30,
+              "description": "api key description"
+            }
+          },
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ]
+        },
+        "GraphQLAPIIdOutput": "xr5f72as2zaixizvlgit5qsnyu",
+        "GraphQLAPIEndpointOutput": "https://s5xx3xu6r5bmrlsnavc36mfnwi.appsync-api.us-east-1.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-wxxpqljnq5cmzibyxt24q7wk7m"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-mobile-monostage-180223-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apiMobile"
+      },
+      "lastPushTimeStamp": "2022-06-05T23:31:09.515Z",
+      "lastPushDirHash": "kt19jEWCK9nhWt6GFgXTQzNbHPo="
+    }
+  },
+  "storage": {
+    "mobilee0d2691a": {
+      "service": "S3",
+      "serviceType": "imported",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "output": {
+        "BucketName": "mobile-storage211804-staging",
+        "Region": "us-east-1"
+      },
+      "lastPushTimeStamp": "2022-06-05T23:31:10.146Z"
+    }
+  },
+  "function": {
+    "MobileCreateAuthChallenge": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "lastBuildTimeStamp": "2022-06-05T23:08:04.976Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2022-06-05T23:08:05.125Z",
+      "distZipFilename": "MobileCreateAuthChallenge-524c3144757077794844-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-mobile-monostage-180223-deployment",
+        "s3Key": "amplify-builds/MobileCreateAuthChallenge-524c3144757077794844-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-mobile-monostage-180223-deployment/amplify-cfn-templates/function/MobileCreateAuthChallenge-cloudformation-template.json",
+        "logicalId": "functionMobileCreateAuthChallenge"
+      },
+      "lastPushTimeStamp": "2022-06-05T23:31:09.515Z",
+      "output": {
+        "Region": "us-east-1",
+        "Arn": "arn:aws:lambda:us-east-1:280592462047:function:MobileCreateAuthChallenge-monostage",
+        "Name": "MobileCreateAuthChallenge-monostage",
+        "LambdaExecutionRole": "MobileCreateAuthChallenge-monostage"
+      },
+      "lastPushDirHash": "T/mj/v5yPa5ZeovzI2pmOTFv41U="
+    },
+    "MobileDefineAuthChallenge": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "lastBuildTimeStamp": "2022-06-05T23:08:04.978Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2022-06-05T23:08:05.132Z",
+      "distZipFilename": "MobileDefineAuthChallenge-634c696c514949746748-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-mobile-monostage-180223-deployment",
+        "s3Key": "amplify-builds/MobileDefineAuthChallenge-634c696c514949746748-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-mobile-monostage-180223-deployment/amplify-cfn-templates/function/MobileDefineAuthChallenge-cloudformation-template.json",
+        "logicalId": "functionMobileDefineAuthChallenge"
+      },
+      "lastPushTimeStamp": "2022-06-05T23:31:09.515Z",
+      "output": {
+        "Region": "us-east-1",
+        "Arn": "arn:aws:lambda:us-east-1:280592462047:function:MobileDefineAuthChallenge-monostage",
+        "Name": "MobileDefineAuthChallenge-monostage",
+        "LambdaExecutionRole": "MobileDefineAuthChallenge-monostage"
+      },
+      "lastPushDirHash": "PMDsN3qARB9Izwq448iTVjKEaw4="
+    },
+    "MobileVerifyAuthChallengeResponse": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "lastBuildTimeStamp": "2022-06-05T23:08:04.979Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2022-06-05T23:08:05.405Z",
+      "distZipFilename": "MobileVerifyAuthChallengeResponse-6c4a55774c3863545763-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-mobile-monostage-180223-deployment",
+        "s3Key": "amplify-builds/MobileVerifyAuthChallengeResponse-6c4a55774c3863545763-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-mobile-monostage-180223-deployment/amplify-cfn-templates/function/MobileVerifyAuthChallengeResponse-cloudformation-template.json",
+        "logicalId": "functionMobileVerifyAuthChallengeResponse"
+      },
+      "lastPushTimeStamp": "2022-06-05T23:31:09.515Z",
+      "output": {
+        "Region": "us-east-1",
+        "Arn": "arn:aws:lambda:us-east-1:280592462047:function:MobileVerifyAuthChallengeResponse-monostage",
+        "Name": "MobileVerifyAuthChallengeResponse-monostage",
+        "LambdaExecutionRole": "MobileVerifyAuthChallengeResponse-monostage"
+      },
+      "lastPushDirHash": "KSolw/nkt4Q/UiuYCJ5rbpooefU="
+    },
+    "MobilePreSignup": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "lastBuildTimeStamp": "2022-06-05T23:08:04.981Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2022-06-05T23:08:05.141Z",
+      "distZipFilename": "MobilePreSignup-61695a7179315251624f-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-mobile-monostage-180223-deployment",
+        "s3Key": "amplify-builds/MobilePreSignup-61695a7179315251624f-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-mobile-monostage-180223-deployment/amplify-cfn-templates/function/MobilePreSignup-cloudformation-template.json",
+        "logicalId": "functionMobilePreSignup"
+      },
+      "lastPushTimeStamp": "2022-06-05T23:31:09.515Z",
+      "output": {
+        "Region": "us-east-1",
+        "Arn": "arn:aws:lambda:us-east-1:280592462047:function:MobilePreSignup-monostage",
+        "Name": "MobilePreSignup-monostage",
+        "LambdaExecutionRole": "MobilePreSignup-monostage"
+      },
+      "lastPushDirHash": "pKL1boE5fqm/tdkGC0xd8qzLWX4="
     }
   }
 }

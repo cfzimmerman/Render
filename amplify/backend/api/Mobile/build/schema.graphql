@@ -19,16 +19,6 @@ type UserRelationships @aws_iam @aws_api_key {
   updatedAt: AWSDateTime!
 }
 
-type UserExtras @aws_iam @aws_api_key {
-  id: ID!
-  cognitosub: String
-  firstvaultupload: Boolean
-  usersID: ID
-  Users: Users
-  createdAt: AWSDateTime!
-  updatedAt: AWSDateTime!
-}
-
 type Posts @aws_iam @aws_api_key {
   id: ID!
   aspectratio: Float
@@ -49,17 +39,6 @@ type Posts @aws_iam @aws_api_key {
   updatedAt: AWSDateTime!
 }
 
-type UserOTP @aws_iam @aws_api_key {
-  id: ID!
-  currentotp: String
-  userdisplayname: String
-  useremail: String
-  usersID: ID
-  Users: Users
-  createdAt: AWSDateTime!
-  updatedAt: AWSDateTime!
-}
-
 type Users @aws_iam @aws_api_key {
   id: ID!
   acceptedtos: Boolean
@@ -74,14 +53,9 @@ type Users @aws_iam @aws_api_key {
   fullyauthenticated: Boolean
   gamertag: String
   mostrecentpublicpost: AWSDateTime
-  password: String
   pfp: String
   storagesizeinbytes: Float
   type: String
-  userextrasID: ID
-  UserExtras: UserExtras
-  userotpID: ID
-  UserOTP: UserOTP
   Posts(filter: ModelPostsFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelPostsConnection
   PostViewTrackers(filter: ModelPostViewTrackerFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelPostViewTrackerConnection
   UserRelationships(filter: ModelUserRelationshipsFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelUserRelationshipsConnection
@@ -126,8 +100,6 @@ type Query {
   relationshipsBySenderDate(sendercognitosub: String!, createdAt: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelUserRelationshipsFilterInput, limit: Int, nextToken: String): ModelUserRelationshipsConnection @aws_api_key @aws_iam
   verifyAddedUser(sendercognitosub: String!, receivercognitosub: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelUserRelationshipsFilterInput, limit: Int, nextToken: String): ModelUserRelationshipsConnection @aws_api_key @aws_iam
   addedUsersByCurrentUser(sendercognitosub: String!, sortDirection: ModelSortDirection, filter: ModelUserRelationshipsFilterInput, limit: Int, nextToken: String): ModelUserRelationshipsConnection @aws_api_key @aws_iam
-  getUserExtras(id: ID!): UserExtras @aws_api_key @aws_iam
-  listUserExtras(filter: ModelUserExtrasFilterInput, limit: Int, nextToken: String): ModelUserExtrasConnection @aws_api_key @aws_iam
   getPosts(id: ID!): Posts @aws_api_key @aws_iam
   listPosts(filter: ModelPostsFilterInput, limit: Int, nextToken: String): ModelPostsConnection @aws_api_key @aws_iam
   postsByCreatedDate(cognitosub: String!, createdAt: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelPostsFilterInput, limit: Int, nextToken: String): ModelPostsConnection @aws_api_key @aws_iam
@@ -136,8 +108,6 @@ type Query {
   postsByContentKey(contentkey: String!, sortDirection: ModelSortDirection, filter: ModelPostsFilterInput, limit: Int, nextToken: String): ModelPostsConnection @aws_api_key @aws_iam
   postsByPublicDate(type: String!, publicpostdate: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelPostsFilterInput, limit: Int, nextToken: String): ModelPostsConnection @aws_api_key @aws_iam
   searchPosts(filter: SearchablePostsFilterInput, sort: [SearchablePostsSortInput], limit: Int, nextToken: String, from: Int, aggregates: [SearchablePostsAggregationInput]): SearchablePostsConnection @aws_api_key @aws_iam
-  getUserOTP(id: ID!): UserOTP @aws_api_key @aws_iam
-  listUserOTPS(filter: ModelUserOTPFilterInput, limit: Int, nextToken: String): ModelUserOTPConnection @aws_api_key @aws_iam
   getUsers(id: ID!): Users @aws_api_key @aws_iam
   listUsers(filter: ModelUsersFilterInput, limit: Int, nextToken: String): ModelUsersConnection @aws_api_key @aws_iam
   userByCognitosub(cognitosub: String!, sortDirection: ModelSortDirection, filter: ModelUsersFilterInput, limit: Int, nextToken: String): ModelUsersConnection @aws_api_key @aws_iam
@@ -290,15 +260,9 @@ type Mutation {
   createUserRelationships(input: CreateUserRelationshipsInput!, condition: ModelUserRelationshipsConditionInput): UserRelationships @aws_api_key @aws_iam
   updateUserRelationships(input: UpdateUserRelationshipsInput!, condition: ModelUserRelationshipsConditionInput): UserRelationships @aws_api_key @aws_iam
   deleteUserRelationships(input: DeleteUserRelationshipsInput!, condition: ModelUserRelationshipsConditionInput): UserRelationships @aws_api_key @aws_iam
-  createUserExtras(input: CreateUserExtrasInput!, condition: ModelUserExtrasConditionInput): UserExtras @aws_api_key @aws_iam
-  updateUserExtras(input: UpdateUserExtrasInput!, condition: ModelUserExtrasConditionInput): UserExtras @aws_api_key @aws_iam
-  deleteUserExtras(input: DeleteUserExtrasInput!, condition: ModelUserExtrasConditionInput): UserExtras @aws_api_key @aws_iam
   createPosts(input: CreatePostsInput!, condition: ModelPostsConditionInput): Posts @aws_api_key @aws_iam
   updatePosts(input: UpdatePostsInput!, condition: ModelPostsConditionInput): Posts @aws_api_key @aws_iam
   deletePosts(input: DeletePostsInput!, condition: ModelPostsConditionInput): Posts @aws_api_key @aws_iam
-  createUserOTP(input: CreateUserOTPInput!, condition: ModelUserOTPConditionInput): UserOTP @aws_api_key @aws_iam
-  updateUserOTP(input: UpdateUserOTPInput!, condition: ModelUserOTPConditionInput): UserOTP @aws_api_key @aws_iam
-  deleteUserOTP(input: DeleteUserOTPInput!, condition: ModelUserOTPConditionInput): UserOTP @aws_api_key @aws_iam
   createUsers(input: CreateUsersInput!, condition: ModelUsersConditionInput): Users @aws_api_key @aws_iam
   updateUsers(input: UpdateUsersInput!, condition: ModelUsersConditionInput): Users @aws_api_key @aws_iam
   deleteUsers(input: DeleteUsersInput!, condition: ModelUsersConditionInput): Users @aws_api_key @aws_iam
@@ -311,15 +275,9 @@ type Subscription {
   onCreateUserRelationships: UserRelationships @aws_subscribe(mutations: ["createUserRelationships"]) @aws_api_key @aws_iam
   onUpdateUserRelationships: UserRelationships @aws_subscribe(mutations: ["updateUserRelationships"]) @aws_api_key @aws_iam
   onDeleteUserRelationships: UserRelationships @aws_subscribe(mutations: ["deleteUserRelationships"]) @aws_api_key @aws_iam
-  onCreateUserExtras: UserExtras @aws_subscribe(mutations: ["createUserExtras"]) @aws_api_key @aws_iam
-  onUpdateUserExtras: UserExtras @aws_subscribe(mutations: ["updateUserExtras"]) @aws_api_key @aws_iam
-  onDeleteUserExtras: UserExtras @aws_subscribe(mutations: ["deleteUserExtras"]) @aws_api_key @aws_iam
   onCreatePosts: Posts @aws_subscribe(mutations: ["createPosts"]) @aws_api_key @aws_iam
   onUpdatePosts: Posts @aws_subscribe(mutations: ["updatePosts"]) @aws_api_key @aws_iam
   onDeletePosts: Posts @aws_subscribe(mutations: ["deletePosts"]) @aws_api_key @aws_iam
-  onCreateUserOTP: UserOTP @aws_subscribe(mutations: ["createUserOTP"]) @aws_api_key @aws_iam
-  onUpdateUserOTP: UserOTP @aws_subscribe(mutations: ["updateUserOTP"]) @aws_api_key @aws_iam
-  onDeleteUserOTP: UserOTP @aws_subscribe(mutations: ["deleteUserOTP"]) @aws_api_key @aws_iam
   onCreateUsers: Users @aws_subscribe(mutations: ["createUsers"]) @aws_api_key @aws_iam
   onUpdateUsers: Users @aws_subscribe(mutations: ["updateUsers"]) @aws_api_key @aws_iam
   onDeleteUsers: Users @aws_subscribe(mutations: ["deleteUsers"]) @aws_api_key @aws_iam
@@ -368,48 +326,6 @@ input UpdateUserRelationshipsInput {
 }
 
 input DeleteUserRelationshipsInput {
-  id: ID!
-}
-
-type ModelUserExtrasConnection @aws_api_key @aws_iam {
-  items: [UserExtras]!
-  nextToken: String
-}
-
-input ModelUserExtrasFilterInput {
-  id: ModelIDInput
-  cognitosub: ModelStringInput
-  firstvaultupload: ModelBooleanInput
-  usersID: ModelIDInput
-  and: [ModelUserExtrasFilterInput]
-  or: [ModelUserExtrasFilterInput]
-  not: ModelUserExtrasFilterInput
-}
-
-input ModelUserExtrasConditionInput {
-  cognitosub: ModelStringInput
-  firstvaultupload: ModelBooleanInput
-  usersID: ModelIDInput
-  and: [ModelUserExtrasConditionInput]
-  or: [ModelUserExtrasConditionInput]
-  not: ModelUserExtrasConditionInput
-}
-
-input CreateUserExtrasInput {
-  id: ID
-  cognitosub: String
-  firstvaultupload: Boolean
-  usersID: ID
-}
-
-input UpdateUserExtrasInput {
-  id: ID!
-  cognitosub: String
-  firstvaultupload: Boolean
-  usersID: ID
-}
-
-input DeleteUserExtrasInput {
   id: ID!
 }
 
@@ -495,52 +411,6 @@ input DeletePostsInput {
   id: ID!
 }
 
-type ModelUserOTPConnection @aws_api_key @aws_iam {
-  items: [UserOTP]!
-  nextToken: String
-}
-
-input ModelUserOTPFilterInput {
-  id: ModelIDInput
-  currentotp: ModelStringInput
-  userdisplayname: ModelStringInput
-  useremail: ModelStringInput
-  usersID: ModelIDInput
-  and: [ModelUserOTPFilterInput]
-  or: [ModelUserOTPFilterInput]
-  not: ModelUserOTPFilterInput
-}
-
-input ModelUserOTPConditionInput {
-  currentotp: ModelStringInput
-  userdisplayname: ModelStringInput
-  useremail: ModelStringInput
-  usersID: ModelIDInput
-  and: [ModelUserOTPConditionInput]
-  or: [ModelUserOTPConditionInput]
-  not: ModelUserOTPConditionInput
-}
-
-input CreateUserOTPInput {
-  id: ID
-  currentotp: String
-  userdisplayname: String
-  useremail: String
-  usersID: ID
-}
-
-input UpdateUserOTPInput {
-  id: ID!
-  currentotp: String
-  userdisplayname: String
-  useremail: String
-  usersID: ID
-}
-
-input DeleteUserOTPInput {
-  id: ID!
-}
-
 type ModelUsersConnection @aws_api_key @aws_iam {
   items: [Users]!
   nextToken: String
@@ -560,12 +430,9 @@ input ModelUsersFilterInput {
   fullyauthenticated: ModelBooleanInput
   gamertag: ModelStringInput
   mostrecentpublicpost: ModelStringInput
-  password: ModelStringInput
   pfp: ModelStringInput
   storagesizeinbytes: ModelFloatInput
   type: ModelStringInput
-  userextrasID: ModelIDInput
-  userotpID: ModelIDInput
   and: [ModelUsersFilterInput]
   or: [ModelUsersFilterInput]
   not: ModelUsersFilterInput
@@ -584,12 +451,9 @@ input ModelUsersConditionInput {
   fullyauthenticated: ModelBooleanInput
   gamertag: ModelStringInput
   mostrecentpublicpost: ModelStringInput
-  password: ModelStringInput
   pfp: ModelStringInput
   storagesizeinbytes: ModelFloatInput
   type: ModelStringInput
-  userextrasID: ModelIDInput
-  userotpID: ModelIDInput
   and: [ModelUsersConditionInput]
   or: [ModelUsersConditionInput]
   not: ModelUsersConditionInput
@@ -609,12 +473,9 @@ input CreateUsersInput {
   fullyauthenticated: Boolean
   gamertag: String
   mostrecentpublicpost: AWSDateTime
-  password: String
   pfp: String
   storagesizeinbytes: Float
   type: String
-  userextrasID: ID
-  userotpID: ID
 }
 
 input UpdateUsersInput {
@@ -631,12 +492,9 @@ input UpdateUsersInput {
   fullyauthenticated: Boolean
   gamertag: String
   mostrecentpublicpost: AWSDateTime
-  password: String
   pfp: String
   storagesizeinbytes: Float
   type: String
-  userextrasID: ID
-  userotpID: ID
 }
 
 input DeleteUsersInput {
@@ -817,12 +675,9 @@ input SearchableUsersFilterInput {
   fullyauthenticated: SearchableBooleanFilterInput
   gamertag: SearchableStringFilterInput
   mostrecentpublicpost: SearchableStringFilterInput
-  password: SearchableStringFilterInput
   pfp: SearchableStringFilterInput
   storagesizeinbytes: SearchableFloatFilterInput
   type: SearchableStringFilterInput
-  userextrasID: SearchableIDFilterInput
-  userotpID: SearchableIDFilterInput
   createdAt: SearchableStringFilterInput
   updatedAt: SearchableStringFilterInput
   and: [SearchableUsersFilterInput]
@@ -844,12 +699,9 @@ enum SearchableUsersSortableFields {
   fullyauthenticated
   gamertag
   mostrecentpublicpost
-  password
   pfp
   storagesizeinbytes
   type
-  userextrasID
-  userotpID
   createdAt
   updatedAt
 }
@@ -873,12 +725,9 @@ enum SearchableUsersAggregateField {
   fullyauthenticated
   gamertag
   mostrecentpublicpost
-  password
   pfp
   storagesizeinbytes
   type
-  userextrasID
-  userotpID
   createdAt
   updatedAt
 }

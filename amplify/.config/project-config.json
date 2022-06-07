@@ -6,12 +6,12 @@
   "version": "3.1",
   "frontend": "javascript",
   "javascript": {
-    "framework": "react-native",
+    "framework": "react",
     "config": {
-      "SourceDir": "src",
-      "DistributionDir": "/",
-      "BuildCommand": "npm run-script build",
-      "StartCommand": "npm run-script start"
+      "SourceDir": "web/src",
+      "DistributionDir": "web/build",
+      "BuildCommand": "npm.cmd run-script web-build",
+      "StartCommand": "npm.cmd run-script web"
     }
   }
 }

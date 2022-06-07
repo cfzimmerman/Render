@@ -155,9 +155,9 @@
     "AuthTriggerCustomLambdaStack": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-mobile-staging-211804-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-mobile-monostage-180223-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json",
         "Parameters": {
-          "env": "staging",
+          "env": "monostage",
           "userpoolId": {
             "Fn::GetAtt": [
               "authMobile",
@@ -231,7 +231,7 @@
     "authMobile": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-mobile-staging-211804-deployment/amplify-cfn-templates/auth/Mobile-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-mobile-monostage-180223-deployment/amplify-cfn-templates/auth/Mobile-cloudformation-template.json",
         "Parameters": {
           "identityPoolName": "testAuthIdentityPool",
           "allowUnauthenticatedIdentities": true,
@@ -289,14 +289,14 @@
           },
           "authTriggerConnections": "{\"triggerType\":\"CreateAuthChallenge\",\"lambdaFunctionName\":\"MobileCreateAuthChallenge\"},{\"triggerType\":\"DefineAuthChallenge\",\"lambdaFunctionName\":\"MobileDefineAuthChallenge\"},{\"triggerType\":\"PreSignUp\",\"lambdaFunctionName\":\"MobilePreSignup\"},{\"triggerType\":\"VerifyAuthChallengeResponse\",\"lambdaFunctionName\":\"MobileVerifyAuthChallengeResponse\"}",
           "permissions": "",
-          "env": "staging"
+          "env": "monostage"
         }
       }
     },
     "apiMobile": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-mobile-staging-211804-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-mobile-monostage-180223-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "Parameters": {
           "AppSyncApiName": "Mobile",
           "DynamoDBBillingMode": "PAY_PER_REQUEST",
@@ -307,117 +307,61 @@
           "unauthRoleName": {
             "Ref": "UnauthRoleName"
           },
-          "S3DeploymentBucket": "amplify-mobile-staging-211804-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/aa36f041d562945ba4a89979b10aaeea892a4ff8",
-          "env": "staging"
-        }
-      }
-    },
-    "storages3mobilestorage": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-mobile-staging-211804-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
-        "Parameters": {
-          "bucketName": "mobile-storage",
-          "selectedGuestPermissions": "s3:GetObject,s3:ListBucket",
-          "selectedAuthenticatedPermissions": "s3:PutObject,s3:GetObject,s3:ListBucket,s3:DeleteObject",
-          "unauthRoleName": {
-            "Ref": "UnauthRoleName"
-          },
-          "authRoleName": {
-            "Ref": "AuthRoleName"
-          },
-          "s3PrivatePolicy": "Private_policy_8173885e",
-          "s3ProtectedPolicy": "Protected_policy_8173885e",
-          "s3PublicPolicy": "Public_policy_8173885e",
-          "s3ReadPolicy": "read_policy_8173885e",
-          "s3UploadsPolicy": "Uploads_policy_8173885e",
-          "authPolicyName": "s3_amplify_8173885e",
-          "unauthPolicyName": "s3_amplify_8173885e",
-          "AuthenticatedAllowList": "ALLOW",
-          "GuestAllowList": "ALLOW",
-          "s3PermissionsAuthenticatedPrivate": "s3:PutObject,s3:GetObject,s3:DeleteObject",
-          "s3PermissionsAuthenticatedProtected": "s3:PutObject,s3:GetObject,s3:DeleteObject",
-          "s3PermissionsAuthenticatedPublic": "s3:PutObject,s3:GetObject,s3:DeleteObject",
-          "s3PermissionsAuthenticatedUploads": "s3:PutObject",
-          "s3PermissionsGuestPublic": "s3:GetObject",
-          "s3PermissionsGuestUploads": "DISALLOW",
-          "env": "staging"
-        }
-      }
-    },
-    "functionOTPEmailWatcher": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-mobile-staging-211804-deployment/amplify-cfn-templates/function/OTPEmailWatcher-cloudformation-template.json",
-        "Parameters": {
-          "deploymentBucketName": "amplify-mobile-staging-211804-deployment",
-          "s3Key": "amplify-builds/OTPEmailWatcher-46766937574a30344e4e-build.zip",
-          "apiMobileGraphQLAPIIdOutput": {
-            "Fn::GetAtt": [
-              "apiMobile",
-              "Outputs.GraphQLAPIIdOutput"
-            ]
-          },
-          "apiMobileGraphQLAPIEndpointOutput": {
-            "Fn::GetAtt": [
-              "apiMobile",
-              "Outputs.GraphQLAPIEndpointOutput"
-            ]
-          },
-          "env": "staging"
+          "S3DeploymentBucket": "amplify-mobile-monostage-180223-deployment",
+          "S3DeploymentRootKey": "amplify-appsync-files/df4789fae37b2c97eda8354fa035dced5ab67ef2",
+          "env": "monostage"
         }
       }
     },
     "functionMobileCreateAuthChallenge": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-mobile-staging-211804-deployment/amplify-cfn-templates/function/MobileCreateAuthChallenge-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-mobile-monostage-180223-deployment/amplify-cfn-templates/function/MobileCreateAuthChallenge-cloudformation-template.json",
         "Parameters": {
           "modules": "boilerplate-create-challenge",
           "resourceName": "MobileCreateAuthChallenge",
-          "deploymentBucketName": "amplify-mobile-staging-211804-deployment",
+          "deploymentBucketName": "amplify-mobile-monostage-180223-deployment",
           "s3Key": "amplify-builds/MobileCreateAuthChallenge-524c3144757077794844-build.zip",
-          "env": "staging"
+          "env": "monostage"
         }
       }
     },
     "functionMobileDefineAuthChallenge": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-mobile-staging-211804-deployment/amplify-cfn-templates/function/MobileDefineAuthChallenge-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-mobile-monostage-180223-deployment/amplify-cfn-templates/function/MobileDefineAuthChallenge-cloudformation-template.json",
         "Parameters": {
           "modules": "boilerplate-define-challenge",
           "resourceName": "MobileDefineAuthChallenge",
-          "deploymentBucketName": "amplify-mobile-staging-211804-deployment",
+          "deploymentBucketName": "amplify-mobile-monostage-180223-deployment",
           "s3Key": "amplify-builds/MobileDefineAuthChallenge-634c696c514949746748-build.zip",
-          "env": "staging"
+          "env": "monostage"
         }
       }
     },
     "functionMobileVerifyAuthChallengeResponse": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-mobile-staging-211804-deployment/amplify-cfn-templates/function/MobileVerifyAuthChallengeResponse-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-mobile-monostage-180223-deployment/amplify-cfn-templates/function/MobileVerifyAuthChallengeResponse-cloudformation-template.json",
         "Parameters": {
           "modules": "boilerplate-verify",
           "resourceName": "MobileVerifyAuthChallengeResponse",
-          "deploymentBucketName": "amplify-mobile-staging-211804-deployment",
+          "deploymentBucketName": "amplify-mobile-monostage-180223-deployment",
           "s3Key": "amplify-builds/MobileVerifyAuthChallengeResponse-6c4a55774c3863545763-build.zip",
-          "env": "staging"
+          "env": "monostage"
         }
       }
     },
     "functionMobilePreSignup": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-mobile-staging-211804-deployment/amplify-cfn-templates/function/MobilePreSignup-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-mobile-monostage-180223-deployment/amplify-cfn-templates/function/MobilePreSignup-cloudformation-template.json",
         "Parameters": {
           "modules": "custom",
           "resourceName": "MobilePreSignup",
-          "deploymentBucketName": "amplify-mobile-staging-211804-deployment",
+          "deploymentBucketName": "amplify-mobile-monostage-180223-deployment",
           "s3Key": "amplify-builds/MobilePreSignup-61695a7179315251624f-build.zip",
-          "env": "staging"
+          "env": "monostage"
         }
       }
     },
