@@ -1,6 +1,15 @@
 .signInContainer {
 }
 
+.textFields {
+  display: flex;
+  flex-direction: column;
+}
+
+.textFields > :not(:last-child) {
+  margin-bottom: 0.75rem;
+}
+
 .renderLogo {
   height: 22%;
   width: 22%;

@@ -8,18 +8,14 @@ import { Button } from '../Common/Button/Button';
 import { TextInput } from '../Common/TextInput/TextInput';
 import styles from './SignIn.module.css';
 
-Auth.configure({
-  authenticationFlowType: 'CUSTOM_AUTH'
-});
-
 export const SignIn: React.FC<{}> = () => {
   const { user, setUser } = useContext(UserContext);
 
   const titleRef = useRef<HTMLHeadingElement>(null);
 
-  // const [user, setUser] = useState(null);
   const [session, setSession] = useState<CognitoUser | null>(null);
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [otp, setOtp] = useState('');
   const [otpDisabled, setOtpDisabled] = useState(false);
   const [otpError, setOtpError] = useState(false);
@@ -35,8 +31,8 @@ export const SignIn: React.FC<{}> = () => {
 
     try {
       setIsSigningIn(true);
-      const cognitoUser: CognitoUser = await Auth.signIn(email);
-      setSession(cognitoUser);
+      const cognitoUser: CognitoUser = await Auth.signIn({ username: email, password });
+      setUser(cognitoUser);
     } catch (err) {
       setIsSigningIn(false);
       if ((err as Error).toString().includes('UserNotFoundException')) {
@@ -44,6 +40,7 @@ export const SignIn: React.FC<{}> = () => {
         setSignup(true);
       }
     }
+    setPassword('');
   };
 
   const verifyOtp = () => {
@@ -86,9 +83,11 @@ export const SignIn: React.FC<{}> = () => {
 
   // TODO: Temp func, remove when render app is linked
   const signUp = async () => {
+    const pass = v4();
+    console.log('password: ', pass);
     const result = await Auth.signUp({
       username: email,
-      password: v4()
+      password: pass
     }).then(() => signOut()); // After signUp, we are going to signIn()
     return result;
   };
@@ -108,11 +107,18 @@ export const SignIn: React.FC<{}> = () => {
           <div className={styles.signInContent}>
             <h1>Save forever, share anywhere</h1>
             {!user && !session && (
-              <div>
+              <div className={styles.textFields}>
                 <TextInput
                   value={email}
                   placeholder="Email"
                   onChange={(val) => setEmail(val)}
+                  onSubmit={signIn}
+                />
+                <TextInput
+                  type="password"
+                  value={password}
+                  placeholder="Password"
+                  onChange={(val) => setPassword(val)}
                   onSubmit={signIn}
                 />
               </div>

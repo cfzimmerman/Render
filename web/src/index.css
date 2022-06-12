@@ -49,6 +49,9 @@ code {
   color: var(--translucent-white);
 }
 
+:root input {
+}
+
 .headerText {
   color: white;
   font-size: 70px;
