@@ -1,0 +1,16 @@
+{
+  "monostage": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-mobile-monostage-180223-authRole",
+      "UnauthRoleArn": "arn:aws:iam::280592462047:role/amplify-mobile-monostage-180223-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::280592462047:role/amplify-mobile-monostage-180223-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-mobile-monostage-180223-deployment",
+      "UnauthRoleName": "amplify-mobile-monostage-180223-unauthRole",
+      "StackName": "amplify-mobile-monostage-180223",
+      "StackId": "arn:aws:cloudformation:us-east-1:280592462047:stack/amplify-mobile-monostage-180223/91f82ea0-e523-11ec-a533-128e6a1cd335",
+      "AmplifyAppId": "d88kw0i3xs9f9",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-mobile-monostage-180223-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    }
+  }
+}

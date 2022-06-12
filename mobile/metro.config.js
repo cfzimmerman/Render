@@ -1,7 +1,11 @@
 const { getDefaultConfig } = require("@expo/metro-config");
+const exclusionList = require("metro-config/src/defaults/exclusionList");
+
 const defaultConfig = getDefaultConfig(__dirname);
 
-defaultConfig.resolver.blacklistRE = /#current-cloud-backend\/.*/;
+defaultConfig.resolver.blacklistRE = exclusionList([
+  /amplify\/#current-cloud-backend\/.*/,
+]);
 
 defaultConfig.transformer.getTransformOptions = async () => ({
   transform: {
