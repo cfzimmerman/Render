@@ -1,4 +1,4 @@
- type PostViewTracker @model @auth(rules: [{allow: public}]) {
+type PostViewTracker @model @auth(rules: [{allow: public}]) {
   id: ID!
   postsID: ID @index(name: "byPosts") @index(name: "postViewByPostID", queryField: "postViewByPostID", sortKeyFields: ["viewerID"]) 
   Posts: Posts @belongsTo
