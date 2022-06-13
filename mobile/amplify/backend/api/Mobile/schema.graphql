@@ -1,4 +1,4 @@
-type PostViewTracker @model @auth(rules: [{allow: public}]) {
+ type PostViewTracker @model @auth(rules: [{allow: public}]) {
   id: ID!
   postsID: ID @index(name: "byPosts") @index(name: "postViewByPostID", queryField: "postViewByPostID", sortKeyFields: ["viewerID"]) 
   Posts: Posts @belongsTo
@@ -13,6 +13,16 @@ type UserRelationships @model @auth(rules: [{allow: public}]) {
   sendercognitosub: String @index(name: "relationshipsBySenderDate", queryField: "relationshipsBySenderDate", sortKeyFields: ["createdAt"]) @index(name: "verifyAddedUser", queryField: "verifyAddedUser", sortKeyFields: ["receivercognitosub"]) @index(name: "addedUsersByCurrentUser", queryField: "addedUsersByCurrentUser")
   usersID: ID! @index(name: "byUsers")
   Users: Users @belongsTo(fields: ["usersID"])
+}
+
+type Comments @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  commenttext: String
+  postsID: ID @index(name: "byPosts") @index(name: "commentsByCreatedDate", queryField: "commentsByCreatedDate", sortKeyFields: ["createdAt"])
+  Posts: Posts @belongsTo(fields: ["postsID"])
+  usersID: ID @index(name: "byUsers")
+  Users: Users @belongsTo(fields: ["usersID"])
+  createdAt: String!
 }
 
 type Posts @model @searchable @auth(rules: [{allow: public}]) {
@@ -31,6 +41,7 @@ type Posts @model @searchable @auth(rules: [{allow: public}]) {
   type: String @index(name: "postsByPublicDate", queryField: "postsByPublicDate", sortKeyFields: ["publicpostdate"] )
   usersID: ID! @index(name: "byUsers")
   Users: Users @belongsTo(fields: ["usersID"])
+  Comments: [Comments] @hasMany (indexName: "byPosts", fields: ["id"])
   PostViewTrackers: [PostViewTracker] @hasMany(indexName: "byPosts", fields: ["id"])
 }
 
@@ -52,8 +63,8 @@ type Users @model @searchable @auth(rules: [{allow: public}]) {
   setpassword: Boolean @default(value: false)
   storagesizeinbytes: Float
   type: String @index(name: "searchByGamertag", sortKeyFields: ["gamertag"], queryField: "searchByGamertag")
+  Comments: [Comments] @hasMany(indexName: "byUsers", fields: ["id"])
   Posts: [Posts] @hasMany(indexName: "byUsers", fields: ["id"])
   PostViewTrackers: [PostViewTracker] @hasMany(indexName: "byUsers", fields: ["id"])
   UserRelationships: [UserRelationships] @hasMany(indexName: "byUsers", fields: ["id"])
 }
- 
