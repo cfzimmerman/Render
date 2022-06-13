@@ -49,6 +49,7 @@ type Users @model @searchable @auth(rules: [{allow: public}]) {
   gamertag: String @index(name: "userByGamertag", queryField: "userByGamertag")
   mostrecentpublicpost: AWSDateTime
   pfp: String
+  setpassword: Boolean @default(value: false)
   storagesizeinbytes: Float
   type: String @index(name: "searchByGamertag", sortKeyFields: ["gamertag"], queryField: "searchByGamertag")
   Posts: [Posts] @hasMany(indexName: "byUsers", fields: ["id"])
