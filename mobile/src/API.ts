@@ -84,6 +84,7 @@ export type Posts = {
   type?: string | null,
   usersID: string,
   Users?: Users | null,
+  Comments?: ModelCommentsConnection | null,
   PostViewTrackers?: ModelPostViewTrackerConnection | null,
   updatedAt: string,
 };
@@ -106,9 +107,28 @@ export type Users = {
   pfp?: string | null,
   storagesizeinbytes?: number | null,
   type?: string | null,
+  Comments?: ModelCommentsConnection | null,
   Posts?: ModelPostsConnection | null,
   PostViewTrackers?: ModelPostViewTrackerConnection | null,
   UserRelationships?: ModelUserRelationshipsConnection | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type ModelCommentsConnection = {
+  __typename: "ModelCommentsConnection",
+  items:  Array<Comments | null >,
+  nextToken?: string | null,
+};
+
+export type Comments = {
+  __typename: "Comments",
+  id: string,
+  commenttext?: string | null,
+  postsID?: string | null,
+  Posts?: Posts | null,
+  usersID?: string | null,
+  Users?: Users | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -195,6 +215,36 @@ export type UpdateUserRelationshipsInput = {
 };
 
 export type DeleteUserRelationshipsInput = {
+  id: string,
+};
+
+export type CreateCommentsInput = {
+  id?: string | null,
+  commenttext?: string | null,
+  postsID?: string | null,
+  usersID?: string | null,
+  createdAt?: string | null,
+};
+
+export type ModelCommentsConditionInput = {
+  commenttext?: ModelStringInput | null,
+  postsID?: ModelIDInput | null,
+  usersID?: ModelIDInput | null,
+  createdAt?: ModelStringInput | null,
+  and?: Array< ModelCommentsConditionInput | null > | null,
+  or?: Array< ModelCommentsConditionInput | null > | null,
+  not?: ModelCommentsConditionInput | null,
+};
+
+export type UpdateCommentsInput = {
+  id: string,
+  commenttext?: string | null,
+  postsID?: string | null,
+  usersID?: string | null,
+  createdAt?: string | null,
+};
+
+export type DeleteCommentsInput = {
   id: string,
 };
 
@@ -393,6 +443,17 @@ export type ModelStringKeyConditionInput = {
   gt?: string | null,
   between?: Array< string | null > | null,
   beginsWith?: string | null,
+};
+
+export type ModelCommentsFilterInput = {
+  id?: ModelIDInput | null,
+  commenttext?: ModelStringInput | null,
+  postsID?: ModelIDInput | null,
+  usersID?: ModelIDInput | null,
+  createdAt?: ModelStringInput | null,
+  and?: Array< ModelCommentsFilterInput | null > | null,
+  or?: Array< ModelCommentsFilterInput | null > | null,
+  not?: ModelCommentsFilterInput | null,
 };
 
 export type ModelPostsFilterInput = {
@@ -986,6 +1047,174 @@ export type DeleteUserRelationshipsMutation = {
   } | null,
 };
 
+export type CreateCommentsMutationVariables = {
+  input: CreateCommentsInput,
+  condition?: ModelCommentsConditionInput | null,
+};
+
+export type CreateCommentsMutation = {
+  createComments?:  {
+    __typename: "Comments",
+    id: string,
+    commenttext?: string | null,
+    postsID?: string | null,
+    Posts?:  {
+      __typename: "Posts",
+      id: string,
+      aspectratio?: number | null,
+      cognitosub: string,
+      contentdate?: string | null,
+      contentkey?: string | null,
+      contenttype?: string | null,
+      createdAt: string,
+      posttext?: string | null,
+      publicpost?: boolean | null,
+      publicpostdate?: string | null,
+      sizeinbytes?: number | null,
+      thumbnailkey?: string | null,
+      type?: string | null,
+      usersID: string,
+      updatedAt: string,
+    } | null,
+    usersID?: string | null,
+    Users?:  {
+      __typename: "Users",
+      id: string,
+      acceptedtos?: boolean | null,
+      addedcount?: number | null,
+      addedmecount?: number | null,
+      birthday?: string | null,
+      cognitosub?: string | null,
+      displayname?: string | null,
+      email?: string | null,
+      emailconfirmed?: boolean | null,
+      firstvaultupload?: boolean | null,
+      fullyauthenticated?: boolean | null,
+      gamertag?: string | null,
+      mostrecentpublicpost?: string | null,
+      pfp?: string | null,
+      storagesizeinbytes?: number | null,
+      type?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateCommentsMutationVariables = {
+  input: UpdateCommentsInput,
+  condition?: ModelCommentsConditionInput | null,
+};
+
+export type UpdateCommentsMutation = {
+  updateComments?:  {
+    __typename: "Comments",
+    id: string,
+    commenttext?: string | null,
+    postsID?: string | null,
+    Posts?:  {
+      __typename: "Posts",
+      id: string,
+      aspectratio?: number | null,
+      cognitosub: string,
+      contentdate?: string | null,
+      contentkey?: string | null,
+      contenttype?: string | null,
+      createdAt: string,
+      posttext?: string | null,
+      publicpost?: boolean | null,
+      publicpostdate?: string | null,
+      sizeinbytes?: number | null,
+      thumbnailkey?: string | null,
+      type?: string | null,
+      usersID: string,
+      updatedAt: string,
+    } | null,
+    usersID?: string | null,
+    Users?:  {
+      __typename: "Users",
+      id: string,
+      acceptedtos?: boolean | null,
+      addedcount?: number | null,
+      addedmecount?: number | null,
+      birthday?: string | null,
+      cognitosub?: string | null,
+      displayname?: string | null,
+      email?: string | null,
+      emailconfirmed?: boolean | null,
+      firstvaultupload?: boolean | null,
+      fullyauthenticated?: boolean | null,
+      gamertag?: string | null,
+      mostrecentpublicpost?: string | null,
+      pfp?: string | null,
+      storagesizeinbytes?: number | null,
+      type?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteCommentsMutationVariables = {
+  input: DeleteCommentsInput,
+  condition?: ModelCommentsConditionInput | null,
+};
+
+export type DeleteCommentsMutation = {
+  deleteComments?:  {
+    __typename: "Comments",
+    id: string,
+    commenttext?: string | null,
+    postsID?: string | null,
+    Posts?:  {
+      __typename: "Posts",
+      id: string,
+      aspectratio?: number | null,
+      cognitosub: string,
+      contentdate?: string | null,
+      contentkey?: string | null,
+      contenttype?: string | null,
+      createdAt: string,
+      posttext?: string | null,
+      publicpost?: boolean | null,
+      publicpostdate?: string | null,
+      sizeinbytes?: number | null,
+      thumbnailkey?: string | null,
+      type?: string | null,
+      usersID: string,
+      updatedAt: string,
+    } | null,
+    usersID?: string | null,
+    Users?:  {
+      __typename: "Users",
+      id: string,
+      acceptedtos?: boolean | null,
+      addedcount?: number | null,
+      addedmecount?: number | null,
+      birthday?: string | null,
+      cognitosub?: string | null,
+      displayname?: string | null,
+      email?: string | null,
+      emailconfirmed?: boolean | null,
+      firstvaultupload?: boolean | null,
+      fullyauthenticated?: boolean | null,
+      gamertag?: string | null,
+      mostrecentpublicpost?: string | null,
+      pfp?: string | null,
+      storagesizeinbytes?: number | null,
+      type?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type CreatePostsMutationVariables = {
   input: CreatePostsInput,
   condition?: ModelPostsConditionInput | null,
@@ -1028,6 +1257,10 @@ export type CreatePostsMutation = {
       type?: string | null,
       createdAt: string,
       updatedAt: string,
+    } | null,
+    Comments?:  {
+      __typename: "ModelCommentsConnection",
+      nextToken?: string | null,
     } | null,
     PostViewTrackers?:  {
       __typename: "ModelPostViewTrackerConnection",
@@ -1080,6 +1313,10 @@ export type UpdatePostsMutation = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    Comments?:  {
+      __typename: "ModelCommentsConnection",
+      nextToken?: string | null,
+    } | null,
     PostViewTrackers?:  {
       __typename: "ModelPostViewTrackerConnection",
       nextToken?: string | null,
@@ -1131,6 +1368,10 @@ export type DeletePostsMutation = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    Comments?:  {
+      __typename: "ModelCommentsConnection",
+      nextToken?: string | null,
+    } | null,
     PostViewTrackers?:  {
       __typename: "ModelPostViewTrackerConnection",
       nextToken?: string | null,
@@ -1163,6 +1404,10 @@ export type CreateUsersMutation = {
     pfp?: string | null,
     storagesizeinbytes?: number | null,
     type?: string | null,
+    Comments?:  {
+      __typename: "ModelCommentsConnection",
+      nextToken?: string | null,
+    } | null,
     Posts?:  {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
@@ -1204,6 +1449,10 @@ export type UpdateUsersMutation = {
     pfp?: string | null,
     storagesizeinbytes?: number | null,
     type?: string | null,
+    Comments?:  {
+      __typename: "ModelCommentsConnection",
+      nextToken?: string | null,
+    } | null,
     Posts?:  {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
@@ -1245,6 +1494,10 @@ export type DeleteUsersMutation = {
     pfp?: string | null,
     storagesizeinbytes?: number | null,
     type?: string | null,
+    Comments?:  {
+      __typename: "ModelCommentsConnection",
+      nextToken?: string | null,
+    } | null,
     Posts?:  {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
@@ -1519,6 +1772,108 @@ export type AddedUsersByCurrentUserQuery = {
   } | null,
 };
 
+export type GetCommentsQueryVariables = {
+  id: string,
+};
+
+export type GetCommentsQuery = {
+  getComments?:  {
+    __typename: "Comments",
+    id: string,
+    commenttext?: string | null,
+    postsID?: string | null,
+    Posts?:  {
+      __typename: "Posts",
+      id: string,
+      aspectratio?: number | null,
+      cognitosub: string,
+      contentdate?: string | null,
+      contentkey?: string | null,
+      contenttype?: string | null,
+      createdAt: string,
+      posttext?: string | null,
+      publicpost?: boolean | null,
+      publicpostdate?: string | null,
+      sizeinbytes?: number | null,
+      thumbnailkey?: string | null,
+      type?: string | null,
+      usersID: string,
+      updatedAt: string,
+    } | null,
+    usersID?: string | null,
+    Users?:  {
+      __typename: "Users",
+      id: string,
+      acceptedtos?: boolean | null,
+      addedcount?: number | null,
+      addedmecount?: number | null,
+      birthday?: string | null,
+      cognitosub?: string | null,
+      displayname?: string | null,
+      email?: string | null,
+      emailconfirmed?: boolean | null,
+      firstvaultupload?: boolean | null,
+      fullyauthenticated?: boolean | null,
+      gamertag?: string | null,
+      mostrecentpublicpost?: string | null,
+      pfp?: string | null,
+      storagesizeinbytes?: number | null,
+      type?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListCommentsQueryVariables = {
+  filter?: ModelCommentsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListCommentsQuery = {
+  listComments?:  {
+    __typename: "ModelCommentsConnection",
+    items:  Array< {
+      __typename: "Comments",
+      id: string,
+      commenttext?: string | null,
+      postsID?: string | null,
+      usersID?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type CommentsByCreatedDateQueryVariables = {
+  postsID: string,
+  createdAt?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelCommentsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type CommentsByCreatedDateQuery = {
+  commentsByCreatedDate?:  {
+    __typename: "ModelCommentsConnection",
+    items:  Array< {
+      __typename: "Comments",
+      id: string,
+      commenttext?: string | null,
+      postsID?: string | null,
+      usersID?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type GetPostsQueryVariables = {
   id: string,
 };
@@ -1560,6 +1915,10 @@ export type GetPostsQuery = {
       type?: string | null,
       createdAt: string,
       updatedAt: string,
+    } | null,
+    Comments?:  {
+      __typename: "ModelCommentsConnection",
+      nextToken?: string | null,
     } | null,
     PostViewTrackers?:  {
       __typename: "ModelPostViewTrackerConnection",
@@ -1843,6 +2202,10 @@ export type GetUsersQuery = {
     pfp?: string | null,
     storagesizeinbytes?: number | null,
     type?: string | null,
+    Comments?:  {
+      __typename: "ModelCommentsConnection",
+      nextToken?: string | null,
+    } | null,
     Posts?:  {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
@@ -2342,6 +2705,159 @@ export type OnDeleteUserRelationshipsSubscription = {
   } | null,
 };
 
+export type OnCreateCommentsSubscription = {
+  onCreateComments?:  {
+    __typename: "Comments",
+    id: string,
+    commenttext?: string | null,
+    postsID?: string | null,
+    Posts?:  {
+      __typename: "Posts",
+      id: string,
+      aspectratio?: number | null,
+      cognitosub: string,
+      contentdate?: string | null,
+      contentkey?: string | null,
+      contenttype?: string | null,
+      createdAt: string,
+      posttext?: string | null,
+      publicpost?: boolean | null,
+      publicpostdate?: string | null,
+      sizeinbytes?: number | null,
+      thumbnailkey?: string | null,
+      type?: string | null,
+      usersID: string,
+      updatedAt: string,
+    } | null,
+    usersID?: string | null,
+    Users?:  {
+      __typename: "Users",
+      id: string,
+      acceptedtos?: boolean | null,
+      addedcount?: number | null,
+      addedmecount?: number | null,
+      birthday?: string | null,
+      cognitosub?: string | null,
+      displayname?: string | null,
+      email?: string | null,
+      emailconfirmed?: boolean | null,
+      firstvaultupload?: boolean | null,
+      fullyauthenticated?: boolean | null,
+      gamertag?: string | null,
+      mostrecentpublicpost?: string | null,
+      pfp?: string | null,
+      storagesizeinbytes?: number | null,
+      type?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateCommentsSubscription = {
+  onUpdateComments?:  {
+    __typename: "Comments",
+    id: string,
+    commenttext?: string | null,
+    postsID?: string | null,
+    Posts?:  {
+      __typename: "Posts",
+      id: string,
+      aspectratio?: number | null,
+      cognitosub: string,
+      contentdate?: string | null,
+      contentkey?: string | null,
+      contenttype?: string | null,
+      createdAt: string,
+      posttext?: string | null,
+      publicpost?: boolean | null,
+      publicpostdate?: string | null,
+      sizeinbytes?: number | null,
+      thumbnailkey?: string | null,
+      type?: string | null,
+      usersID: string,
+      updatedAt: string,
+    } | null,
+    usersID?: string | null,
+    Users?:  {
+      __typename: "Users",
+      id: string,
+      acceptedtos?: boolean | null,
+      addedcount?: number | null,
+      addedmecount?: number | null,
+      birthday?: string | null,
+      cognitosub?: string | null,
+      displayname?: string | null,
+      email?: string | null,
+      emailconfirmed?: boolean | null,
+      firstvaultupload?: boolean | null,
+      fullyauthenticated?: boolean | null,
+      gamertag?: string | null,
+      mostrecentpublicpost?: string | null,
+      pfp?: string | null,
+      storagesizeinbytes?: number | null,
+      type?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteCommentsSubscription = {
+  onDeleteComments?:  {
+    __typename: "Comments",
+    id: string,
+    commenttext?: string | null,
+    postsID?: string | null,
+    Posts?:  {
+      __typename: "Posts",
+      id: string,
+      aspectratio?: number | null,
+      cognitosub: string,
+      contentdate?: string | null,
+      contentkey?: string | null,
+      contenttype?: string | null,
+      createdAt: string,
+      posttext?: string | null,
+      publicpost?: boolean | null,
+      publicpostdate?: string | null,
+      sizeinbytes?: number | null,
+      thumbnailkey?: string | null,
+      type?: string | null,
+      usersID: string,
+      updatedAt: string,
+    } | null,
+    usersID?: string | null,
+    Users?:  {
+      __typename: "Users",
+      id: string,
+      acceptedtos?: boolean | null,
+      addedcount?: number | null,
+      addedmecount?: number | null,
+      birthday?: string | null,
+      cognitosub?: string | null,
+      displayname?: string | null,
+      email?: string | null,
+      emailconfirmed?: boolean | null,
+      firstvaultupload?: boolean | null,
+      fullyauthenticated?: boolean | null,
+      gamertag?: string | null,
+      mostrecentpublicpost?: string | null,
+      pfp?: string | null,
+      storagesizeinbytes?: number | null,
+      type?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type OnCreatePostsSubscription = {
   onCreatePosts?:  {
     __typename: "Posts",
@@ -2379,6 +2895,10 @@ export type OnCreatePostsSubscription = {
       type?: string | null,
       createdAt: string,
       updatedAt: string,
+    } | null,
+    Comments?:  {
+      __typename: "ModelCommentsConnection",
+      nextToken?: string | null,
     } | null,
     PostViewTrackers?:  {
       __typename: "ModelPostViewTrackerConnection",
@@ -2426,6 +2946,10 @@ export type OnUpdatePostsSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    Comments?:  {
+      __typename: "ModelCommentsConnection",
+      nextToken?: string | null,
+    } | null,
     PostViewTrackers?:  {
       __typename: "ModelPostViewTrackerConnection",
       nextToken?: string | null,
@@ -2472,6 +2996,10 @@ export type OnDeletePostsSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    Comments?:  {
+      __typename: "ModelCommentsConnection",
+      nextToken?: string | null,
+    } | null,
     PostViewTrackers?:  {
       __typename: "ModelPostViewTrackerConnection",
       nextToken?: string | null,
@@ -2499,6 +3027,10 @@ export type OnCreateUsersSubscription = {
     pfp?: string | null,
     storagesizeinbytes?: number | null,
     type?: string | null,
+    Comments?:  {
+      __typename: "ModelCommentsConnection",
+      nextToken?: string | null,
+    } | null,
     Posts?:  {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
@@ -2535,6 +3067,10 @@ export type OnUpdateUsersSubscription = {
     pfp?: string | null,
     storagesizeinbytes?: number | null,
     type?: string | null,
+    Comments?:  {
+      __typename: "ModelCommentsConnection",
+      nextToken?: string | null,
+    } | null,
     Posts?:  {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
@@ -2571,6 +3107,10 @@ export type OnDeleteUsersSubscription = {
     pfp?: string | null,
     storagesizeinbytes?: number | null,
     type?: string | null,
+    Comments?:  {
+      __typename: "ModelCommentsConnection",
+      nextToken?: string | null,
+    } | null,
     Posts?:  {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,

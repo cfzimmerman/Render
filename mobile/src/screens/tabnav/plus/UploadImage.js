@@ -34,7 +34,7 @@ async function UploadImage({
     setLoadProgressActive({
       title: "Uploading image",
       description: `${(size.size / 1000000).toFixed(2)} MB total`,
-    }),
+    })
   );
   dispatch(setPercentComplete("Processing"));
 
@@ -44,8 +44,8 @@ async function UploadImage({
         // console.log(`Uploading image: ${parseInt((progress.loaded / progress.total) * 100)}%`);
         dispatch(
           setPercentComplete(
-            `${parseInt((progress.loaded / progress.total) * 100)}%`,
-          ),
+            `${parseInt((progress.loaded / progress.total) * 100)}%`
+          )
         );
       },
     });

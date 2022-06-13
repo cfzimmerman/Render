@@ -7,7 +7,7 @@ import AddedMeUsers from "../screens/tabnav/profile/AddedMeUsers";
 
 const Stack = createNativeStackNavigator();
 
-function Profile() {
+const Profile = () => {
   return (
     <Stack.Navigator
       initialRouteName="ProfileLanding"
@@ -22,6 +22,6 @@ function Profile() {
       <Stack.Screen name="AddedMeUsers" component={AddedMeUsers} />
     </Stack.Navigator>
   );
-}
+};
 
 export default Profile;

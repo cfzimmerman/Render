@@ -2,11 +2,13 @@ import { API, graphqlOperation, Auth } from "aws-amplify";
 import AddPost from "./AddPost";
 
 import { filteredSearchPosts } from "../../../graphql/customqueries";
-import { setAddedFeedNextToken } from "../../../redux/home/homemain";
+import {
+  setAddedFeedNextToken,
+  setFetchingAddedFeedData,
+} from "../../../redux/home/homemain";
 
 async function GetAddedFeedData({
   dispatch,
-  currentuser,
   addedusersfilter,
   addedfeed,
   addedfeednexttoken,
@@ -32,17 +34,24 @@ async function GetAddedFeedData({
       sort: searchSort,
       limit: feedFetchLimit,
       nextToken: addedfeednexttoken,
-    }),
+    })
   );
 
   const postArray = postResult.data.searchPosts.items;
   const newNextToken = postResult.data.searchPosts.nextToken;
 
-  postArray.forEach((item) => {
-    AddPost({ item, dispatch, usecase: "addedfeed" });
-  });
-
-  dispatch(setAddedFeedNextToken(newNextToken));
+  if (postArray.length > 0) {
+    const lastPostID = postArray[postArray.length - 1].id;
+    postArray.forEach((item) => {
+      AddPost({ item, dispatch, usecase: "addedfeed" });
+      if (item.id === lastPostID) {
+        dispatch(setAddedFeedNextToken(newNextToken));
+        dispatch(setFetchingAddedFeedData(false));
+      }
+    });
+  } else {
+    dispatch(setFetchingAddedFeedData(false));
+  }
 }
 
 export default GetAddedFeedData;

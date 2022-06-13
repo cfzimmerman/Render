@@ -1,10 +1,12 @@
-import {
-  View, TouchableOpacity, Text, StyleSheet,
-} from "react-native";
+import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { GlobalStyles, Environment, Colors } from "../../../resources/project";
 
-function PostTextDisplay({ item, Action }) {
-  if (item.posttext != null && typeof item.posttext !== "undefined") {
+const PostTextDisplay = ({ item, Action }) => {
+  if (
+    item.posttext != null &&
+    typeof item.posttext != "undefined" &&
+    item.posttext.length != 0
+  ) {
     return (
       <TouchableOpacity onPress={() => Action()}>
         <View style={[GlobalStyles.shadow, styles.textwrapper]}>
@@ -23,7 +25,7 @@ function PostTextDisplay({ item, Action }) {
     );
   }
   return null;
-}
+};
 
 const styles = StyleSheet.create({
   textwrapper: {

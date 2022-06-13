@@ -1,4 +1,5 @@
-import { View, Image, StyleSheet } from "react-native";
+import react, { useRef } from "react";
+import { View, Image, StyleSheet, Animated, PanResponder } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 import * as ScreenOrientation from "expo-screen-orientation";
 import VideoPlayer from "expo-video-player";
@@ -10,6 +11,10 @@ import { Environment, Colors } from "../../../resources/project";
 import ChangeFocusView from "./ChangeFocusView";
 import ChangeLandscape from "./ChangeLandscape";
 
+import GestureHandler, {
+  PinchGestureHandler,
+} from "react-native-gesture-handler";
+
 const ExitFocusView = ({ navigation, dispatch, listener }) => {
   ChangeFocusView({ dispatch, set: false });
   ToPortrait(), ScreenOrientation.removeOrientationChangeListener(listener);
@@ -18,7 +23,7 @@ const ExitFocusView = ({ navigation, dispatch, listener }) => {
   // ToPortrait()
 };
 
-function VaultPostFocusView({ navigation, route }) {
+const VaultPostFocusView = ({ navigation, route }) => {
   const dispatch = useDispatch();
 
   ScreenOrientation.unlockAsync();
@@ -29,10 +34,10 @@ function VaultPostFocusView({ navigation, route }) {
   const feeddata = useSelector((state) => state.vaultpostdata.vaultfeeddata);
   const gallerydata = useSelector((state) => state.profilemain.gallerydata);
   const otherusergallerydata = useSelector(
-    (state) => state.otheruserprofile.otherusergallerydata,
+    (state) => state.otheruserprofile.otherusergallerydata
   );
   const storiesfullview = useSelector(
-    (state) => state.homemain.storiesfullview,
+    (state) => state.homemain.storiesfullview
   );
   const addedfeed = useSelector((state) => state.homemain.addedfeed);
   const publicfeed = useSelector((state) => state.homemain.publicfeed);
@@ -41,8 +46,8 @@ function VaultPostFocusView({ navigation, route }) {
 
   const listener = ScreenOrientation.addOrientationChangeListener((change) => {
     if (
-      change.orientationInfo.orientation === 3
-      || change.orientationInfo.orientation === 4
+      change.orientationInfo.orientation === 3 ||
+      change.orientationInfo.orientation === 4
     ) {
       ChangeLandscape({ dispatch, set: true });
     } else {
@@ -50,18 +55,60 @@ function VaultPostFocusView({ navigation, route }) {
     }
   });
 
+  let scale = new Animated.Value(1);
+  const pan = useRef(new Animated.ValueXY()).current;
+
+  const onPinchEvent = Animated.event([{ nativeEvent: { scale: scale } }], {
+    useNativeDriver: false,
+  });
+
+  const onPinchStateChange = (event) => {
+    Animated.spring(scale, {
+      toValue: 1,
+      useNativeDriver: false,
+      bounciness: 1,
+    }).start();
+
+    Animated.spring(
+      pan, // Auto-multiplexed
+      {
+        toValue: { x: 0, y: 0 },
+        useNativeDriver: false,
+      } // Back to zero
+    ).start();
+  };
+
+  const panResponder = PanResponder.create({
+    onStartShouldSetPanResponder: () => true,
+    onPanResponderMove: Animated.event(
+      [
+        null,
+        {
+          dx: pan.x, // x,y are Animated.Value
+          dy: pan.y,
+        },
+      ],
+      { useNativeDriver: false }
+    ),
+  });
+
   const GetSignedUrl = () => {
     if (usecase === "vault") {
       return feeddata[index].signedurl;
-    } if (usecase === "gallery") {
+    }
+    if (usecase === "gallery") {
       return gallerydata[index].signedurl;
-    } if (usecase === "otherusergallery") {
+    }
+    if (usecase === "otherusergallery") {
       return otherusergallerydata[index].signedurl;
-    } if (usecase === "stories") {
+    }
+    if (usecase === "stories") {
       return storiesfullview[index].signedurl;
-    } if (usecase === "addedfeed") {
+    }
+    if (usecase === "addedfeed") {
       return addedfeed[index].signedurl;
-    } if (usecase === "publicfeed") {
+    }
+    if (usecase === "publicfeed") {
       return publicfeed[index].signedurl;
     }
   };
@@ -69,15 +116,20 @@ function VaultPostFocusView({ navigation, route }) {
   const ActivePostType = () => {
     if (usecase === "vault") {
       return feeddata[index].contenttype;
-    } if (usecase === "gallery") {
+    }
+    if (usecase === "gallery") {
       return gallerydata[index].contenttype;
-    } if (usecase === "otherusergallery") {
+    }
+    if (usecase === "otherusergallery") {
       return otherusergallerydata[index].contenttype;
-    } if (usecase === "stories") {
+    }
+    if (usecase === "stories") {
       return storiesfullview[index].contenttype;
-    } if (usecase === "addedfeed") {
+    }
+    if (usecase === "addedfeed") {
       return addedfeed[index].contenttype;
-    } if (usecase === "publicfeed") {
+    }
+    if (usecase === "publicfeed") {
       return publicfeed[index].contenttype;
     }
   };
@@ -136,21 +188,41 @@ function VaultPostFocusView({ navigation, route }) {
   }
   return (
     <GestureRecognizer
-      onSwipe={() => {
+      onSwipeDown={() => {
         ExitFocusView({ navigation, dispatch, listener });
       }}
       style={styles.gesturewrapper}
     >
       <View style={styles.container}>
-        <Image
-          style={styles.postimage}
-          resizeMode="contain"
-          source={{ uri: GetSignedUrl() }}
-        />
+        <PinchGestureHandler
+          onGestureEvent={onPinchEvent}
+          onHandlerStateChange={onPinchStateChange}
+        >
+          <Animated.Image
+            {...panResponder.panHandlers}
+            style={[
+              //styles.postimage,
+              pan.getLayout(),
+              {
+                transform: [{ scale: scale }],
+                height:
+                  orientation === true
+                    ? Environment.ScreenWidth
+                    : Environment.ScreenHeight,
+                width:
+                  orientation === true
+                    ? Environment.ScreenHeight
+                    : Environment.ScreenWidth,
+              },
+            ]}
+            resizeMode="contain"
+            source={{ uri: GetSignedUrl() }}
+          />
+        </PinchGestureHandler>
       </View>
     </GestureRecognizer>
   );
-}
+};
 
 const styles = StyleSheet.create({
   gesturewrapper: {
@@ -161,8 +233,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.Background,
   },
   postimage: {
-    width: undefined,
-    height: undefined,
     flex: 1,
   },
 });

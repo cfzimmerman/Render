@@ -13,7 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { setTextActive } from "../../../redux/vault/vaultpostdata";
 import { Environment, GlobalStyles, Colors } from "../../../resources/project";
 
-function PostTextModal({ dispatch, item }) {
+const PostTextModal = ({ dispatch, item }) => {
   const textactive = useSelector((state) => state.vaultpostdata.textactive);
 
   return (
@@ -52,7 +52,7 @@ function PostTextModal({ dispatch, item }) {
       </TouchableWithoutFeedback>
     </Modal>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

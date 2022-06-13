@@ -269,6 +269,103 @@ export const addedUsersByCurrentUser = /* GraphQL */ `
     }
   }
 `;
+export const getComments = /* GraphQL */ `
+  query GetComments($id: ID!) {
+    getComments(id: $id) {
+      id
+      commenttext
+      postsID
+      Posts {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contenttype
+        createdAt
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        updatedAt
+      }
+      usersID
+      Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listComments = /* GraphQL */ `
+  query ListComments(
+    $filter: ModelCommentsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        commenttext
+        postsID
+        usersID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const commentsByCreatedDate = /* GraphQL */ `
+  query CommentsByCreatedDate(
+    $postsID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelCommentsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    commentsByCreatedDate(
+      postsID: $postsID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        commenttext
+        postsID
+        usersID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getPosts = /* GraphQL */ `
   query GetPosts($id: ID!) {
     getPosts(id: $id) {
@@ -305,6 +402,9 @@ export const getPosts = /* GraphQL */ `
         type
         createdAt
         updatedAt
+      }
+      Comments {
+        nextToken
       }
       PostViewTrackers {
         nextToken
@@ -601,6 +701,9 @@ export const getUsers = /* GraphQL */ `
       pfp
       storagesizeinbytes
       type
+      Comments {
+        nextToken
+      }
       Posts {
         nextToken
       }

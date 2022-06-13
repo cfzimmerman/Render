@@ -1,12 +1,5 @@
 import react, { useRef, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Animated,
-  TouchableOpacity,
-  SectionList,
-} from "react-native";
+import { View, StyleSheet } from "react-native";
 import { SectionGrid } from "react-native-super-grid";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useScrollToTop } from "@react-navigation/native";
@@ -20,21 +13,20 @@ import {
   Colors,
   Icons,
 } from "../../../resources/project";
-import { CollapsingHeaderBox } from "../../../resources/atoms";
 import { SystemmessageModal } from "../../../resources/molecules";
 import GetAddedUsersFilter from "../home/GetAddedUsersFilter";
 import GetCurrentUser from "../profile/GetCurrentUser";
 import GetStoriesData from "../home/GetStoriesData";
 import GetVaultData from "../vault/GetVaultData";
-import HomeTopLogo from "../home/HomeTopLogo";
 import HomeVaultHeader from "./HomeVaultHeader";
 import NoUploads from "./NoUploads";
-import SectionGridEmptyComponent from "../vault/SectionGridEmptyComponent";
 import SectionGridFooter from "../vault/SectionGridFooter";
 import VaultSectionHeader from "../vault/VaultSectionHeader";
 import VaultSectionItem from "../vault/VaultSectionItem";
 
-function HomeVaultLanding({ navigation }) {
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const HomeVaultLanding = ({ navigation }) => {
   // How to initial load without flickering? Long splash screen?
 
   const [initialLoad, setInitialLoad] = useState(false);
@@ -45,32 +37,34 @@ function HomeVaultLanding({ navigation }) {
 
   const [gotInitialVaultData, setGotInitialVaultData] = useState(false);
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   const currentuser = useSelector((state) => state.profilemain.currentuser);
   const onboardingstatus = useSelector(
-    (state) => state.homemain.onboardingstatus,
+    (state) => state.homemain.onboardingstatus
   );
 
   const vaultpostdata = useSelector(
-    (state) => state.vaultpostdata.vaultpostdata,
+    (state) => state.vaultpostdata.vaultpostdata
   );
   const vaultfeeddata = useSelector(
-    (state) => state.vaultpostdata.vaultfeeddata,
+    (state) => state.vaultpostdata.vaultfeeddata
   );
   const nextToken = useSelector((state) => state.vaultpostdata.nextToken);
   const fetchingdata = useSelector((state) => state.vaultpostdata.fetchingdata);
 
   const addedusersfilter = useSelector(
-    (state) => state.homemain.addedusersfilter,
+    (state) => state.homemain.addedusersfilter
   );
   const gotaddedusersfilter = useSelector(
-    (state) => state.homemain.gotaddedusersfilter,
+    (state) => state.homemain.gotaddedusersfilter
   );
 
   const storiessectionlist = useSelector(
-    (state) => state.homemain.storiessectionlist,
+    (state) => state.homemain.storiessectionlist
   );
   const storiesfullview = useSelector(
-    (state) => state.homemain.storiesfullview,
+    (state) => state.homemain.storiesfullview
   );
 
   const dispatch = useDispatch();
@@ -80,22 +74,22 @@ function HomeVaultLanding({ navigation }) {
   useScrollToTop(ref);
 
   if (
-    typeof currentuser.cognitosub === "undefined"
-    && gotCurrentUser === false
+    typeof currentuser.cognitosub === "undefined" &&
+    gotCurrentUser === false
   ) {
-    GetCurrentUser({ dispatch, navigation });
+    // GetCurrentUser({ dispatch, navigation });
     setGotCurrentUser(true);
   } else if (
-    gotAddedUsersFilter === false
-    && typeof currentuser.cognitosub !== "undefined"
-    && currentuser.cognitosub != null
+    gotAddedUsersFilter === false &&
+    typeof currentuser.cognitosub !== "undefined" &&
+    currentuser.cognitosub != null
   ) {
     GetAddedUsersFilter({ dispatch, currentuser });
     setGotAddedUsersFilter(true);
   } else if (
-    typeof currentuser.cognitosub !== "undefined"
-    && initialLoad === false
-    && gotaddedusersfilter === true
+    typeof currentuser.cognitosub !== "undefined" &&
+    initialLoad === false &&
+    gotaddedusersfilter === true
   ) {
     GetStoriesData({
       dispatch,
@@ -111,10 +105,10 @@ function HomeVaultLanding({ navigation }) {
   }
 
   if (
-    vaultpostdata.length === 0
-    && nextToken === null
-    && initialLoad === true
-    && gotInitialVaultData === false
+    vaultpostdata.length === 0 &&
+    nextToken === null &&
+    initialLoad === true &&
+    gotInitialVaultData === false
   ) {
     GetVaultData({
       dispatch,
@@ -128,9 +122,9 @@ function HomeVaultLanding({ navigation }) {
 
   const EndReached = () => {
     if (
-      vaultpostdata.length > 0
-      && nextToken != null
-      && fetchingdata === false
+      vaultpostdata.length > 0 &&
+      nextToken != null &&
+      fetchingdata === false
     ) {
       dispatch(setFetchingData(true));
       GetVaultData({
@@ -158,6 +152,12 @@ function HomeVaultLanding({ navigation }) {
     />
   );
 
+  async function OnRefresh() {
+    setIsRefreshing(true);
+    await sleep(2000);
+    setIsRefreshing(false);
+  }
+
   return (
     <View style={styles.container}>
       <SectionGrid
@@ -168,27 +168,25 @@ function HomeVaultLanding({ navigation }) {
         ref={ref}
         fixed
         spacing={0}
+        // refreshing={isRefreshing}
+        // onRefresh={OnRefresh}
         stickySectionHeadersEnabled={false}
         additionalRowStyle={styles.sectiongridrowstyle}
         renderItem={renderItem}
         renderSectionHeader={renderSectionHeader}
         onEndReachedThreshold={1}
-        onEndReached={() => {
-          EndReached();
-        }}
-        ListHeaderComponent={() => (
-          <HomeVaultHeader
-            navigation={navigation}
-            dispatch={dispatch}
-            storiesfullview={storiesfullview}
-            storiessectionlist={storiessectionlist}
-          />
-        )}
+        onEndReached={EndReached}
+        ListHeaderComponent={HomeVaultHeader({
+          navigation,
+          dispatch,
+          storiesfullview,
+          storiessectionlist,
+        })}
         ListFooterComponent={SectionGridFooter({
           length: vaultfeeddata.length,
           vaultNextToken: nextToken,
         })}
-        ListEmptyComponent={() => NoUploads({
+        ListEmptyComponent={NoUploads({
           navigation,
           firstvaultupload: currentuser.firstvaultupload,
         })}
@@ -196,7 +194,7 @@ function HomeVaultLanding({ navigation }) {
       <SystemmessageModal />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

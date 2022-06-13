@@ -1,6 +1,4 @@
-import {
-  View, Text, StyleSheet, TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import {
   Environment,
   Colors,
@@ -40,6 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "column",
     backgroundColor: Colors.Primary,
+    marginVertical: Environment.LargePadding,
   },
   header: {
     color: Colors.AccentOn,

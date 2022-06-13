@@ -18,7 +18,7 @@ async function AttemptSignup({ username, navigation, dispatch }) {
     };
 
     const newUser = await API.graphql(
-      graphqlOperation(createUsers, { input: userObject }),
+      graphqlOperation(createUsers, { input: userObject })
     );
 
     const newUserID = newUser.data.createUsers.id;
@@ -51,7 +51,7 @@ async function AttemptSignup({ username, navigation, dispatch }) {
   } catch (error) {
     if (createdUserID != null && createdCognitoSub === null) {
       await API.graphql(
-        graphqlOperation(deleteUsers, { input: { id: createdUserID } }),
+        graphqlOperation(deleteUsers, { input: { id: createdUserID } })
       );
     }
     console.log(`Error: ${error}`);

@@ -6,7 +6,7 @@ import OtherUserGalleryMain from "../screens/tabnav/explore/OtherUserGalleryMain
 
 const Stack = createNativeStackNavigator();
 
-function Explore() {
+const Explore = () => {
   return (
     <Stack.Navigator
       initialRouteName="ExploreLanding"
@@ -25,6 +25,6 @@ function Explore() {
       />
     </Stack.Navigator>
   );
-}
+};
 
 export default Explore;

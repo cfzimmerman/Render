@@ -34,6 +34,7 @@ import {
   Clock,
   Type,
   FileText,
+  MessageSquare,
 } from "react-native-feather";
 import Environment from "./Environment";
 import Colors from "./Colors";
@@ -77,6 +78,7 @@ const OriginalSizeIcons = {
   Clock,
   Anchor,
   Text: FileText,
+  Comment: MessageSquare,
 };
 
 const ResizedIcons = {

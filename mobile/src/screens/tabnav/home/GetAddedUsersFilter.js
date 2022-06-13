@@ -21,7 +21,7 @@ async function GetAddedUsersFilter({ dispatch, currentuser }) {
                 }
             }
         }
-    `),
+    `)
   );
 
   const userArray = userResult.data.addedUsersByCurrentUser.items;
@@ -39,8 +39,9 @@ async function GetAddedUsersFilter({ dispatch, currentuser }) {
       AddToAddedUsersFilter({ dispatch, filterObject });
 
       if (
-        item.Users.id
-        === userArray[searchlimit - 1 - searchLimitBuffer].Users.id
+        typeof userArray[searchlimit - 1 - searchLimitBuffer] === "undefined" ||
+        item.Users.id ===
+          userArray[searchlimit - 1 - searchLimitBuffer].Users.id
       ) {
         dispatch(setGotAddedUsersFilter(true));
       }

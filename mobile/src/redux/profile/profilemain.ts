@@ -8,15 +8,40 @@ import { ChangeGalleryPostPublicType } from "../../screens/tabnav/profile/Change
 const slice = createSlice({
   name: "profilemain",
   initialState: {
-    currentuser: {},
+    currentuser: {
+      id: null,
+      email: null,
+      gamertag: null,
+      displayname: null,
+      pfp: null,
+      fullyauthenticated: null,
+      firstvaultupload: null,
+      cognitosub: null,
+      createdAt: null,
+      addedmecount: null,
+      addedcount: null,
+    },
     pfpsignedurl: null,
     gallerydata: [],
     gallerynexttoken: null,
     addbackusers: [],
+    fetchinggallerydata: false,
   },
   reducers: {
     clearProfile: (state) => {
-      state.currentuser = {};
+      state.currentuser = {
+        id: null,
+        email: null,
+        gamertag: null,
+        displayname: null,
+        pfp: null,
+        fullyauthenticated: null,
+        firstvaultupload: null,
+        cognitosub: null,
+        createdAt: null,
+        addedmecount: null,
+        addedcount: null,
+      };
       state.pfpsignedurl = null;
       state.gallerydata.length = 0;
       state.gallerynexttoken = null;
@@ -31,6 +56,9 @@ const slice = createSlice({
     addToGalleryData: (state, action: PayloadAction<PostType>) => {
       state.gallerydata.push(action.payload);
     },
+    setFetchingGalleryData: (state, action: PayloadAction<boolean>) => {
+      state.fetchinggallerydata = action.payload;
+    },
     clearGalleryData: (state) => {
       state.gallerydata.length = 0;
     },
@@ -39,9 +67,10 @@ const slice = createSlice({
     },
     addVideoToGalleryData: (
       state,
-      action: PayloadAction<AddVideoToGalleryDataType>,
+      action: PayloadAction<AddVideoToGalleryDataType>
     ) => {
-      state.gallerydata[action.payload.index].signedurl = action.payload.signedurl;
+      state.gallerydata[action.payload.index].signedurl =
+        action.payload.signedurl;
     },
     addToAddBackUsers: (state, action: PayloadAction<AddedMeUsersType>) => {
       state.addbackusers.push(action.payload);
@@ -57,12 +86,12 @@ const slice = createSlice({
     },
     injectGalleryPost: (
       state,
-      action: PayloadAction<ChangeGalleryPostPublicType>,
+      action: PayloadAction<ChangeGalleryPostPublicType>
     ) => {
       state.gallerydata.splice(
         action.payload.postIndex,
         0,
-        action.payload.newPost,
+        action.payload.newPost
       );
     },
   },
@@ -72,6 +101,7 @@ export const {
   setCurrentUser,
   setPfpSignedUrl,
   addToGalleryData,
+  setFetchingGalleryData,
   clearGalleryData,
   addVideoToGalleryData,
   clearProfile,

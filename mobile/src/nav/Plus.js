@@ -5,7 +5,7 @@ import SelectFromVault from "../screens/tabnav/plus/SelectFromVault";
 
 const Stack = createNativeStackNavigator();
 
-function Plus() {
+const Plus = () => {
   return (
     <Stack.Navigator
       initialRouteName="PlusLanding"
@@ -17,6 +17,6 @@ function Plus() {
       <Stack.Screen name="SelectFromVault" component={SelectFromVault} />
     </Stack.Navigator>
   );
-}
+};
 
 export default Plus;

@@ -1,7 +1,5 @@
-import {
-  View, Text, Image, TouchableOpacity, StyleSheet,
-} from "react-native";
-
+import React from "react";
+import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { GlobalStyles, Environment, Colors } from "../../../resources/project";
 import ExternalVaultTileInfo from "./ExternalVaultTileInfo";
 import TransitionToFullView from "./TransitionToFullView";
@@ -9,17 +7,27 @@ import TransitionToFullView from "./TransitionToFullView";
 const CorrectURI = ({ contenttype, section }) => {
   if (contenttype === "video") {
     return section.header.post.thumbnailurl;
-  } if (contenttype === "image") {
+  }
+  if (contenttype === "image") {
     return section.header.post.signedurl;
   }
 };
 
-function VaultSectionHeader({
-  section,
-  navigation,
-  vaultfeeddata,
-  dispatch,
-}) {
+const AreEqual = (previousProps, nextProps) => {
+  if (
+    previousProps.section.header.post.contentkey ===
+      nextProps.section.header.post.contentkey &&
+    previousProps.section.header.post.publicpost ===
+      nextProps.section.header.post.publicpost &&
+    previousProps.section.header.post.posttext ===
+      nextProps.section.header.post.posttext
+  ) {
+    return true;
+  }
+  return false;
+};
+
+const VaultSectionHeader = ({ section, navigation, vaultfeeddata }) => {
   const contenturl = CorrectURI({
     contenttype: section.header.post.contenttype,
     section,
@@ -33,13 +41,14 @@ function VaultSectionHeader({
         </Text>
         <TouchableOpacity
           style={[GlobalStyles.shadow, styles.touchablecontainer]}
-          onPress={() => TransitionToFullView({
-            id: section.header.post.id,
-            navigation,
-            data: vaultfeeddata,
-            dispatch,
-            usecase: "vault",
-          })}
+          onPress={() =>
+            TransitionToFullView({
+              id: section.header.post.id,
+              navigation,
+              data: vaultfeeddata,
+              usecase: "vault",
+            })
+          }
         >
           <Image style={styles.previewimage} source={{ uri: contenturl }} />
           <ExternalVaultTileInfo
@@ -50,7 +59,7 @@ function VaultSectionHeader({
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -78,4 +87,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VaultSectionHeader;
+export default React.memo(VaultSectionHeader, AreEqual);

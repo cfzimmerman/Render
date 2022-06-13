@@ -260,6 +260,162 @@ export const deleteUserRelationships = /* GraphQL */ `
     }
   }
 `;
+export const createComments = /* GraphQL */ `
+  mutation CreateComments(
+    $input: CreateCommentsInput!
+    $condition: ModelCommentsConditionInput
+  ) {
+    createComments(input: $input, condition: $condition) {
+      id
+      commenttext
+      postsID
+      Posts {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contenttype
+        createdAt
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        updatedAt
+      }
+      usersID
+      Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateComments = /* GraphQL */ `
+  mutation UpdateComments(
+    $input: UpdateCommentsInput!
+    $condition: ModelCommentsConditionInput
+  ) {
+    updateComments(input: $input, condition: $condition) {
+      id
+      commenttext
+      postsID
+      Posts {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contenttype
+        createdAt
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        updatedAt
+      }
+      usersID
+      Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteComments = /* GraphQL */ `
+  mutation DeleteComments(
+    $input: DeleteCommentsInput!
+    $condition: ModelCommentsConditionInput
+  ) {
+    deleteComments(input: $input, condition: $condition) {
+      id
+      commenttext
+      postsID
+      Posts {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contenttype
+        createdAt
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        updatedAt
+      }
+      usersID
+      Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createPosts = /* GraphQL */ `
   mutation CreatePosts(
     $input: CreatePostsInput!
@@ -299,6 +455,9 @@ export const createPosts = /* GraphQL */ `
         type
         createdAt
         updatedAt
+      }
+      Comments {
+        nextToken
       }
       PostViewTrackers {
         nextToken
@@ -347,6 +506,9 @@ export const updatePosts = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      Comments {
+        nextToken
+      }
       PostViewTrackers {
         nextToken
       }
@@ -394,6 +556,9 @@ export const deletePosts = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      Comments {
+        nextToken
+      }
       PostViewTrackers {
         nextToken
       }
@@ -423,6 +588,9 @@ export const createUsers = /* GraphQL */ `
       pfp
       storagesizeinbytes
       type
+      Comments {
+        nextToken
+      }
       Posts {
         nextToken
       }
@@ -459,6 +627,9 @@ export const updateUsers = /* GraphQL */ `
       pfp
       storagesizeinbytes
       type
+      Comments {
+        nextToken
+      }
       Posts {
         nextToken
       }
@@ -495,6 +666,9 @@ export const deleteUsers = /* GraphQL */ `
       pfp
       storagesizeinbytes
       type
+      Comments {
+        nextToken
+      }
       Posts {
         nextToken
       }

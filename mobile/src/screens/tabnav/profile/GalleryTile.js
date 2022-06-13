@@ -1,25 +1,29 @@
-import {
-  View, Text, Image, StyleSheet, TouchableOpacity,
-} from "react-native";
+import React from "react";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import format from "date-fns/format";
 import { GlobalStyles, Colors, Environment } from "../../../resources/project";
 
 import PostTextDisplay from "../social/PostTextDisplay";
 
-function GalleryTile({
-  navigation, item, index, usecase, dispatch,
-}) {
+const AreEqual = (previousProps, nextProps) => {
+  if (previousProps.item.contentkey === nextProps.item.contentkey) {
+    return true;
+  }
+  return false;
+};
+
+const GalleryTile = ({ navigation, item, index, usecase }) => {
   const formatteddate = format(new Date(item.publicpostdate), "PP");
   if (item.contenttype === "video") {
     return (
-    //  <TouchableOpacity style={ GlobalStyles.shadow } onPress={() => TransitionToFullView({ id: section.header.post.id, navigation: navigation, data: vaultfeeddata, dispatch: dispatch, usecase: 'vault' })}>
-
       <TouchableOpacity
         style={[styles.wrapper]}
-        onPress={() => navigation.navigate("VaultPostFullView", {
-          startindex: index,
-          usecase,
-        })}
+        onPress={() =>
+          navigation.navigate("VaultPostFullView", {
+            startindex: index,
+            usecase,
+          })
+        }
       >
         <View>
           <Text
@@ -37,10 +41,12 @@ function GalleryTile({
         </View>
         <PostTextDisplay
           item={item}
-          Action={() => navigation.navigate("VaultPostFullView", {
-            startindex: index,
-            usecase,
-          })}
+          Action={() =>
+            navigation.navigate("VaultPostFullView", {
+              startindex: index,
+              usecase,
+            })
+          }
         />
       </TouchableOpacity>
     );
@@ -48,10 +54,12 @@ function GalleryTile({
   return (
     <TouchableOpacity
       style={[styles.wrapper]}
-      onPress={() => navigation.navigate("VaultPostFullView", {
-        startindex: index,
-        usecase,
-      })}
+      onPress={() =>
+        navigation.navigate("VaultPostFullView", {
+          startindex: index,
+          usecase,
+        })
+      }
     >
       <View>
         <Text
@@ -69,14 +77,16 @@ function GalleryTile({
       </View>
       <PostTextDisplay
         item={item}
-        Action={() => navigation.navigate("VaultPostFullView", {
-          startindex: index,
-          usecase,
-        })}
+        Action={() =>
+          navigation.navigate("VaultPostFullView", {
+            startindex: index,
+            usecase,
+          })
+        }
       />
     </TouchableOpacity>
   );
-}
+};
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -95,4 +105,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GalleryTile;
+// export default GalleryTile;
+export default React.memo(GalleryTile, AreEqual);

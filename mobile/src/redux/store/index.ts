@@ -24,6 +24,8 @@ import otheruserprofile from "../explore/otheruserprofile";
 
 import homemain from "../home/homemain";
 
+import socialmain from "../social/socialmain";
+
 const reducer = combineReducers({
   errormessage,
   systemmessage,
@@ -38,13 +40,15 @@ const reducer = combineReducers({
   appstart,
   homemain,
   onboarding,
+  socialmain,
 });
 
 const store = configureStore({
   reducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-    serializableCheck: false,
-  }),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export type RootStateType = ReturnType<typeof reducer>;
