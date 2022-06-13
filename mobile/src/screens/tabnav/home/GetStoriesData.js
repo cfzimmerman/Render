@@ -18,7 +18,7 @@ async function CheckIfSeen({ dispatch, postItem, currentuser }) {
                 nextToken
             }
         }
-    `),
+    `)
   );
 
   if (interactionArray.data.postViewByPostID.items.length === 0) {
@@ -35,6 +35,7 @@ async function CheckIfSeen({ dispatch, postItem, currentuser }) {
         thumbnailurl,
         previewurl,
         displayname: postItem.Users.displayname,
+        userid: postItem.Users.id,
       });
     } else if (postItem.contenttype === "image") {
       const signedurl = await Storage.get(postItem.contentkey, {
@@ -49,6 +50,7 @@ async function CheckIfSeen({ dispatch, postItem, currentuser }) {
         thumbnailurl,
         previewurl,
         displayname: postItem.Users.displayname,
+        userid: postItem.Users.id,
       });
     }
   }
@@ -71,8 +73,8 @@ async function GetStoriesData({
   // And postdate is less than X days old
 
   if (
-    storiessectionlist.length > 0
-    || typeof currentuser.cognitosub === "undefined"
+    storiessectionlist.length > 0 ||
+    typeof currentuser.cognitosub === "undefined"
   ) {
     return console.log("Already fetched or user unauthenticated");
   } else {
@@ -102,7 +104,7 @@ async function GetStoriesData({
         sort: searchSort,
         limit: storiesFetchLimit,
         nextToken: storiesNextToken,
-      }),
+      })
     );
 
     const postArray = postResult.data.searchPosts.items;

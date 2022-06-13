@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import {
   KeyboardAvoidingView,
   TextInput,
-  Easing,
-  TouchableOpacity,
   StyleSheet,
-  Animated,
+  View,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { IconButton } from "react-native-paper";
@@ -18,7 +16,6 @@ import {
   GlobalStyles,
   Environment,
   Colors,
-  Icons,
   UserDialogue,
 } from "../../../resources/project";
 import {
@@ -29,6 +26,7 @@ import { OnboardingScreenTemplate } from "../../../resources/organisms";
 
 import { updateUsers } from "../../../graphql/mutations";
 import { listUserID } from "../../../graphql/customqueries";
+import NextButton from "./NextButton";
 
 async function AddDisplayName({ input, navigation, dispatch }) {
   // Trim spaces from user input.  Get current user email and pass along with Nav object into change name functions
@@ -38,19 +36,20 @@ async function AddDisplayName({ input, navigation, dispatch }) {
 
   if (trimmedinput.length > 20 || trimmedinput.length < 2) {
     dispatch(
-      setSystemmessageActive(UserDialogue().systemmessage.impropernameformat),
+      setSystemmessageActive(UserDialogue().systemmessage.impropernameformat)
     );
     return;
   }
 
   UpdateName({
-    displayname: trimmedinput, userid, navigation, dispatch,
+    displayname: trimmedinput,
+    userid,
+    navigation,
+    dispatch,
   });
 }
 
-async function UpdateName({
-  displayname, userid, navigation, dispatch,
-}) {
+async function UpdateName({ displayname, userid, navigation, dispatch }) {
   const userobject = {
     id: userid,
     displayname,
@@ -66,12 +65,11 @@ async function UpdateName({
   navigation.navigate("Gamertag");
 }
 
-function DisplayName() {
+const DisplayName = () => {
   // input logs text bar contents
   const [input, setInput] = useState("");
 
-  // isActive logs whether the inputbar animation is active (for activation logic)
-  const [isActive, setIsActive] = useState(false);
+  const [isValid, setIsValid] = useState(false);
 
   const onboardingassets = useSelector((state) => state.onboarding.imageurls);
 
@@ -81,86 +79,15 @@ function DisplayName() {
   // Accesses Redux store for triggering error messages
   const dispatch = useDispatch();
 
-  // Animation starts here
-  // opacity is the name of the animated value. Perhaps a little confusing, but I just followed along the React Native docs, and that's what they used. Easier to follow along this way.
-  const opacity = new Animated.Value(0);
-
-  // Makes next button to confirm email visible
-  const animatein = (easing) => {
-    opacity.setValue(0);
-    Animated.timing(opacity, {
-      toValue: 1,
-      duration: 200,
-      useNativeDriver: false,
-      easing,
-    }).start(({ finished }) => {
-      if (!finished) {
-        setTimeout(() => {
-          setIsActive(false);
-        }, 400);
-      }
-    });
-  };
-
-  // Obscures button to confirm email
-  const animateout = (easing) => {
-    opacity.setValue(1);
-    Animated.timing(opacity, {
-      toValue: 0,
-      duration: 200,
-      useNativeDriver: false,
-      easing,
-    }).start();
-  };
-
-  // Calculates button transforming from size zero to a standard button size and back
-  const size = opacity.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, Environment.CubeSize],
-  });
-
-  const animatedStyles = [
-    styles.box,
-    {
-      opacity,
-      width: size,
-      height: size,
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    GlobalStyles.shadow,
-  ];
-
-  const bar = opacity.interpolate({
-    inputRange: [0, 1],
-    outputRange: [Environment.FullBar, Environment.TextBarOption],
-  });
-
-  const barStyles = [
-    styles.bar,
-    {
-      width: bar,
-      height: Environment.CubeSize,
-    },
-    GlobalStyles.shadow,
-  ];
-
   // Animation ends here
 
   // Triggers animation to display next button if input matches display name length requirements
-  const CheckName = () => {
-    if (input.length >= 2 && input.length <= 20 && isActive === false) {
-      animatein(Easing.ease);
-      setTimeout(() => {
-        setIsActive(true);
-      }, 200);
-    } else if ((input.length < 2 || input.length > 20) && isActive === true) {
-      animateout(Easing.ease);
-      setTimeout(() => {
-        setIsActive(false);
-      }, 200);
-    } else {
-
+  const CheckName = (userInput) => {
+    const trimmedInput = userInput.trim();
+    if (trimmedInput.length >= 1 && isValid === false) {
+      setIsValid(true);
+    } else if (trimmedInput.length < 1 && isValid === true) {
+      setIsValid(false);
     }
   };
 
@@ -174,44 +101,43 @@ function DisplayName() {
     activebox: 2,
   };
 
+  const HandleChange = (prop) => {
+    setInput(prop);
+    CheckName(prop);
+  };
+
   return (
     <OnboardingScreenTemplate options={Items}>
       <ErrormessageModal />
       <SystemmessageModal />
       <KeyboardAvoidingView style={styles.boxContainer}>
-        <Animated.View style={barStyles}>
+        <View style={[styles.box, GlobalStyles.shadow]}>
           <TextInput
             placeholder="Display name"
             textAlign="left"
             autoCapitalize="none"
             placeholderTextColor={Colors.PrimaryOff}
             style={[styles.inputbox, GlobalStyles.h3text]}
-            onChangeText={setInput}
-            onKeyPress={CheckName()}
+            onChangeText={HandleChange}
             value={input}
             keyboardType="default"
+            maxLength={20}
           />
-        </Animated.View>
-        <TouchableOpacity
-          onPress={() => {
+        </View>
+        <NextButton
+          Action={() =>
             AddDisplayName({
               input,
               navigation,
               dispatch,
-            });
-          }}
-        >
-          <Animated.View style={animatedStyles}>
-            <IconButton
-              icon={Icons.OriginalSize.NextIcon}
-              color={Colors.AccentOn}
-            />
-          </Animated.View>
-        </TouchableOpacity>
+            })
+          }
+          active={isValid}
+        />
       </KeyboardAvoidingView>
     </OnboardingScreenTemplate>
   );
-}
+};
 
 const styles = StyleSheet.create({
   bar: {
@@ -220,9 +146,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.AccentOff,
   },
   box: {
-    marginTop: 32,
     borderRadius: Environment.StandardRadius,
     backgroundColor: Colors.AccentOff,
+    width:
+      Environment.FullBar -
+      (Environment.CubeSize + Environment.StandardPadding),
+    height: Environment.CubeSize,
   },
   boxContainer: {
     width: Environment.FullBar,

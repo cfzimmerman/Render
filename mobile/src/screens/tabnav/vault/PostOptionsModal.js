@@ -12,12 +12,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 
-import { setStatusBarHidden } from "expo-status-bar";
 import {
   setShareActive,
   setPostPublicModal,
 } from "../../../redux/vault/vaultpostdata";
-import { GetPostDimensions } from "../../../resources/utilities";
 import { BackArrow, CubeSizeButton } from "../../../resources/atoms";
 import {
   Environment,
@@ -28,20 +26,21 @@ import {
 import ChangeFocusView from "./ChangeFocusView";
 import PostShareModal from "./PostShareModal";
 
-const GetAdjustedHeight = ({ height }) => {
-  if (height > Environment.FullBar) {
-    return Environment.FullBar;
+const EnterComments = ({ index, usecase, navigation }) => {
+  // Usecases are explicitly checked as opposed to != "vault" to ensure we've correctly configured CommentsMain for every necessary case
+  if (
+    usecase === "gallery" ||
+    usecase === "otherusergallery" ||
+    usecase === "stories" ||
+    usecase === "addedfeed" ||
+    usecase === "publicfeed"
+  ) {
+    navigation.navigate("CommentsMain", { usecase, index });
   }
-  return height;
 };
 
-function PostOptionsModal({
-  navigation, dispatch, usecase, item, index,
-}) {
+const PostOptionsModal = ({ navigation, dispatch, usecase, item, index }) => {
   const postoptions = useSelector((state) => state.vaultpostdata.options);
-  const dimensions = GetPostDimensions(item.aspectratio);
-
-  const adjustedHeight = GetAdjustedHeight({ height: dimensions.height });
 
   const ActivateShare = ({ dispatch }) => {
     dispatch(setShareActive(true));
@@ -50,9 +49,9 @@ function PostOptionsModal({
   // if-else filters so only the current active post's options are displayed
 
   if (
-    postoptions.postid != item.id
-    || typeof postoptions.postid === "undefined"
-    || typeof item.id === "undefined"
+    postoptions.postid != item.id ||
+    typeof postoptions.postid === "undefined" ||
+    typeof item.id === "undefined"
   ) {
     return null;
   }
@@ -157,10 +156,7 @@ function PostOptionsModal({
 
   if (postoptions.active === false && postoptions.changestatus === true) {
     animateout(Easing.ease);
-  } else if (
-    postoptions.active === true
-      && postoptions.changestatus === true
-  ) {
+  } else if (postoptions.active === true && postoptions.changestatus === true) {
     animatein(Easing.ease);
   }
 
@@ -180,70 +176,72 @@ function PostOptionsModal({
           <Animated.View style={animatedStylesFooter}>
             <Animated.View style={animatedStylesFooterMain}>
               <CubeSizeButton
-                  Icon={Icons.OriginalSize.Trash}
-                  Action={() => {
-                    navigation.navigate("DeletePost", {
-                      postid: postoptions.postid,
-                    });
-                  }}
-                  isactive={false}
-                />
+                Icon={Icons.OriginalSize.Trash}
+                Action={() => {
+                  navigation.navigate("DeletePost", {
+                    postid: postoptions.postid,
+                  });
+                }}
+                isactive={false}
+              />
               <CubeSizeButton
-                  Icon={Icons.OriginalSize.Edit}
-                  Action={() => navigation.navigate("EditPost", {
+                Icon={Icons.OriginalSize.Edit}
+                Action={() =>
+                  navigation.navigate("EditPost", {
                     index,
                     origin: "homevault",
-                  })}
-                  isactive={false}
-                />
+                  })
+                }
+                isactive={false}
+              />
               <CubeSizeButton
-                  Icon={Icons.OriginalSize.Share}
-                  Action={() => ActivateShare({ dispatch, item })}
-                  isactive={false}
-                />
+                Icon={Icons.OriginalSize.Share}
+                Action={() => ActivateShare({ dispatch, item })}
+                isactive={false}
+              />
               <CubeSizeButton
-                  Icon={Icons.OriginalSize.PlusIcon}
-                  Action={() => dispatch(setPostPublicModal(true))}
-                  isactive={item.publicpost}
-                />
+                Icon={Icons.OriginalSize.PlusIcon}
+                Action={() => dispatch(setPostPublicModal(true))}
+                isactive={item.publicpost}
+              />
               <CubeSizeButton
-                  Icon={Icons.OriginalSize.FullScreen}
-                  Action={() => {
-                    ChangeFocusView({ dispatch, set: true }),
+                Icon={Icons.OriginalSize.FullScreen}
+                Action={() => {
+                  ChangeFocusView({ dispatch, set: true }),
                     navigation.navigate("VaultPostFocusView", {
                       usecase: "vault",
                     });
-                  }}
-                  isactive={false}
-                />
+                }}
+                isactive={false}
+              />
               {/* <ButtonOption Icon={Icons.OriginalSize.More} Action={() => animateoptionsin(Easing.ease)} /> */}
             </Animated.View>
 
             <Animated.View style={animatedStylesOptions}>
               <View style={styles.optionswrapper}>
-                  <CubeSizeButton
-                    Icon={Icons.OriginalSize.More}
-                    Action={() => animateoptionsout(Easing.ease)}
-                    isactive
-                  />
-                </View>
+                <CubeSizeButton
+                  Icon={Icons.OriginalSize.More}
+                  Action={() => animateoptionsout(Easing.ease)}
+                  isactive
+                />
+              </View>
               <View style={[styles.optionswrapper, styles.secondaryoptions]}>
-                  <CubeSizeButton
-                    Icon={Icons.OriginalSize.X}
-                    Action={() => console.log("Pressed")}
-                    isactive={false}
-                  />
-                  <CubeSizeButton
-                    Icon={Icons.OriginalSize.X}
-                    Action={() => console.log("Pressed")}
-                    isactive={false}
-                  />
-                  <CubeSizeButton
-                    Icon={Icons.OriginalSize.X}
-                    Action={() => console.log("Pressed")}
-                    isactive={false}
-                  />
-                </View>
+                <CubeSizeButton
+                  Icon={Icons.OriginalSize.X}
+                  Action={() => console.log("Pressed")}
+                  isactive={false}
+                />
+                <CubeSizeButton
+                  Icon={Icons.OriginalSize.X}
+                  Action={() => console.log("Pressed")}
+                  isactive={false}
+                />
+                <CubeSizeButton
+                  Icon={Icons.OriginalSize.X}
+                  Action={() => console.log("Pressed")}
+                  isactive={false}
+                />
+              </View>
             </Animated.View>
           </Animated.View>
         </Animated.View>
@@ -251,7 +249,8 @@ function PostOptionsModal({
         <PostShareModal dispatch={dispatch} item={item} />
       </SafeAreaView>
     );
-  } if (usecase === "gallery") {
+  }
+  if (usecase === "gallery") {
     return (
       <SafeAreaView style={styles.container} pointerEvents="box-none">
         <Animated.View style={animatedStyles} pointerEvents="box-none">
@@ -265,25 +264,30 @@ function PostOptionsModal({
             <Animated.View style={animatedStylesFooterMain}>
               {/* <ButtonOption Icon={Icons.OriginalSize.VaultIcon} Action={() => { console.log('unpublish')}} /> */}
               <CubeSizeButton
-                  Icon={Icons.OriginalSize.PlusIcon}
-                  Action={() => dispatch(setPostPublicModal(true))}
-                  isactive={item.publicpost}
-                />
+                Icon={Icons.OriginalSize.PlusIcon}
+                Action={() => dispatch(setPostPublicModal(true))}
+                isactive={item.publicpost}
+              />
               <CubeSizeButton
-                  Icon={Icons.OriginalSize.Share}
-                  Action={() => ActivateShare({ dispatch, item })}
-                  isactive={false}
-                />
+                Icon={Icons.OriginalSize.Share}
+                Action={() => ActivateShare({ dispatch, item })}
+                isactive={false}
+              />
               <CubeSizeButton
-                  Icon={Icons.OriginalSize.FullScreen}
-                  Action={() => {
-                    ChangeFocusView({ dispatch, set: true }),
+                Icon={Icons.OriginalSize.Comment}
+                Action={() => EnterComments({ index, navigation, usecase })}
+                isactive={false}
+              />
+              <CubeSizeButton
+                Icon={Icons.OriginalSize.FullScreen}
+                Action={() => {
+                  ChangeFocusView({ dispatch, set: true }),
                     navigation.navigate("VaultPostFocusView", {
                       usecase: "gallery",
                     });
-                  }}
-                  isactive={false}
-                />
+                }}
+                isactive={false}
+              />
             </Animated.View>
           </Animated.View>
         </Animated.View>
@@ -301,35 +305,40 @@ function PostOptionsModal({
           </Animated.View>
           <TouchableOpacity onPress={() => console.log("Go to profile")}>
             <Text style={[GlobalStyles.h4text, styles.displayname]}>
-                  {item.userdisplayname}
-                </Text>
+              {item.displayname}
+            </Text>
           </TouchableOpacity>
         </View>
 
         <Animated.View style={animatedStylesFooter}>
           <Animated.View style={animatedStylesFooterMain}>
             <CubeSizeButton
-                  Icon={Icons.OriginalSize.Share}
-                  Action={() => ActivateShare({ dispatch, item })}
-                  isactive={false}
-                />
+              Icon={Icons.OriginalSize.Comment}
+              Action={() => EnterComments({ index, navigation, usecase })}
+              isactive={false}
+            />
             <CubeSizeButton
-                  Icon={Icons.OriginalSize.FullScreen}
-                  Action={() => {
-                    ChangeFocusView({ dispatch, set: true }),
-                    navigation.navigate("VaultPostFocusView", {
-                      usecase,
-                    });
-                  }}
-                  isactive={false}
-                />
+              Icon={Icons.OriginalSize.Share}
+              Action={() => ActivateShare({ dispatch, item })}
+              isactive={false}
+            />
+            <CubeSizeButton
+              Icon={Icons.OriginalSize.FullScreen}
+              Action={() => {
+                ChangeFocusView({ dispatch, set: true }),
+                  navigation.navigate("VaultPostFocusView", {
+                    usecase,
+                  });
+              }}
+              isactive={false}
+            />
           </Animated.View>
         </Animated.View>
       </Animated.View>
       <PostShareModal dispatch={dispatch} item={item} />
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

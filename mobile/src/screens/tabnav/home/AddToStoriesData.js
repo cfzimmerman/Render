@@ -7,6 +7,7 @@ const AddToStoriesData = ({
   signedurl,
   displayname,
   previewurl,
+  userid,
 }) => {
   const newpost = {
     id: postItem.id,
@@ -16,6 +17,7 @@ const AddToStoriesData = ({
     contentdate: postItem.contentdate,
     aspectratio: postItem.aspectratio,
     posttext: postItem.posttext,
+    userid,
     signedurl,
     thumbnailurl,
     displayname,

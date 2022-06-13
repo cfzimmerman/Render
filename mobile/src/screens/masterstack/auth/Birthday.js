@@ -3,14 +3,11 @@ import {
   KeyboardAvoidingView,
   View,
   Text,
-  Easing,
   TouchableOpacity,
   StyleSheet,
-  Animated,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { format, differenceInCalendarDays } from "date-fns";
-import { IconButton } from "react-native-paper";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -21,7 +18,6 @@ import {
   GlobalStyles,
   Environment,
   Colors,
-  Icons,
   UserDialogue,
 } from "../../../resources/project";
 import { IsDarkMode } from "../../../resources/utilities";
@@ -32,6 +28,7 @@ import {
 import { OnboardingScreenTemplate } from "../../../resources/organisms";
 
 import { updateUsers } from "../../../graphql/mutations";
+import NextButton from "./NextButton";
 
 async function AddBirthday({ input, navigation, dispatch }) {
   const age = differenceInCalendarDays(new Date(), input);
@@ -54,9 +51,7 @@ async function AddBirthday({ input, navigation, dispatch }) {
   });
 }
 
-async function UpdateBirthday({
-  birthday, userid, navigation, dispatch,
-}) {
+async function UpdateBirthday({ birthday, userid, navigation, dispatch }) {
   const updateduser = {
     id: userid,
     birthday,
@@ -78,15 +73,14 @@ const FormatDateDisplay = (input) => {
   return date;
 };
 
-function Birthday() {
+const Birthday = () => {
   // input logs text bar contents
   const [input, setInput] = useState(new Date(2002, 4, 1));
 
   // isActive logs whether the inputbar animation is active (for activation logic)
   const [isActive, setIsActive] = useState(false);
 
-  // isUntouched is used to activate the 'next' arrow
-  const [isUntouched, setIsUntouched] = useState(true);
+  const [isValid, setIsValid] = useState(false);
 
   const onboardingassets = useSelector((state) => state.onboarding.imageurls);
 
@@ -96,10 +90,11 @@ function Birthday() {
   const dispatch = useDispatch();
 
   const TextColor = () => {
-    if (isUntouched === true) {
+    if (isValid === false) {
       return styles.inactivetext;
+    } else {
+      return styles.activetext;
     }
-    return styles.activetext;
   };
 
   // Closes the datepicker modal
@@ -111,21 +106,20 @@ function Birthday() {
 
   // Opens the datepicker modal
   const OpenModal = () => {
-    if (isUntouched === true) {
-      animatein(Easing.ease);
+    if (isValid === false) {
+      setIsValid(true);
     }
-    setTimeout(() => {
-      setIsUntouched(false), setIsActive(true);
-    }, 250);
+    setIsActive(true);
   };
 
   // Determines what content to display in the view (that looks like a textbar)
   const BarDisplay = () => {
-    if (isUntouched === true) {
+    if (isValid === false) {
       return "Tap here to select";
+    } else {
+      const date = FormatDateDisplay(input);
+      return date;
     }
-    const date = FormatDateDisplay(input);
-    return date;
   };
 
   // Saves selected date upon user confirmation
@@ -133,61 +127,6 @@ function Birthday() {
     setInput(date);
     HideModal();
   };
-
-  // Animation starts here
-  // opacity is the name of the animated value. Perhaps a little confusing, but I just followed along the React Native docs, and that's what they used. Easier to follow along this way.
-  const opacity = new Animated.Value(0);
-
-  // Makes next button to confirm email visible
-  const animatein = (easing) => {
-    opacity.setValue(0);
-    Animated.timing(opacity, {
-      toValue: 1,
-      duration: 200,
-      useNativeDriver: false,
-      easing,
-    }).start(({ finished }) => {
-      if (!finished) {
-        setTimeout(() => {
-          animatein(Easing.ease);
-        }, 400);
-      }
-    });
-  };
-
-  // Calculates button transforming from size zero to a standard button size and back
-  const size = opacity.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, Environment.CubeSize],
-  });
-
-  const animatedStyles = [
-    styles.box,
-    {
-      opacity,
-      width: size,
-      height: size,
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    GlobalStyles.shadow,
-  ];
-
-  const bar = opacity.interpolate({
-    inputRange: [0, 1],
-    outputRange: [Environment.FullBar, Environment.TextBarOption],
-  });
-
-  const barStyles = [
-    styles.bar,
-    {
-      width: bar,
-      height: Environment.CubeSize,
-    },
-    GlobalStyles.shadow,
-  ];
-
-  // Animation ends here
 
   // FRONTEND CONFIG: Data sent to OnboardingScreenTemplate to visually customize the screen
   const Items = {
@@ -203,7 +142,7 @@ function Birthday() {
       <ErrormessageModal />
       <SystemmessageModal />
       <KeyboardAvoidingView style={styles.boxcontainer}>
-        <Animated.View style={barStyles}>
+        <View style={[GlobalStyles.shadow, styles.box]}>
           <TouchableOpacity
             onPress={() => {
               OpenModal();
@@ -215,23 +154,17 @@ function Birthday() {
               </Text>
             </View>
           </TouchableOpacity>
-        </Animated.View>
-        <TouchableOpacity
-          onPress={() => {
+        </View>
+        <NextButton
+          Action={() =>
             AddBirthday({
               input,
               navigation,
               dispatch,
-            });
-          }}
-        >
-          <Animated.View style={animatedStyles}>
-            <IconButton
-              icon={Icons.OriginalSize.NextIcon}
-              color={Colors.AccentOn}
-            />
-          </Animated.View>
-        </TouchableOpacity>
+            })
+          }
+          active={isValid}
+        />
       </KeyboardAvoidingView>
       <DateTimePickerModal
         isVisible={isActive}
@@ -244,7 +177,7 @@ function Birthday() {
       />
     </OnboardingScreenTemplate>
   );
-}
+};
 
 const styles = StyleSheet.create({
   activetext: {
@@ -256,9 +189,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.AccentOff,
   },
   box: {
-    marginTop: 32,
     borderRadius: Environment.StandardRadius,
     backgroundColor: Colors.AccentOff,
+    width:
+      Environment.FullBar -
+      (Environment.CubeSize + Environment.StandardPadding),
+    height: Environment.CubeSize,
   },
   boxcontainer: {
     width: Environment.FullBar,

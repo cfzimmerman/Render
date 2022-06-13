@@ -28,6 +28,7 @@ const CreateNewMonth = ({
         posttext: item.posttext,
         signedurl: signedurl,
         thumbnailurl: thumbnailurl,
+        userid: null,
       },
     },
     data: [],

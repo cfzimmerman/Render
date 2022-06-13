@@ -20,7 +20,7 @@ import { Environment, GlobalStyles, Colors } from "../../../resources/project";
 import { HalfbarButton } from "../../../resources/atoms";
 import ChangePostText from "./ChangePostText";
 
-function CustomHalfbarButton({ label, Action }) {
+const CustomHalfbarButton = ({ label, Action }) => {
   return (
     <TouchableOpacity onPress={() => Action()}>
       <View style={[GlobalStyles.shadow, styles.customhalfbarbutton]}>
@@ -28,41 +28,13 @@ function CustomHalfbarButton({ label, Action }) {
       </View>
     </TouchableOpacity>
   );
-}
+};
 
-function TextLimit({ postText, postTextLengthLimit }) {
-  if (
-    typeof postText === "undefined"
-    || postText === null
-    || postText.length < postTextLengthLimit * 0.8
-  ) {
-    return null;
-  }
-  return (
-    <Text
-      style={[
-        GlobalStyles.p2text,
-        styles.textlimitlabel,
-        {
-          textDecorationLine:
-              postText.length > postTextLengthLimit ? "line-through" : "none",
-        },
-      ]}
-    >
-      {postText.length}
-      /
-      {postTextLengthLimit}
-    </Text>
-  );
-}
-
-function EditTextModal({
-  dispatch, item, vaultpostdata, vaultfeeddata,
-}) {
+const EditTextModal = ({ dispatch, item, vaultpostdata, vaultfeeddata }) => {
   const [postText, setPostText] = useState(item.posttext);
 
   const edittextmodalactive = useSelector(
-    (state) => state.plusmain.edittextmodalactive,
+    (state) => state.plusmain.edittextmodalactive
   );
 
   // Character limit for user input text
@@ -93,13 +65,10 @@ function EditTextModal({
                 <TextInput
                   onChangeText={setPostText}
                   value={postText}
+                  maxLength={2000}
                   autoFocus
                   multiline
                   style={[GlobalStyles.p1text, styles.textinputstyle]}
-                />
-                <TextLimit
-                  postText={postText}
-                  postTextLengthLimit={postTextLengthLimit}
                 />
               </View>
 
@@ -113,14 +82,14 @@ function EditTextModal({
                   Action={() => {
                     if (postText.length <= postTextLengthLimit) {
                       dispatch(setEditTextModalActive(false)),
-                      ChangePostText({
-                        postID: item.id,
-                        newText: postText,
-                        contentdate: item.contentdate,
-                        vaultpostdata,
-                        vaultfeeddata,
-                        dispatch,
-                      });
+                        ChangePostText({
+                          postID: item.id,
+                          newText: postText,
+                          contentdate: item.contentdate,
+                          vaultpostdata,
+                          vaultfeeddata,
+                          dispatch,
+                        });
                     }
                   }}
                 />
@@ -131,7 +100,7 @@ function EditTextModal({
       </TouchableWithoutFeedback>
     </Modal>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

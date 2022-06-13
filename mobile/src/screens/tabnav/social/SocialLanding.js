@@ -1,9 +1,8 @@
-import react, { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { View, FlatList, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useScrollToTop } from "@react-navigation/native";
-
 import { Colors, Environment, GlobalStyles } from "../../../resources/project";
 import ChangeSelectedFeed from "../home/ChangeSelectedFeed";
 import GetAddedFeedData from "../home/GetAddedFeedData";
@@ -11,34 +10,45 @@ import GetAddedUsersFilter from "../home/GetAddedUsersFilter";
 import GetPublicFeedData from "../home/GetPublicFeedData";
 import NoFriendsTab from "./NoFriendsTab";
 import PostTile from "../home/PostTile";
+import RefreshPublicFeed from "./RefreshPublicFeed";
 import SocialHeader from "./SocialHeader";
+import RefreshAddedFeed from "./RefreshAddedFeed";
 
-function SocialLanding({ navigation }) {
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const SocialLanding = ({ navigation }) => {
   const [gotAddedUsersFilter, setGotAddedUsersFilter] = useState(false);
 
   const [gotAddedFeed, setGotAddedFeed] = useState(false);
 
   const [gotPublicFeed, setGotPublicFeed] = useState(false);
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const [publicRefreshDate, setPublicRefreshDate] = useState(
+    "1984-01-24T14:23:00.000Z"
+  );
+
+  const [addedRefreshDate, setAddedRefreshDate] = useState(
+    "1984-01-24T14:23:00.000Z"
+  );
+
   const currentuser = useSelector((state) => state.profilemain.currentuser);
 
   const selectedfeed = useSelector((state) => state.homemain.selectedfeed);
 
   const addedusersfilter = useSelector(
-    (state) => state.homemain.addedusersfilter,
-  );
-  const gotaddedusersfilter = useSelector(
-    (state) => state.homemain.gotaddedusersfilter,
+    (state) => state.homemain.addedusersfilter
   );
 
   const addedfeed = useSelector((state) => state.homemain.addedfeed);
   const addedfeednexttoken = useSelector(
-    (state) => state.homemain.addedfeednexttoken,
+    (state) => state.homemain.addedfeednexttoken
   );
 
   const publicfeed = useSelector((state) => state.homemain.publicfeed);
   const publicfeednexttoken = useSelector(
-    (state) => state.homemain.publicfeednexttoken,
+    (state) => state.homemain.publicfeednexttoken
   );
 
   const dispatch = useDispatch();
@@ -47,45 +57,46 @@ function SocialLanding({ navigation }) {
     GetAddedUsersFilter({ dispatch, currentuser });
     setGotAddedUsersFilter(true);
   } else if (
-    (gotAddedUsersFilter === true || addedusersfilter.length > 0)
-    && gotAddedFeed === false
+    (gotAddedUsersFilter === true || addedusersfilter.length > 0) &&
+    gotAddedFeed === false
   ) {
     GetAddedFeedData({
       dispatch,
-      currentuser,
       addedusersfilter,
       addedfeed,
       addedfeednexttoken,
     });
+    setAddedRefreshDate(new Date().toISOString());
     setGotAddedFeed(true);
   } else if (
-    selectedfeed === "publicfeed"
-    && publicfeed.length === 0
-    && gotPublicFeed === false
+    selectedfeed === "publicfeed" &&
+    publicfeed.length === 0 &&
+    gotPublicFeed === false
   ) {
     GetPublicFeedData({
       dispatch,
-      currentuser,
       publicfeed,
       publicfeednexttoken,
     });
+    setPublicRefreshDate(new Date().toISOString());
     setGotPublicFeed(true);
   }
 
   const FeedData = () => {
     if (selectedfeed === "addedfeed") {
       return addedfeed;
-    } if (selectedfeed === "publicfeed") {
+    }
+    if (selectedfeed === "publicfeed") {
       return publicfeed;
     }
   };
 
   const EndReached = () => {
     if (
-      selectedfeed === "addedfeed"
-      && addedfeed.length > 0
-      && addedfeednexttoken != null
-      && gotAddedFeed === true
+      selectedfeed === "addedfeed" &&
+      addedfeed.length > 0 &&
+      addedfeednexttoken != null &&
+      gotAddedFeed === true
     ) {
       GetAddedFeedData({
         dispatch,
@@ -95,10 +106,10 @@ function SocialLanding({ navigation }) {
         addedfeednexttoken,
       });
     } else if (
-      selectedfeed === "publicfeed"
-      && publicfeed.length > 0
-      && publicfeednexttoken != null
-      && gotPublicFeed === true
+      selectedfeed === "publicfeed" &&
+      publicfeed.length > 0 &&
+      publicfeednexttoken != null &&
+      gotPublicFeed === true
     ) {
       GetPublicFeedData({
         dispatch,
@@ -115,34 +126,65 @@ function SocialLanding({ navigation }) {
 
   // No friends -> add some friends
 
-  const renderItem = ({ item, index }) => PostTile({
-    item, index, dispatch, navigation, addedfeed, selectedfeed,
-  });
+  const renderItem = ({ item, index }) => (
+    <PostTile
+      item={item}
+      index={index}
+      dispatch={dispatch}
+      navigation={navigation}
+      addedfeed={addedfeed}
+      selectedfeed={selectedfeed}
+    />
+  );
+
+  const FooterComponent = () => {
+    return <View style={styles.footerstyle} />;
+  };
+
+  async function OnRefresh() {
+    if (isRefreshing === false) {
+      setIsRefreshing(true);
+      if (selectedfeed === "publicfeed") {
+        RefreshPublicFeed({ dispatch, publicRefreshDate, publicfeed });
+        setPublicRefreshDate(new Date().toISOString());
+      } else if (selectedfeed === "addedfeed") {
+        RefreshAddedFeed({
+          dispatch,
+          addedRefreshDate, // HERE !!!  conditional send addedRefreshDate if addedusersfilter is untouched. Different stuff if addedusersfilter is updated.
+          addedfeed,
+          addedusersfilter,
+        });
+        setAddedRefreshDate(new Date().toISOString());
+      }
+      await sleep(2000);
+      setIsRefreshing(false);
+    }
+  }
 
   return (
     <View style={styles.container}>
       <FlatList
         data={FeedData()}
         ref={ref}
-        ListHeaderComponent={() => (
-          <SocialHeader
-            dispatch={dispatch}
-            currentuser={currentuser}
-            navigation={navigation}
-            selectedfeed={selectedfeed}
-          />
-        )}
+        ListHeaderComponent={SocialHeader({
+          dispatch,
+          currentuser,
+          navigation,
+          selectedfeed,
+        })}
+        refreshing={isRefreshing}
+        onRefresh={OnRefresh}
         style={styles.feedstyle}
         renderItem={renderItem}
-        ListFooterComponent={() => <View style={styles.footerstyle} />}
+        ListFooterComponent={FooterComponent}
         showsVerticalScrollIndicator={false}
         onEndReachedThreshold={0.5}
-        onEndReached={() => EndReached()}
-        ListEmptyComponent={() => NoFriendsTab({ addedusersfilter, navigation })}
+        onEndReached={EndReached}
+        ListEmptyComponent={NoFriendsTab({ addedusersfilter, navigation })}
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

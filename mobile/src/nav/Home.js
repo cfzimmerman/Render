@@ -3,7 +3,7 @@ import { HomeLanding } from "../screens/tabnav/home";
 
 const Stack = createNativeStackNavigator();
 
-function Home() {
+const Home = () => {
   return (
     <Stack.Navigator
       initialRouteName="HomeLanding"
@@ -14,6 +14,6 @@ function Home() {
       <Stack.Screen name="HomeLanding" component={HomeLanding} />
     </Stack.Navigator>
   );
-}
+};
 
 export default Home;

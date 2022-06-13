@@ -1,6 +1,5 @@
-import {
-  View, Text, Image, TouchableOpacity, StyleSheet,
-} from "react-native";
+import React from "react";
+import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { GetPostDimensions } from "../../../resources/utilities";
 import {
   Environment,
@@ -17,15 +16,7 @@ const EnterFullView = ({ navigation, index, selectedfeed }) => {
   });
 };
 
-function PostContent({
-  item,
-  newHeight,
-  dispatch,
-  navigation,
-  index,
-  addedfeed,
-  selectedfeed,
-}) {
+const PostContent = ({ item, newHeight, navigation, index, selectedfeed }) => {
   if (item.contenttype === "image") {
     return (
       <TouchableOpacity
@@ -39,7 +30,8 @@ function PostContent({
         </View>
       </TouchableOpacity>
     );
-  } if (item.contenttype === "video") {
+  }
+  if (item.contenttype === "video") {
     return (
       <View style={GlobalStyles.shadow}>
         <TouchableOpacity
@@ -66,25 +58,33 @@ function PostContent({
       </View>
     );
   }
-}
+};
 
-// TransitionToFullView({ id: item.id, navigation, data: addedfeed, dispatch, usecase: 'addedfeed' })
-//  ->
+const AreEqual = (previousProps, nextProps) => {
+  if (
+    previousProps.item.contentkey === nextProps.item.contentkey &&
+    previousProps.selectedfeed === nextProps.selectedfeed
+  ) {
+    return true;
+  }
+  return false;
+};
 
-function PostTile({
+const PostTile = ({
   item,
   index,
   dispatch,
   navigation,
   addedfeed,
   selectedfeed,
-}) {
+}) => {
   const postDimensions = GetPostDimensions(item.aspectratio);
 
   const DisplaySize = () => {
     if (postDimensions.comp === "standard") {
       return postDimensions.height;
-    } if (postDimensions.comp === "oversize") {
+    }
+    if (postDimensions.comp === "oversize") {
       return Environment.FullBar;
     }
   };
@@ -102,7 +102,7 @@ function PostTile({
               styles.displayname,
             ]}
           >
-            {item.userdisplayname}
+            {item.displayname}
           </Text>
         </TouchableOpacity>
       </View>
@@ -122,7 +122,7 @@ function PostTile({
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   tilewrapper: {
@@ -169,4 +169,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PostTile;
+export default React.memo(PostTile, AreEqual);
+
+// export default PostTile;
+// export default React.memo(PostTile, AreEqual);

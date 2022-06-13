@@ -1,13 +1,27 @@
-import {
-  View, TouchableOpacity, Text, StyleSheet,
-} from "react-native";
+import react, { useState } from "react";
+import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { Environment, Colors, GlobalStyles } from "../project";
 
-function IconHalfbarButton({
-  label, Action, Icon, active,
-}) {
+// origin: null, "OtherUserProfileLanding", "ProfileLanding"
+const IconHalfbarButton = ({ label, Action, Icon, active, origin }) => {
+  const [isDisabled, setIsDisabled] = useState(false);
+
   return (
-    <TouchableOpacity onPress={() => Action()}>
+    <TouchableOpacity
+      onPress={() => {
+        Action();
+        if (origin === "OtherUserProfileLanding") {
+          setIsDisabled(true);
+        }
+      }}
+      onPressOut={() => {
+        if (origin === "OtherUserProfileLanding") {
+          setIsDisabled(false);
+        }
+      }}
+      delayPressOut={origin === "OtherUserProfileLanding" ? 4000 : 0}
+      disabled={isDisabled}
+    >
       <View
         style={[
           GlobalStyles.shadow,
@@ -34,7 +48,7 @@ function IconHalfbarButton({
       </View>
     </TouchableOpacity>
   );
-}
+};
 
 const styles = StyleSheet.create({
   buttonwrapper: {

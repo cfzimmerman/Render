@@ -16,19 +16,19 @@
       "function": {
         "MobileCreateAuthChallenge": {
           "deploymentBucketName": "amplify-mobile-monostage-180223-deployment",
-          "s3Key": "amplify-builds/MobileCreateAuthChallenge-524c3144757077794844-build.zip"
+          "s3Key": "amplify-builds/MobileCreateAuthChallenge-6537302b2f536555346c-build.zip"
         },
         "MobileDefineAuthChallenge": {
           "deploymentBucketName": "amplify-mobile-monostage-180223-deployment",
-          "s3Key": "amplify-builds/MobileDefineAuthChallenge-634c696c514949746748-build.zip"
+          "s3Key": "amplify-builds/MobileDefineAuthChallenge-6e744e5a78564e323341-build.zip"
         },
         "MobileVerifyAuthChallengeResponse": {
           "deploymentBucketName": "amplify-mobile-monostage-180223-deployment",
-          "s3Key": "amplify-builds/MobileVerifyAuthChallengeResponse-6c4a55774c3863545763-build.zip"
+          "s3Key": "amplify-builds/MobileVerifyAuthChallengeResponse-41354d72756d6a553372-build.zip"
         },
         "MobilePreSignup": {
           "deploymentBucketName": "amplify-mobile-monostage-180223-deployment",
-          "s3Key": "amplify-builds/MobilePreSignup-61695a7179315251624f-build.zip"
+          "s3Key": "amplify-builds/MobilePreSignup-6b6b59417a4f57744a52-build.zip"
         }
       },
       "auth": {
@@ -36,7 +36,7 @@
       },
       "storage": {
         "mobilee0d2691a": {
-          "bucketName": "mobile-storage142654-mdev",
+          "bucketName": "mobile-storage211804-staging",
           "region": "us-east-1"
         }
       }

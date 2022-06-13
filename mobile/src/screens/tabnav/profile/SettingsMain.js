@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
+  Button,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Linking from "expo-linking";
@@ -18,7 +19,7 @@ import GetPfp from "./GetPfp";
 import LogOut from "./LogOut";
 import ProfileNavOptions from "./ProfileNavOptions";
 
-function SettingsMain({ navigation }) {
+const SettingsMain = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const currentuser = useSelector((state) => state.profilemain.currentuser);
@@ -48,11 +49,13 @@ function SettingsMain({ navigation }) {
 
         <View style={[GlobalStyles.shadow, styles.pfpcard]}>
           <TouchableOpacity
-            onPress={() => ChangePfp({
-              dispatch,
-              currentpfpkey: currentuser.pfp,
-              cognitosub: currentuser.cognitosub,
-            })}
+            onPress={() =>
+              ChangePfp({
+                dispatch,
+                currentpfpkey: currentuser.pfp,
+                cognitosub: currentuser.cognitosub,
+              })
+            }
           >
             <View style={GlobalStyles.shadow}>
               <Image style={styles.userpfp} source={{ uri: pfpsignedurl }} />
@@ -92,7 +95,7 @@ function SettingsMain({ navigation }) {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

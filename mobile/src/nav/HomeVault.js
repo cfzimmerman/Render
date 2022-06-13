@@ -3,7 +3,7 @@ import HomeVaultLanding from "../screens/tabnav/homevault/HomeVaultLanding";
 
 const Stack = createNativeStackNavigator();
 
-function HomeVault() {
+const HomeVault = () => {
   return (
     <Stack.Navigator
       initialRouteName="HomeVaultLanding"
@@ -14,6 +14,6 @@ function HomeVault() {
       <Stack.Screen name="HomeVaultLanding" component={HomeVaultLanding} />
     </Stack.Navigator>
   );
-}
+};
 
 export default HomeVault;

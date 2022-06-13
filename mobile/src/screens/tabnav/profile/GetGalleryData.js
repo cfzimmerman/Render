@@ -1,5 +1,6 @@
 import { Storage, API, graphqlOperation } from "aws-amplify";
 import AddToGallery from "./AddToGallery";
+import { setFetchingGalleryData } from "../../../redux/profile/profilemain";
 import UpdateGalleryNextToken from "./UpdateGalleryNextToken";
 
 async function GetGalleryData({
@@ -7,9 +8,9 @@ async function GetGalleryData({
   gallerydata,
   cognitosub,
   nextToken,
+  userID,
 }) {
   if (gallerydata.length > 0 && nextToken === null) {
-
   } else {
     const fetchlimit = 10;
 
@@ -41,7 +42,7 @@ async function GetGalleryData({
                     nextToken
                 }
             }
-        `),
+        `)
     );
 
     const userposts = result.data.postsByPostedDate.items;
@@ -59,6 +60,7 @@ async function GetGalleryData({
             item,
             signedurl,
             thumbnailurl,
+            userID,
           });
         } else {
           const signedurl = await Storage.get(item.contentkey, {
@@ -70,16 +72,18 @@ async function GetGalleryData({
             item,
             signedurl,
             thumbnailurl,
+            userID,
           });
         }
       }
       GetUrl({ item });
 
       if (
-        typeof userposts[fetchlimit - 1] === "undefined"
-        || item.id === userposts[fetchlimit - 1].id
+        typeof userposts[fetchlimit - 1] === "undefined" ||
+        item.id === userposts[fetchlimit - 1].id
       ) {
         UpdateGalleryNextToken({ dispatch, nextToken: newnexttoken });
+        dispatch(setFetchingGalleryData(false));
       }
     });
   }

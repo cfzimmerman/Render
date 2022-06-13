@@ -6,7 +6,7 @@ import {
   Icons,
 } from "../../../resources/project";
 
-function WrappedIcon({ Icon, origin }) {
+const WrappedIcon = ({ Icon, origin }) => {
   // This distinction was created so that item and section tile icons can be different sizes if that improves the UI. Whether or not this is the case is up for debate atm.
   if (origin === "sectionheader") {
     return (
@@ -19,7 +19,8 @@ function WrappedIcon({ Icon, origin }) {
         />
       </View>
     );
-  } if (origin === "sectionitem") {
+  }
+  if (origin === "sectionitem") {
     return (
       <View style={styles.wrappediconholder}>
         <Icon
@@ -31,35 +32,35 @@ function WrappedIcon({ Icon, origin }) {
       </View>
     );
   }
-}
+};
 
-function VideoIcon({ item, origin }) {
+const VideoIcon = ({ item, origin }) => {
   if (item.contenttype === "video") {
     return <WrappedIcon Icon={Icons.OriginalSize.Play} origin={origin} />;
   }
   return null;
-}
+};
 
-function PublicPostIcon({ item, origin }) {
+const PublicPostIcon = ({ item, origin }) => {
   if (item.publicpost === true) {
     return <WrappedIcon Icon={Icons.OriginalSize.PlusIcon} origin={origin} />;
   }
   return null;
-}
+};
 
-function PostTextIcon({ item, origin }) {
+const PostTextIcon = ({ item, origin }) => {
   if (
-    item.posttext != "undefined"
-    && item.posttext != null
-    && item.posttext.length > 0
+    item.posttext != "undefined" &&
+    item.posttext != null &&
+    item.posttext.length > 0
   ) {
     return <WrappedIcon Icon={Icons.OriginalSize.Text} origin={origin} />;
   }
   return null;
-}
+};
 
 // Origin: "sectionheader", "sectionitem"
-function ExternalVaultTileInfo({ item, origin }) {
+const ExternalVaultTileInfo = ({ item, origin }) => {
   return (
     <View style={styles.container}>
       <View style={styles.iconholder}>
@@ -69,7 +70,7 @@ function ExternalVaultTileInfo({ item, origin }) {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

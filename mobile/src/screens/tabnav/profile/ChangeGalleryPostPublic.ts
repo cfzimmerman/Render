@@ -3,6 +3,7 @@ import {
   exciseGalleryPost,
   injectGalleryPost,
 } from "../../../redux/profile/profilemain";
+import { excisePublicFeedPost } from "../../../redux/home/homemain";
 import { PostType } from "../../../resources/CommonTypes";
 
 export interface ChangeGalleryPostPublicType {
@@ -17,6 +18,7 @@ const ChangeGalleryPostPublic = ({
   action,
   dispatch,
   isodate,
+  publicfeeddata,
 }) => {
   if (gallerydata != null && gallerydata.length > 0) {
     if (action === "remove") {
@@ -41,6 +43,7 @@ const ChangeGalleryPostPublic = ({
         publicpostdate: isodate,
         posttext: item.posttext,
         publicpost: true,
+        header: null,
         signedurl: item.signedurl,
         thumbnailurl: item.thumbnailurl,
       };
@@ -51,6 +54,18 @@ const ChangeGalleryPostPublic = ({
       };
 
       dispatch(injectGalleryPost(update));
+    }
+  }
+
+  if (action === "remove" && publicfeeddata.length > 0) {
+    // Add actions can be covered by public feed refresh (added feed post public updates are irrelevant to current user changes)
+    const targetPostIndex = publicfeeddata.findIndex(
+      (element: PostType) => element.id === item.id
+    );
+
+    if (targetPostIndex > -1) {
+      // Cut out publicfeeddata post
+      dispatch(excisePublicFeedPost(targetPostIndex));
     }
   }
 };

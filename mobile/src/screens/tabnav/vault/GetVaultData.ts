@@ -134,7 +134,6 @@ async function GetVaultData({
               expires: 86400,
             });
 
-            CreateNewMonth({ dispatch, item, signedurl, thumbnailurl });
             AddToFullviewList({
               dispatch,
               item,
@@ -142,13 +141,13 @@ async function GetVaultData({
               thumbnailurl,
               header: true,
             });
+            CreateNewMonth({ dispatch, item, signedurl, thumbnailurl });
           } else {
             const signedurl = await Storage.get(item.contentkey, {
               expires: 86400,
             });
             const thumbnailurl = null;
 
-            CreateNewMonth({ dispatch, item, signedurl, thumbnailurl });
             AddToFullviewList({
               dispatch,
               item,
@@ -156,6 +155,7 @@ async function GetVaultData({
               thumbnailurl,
               header: true,
             });
+            CreateNewMonth({ dispatch, item, signedurl, thumbnailurl });
           }
         }
 
@@ -171,7 +171,6 @@ async function GetVaultData({
             const thumbnailurl = await Storage.get(item.thumbnailkey, {
               expires: 86400,
             });
-            AddToCurrentMonth({ dispatch, item, signedurl, thumbnailurl });
             AddToFullviewList({
               dispatch,
               item,
@@ -179,12 +178,12 @@ async function GetVaultData({
               thumbnailurl,
               header: false,
             });
+            AddToCurrentMonth({ dispatch, item, signedurl, thumbnailurl });
           } else {
             const signedurl = await Storage.get(item.contentkey, {
               expires: 86400,
             });
             const thumbnailurl = null;
-            AddToCurrentMonth({ dispatch, item, signedurl, thumbnailurl });
             AddToFullviewList({
               dispatch,
               item,
@@ -192,6 +191,7 @@ async function GetVaultData({
               thumbnailurl,
               header: false,
             });
+            AddToCurrentMonth({ dispatch, item, signedurl, thumbnailurl });
           }
         }
         GetUrl({ item });

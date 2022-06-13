@@ -1,6 +1,4 @@
-import {
-  View, FlatList, Animated, StyleSheet,
-} from "react-native";
+import { View, FlatList, Animated, StyleSheet } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -10,27 +8,28 @@ import GalleryFooter from "./GalleryFooter";
 import GetGalleryData from "./GetGalleryData";
 import SelfGalleryHeader from "./SelfGalleryHeader";
 
-function GalleryMain({ navigation }) {
+const GalleryMain = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const gallerydata = useSelector((state) => state.profilemain.gallerydata);
   const currentuser = useSelector((state) => state.profilemain.currentuser);
   const gallerynexttoken = useSelector(
-    (state) => state.profilemain.gallerynexttoken,
+    (state) => state.profilemain.gallerynexttoken
   );
 
   const isFocused = useIsFocused();
 
   if (
-    isFocused === true
-    && gallerydata.length === 0
-    && gallerynexttoken === null
+    isFocused === true &&
+    gallerydata.length === 0 &&
+    gallerynexttoken === null
   ) {
     GetGalleryData({
       dispatch,
       gallerydata,
       cognitosub: currentuser.cognitosub,
       nextToken: gallerynexttoken,
+      userID: currentuser.id,
     });
   }
 
@@ -41,6 +40,7 @@ function GalleryMain({ navigation }) {
         gallerydata,
         cognitosub: currentuser.cognitosub,
         nextToken: gallerynexttoken,
+        userID: currentuser.id,
       });
     }
   };
@@ -62,15 +62,13 @@ function GalleryMain({ navigation }) {
         renderItem={renderItem}
         onEndReachedThreshold={0.5}
         contentContainerStyle={styles.liststyle}
-        onEndReached={() => EndReached()}
+        onEndReached={EndReached}
         ListFooterComponent={GalleryFooter({ length: gallerydata.length })}
-        ListHeaderComponent={() => (
-          <SelfGalleryHeader navigation={navigation} dispatch={dispatch} />
-        )}
+        ListHeaderComponent={SelfGalleryHeader({ navigation, dispatch })}
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

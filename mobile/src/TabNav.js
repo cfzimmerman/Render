@@ -82,7 +82,7 @@ const TabNav = () => {
 
 const Tab = createBottomTabNavigator();
 
-function TabNav() {
+const TabNav = () => {
   return (
     <Tab.Navigator
       initialRouteName="HomeVault"
@@ -152,7 +152,7 @@ function TabNav() {
       />
     </Tab.Navigator>
   );
-}
+};
 
 const styles = StyleSheet.create({
   androidBarBackground: {
