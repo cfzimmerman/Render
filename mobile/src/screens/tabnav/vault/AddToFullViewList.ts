@@ -19,6 +19,7 @@ const AddToFullviewList = ({
     signedurl: signedurl,
     aspectratio: item.aspectratio,
     thumbnailurl: thumbnailurl,
+    userid: null,
     header: header,
   };
 

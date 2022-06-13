@@ -1,8 +1,6 @@
 import { addToGalleryData } from "../../../redux/profile/profilemain";
 
-const AddToGallery = ({
-  dispatch, item, signedurl, thumbnailurl,
-}) => {
+const AddToGallery = ({ dispatch, item, signedurl, thumbnailurl, userID }) => {
   const Post = {
     id: item.id,
     contentdate: item.contentdate,
@@ -12,6 +10,7 @@ const AddToGallery = ({
     publicpostdate: item.publicpostdate,
     posttext: item.posttext,
     publicpost: true,
+    userid: userID,
     signedurl,
     thumbnailurl,
   };

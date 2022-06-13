@@ -1,3 +1,4 @@
+import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useDispatch } from "react-redux";
 
@@ -17,7 +18,9 @@ import VaultPostFullView from "./screens/tabnav/vault/VaultPostFullView";
 import VaultPostFocusView from "./screens/tabnav/vault/VaultPostFocusView";
 import DeletePost from "./screens/tabnav/vault/DeletePost";
 import EditPost from "./screens/tabnav/plus/EditPost";
+import CommentsMain from "./screens/tabnav/social/CommentsMain";
 import AppStart from "./screens/masterstack/AppStart";
+import { useNavigation } from "@react-navigation/native";
 
 type RootStackParamList = {
   TabNav: undefined;
@@ -47,11 +50,21 @@ type RootStackParamList = {
     index: number;
     origin: string;
   };
+  CommentsMain: {
+    usecase:
+      | "gallery"
+      | "otherusergallery"
+      | "stories"
+      | "addedfeed"
+      | "publicfeed";
+    index: number;
+  };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-function MasterStack({ navigation }) {
+const MasterStack = () => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
 
   console.log("calling masterstack");
@@ -102,8 +115,14 @@ function MasterStack({ navigation }) {
         component={EditPost}
         options={{ animation: "slide_from_bottom" }}
       />
+
+      <Stack.Screen
+        name="CommentsMain"
+        component={CommentsMain}
+        options={{ animation: "fade_from_bottom", gestureEnabled: false }}
+      />
     </Stack.Navigator>
   );
-}
+};
 
 export default MasterStack;

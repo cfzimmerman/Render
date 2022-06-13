@@ -1,6 +1,4 @@
-import {
-  View, Text, TouchableOpacity, StyleSheet, Image,
-} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Environment, GlobalStyles, Colors } from "../../../resources/project";
@@ -32,9 +30,7 @@ function FeedSelector({ dispatch, selectedfeed }) {
   );
 }
 
-function SocialHeader({
-  navigation, currentuser, selectedfeed, dispatch,
-}) {
+function SocialHeader({ navigation, currentuser, selectedfeed, dispatch }) {
   return (
     <SafeAreaView style={styles.container}>
       <FeedSelector dispatch={dispatch} selectedfeed={selectedfeed} />

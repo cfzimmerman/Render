@@ -26,7 +26,10 @@ import GetAddedMeUsers from "./GetAddedMeUsers";
 import GetCurrentUser from "./GetCurrentUser";
 import GetPfp from "./GetPfp";
 import ProfileNavOptions from "./ProfileNavOptions";
-import { SystemmessageModal } from "../../../resources/molecules";
+import {
+  SystemmessageModal,
+  LoadProgressModal,
+} from "../../../resources/molecules";
 
 // To add: (1) Remove follower, (2) clear add back recommendation
 // First, implement 'AddBackDisplay'
@@ -39,7 +42,7 @@ function ProfileLanding({ navigation }) {
 
   const addedmeusers = useSelector((state) => state.relationships.addedme);
   const addedmenexttoken = useSelector(
-    (state) => state.relationships.addedmenexttoken,
+    (state) => state.relationships.addedmenexttoken
   );
   const addbackusers = useSelector((state) => state.profilemain.addbackusers);
 
@@ -48,8 +51,8 @@ function ProfileLanding({ navigation }) {
   }
 
   if (
-    typeof currentuser.cognitosub === "undefined"
-    || currentuser.fullyauthenticated === false
+    typeof currentuser.cognitosub === "undefined" ||
+    currentuser.fullyauthenticated === false
   ) {
     return (
       <SafeAreaView style={styles.emptypagewrapper}>
@@ -86,12 +89,14 @@ function ProfileLanding({ navigation }) {
         tension={250}
         friction={25}
         delayPressIn={750}
-        onPress={() => ChangePfp({
-          dispatch,
-          currentpfpkey: currentuser.pfp,
-          cognitosub: currentuser.cognitosub,
-          currentuserid: currentuser.id,
-        })}
+        onPress={() =>
+          ChangePfp({
+            dispatch,
+            currentpfpkey: currentuser.pfp,
+            cognitosub: currentuser.cognitosub,
+            currentuserid: currentuser.id,
+          })
+        }
         onLongPress={() => {
           console.log("LongPress");
         }}
@@ -129,16 +134,20 @@ function ProfileLanding({ navigation }) {
           Action={() => navigation.navigate("AddedMeUsers")}
           Icon={Icons.OriginalSize.Friends}
           active={false}
+          origin={"ProfileLanding"}
         />
         <IconHalfbarButton
           label={" "}
-          Action={() => dispatch(
-            setSystemmessageActive(
-              UserDialogue().systemmessage.shareconstruction,
-            ),
-          )}
+          Action={() =>
+            dispatch(
+              setSystemmessageActive(
+                UserDialogue().systemmessage.shareconstruction
+              )
+            )
+          }
           Icon={Icons.OriginalSize.Share}
           active={false}
+          origin={"ProfileLanding"}
         />
       </View>
 
@@ -157,7 +166,7 @@ function ProfileLanding({ navigation }) {
           addedmeusers={addedmeusers}
         />
       </View>
-
+      <LoadProgressModal />
       <SystemmessageModal />
     </ScrollView>
   );

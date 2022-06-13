@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     width: Environment.FullBar,
     flexDirection: "row",
     justifyContent: "center",
+    marginVertical: Environment.StandardPadding,
   },
   buttonwrapper: {
     marginHorizontal: Environment.StandardPadding,

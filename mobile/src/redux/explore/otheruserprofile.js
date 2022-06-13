@@ -5,6 +5,7 @@ const slice = createSlice({
   initialState: {
     otheruser: {},
     otherusergallerydata: [],
+    fetchingotherusergallerydata: false,
     otherusergallerynexttoken: null,
     relationship: false,
     addedmecount: 0,
@@ -29,8 +30,12 @@ const slice = createSlice({
     clearOtherUserGalleryData: (state, action) => {
       state.otherusergallerydata.length = 0;
     },
+    setFetchingOtherUserGalleryData: (state, action) => {
+      state.fetchingotherusergallerydata = action.payload;
+    },
     addVideoToOtherUserGalleryData: (state, action) => {
-      state.otherusergallerydata[action.payload.index].signedurl = action.payload.signedurl;
+      state.otherusergallerydata[action.payload.index].signedurl =
+        action.payload.signedurl;
     },
     setOtherUserRelationship: (state, action) => {
       state.relationship = action.payload.relationship;
@@ -46,6 +51,7 @@ export const {
   setOtherUser,
   addToOtherUserGalleryData,
   clearOtherUserGalleryData,
+  setFetchingOtherUserGalleryData,
   addVideoToOtherUserGalleryData,
   setOtherUserRelationship,
   setOtherUserGalleryNextToken,

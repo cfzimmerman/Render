@@ -1,6 +1,4 @@
-const TransitionToFullView = ({
-  id, navigation, data, usecase,
-}) => {
+const TransitionToFullView = ({ id, navigation, data, usecase }) => {
   // const FindId = (( element ) => element.id === id)
   // prop.navigation.navigate('SignupCode', {email: input})
 

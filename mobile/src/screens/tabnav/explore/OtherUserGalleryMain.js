@@ -1,40 +1,47 @@
-import {
-  View, FlatList, Animated, StyleSheet,
-} from "react-native";
+import React, { useState } from "react";
+import { View, FlatList, Animated, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useIsFocused } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Colors, Environment, Icons } from "../../../resources/project";
-import {
-  BackArrow,
-  ScreenTitleHeader,
-  CubeSizeButton,
-  CollapsingHeaderBox,
-} from "../../../resources/atoms";
+import { Colors, Environment } from "../../../resources/project";
 import GalleryFooter from "../profile/GalleryFooter";
 import GalleryTile from "../profile/GalleryTile";
 import GetOtherUserGalleryData from "./GetOtherUserGalleryData";
 import OtherUserGalleryEmptyComponent from "./OtherUserGalleryEmptyComponent";
 import OtherUserNavOptions from "./OtherUserNavOptions";
+import { setFetchingOtherUserGalleryData } from "../../../redux/explore/otheruserprofile";
 
-function OtherUserGalleryMain({ navigation }) {
+async function SetGotDataDelay({ setGotOtherUserGalleryData }) {
+  // We're delaying this to give the data a chance to fill the array. If there's no data in the Flatlist array after 0.5 seconds, the empty list display appears
+  setTimeout(() => {
+    setGotOtherUserGalleryData(true);
+  }, "500");
+}
+
+const OtherUserGalleryMain = ({ navigation }) => {
+  const [gotOtherUserGalleryData, setGotOtherUserGalleryData] = useState(false);
+
   const dispatch = useDispatch();
 
   const otherusergallerydata = useSelector(
-    (state) => state.otheruserprofile.otherusergallerydata,
+    (state) => state.otheruserprofile.otherusergallerydata
   );
   const otheruser = useSelector((state) => state.otheruserprofile.otheruser);
   const otherusergallerynexttoken = useSelector(
-    (state) => state.otheruserprofile.otherusergallerynexttoken,
+    (state) => state.otheruserprofile.otherusergallerynexttoken
+  );
+  const fetchingotherusergallerydata = useSelector(
+    (state) => state.otheruserprofile.fetchingotherusergallerydata
   );
 
   const isFocused = useIsFocused();
 
   if (
-    isFocused === true
-    && otherusergallerydata.length === 0
-    && otherusergallerynexttoken === null
+    isFocused === true &&
+    otherusergallerydata.length === 0 &&
+    otherusergallerynexttoken === null &&
+    gotOtherUserGalleryData === false
   ) {
     GetOtherUserGalleryData({
       dispatch,
@@ -42,10 +49,13 @@ function OtherUserGalleryMain({ navigation }) {
       nextToken: otherusergallerynexttoken,
       otheruser,
     });
+    // setGotOtherUserGalleryData(true);
+    SetGotDataDelay({ setGotOtherUserGalleryData });
   }
 
   const EndReached = () => {
     if (otherusergallerydata.length > 0 && otherusergallerynexttoken != null) {
+      dispatch(setFetchingOtherUserGalleryData(true));
       GetOtherUserGalleryData({
         dispatch,
         otherusergallerydata,
@@ -54,6 +64,15 @@ function OtherUserGalleryMain({ navigation }) {
       });
     }
   };
+
+  const renderItem = ({ item, index }) => (
+    <GalleryTile
+      item={item}
+      index={index}
+      navigation={navigation}
+      usecase="otherusergallery"
+    />
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -66,26 +85,24 @@ function OtherUserGalleryMain({ navigation }) {
 
       <FlatList
         data={otherusergallerydata}
-        renderItem={({ item, index }) => (
-          <GalleryTile
-            item={item}
-            index={index}
-            navigation={navigation}
-            usecase="otherusergallery"
-          />
-        )}
+        renderItem={renderItem}
         onEndReachedThreshold={0.5}
-        onEndReached={() => EndReached()}
+        onEndReached={EndReached}
         ListFooterComponent={GalleryFooter({
           length: otherusergallerydata.length,
         })}
-        ListEmptyComponent={OtherUserGalleryEmptyComponent(
-          otheruser.displayname,
+        ListEmptyComponent={() => (
+          <OtherUserGalleryEmptyComponent
+            displayname={otheruser.displayname}
+            fetchingotherusergallerydata={fetchingotherusergallerydata}
+            gotOtherUserGalleryData={gotOtherUserGalleryData}
+            otherusergallerydata={otherusergallerydata}
+          />
         )}
       />
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -17,16 +17,17 @@ import ChangePostPublic from "./ChangePostPublic";
 import PostPublic from "./PostPublic";
 import UnpostPublic from "./UnpostPublic";
 
-function CorrectOptions({
+const CorrectOptions = ({
   item,
   vaultpostdata,
   vaultfeeddata,
+  publicfeeddata,
   dispatch,
   currentuser,
   gallerydata,
   origin,
   navigation,
-}) {
+}) => {
   if (item.publicpost != true) {
     const isodate = new Date().toISOString();
 
@@ -47,7 +48,11 @@ function CorrectOptions({
           active={false}
           Action={() => {
             PostPublic({
-              dispatch, item, currentuser, isodate, gallerydata,
+              dispatch,
+              item,
+              currentuser,
+              isodate,
+              gallerydata,
             });
             ChangePostPublic({
               postID: item.id,
@@ -80,7 +85,11 @@ function CorrectOptions({
         active={false}
         Action={() => {
           UnpostPublic({
-            dispatch, item, gallerydata, origin,
+            dispatch,
+            item,
+            gallerydata,
+            publicfeeddata,
+            origin,
           });
           ChangePostPublic({
             postID: item.id,
@@ -98,31 +107,35 @@ function CorrectOptions({
       />
     </View>
   );
-}
+};
 
 // origin: "gallery", "vault"
-function VaultPostPublicModal({
-  dispatch, item, origin, navigation,
-}) {
+function VaultPostPublicModal({ dispatch, item, origin, navigation }) {
   const initialUserMessage = "Post this publicly?";
 
   const [userMessage, setUserMessage] = useState(initialUserMessage);
 
   const currentuser = useSelector((state) => state.profilemain.currentuser);
   const postpublicmodal = useSelector(
-    (state) => state.vaultpostdata.postpublicmodal,
+    (state) => state.vaultpostdata.postpublicmodal
   );
 
   const vaultpostdata = useSelector(
-    (state) => state.vaultpostdata.vaultpostdata,
+    (state) => state.vaultpostdata.vaultpostdata
   );
   const vaultfeeddata = useSelector(
-    (state) => state.vaultpostdata.vaultfeeddata,
+    (state) => state.vaultpostdata.vaultfeeddata
   );
+
+  // Passed to unpostpublic to determine if we need to remove a newly unposted image from any feeds
   const gallerydata = useSelector((state) => state.profilemain.gallerydata);
+  const publicfeeddata = useSelector((state) => state.homemain.publicfeed);
 
   if (item.publicpost === true) {
-    const newMessage = `Posted on ${format(new Date(item.publicpostdate), "PP")}.`;
+    const newMessage = `Posted on ${format(
+      new Date(item.publicpostdate),
+      "PP"
+    )}.`;
     if (userMessage != newMessage) {
       setUserMessage(newMessage);
     }
@@ -164,6 +177,7 @@ function VaultPostPublicModal({
             dispatch={dispatch}
             currentuser={currentuser}
             gallerydata={gallerydata}
+            publicfeeddata={publicfeeddata}
             origin={origin}
             navigation={navigation}
           />

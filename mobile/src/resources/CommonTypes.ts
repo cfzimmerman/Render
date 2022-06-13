@@ -22,15 +22,18 @@ export interface CurrentUserType {
 export interface PostType {
   id: string;
   aspectratio: number;
+  // hascomments: boolean;
   contentdate: string;
   contentkey: string | null;
   contenttype: string;
-  header: boolean;
+  header?: boolean;
   posttext: string | null;
   publicpost: boolean | null;
+  publicpostdate?: string | null;
   signedurl: string | null;
   thumbnailkey?: string;
   thumbnailurl: string | null;
+  userid: string | null;
 }
 
 interface PostSubHeader {
@@ -41,4 +44,13 @@ interface PostSubHeader {
 export interface PostHeaderType {
   header: PostSubHeader;
   data: PostType[];
+}
+
+export interface CommentType {
+  id: string;
+  commenttext: string;
+  postsID: string;
+  usersID: string;
+  createdAt: string;
+  displayname: string;
 }

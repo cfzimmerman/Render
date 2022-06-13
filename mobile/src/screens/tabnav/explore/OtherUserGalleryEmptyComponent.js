@@ -1,21 +1,30 @@
 import { View, Text, StyleSheet } from "react-native";
 import { GlobalStyles, Environment, Colors } from "../../../resources/project";
 
-function OtherUserGalleryEmptyComponent(displayname) {
-  return (
-    <View style={[styles.modalbox, GlobalStyles.shadow]}>
-      <Text style={[styles.header, GlobalStyles.h1text]}>😔</Text>
-      <Text style={[styles.header, GlobalStyles.h2text]}>No public posts</Text>
-      <Text style={[styles.description, GlobalStyles.p1text]}>
-        Tell
-        {' '}
-        {displayname}
-        {' '}
-        quit being lame
-      </Text>
-    </View>
-  );
-}
+const OtherUserGalleryEmptyComponent = ({
+  displayname,
+  fetchingotherusergallerydata,
+  gotOtherUserGalleryData,
+}) => {
+  if (
+    fetchingotherusergallerydata === false &&
+    gotOtherUserGalleryData === true
+  ) {
+    return (
+      <View style={[styles.modalbox, GlobalStyles.shadow]}>
+        <Text style={[styles.header, GlobalStyles.h1text]}>😔</Text>
+        <Text style={[styles.header, GlobalStyles.h2text]}>
+          No public posts
+        </Text>
+        <Text style={[styles.description, GlobalStyles.p1text]}>
+          Tell {displayname} to quit being lame
+        </Text>
+      </View>
+    );
+  } else {
+    return null;
+  }
+};
 
 const styles = StyleSheet.create({
   modalbox: {

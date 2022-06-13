@@ -1,5 +1,6 @@
 import { API, Storage, graphqlOperation } from "aws-amplify";
 import AddToOtherUserGallery from "./AddToOtherUserGallery";
+import { setFetchingOtherUserGalleryData } from "../../../redux/explore/otheruserprofile";
 import UpdateOtherUserGalleryNextToken from "./UpdateOtherUserGalleryNextToken";
 
 async function GetOtherUserGalleryData({
@@ -9,7 +10,6 @@ async function GetOtherUserGalleryData({
   nextToken,
 }) {
   if (otherusergallerydata.length > 0 && nextToken === null) {
-
   } else {
     const fetchlimit = 10;
 
@@ -34,53 +34,60 @@ async function GetOtherUserGalleryData({
                         contenttype
                         aspectratio
                         publicpostdate
+                        posttext
                         thumbnailkey
                         posttext
+                        Users {
+                          id
+                          displayname
+                        }
                     }
                     nextToken
                 }
             }
-        `),
+        `)
     );
 
     const userposts = result.data.postsByPostedDate.items;
     const newnexttoken = result.data.postsByPostedDate.nextToken;
 
-    userposts.forEach((item) => {
-      async function GetUrl({ item }) {
-        if (item.contenttype === "video") {
-          const signedurl = null;
-          const thumbnailurl = await Storage.get(item.thumbnailkey, {
-            expires: 86400,
-          });
-          AddToOtherUserGallery({
-            dispatch,
-            item,
-            signedurl,
-            thumbnailurl,
-          });
-        } else {
-          const signedurl = await Storage.get(item.contentkey, {
-            expires: 86400,
-          });
-          const thumbnailurl = null;
-          AddToOtherUserGallery({
-            dispatch,
-            item,
-            signedurl,
-            thumbnailurl,
-          });
+    if (userposts.length > 0) {
+      const lastPostID = userposts[userposts.length - 1].id;
+      userposts.forEach((item) => {
+        async function GetUrl({ item }) {
+          if (item.contenttype === "video") {
+            const signedurl = null;
+            const thumbnailurl = await Storage.get(item.thumbnailkey, {
+              expires: 86400,
+            });
+            AddToOtherUserGallery({
+              dispatch,
+              item,
+              signedurl,
+              thumbnailurl,
+            });
+          } else {
+            const signedurl = await Storage.get(item.contentkey, {
+              expires: 86400,
+            });
+            const thumbnailurl = null;
+            AddToOtherUserGallery({
+              dispatch,
+              item,
+              signedurl,
+              thumbnailurl,
+            });
+          }
         }
-      }
-      GetUrl({ item });
-
-      if (
-        typeof userposts[fetchlimit - 1] === "undefined"
-        || item.id === userposts[fetchlimit - 1].id
-      ) {
-        UpdateOtherUserGalleryNextToken({ dispatch, token: newnexttoken });
-      }
-    });
+        GetUrl({ item });
+        if (item.id === lastPostID) {
+          UpdateOtherUserGalleryNextToken({ dispatch, token: newnexttoken });
+          dispatch(setFetchingOtherUserGalleryData(false));
+        }
+      });
+    } else {
+      dispatch(setFetchingOtherUserGalleryData(false));
+    }
   }
 }
 

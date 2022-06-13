@@ -17,6 +17,7 @@ const AddToCurrentMonth = ({
     publicpostdate: item.publicpostdate,
     aspectratio: item.aspectratio,
     posttext: item.posttext,
+    userid: null,
     thumbnailurl: thumbnailurl,
   };
 

@@ -242,6 +242,153 @@ export const onDeleteUserRelationships = /* GraphQL */ `
     }
   }
 `;
+export const onCreateComments = /* GraphQL */ `
+  subscription OnCreateComments {
+    onCreateComments {
+      id
+      commenttext
+      postsID
+      Posts {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contenttype
+        createdAt
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        updatedAt
+      }
+      usersID
+      Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateComments = /* GraphQL */ `
+  subscription OnUpdateComments {
+    onUpdateComments {
+      id
+      commenttext
+      postsID
+      Posts {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contenttype
+        createdAt
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        updatedAt
+      }
+      usersID
+      Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteComments = /* GraphQL */ `
+  subscription OnDeleteComments {
+    onDeleteComments {
+      id
+      commenttext
+      postsID
+      Posts {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contenttype
+        createdAt
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        updatedAt
+      }
+      usersID
+      Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreatePosts = /* GraphQL */ `
   subscription OnCreatePosts {
     onCreatePosts {
@@ -278,6 +425,9 @@ export const onCreatePosts = /* GraphQL */ `
         type
         createdAt
         updatedAt
+      }
+      Comments {
+        nextToken
       }
       PostViewTrackers {
         nextToken
@@ -323,6 +473,9 @@ export const onUpdatePosts = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      Comments {
+        nextToken
+      }
       PostViewTrackers {
         nextToken
       }
@@ -367,6 +520,9 @@ export const onDeletePosts = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      Comments {
+        nextToken
+      }
       PostViewTrackers {
         nextToken
       }
@@ -393,6 +549,9 @@ export const onCreateUsers = /* GraphQL */ `
       pfp
       storagesizeinbytes
       type
+      Comments {
+        nextToken
+      }
       Posts {
         nextToken
       }
@@ -426,6 +585,9 @@ export const onUpdateUsers = /* GraphQL */ `
       pfp
       storagesizeinbytes
       type
+      Comments {
+        nextToken
+      }
       Posts {
         nextToken
       }
@@ -459,6 +621,9 @@ export const onDeleteUsers = /* GraphQL */ `
       pfp
       storagesizeinbytes
       type
+      Comments {
+        nextToken
+      }
       Posts {
         nextToken
       }

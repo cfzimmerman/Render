@@ -10,7 +10,11 @@ import ChangeGalleryPostPublic from "../profile/ChangeGalleryPostPublic";
 import { updatePosts, updateUsers } from "../../../graphql/mutations";
 
 async function UnpostPublic({
-  item, dispatch, gallerydata, origin,
+  item,
+  dispatch,
+  gallerydata,
+  origin,
+  publicfeeddata,
 }) {
   const updatedpost = {
     id: item.id,
@@ -31,6 +35,7 @@ async function UnpostPublic({
     item,
     action: "remove",
     dispatch,
+    publicfeeddata,
     isodate: null,
   });
 }

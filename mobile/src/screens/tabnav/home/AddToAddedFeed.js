@@ -1,8 +1,6 @@
 import { addToAddedFeed } from "../../../redux/home/homemain";
 
-const AddToAddedFeed = ({
-  dispatch, item, signedurl, thumbnailurl,
-}) => {
+const AddToAddedFeed = ({ dispatch, item, signedurl, thumbnailurl }) => {
   const post = {
     id: item.id,
     contenttype: item.contenttype,
@@ -15,7 +13,7 @@ const AddToAddedFeed = ({
     signedurl,
     thumbnailurl,
     userid: item.Users.id,
-    userdisplayname: item.Users.displayname,
+    displayname: item.Users.displayname,
     userpfp: item.Users.pfp,
     userpfpurl: null,
   };

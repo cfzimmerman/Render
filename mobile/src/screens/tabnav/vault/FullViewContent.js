@@ -1,4 +1,3 @@
-import react, { useRef, useState } from "react";
 import {
   Image,
   View,
@@ -13,6 +12,9 @@ import { Audio, Video, AVPlaybackStatus } from "expo-av";
 import VideoPlayer from "expo-video-player";
 import TouchableScale from "react-native-touchable-scale";
 import GestureRecognizer from "react-native-swipe-gestures";
+import GestureHandler, {
+  PinchGestureHandler,
+} from "react-native-gesture-handler";
 
 import { useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
@@ -38,13 +40,24 @@ import VaultPostPublicModal from "../plus/VaultPostPublicModal";
 
 // SetOptions({ postid: xxx, animateactive: true, animateinactive: false, newchangestatus: false, })
 
-function PostTextModalButton({
-  dispatch, item, dimensions, index,
-}) {
+const SwipeUp = ({ index, usecase, navigation }) => {
+  // Usecases are explicitly checked as opposed to != "vault" to ensure we've correctly configured CommentsMain for every necessary case
   if (
-    typeof item.posttext === "undefined"
-    || item.posttext === null
-    || item.posttext.length === 0
+    usecase === "gallery" ||
+    usecase === "otherusergallery" ||
+    usecase === "stories" ||
+    usecase === "addedfeed" ||
+    usecase === "publicfeed"
+  ) {
+    navigation.navigate("CommentsMain", { usecase, index });
+  }
+};
+
+const PostTextModalButton = ({ dispatch, item, dimensions, index }) => {
+  if (
+    typeof item.posttext === "undefined" ||
+    item.posttext === null ||
+    item.posttext.length === 0
   ) {
     return null;
   }
@@ -61,16 +74,16 @@ function PostTextModalButton({
       </TouchableOpacity>
     </View>
   );
-}
+};
 
-function PostModalFilter({
+const PostModalFilter = ({
   index,
   postindex,
   item,
   dispatch,
   navigation,
   usecase,
-}) {
+}) => {
   if (index != postindex) {
     return null;
   }
@@ -85,11 +98,9 @@ function PostModalFilter({
       />
     </View>
   );
-}
+};
 
-function FullViewContent({
-  item, index, dispatch, navigation, usecase,
-}) {
+const FullViewContent = ({ item, index, dispatch, navigation, usecase }) => {
   const dimensions = GetPostDimensions(item.aspectratio);
   const optionstatus = useSelector((state) => state.vaultpostdata.options);
   const textactive = useSelector((state) => state.vaultpostdata.textactive);
@@ -149,26 +160,35 @@ function FullViewContent({
         onSwipeDown={() => {
           ToPortrait(), navigation.goBack();
         }}
-        onSwipeLeft={() => SetOptions({
-          shouldshowoptions: false,
-          optionstatus,
-          dispatch,
-          postid: item.id,
-        })}
-        onSwipeRight={() => SetOptions({
-          shouldshowoptions: false,
-          optionstatus,
-          dispatch,
-          postid: item.id,
-        })}
-      >
-        <TouchableWithoutFeedback
-          onPress={() => SetOptions({
-            shouldshowoptions: true,
+        onSwipeUp={() => {
+          SwipeUp({ index, usecase, navigation });
+        }}
+        onSwipeLeft={() =>
+          SetOptions({
+            shouldshowoptions: false,
             optionstatus,
             dispatch,
             postid: item.id,
-          })}
+          })
+        }
+        onSwipeRight={() =>
+          SetOptions({
+            shouldshowoptions: false,
+            optionstatus,
+            dispatch,
+            postid: item.id,
+          })
+        }
+      >
+        <TouchableWithoutFeedback
+          onPress={() =>
+            SetOptions({
+              shouldshowoptions: true,
+              optionstatus,
+              dispatch,
+              postid: item.id,
+            })
+          }
         >
           <View style={styles.container}>
             <Image
@@ -249,26 +269,35 @@ function FullViewContent({
           ToPortrait(), navigation.goBack();
         }
       }}
-      onSwipeLeft={() => SetOptions({
-        shouldshowoptions: false,
-        optionstatus,
-        dispatch,
-        postid: item.id,
-      })}
-      onSwipeRight={() => SetOptions({
-        shouldshowoptions: false,
-        optionstatus,
-        dispatch,
-        postid: item.id,
-      })}
-    >
-      <TouchableWithoutFeedback
-        onPress={() => SetOptions({
-          shouldshowoptions: true,
+      onSwipeUp={() => {
+        SwipeUp({ index, usecase, navigation });
+      }}
+      onSwipeLeft={() =>
+        SetOptions({
+          shouldshowoptions: false,
           optionstatus,
           dispatch,
           postid: item.id,
-        })}
+        })
+      }
+      onSwipeRight={() =>
+        SetOptions({
+          shouldshowoptions: false,
+          optionstatus,
+          dispatch,
+          postid: item.id,
+        })
+      }
+    >
+      <TouchableWithoutFeedback
+        onPress={() =>
+          SetOptions({
+            shouldshowoptions: true,
+            optionstatus,
+            dispatch,
+            postid: item.id,
+          })
+        }
       >
         <View style={styles.container}>
           <Image
@@ -283,26 +312,26 @@ function FullViewContent({
               tension={250}
               friction={25}
               delayPressIn={750}
-              onPress={() => SetOptions({
-                shouldshowoptions: true,
-                optionstatus,
-                dispatch,
-                postid: item.id,
-              })}
+              onPress={() =>
+                SetOptions({
+                  shouldshowoptions: true,
+                  optionstatus,
+                  dispatch,
+                  postid: item.id,
+                })
+              }
               onLongPress={() => {
                 console.log("LongPress");
               }}
             >
-              <View
-                style={[GlobalStyles.shadow, { backgroundColor: "black" }]}
-              >
+              <View style={[GlobalStyles.shadow, { backgroundColor: "black" }]}>
                 <Image
-                    style={[
-                      styles.postimage,
-                      { height: dimensions.height, width: dimensions.width },
-                    ]}
-                    source={{ uri: item.signedurl }}
-                  />
+                  style={[
+                    styles.postimage,
+                    { height: dimensions.height, width: dimensions.width },
+                  ]}
+                  source={{ uri: item.signedurl }}
+                />
               </View>
             </TouchableScale>
 
@@ -331,7 +360,7 @@ function FullViewContent({
       />
     </GestureRecognizer>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

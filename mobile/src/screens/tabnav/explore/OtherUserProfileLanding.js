@@ -59,42 +59,51 @@ function CorrectFriendButton({
         Action={() => navigation.navigate("OnboardingLanding")}
         Icon={Icons.OriginalSize.AddUser}
         active={false}
+        origin={"OtherUserProfileLanding"}
       />
     );
-  } if (relationship === true) {
+  }
+  if (relationship === true) {
     return (
       // Remove friend
       <IconHalfbarButton
         label={` ${addedmecount}`}
-        Action={() => ChangeUserRelationship({
-          action: "remove",
-          dispatch,
-          currentuserid,
-          targetuserid,
-          currentusercognitosub,
-          targetusercognitosub,
-          origin: "otheruserprofile",
-        })}
+        Action={() =>
+          ChangeUserRelationship({
+            action: "remove",
+            dispatch,
+            currentuserid,
+            targetuserid,
+            currentusercognitosub,
+            targetusercognitosub,
+            origin: "otheruserprofile",
+          })
+        }
         Icon={Icons.OriginalSize.CurrentFriend}
-        active
+        active={true}
+        origin={"OtherUserProfileLanding"}
       />
     );
-  } if (relationship === false) {
+  }
+  if (relationship === false) {
     return (
       // Add friend
       <IconHalfbarButton
         label={` ${addedmecount}`}
-        Action={() => ChangeUserRelationship({
-          action: "add",
-          dispatch,
-          currentuserid,
-          targetuserid,
-          currentusercognitosub,
-          targetusercognitosub,
-          origin: "otheruserprofile",
-        })}
+        Action={() =>
+          ChangeUserRelationship({
+            action: "add",
+            dispatch,
+            currentuserid,
+            targetuserid,
+            currentusercognitosub,
+            targetusercognitosub,
+            origin: "otheruserprofile",
+          })
+        }
         Icon={Icons.OriginalSize.AddUser}
         active={false}
+        origin={"OtherUserProfileLanding"}
       />
     );
   }
@@ -106,10 +115,10 @@ function OtherUserProfileLanding({ navigation }) {
 
   const otheruser = useSelector((state) => state.otheruserprofile.otheruser);
   const relationship = useSelector(
-    (state) => state.otheruserprofile.relationship,
+    (state) => state.otheruserprofile.relationship
   );
   const addedmecount = useSelector(
-    (state) => state.otheruserprofile.addedmecount,
+    (state) => state.otheruserprofile.addedmecount
   );
   const currentuser = useSelector((state) => state.profilemain.currentuser);
 
@@ -173,12 +182,15 @@ function OtherUserProfileLanding({ navigation }) {
         />
         <IconHalfbarButton
           label=""
-          Action={() => dispatch(
-            setSystemmessageActive(
-              UserDialogue().systemmessage.shareconstruction,
-            ),
-          )}
+          Action={() =>
+            dispatch(
+              setSystemmessageActive(
+                UserDialogue().systemmessage.shareconstruction
+              )
+            )
+          }
           Icon={Icons.OriginalSize.Share}
+          origin={null}
         />
       </View>
 
