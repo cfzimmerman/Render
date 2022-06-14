@@ -17,6 +17,12 @@ export type AmplifyDependentResourcesAttributes = {
             "GraphQLAPIEndpointOutput": "string"
         }
     },
+    "storage": {
+        "s399ee0561": {
+            "BucketName": "string",
+            "Region": "string"
+        }
+    },
     "function": {
         "MobileCreateAuthChallenge": {
             "Name": "string",
