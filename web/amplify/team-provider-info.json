@@ -36,7 +36,7 @@
       },
       "storage": {
         "mobilee0d2691a": {
-          "bucketName": "mobile-storage211804-staging",
+          "bucketName": "mobile-storage142654-mdev",
           "region": "us-east-1"
         }
       }
