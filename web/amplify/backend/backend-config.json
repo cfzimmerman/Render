@@ -86,19 +86,7 @@
       }
     }
   },
-  "storage": {
-    "mobilee0d2691a": {
-      "service": "S3",
-      "serviceType": "imported",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": []
-    },
-    "s399ee0561": {
-      "service": "S3",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": []
-    }
-  },
+  "storage": {},
   "function": {
     "MobileCreateAuthChallenge": {
       "build": true,
