@@ -86,7 +86,13 @@
       }
     }
   },
-  "storage": {},
+  "storage": {
+    "s33670c063": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": []
+    }
+  },
   "function": {
     "MobileCreateAuthChallenge": {
       "build": true,
