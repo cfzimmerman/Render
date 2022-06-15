@@ -181,6 +181,7 @@ const HomeVaultLanding = ({ navigation }) => {
           dispatch,
           storiesfullview,
           storiessectionlist,
+          currentuser,
         })}
         ListFooterComponent={SectionGridFooter({
           length: vaultfeeddata.length,

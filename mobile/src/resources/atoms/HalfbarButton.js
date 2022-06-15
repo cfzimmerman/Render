@@ -1,12 +1,10 @@
-import {
-  TouchableOpacity, StyleSheet, View, Text,
-} from "react-native";
+import { TouchableOpacity, StyleSheet, View, Text } from "react-native";
 import { Environment, Colors, GlobalStyles } from "../project/index";
 
 // Use example
 // <HalfbarButton label={'words'} Action={() => console.log('pressed')} />
 
-function HalfbarButton({ label, Action, active }) {
+const HalfbarButton = ({ label, Action, active }) => {
   return (
     <TouchableOpacity onPress={() => Action()}>
       <View
@@ -29,7 +27,7 @@ function HalfbarButton({ label, Action, active }) {
       </View>
     </TouchableOpacity>
   );
-}
+};
 
 const styles = StyleSheet.create({
   buttonwrapper: {

@@ -22,3 +22,6 @@ export { default as CollapsingHeaderBox } from "./CollapsingHeaderBox";
 
 // Halfbar button... but with an icon 😱
 export { default as IconHalfbarButton } from "./IconHalfbarButton";
+
+// Standard box of size halfbar H and fullbar W to display 3 lines of text
+export { default as HalfByFullDisplayBox } from "./HalfByFullDisplayBox";

@@ -20,6 +20,7 @@ const slice = createSlice({
       createdAt: null,
       addedmecount: null,
       addedcount: null,
+      setpassword: "unknown",
     },
     pfpsignedurl: null,
     gallerydata: [],
@@ -41,6 +42,7 @@ const slice = createSlice({
         createdAt: null,
         addedmecount: null,
         addedcount: null,
+        setpassword: "unknown",
       };
       state.pfpsignedurl = null;
       state.gallerydata.length = 0;
