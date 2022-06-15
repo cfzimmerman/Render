@@ -48,6 +48,7 @@ async function GetCurrentUser({ dispatch, navigation }) {
                         addedcount
                         emailconfirmed
                         acceptedtos
+                        setpassword
                     }
                 }
             `)
@@ -92,6 +93,7 @@ async function GetCurrentUser({ dispatch, navigation }) {
         createdAt: user.createdAt,
         addedmecount: user.addedmecount,
         addedcount: user.addedcount,
+        setpassword: user.setpassword,
       };
 
       batch(() => {
