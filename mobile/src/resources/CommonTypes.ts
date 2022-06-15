@@ -13,6 +13,7 @@ export interface CurrentUserType {
   pfp: string | null;
   fullyauthenticated: boolean | null;
   firstvaultupload: boolean | null;
+  setpassword: boolean | null;
   cognitosub: string | null;
   createdAt: string | null;
   addedmecount: number | null;

@@ -15,6 +15,7 @@ async function AttemptSignup({ username, navigation, dispatch }) {
     const userObject = {
       email: username,
       fullyauthenticated: false,
+      setpassword: false,
     };
 
     const newUser = await API.graphql(
@@ -49,6 +50,7 @@ async function AttemptSignup({ username, navigation, dispatch }) {
       email: username,
     });
   } catch (error) {
+    // If something failed, backtrack and delete the created user
     if (createdUserID != null && createdCognitoSub === null) {
       await API.graphql(
         graphqlOperation(deleteUsers, { input: { id: createdUserID } })
