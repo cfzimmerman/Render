@@ -15,8 +15,7 @@ async function PostPublic({
   isodate,
   gallerydata,
 }) {
-  // id is PostID
-
+  // item.id is PostID
   const updatedpost = {
     id: item.id,
     publicpost: true,

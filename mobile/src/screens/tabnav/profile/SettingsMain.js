@@ -86,6 +86,13 @@ const SettingsMain = ({ navigation }) => {
               active={false}
             />
             <HalfbarButton
+              label="Password"
+              Action={() => navigation.navigate("ForgotPassword")}
+              active={false}
+            />
+          </View>
+          <View style={styles.buttonrowwrapper}>
+            <HalfbarButton
               label="Log out"
               Action={() => LogOut({ dispatch, navigation })}
               active={false}

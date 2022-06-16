@@ -40,6 +40,7 @@ export const getPostViewTracker = /* GraphQL */ `
         gamertag
         mostrecentpublicpost
         pfp
+        setpassword
         storagesizeinbytes
         type
         createdAt
@@ -123,6 +124,7 @@ export const getUserRelationships = /* GraphQL */ `
         gamertag
         mostrecentpublicpost
         pfp
+        setpassword
         storagesizeinbytes
         type
         createdAt
@@ -308,6 +310,7 @@ export const getComments = /* GraphQL */ `
         gamertag
         mostrecentpublicpost
         pfp
+        setpassword
         storagesizeinbytes
         type
         createdAt
@@ -398,6 +401,7 @@ export const getPosts = /* GraphQL */ `
         gamertag
         mostrecentpublicpost
         pfp
+        setpassword
         storagesizeinbytes
         type
         createdAt
@@ -699,6 +703,7 @@ export const getUsers = /* GraphQL */ `
       gamertag
       mostrecentpublicpost
       pfp
+      setpassword
       storagesizeinbytes
       type
       Comments {
@@ -740,6 +745,7 @@ export const listUsers = /* GraphQL */ `
         gamertag
         mostrecentpublicpost
         pfp
+        setpassword
         storagesizeinbytes
         type
         createdAt
@@ -779,6 +785,7 @@ export const userByCognitosub = /* GraphQL */ `
         gamertag
         mostrecentpublicpost
         pfp
+        setpassword
         storagesizeinbytes
         type
         createdAt
@@ -818,6 +825,7 @@ export const userByEmail = /* GraphQL */ `
         gamertag
         mostrecentpublicpost
         pfp
+        setpassword
         storagesizeinbytes
         type
         createdAt
@@ -857,6 +865,7 @@ export const userByGamertag = /* GraphQL */ `
         gamertag
         mostrecentpublicpost
         pfp
+        setpassword
         storagesizeinbytes
         type
         createdAt
@@ -898,6 +907,7 @@ export const searchByGamertag = /* GraphQL */ `
         gamertag
         mostrecentpublicpost
         pfp
+        setpassword
         storagesizeinbytes
         type
         createdAt
@@ -939,6 +949,7 @@ export const searchUsers = /* GraphQL */ `
         gamertag
         mostrecentpublicpost
         pfp
+        setpassword
         storagesizeinbytes
         type
         createdAt

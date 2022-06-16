@@ -9,10 +9,9 @@ import { BlurView } from "expo-blur";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setSystemmessageInactive } from "../../redux/system/systemmessage";
-
 import { Environment, Colors, GlobalStyles } from "../project";
 
-function SystemmessageModal() {
+const SystemmessageModal = () => {
   const systemmessage = useSelector((state) => state.systemmessage);
   const dispatch = useDispatch();
 
@@ -55,7 +54,7 @@ function SystemmessageModal() {
       </TouchableWithoutFeedback>
     </Modal>
   );
-}
+};
 
 const styles = StyleSheet.create({
   modalcontainer: {

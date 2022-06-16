@@ -40,6 +40,7 @@ export const onCreatePostViewTracker = /* GraphQL */ `
         gamertag
         mostrecentpublicpost
         pfp
+        setpassword
         storagesizeinbytes
         type
         createdAt
@@ -88,6 +89,7 @@ export const onUpdatePostViewTracker = /* GraphQL */ `
         gamertag
         mostrecentpublicpost
         pfp
+        setpassword
         storagesizeinbytes
         type
         createdAt
@@ -136,6 +138,7 @@ export const onDeletePostViewTracker = /* GraphQL */ `
         gamertag
         mostrecentpublicpost
         pfp
+        setpassword
         storagesizeinbytes
         type
         createdAt
@@ -169,6 +172,7 @@ export const onCreateUserRelationships = /* GraphQL */ `
         gamertag
         mostrecentpublicpost
         pfp
+        setpassword
         storagesizeinbytes
         type
         createdAt
@@ -201,6 +205,7 @@ export const onUpdateUserRelationships = /* GraphQL */ `
         gamertag
         mostrecentpublicpost
         pfp
+        setpassword
         storagesizeinbytes
         type
         createdAt
@@ -233,6 +238,7 @@ export const onDeleteUserRelationships = /* GraphQL */ `
         gamertag
         mostrecentpublicpost
         pfp
+        setpassword
         storagesizeinbytes
         type
         createdAt
@@ -281,6 +287,7 @@ export const onCreateComments = /* GraphQL */ `
         gamertag
         mostrecentpublicpost
         pfp
+        setpassword
         storagesizeinbytes
         type
         createdAt
@@ -330,6 +337,7 @@ export const onUpdateComments = /* GraphQL */ `
         gamertag
         mostrecentpublicpost
         pfp
+        setpassword
         storagesizeinbytes
         type
         createdAt
@@ -379,6 +387,7 @@ export const onDeleteComments = /* GraphQL */ `
         gamertag
         mostrecentpublicpost
         pfp
+        setpassword
         storagesizeinbytes
         type
         createdAt
@@ -421,6 +430,7 @@ export const onCreatePosts = /* GraphQL */ `
         gamertag
         mostrecentpublicpost
         pfp
+        setpassword
         storagesizeinbytes
         type
         createdAt
@@ -468,6 +478,7 @@ export const onUpdatePosts = /* GraphQL */ `
         gamertag
         mostrecentpublicpost
         pfp
+        setpassword
         storagesizeinbytes
         type
         createdAt
@@ -515,6 +526,7 @@ export const onDeletePosts = /* GraphQL */ `
         gamertag
         mostrecentpublicpost
         pfp
+        setpassword
         storagesizeinbytes
         type
         createdAt
@@ -547,6 +559,7 @@ export const onCreateUsers = /* GraphQL */ `
       gamertag
       mostrecentpublicpost
       pfp
+      setpassword
       storagesizeinbytes
       type
       Comments {
@@ -583,6 +596,7 @@ export const onUpdateUsers = /* GraphQL */ `
       gamertag
       mostrecentpublicpost
       pfp
+      setpassword
       storagesizeinbytes
       type
       Comments {
@@ -619,6 +633,7 @@ export const onDeleteUsers = /* GraphQL */ `
       gamertag
       mostrecentpublicpost
       pfp
+      setpassword
       storagesizeinbytes
       type
       Comments {

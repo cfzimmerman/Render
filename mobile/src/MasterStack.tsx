@@ -20,6 +20,7 @@ import DeletePost from "./screens/tabnav/vault/DeletePost";
 import EditPost from "./screens/tabnav/plus/EditPost";
 import CommentsMain from "./screens/tabnav/social/CommentsMain";
 import AppStart from "./screens/masterstack/AppStart";
+import ForgotPassword from "./screens/tabnav/profile/ForgotPassword";
 import { useNavigation } from "@react-navigation/native";
 
 type RootStackParamList = {
@@ -36,6 +37,7 @@ type RootStackParamList = {
   Gamertag: undefined;
   Birthday: undefined;
   TOS: undefined;
+  ForgotPassword: undefined;
   VaultPostFullView: {
     startindex: number;
     usecase: string;
@@ -93,6 +95,7 @@ const MasterStack = () => {
       <Stack.Screen name="Gamertag" component={Gamertag} />
       <Stack.Screen name="Birthday" component={Birthday} />
       <Stack.Screen name="TOS" component={TOS} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
 
       <Stack.Screen
         name="VaultPostFullView"

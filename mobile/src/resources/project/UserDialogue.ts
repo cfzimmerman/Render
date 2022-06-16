@@ -11,7 +11,8 @@
 8: GAMERTAG.JS  - Add Gamertag to DataStore failed
 9: BIRTHDAY.JS - Add Birthday to DataStore failed
 10: TOS.JS - Add (acceptedtos = true) to DataStore failed
-
+11: ForgotPassword.TSX - Auth.forgotPassword(username) failed - username is the user's email
+12: ForgotPassword.TSX - Auth.forgotPasswordSubmit(username, code, new_password) failed OR API.graphql(graphqlOperation(updateUsers, { input: { id, setpassword: true } })) failed
 */
 
 // Add Sign up welcome!
@@ -40,7 +41,7 @@ USERTOOYOUNG = [
 
 */
 
-const UserDialogue = (prop) => {
+const UserDialogue = (prop?: string) => {
   const UserDialogue = {
     errormessage: {
       systemerror: {
@@ -100,6 +101,21 @@ const UserDialogue = (prop) => {
         title: "Unable to read file",
         description:
           "Please ensure your screen capture software is fully up to date.",
+      },
+      forgotpasswordsent: {
+        header: "📨",
+        title: "Code sent",
+        description: "This tape will self destruct in 5 seconds.",
+      },
+      newpasswordsaved: {
+        header: "🪩",
+        title: "New password saved",
+        description: "What can't you do!",
+      },
+      incorrectpasswordcode: {
+        header: "🤨",
+        title: "Incorrect code",
+        description: "Please request a new code and try again.",
       },
     },
   };

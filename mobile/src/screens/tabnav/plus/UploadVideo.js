@@ -40,13 +40,11 @@ async function UploadVideo({
       setLoadProgressActive({
         title: "Uploading video",
         description: `${parseInt(size.size / 1000000)} MB total`,
-      }),
+      })
     );
     dispatch(setPercentComplete("Processing"));
     // dispatch(setUploadObject(postobject))
   });
-
-  // Issue here  ^^^^^^    console.log("Name: " + JSON.stringify(videoname))
 
   // Get video thumbnail. VideoThumbnails.getThumbnailAsync() isn't that robust, so there's a backup
   try {
@@ -88,15 +86,16 @@ async function UploadVideo({
 
   const file = {
     size: size.size,
-    slice: (bodystart, bodyend) => FileSystem.readAsStringAsync(uri, {
-      length: bodyend - bodystart,
-      position: bodystart,
-      encoding: "base64",
-    })
-      .then((data) => Buffer.from(data, "base64"))
-      .catch((error) => {
-        console.log(`error: ${error}`);
-      }),
+    slice: (bodystart, bodyend) =>
+      FileSystem.readAsStringAsync(uri, {
+        length: bodyend - bodystart,
+        position: bodystart,
+        encoding: "base64",
+      })
+        .then((data) => Buffer.from(data, "base64"))
+        .catch((error) => {
+          console.log(`error: ${error}`);
+        }),
   };
 
   try {
@@ -107,8 +106,8 @@ async function UploadVideo({
         // console.log(`Uploading video: ${parseInt((progress.loaded / progress.total) * 100)}%`);
         dispatch(
           setPercentComplete(
-            `${parseInt((progress.loaded / progress.total) * 100)}%`,
-          ),
+            `${parseInt((progress.loaded / progress.total) * 100)}%`
+          )
         );
       },
     });
