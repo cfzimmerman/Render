@@ -5,6 +5,15 @@ import { AddVideoToGalleryDataType } from "../../screens/tabnav/profile/AddVideo
 import { AddedMeUsersType } from "../../screens/tabnav/profile/AddToAddedMeUsers";
 import { ChangeGalleryPostPublicType } from "../../screens/tabnav/profile/ChangeGalleryPostPublic";
 
+interface SliceStateTypes {
+  currentuser: CurrentUserType;
+  pfpsignedurl: string | null;
+  gallerydata: PostType[];
+  gallerynexttoken: string | null;
+  addbackusers: any[];
+  fetchinggallerydata: boolean;
+}
+
 const slice = createSlice({
   name: "profilemain",
   initialState: {
@@ -27,7 +36,7 @@ const slice = createSlice({
     gallerynexttoken: null,
     addbackusers: [],
     fetchinggallerydata: false,
-  },
+  } as SliceStateTypes,
   reducers: {
     clearProfile: (state) => {
       state.currentuser = {
@@ -96,6 +105,9 @@ const slice = createSlice({
         action.payload.newPost
       );
     },
+    setSetPassword: (state, action: PayloadAction<boolean>) => {
+      state.currentuser.setpassword = action.payload;
+    },
   },
 });
 
@@ -113,6 +125,7 @@ export const {
   setGalleryNextToken,
   exciseGalleryPost,
   injectGalleryPost,
+  setSetPassword,
 } = slice.actions;
 
 export default slice.reducer;

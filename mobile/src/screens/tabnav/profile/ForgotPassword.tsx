@@ -8,63 +8,133 @@ import {
   StyleSheet,
   Image,
 } from "react-native";
-import { Storage } from "aws-amplify";
-import { Environment, GlobalStyles, Colors } from "../../../resources/project";
+import { Storage, Auth, API, graphqlOperation } from "aws-amplify";
+import {
+  Environment,
+  GlobalStyles,
+  Colors,
+  UserDialogue,
+} from "../../../resources/project";
+import {
+  SystemmessageModal,
+  ErrormessageModal,
+} from "../../../resources/molecules";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { DismissKeyboard } from "../../../resources/utilities";
-import { BackArrow, HalfbarButton } from "../../../resources/atoms";
+import { BackArrow, PastyHalfbarButtons } from "../../../resources/atoms";
+import { DispatchType, RootStateType } from "../../../redux/store";
+import { CurrentUserType } from "../../../resources/CommonTypes";
+import { setSystemmessageActive } from "../../../redux/system/systemmessage";
+import { setErrormessageActive } from "../../../redux/system/errormessage";
+import { updateUsers } from "../../../graphql/mutations";
+import { setSetPassword } from "../../../redux/profile/profilemain";
 
-const PastyHalfbarButtons = ({ active, label, Action, disabled }) => {
-  return (
-    <TouchableOpacity onPress={() => Action()} disabled={disabled}>
-      <View
-        style={[
-          GlobalStyles.shadow,
-          styles.buttonwrapper,
-          { backgroundColor: active ? Colors.AccentOn : Colors.AccentOff },
-        ]}
-      >
-        <Text
-          style={[
-            GlobalStyles.irregularshadow,
-            GlobalStyles.h3text,
-            styles.buttontext,
-          ]}
-        >
-          {label}
-        </Text>
-      </View>
-    </TouchableOpacity>
-  );
-};
+async function GetForgotPasswordCode({
+  username,
+  dispatch,
+}: {
+  username: string;
+  dispatch: DispatchType;
+}) {
+  try {
+    await Auth.forgotPassword(username);
+    dispatch(
+      setSystemmessageActive(UserDialogue().systemmessage.forgotpasswordsent)
+    );
+  } catch (error) {
+    dispatch(
+      setErrormessageActive(UserDialogue("11").errormessage.systemerror)
+    );
+    console.log("Error: " + error);
+  }
+}
+
+interface ConfirmChangePasswordPropTypes {
+  username: string;
+  code: string;
+  new_password: string;
+  currentuser: CurrentUserType;
+  navigation: any;
+  dispatch: DispatchType;
+}
+
+async function ConfirmChangePassword({
+  username,
+  code,
+  new_password,
+  currentuser,
+  navigation,
+  dispatch,
+}: ConfirmChangePasswordPropTypes) {
+  try {
+    await Auth.forgotPasswordSubmit(username, code, new_password);
+    if (currentuser.setpassword === false) {
+      const updatedUser = {
+        id: currentuser.id,
+        setpassword: true,
+      };
+      const newUser = await API.graphql(
+        graphqlOperation(updateUsers, { input: updatedUser })
+      );
+      console.log("NewUser: " + JSON.stringify(newUser));
+    }
+    dispatch(setSetPassword(true));
+    navigation.navigate("HomeVault");
+    dispatch(
+      setSystemmessageActive(UserDialogue().systemmessage.newpasswordsaved)
+    );
+  } catch (error) {
+    console.log("Error: " + error);
+    dispatch(
+      setSystemmessageActive(UserDialogue().systemmessage.incorrectcode)
+    );
+  }
+}
+
+// Update redux
 
 async function GetBackground({
   setBackgroundImg,
 }: {
   setBackgroundImg: Function;
 }) {
-  console.log("Get background img");
   const signedURL = await Storage.get("CompanyStock/forgotpasswordacnh.JPG", {
     expires: 86400,
   });
   setBackgroundImg(signedURL);
 }
 
+async function GetUsername({ setUsername }) {
+  const { username } = await Auth.currentUserInfo();
+  setUsername(username);
+}
+
 const ForgotPassword = ({ navigation }) => {
   const [gotBackgroundImg, setGotBackgroundImg] = useState(false);
   const [backgroundImg, setBackgroundImg] = useState(null);
+  const [username, setUsername] = useState(null);
+  const [sentInitialCode, setSentInitialCode] = useState(false);
 
   const [codeValue, setCodeValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [passwordSatisfied, setPasswordSatisfied] = useState(false);
 
-  // Accesses Redux store for triggering error messages
+  const currentuser = useSelector(
+    (state: RootStateType) => state.profilemain.currentuser
+  );
+
   const dispatch = useDispatch();
 
   if (gotBackgroundImg === false) {
     GetBackground({ setBackgroundImg });
+    GetUsername({ setUsername });
     setGotBackgroundImg(true);
+  }
+
+  if (sentInitialCode === false && username != null) {
+    GetForgotPasswordCode({ dispatch, username });
+    setSentInitialCode(true);
   }
 
   const UpdatePassword = (input) => {
@@ -85,95 +155,111 @@ const ForgotPassword = ({ navigation }) => {
           blurRadius={Environment.BlurRadius}
         />
         <SafeAreaView style={styles.safeareacontainer}>
-          <KeyboardAvoidingView
-            style={styles.keyboardavoidingwrapper}
-            behavior="height"
-          >
-            <View style={styles.boxwrapper}>
-              <View style={styles.labelwrapper}>
-                <Text
-                  style={[
-                    styles.labelstyle,
-                    GlobalStyles.irregularshadow,
-                    GlobalStyles.p1text,
-                  ]}
-                >
-                  {`${"Security code "}`}
-                </Text>
-                <Text
-                  style={[
-                    styles.sublabelstyle,
-                    GlobalStyles.irregularshadow,
-                    GlobalStyles.p2text,
-                  ]}
-                >
-                  (Sent to your email)
-                </Text>
-              </View>
-              <View style={[GlobalStyles.shadow, styles.inputwrapper]}>
-                <TextInput
-                  placeholder="000000"
-                  textAlign="center"
-                  placeholderTextColor={Colors.PrimaryOff}
-                  style={[styles.inputbox, GlobalStyles.h3text]}
-                  onChangeText={setCodeValue}
-                  value={codeValue}
-                  keyboardType="number-pad"
-                  maxLength={6}
-                />
-              </View>
-            </View>
-
-            <View style={styles.boxwrapper}>
-              <View style={styles.labelwrapper}>
-                <Text
-                  style={[
-                    styles.labelstyle,
-                    GlobalStyles.irregularshadow,
-                    GlobalStyles.p1text,
-                  ]}
-                >
-                  {`${"New password "}`}
-                </Text>
-                <Text
-                  style={[
-                    styles.sublabelstyle,
-                    GlobalStyles.irregularshadow,
-                    GlobalStyles.p2text,
-                  ]}
-                >
-                  (8 character min)
-                </Text>
+          <View style={{ flex: 1 }}>
+            <KeyboardAvoidingView
+              style={styles.keyboardavoidingwrapper}
+              behavior="height"
+            >
+              <View style={styles.boxwrapper}>
+                <View style={styles.labelwrapper}>
+                  <Text
+                    style={[
+                      styles.labelstyle,
+                      GlobalStyles.irregularshadow,
+                      GlobalStyles.p1text,
+                    ]}
+                  >
+                    {`${"Security code "}`}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.sublabelstyle,
+                      GlobalStyles.irregularshadow,
+                      GlobalStyles.p2text,
+                    ]}
+                  >
+                    (Sent to your email)
+                  </Text>
+                </View>
+                <View style={[GlobalStyles.shadow, styles.inputwrapper]}>
+                  <TextInput
+                    placeholder="000000"
+                    textAlign="center"
+                    placeholderTextColor={Colors.PrimaryOff}
+                    style={[styles.inputbox, GlobalStyles.h3text]}
+                    onChangeText={setCodeValue}
+                    value={codeValue}
+                    keyboardType="number-pad"
+                    maxLength={6}
+                  />
+                </View>
               </View>
 
-              <View style={[GlobalStyles.shadow, styles.inputwrapper]}>
-                <TextInput
-                  placeholder="••••••••••"
-                  textAlign="center"
-                  placeholderTextColor={Colors.PrimaryOff}
-                  style={[styles.inputbox, GlobalStyles.h3text]}
-                  onChangeText={UpdatePassword}
-                  value={passwordValue}
-                  keyboardType="default"
+              <View style={styles.boxwrapper}>
+                <View style={styles.labelwrapper}>
+                  <Text
+                    style={[
+                      styles.labelstyle,
+                      GlobalStyles.irregularshadow,
+                      GlobalStyles.p1text,
+                    ]}
+                  >
+                    {`${"New password "}`}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.sublabelstyle,
+                      GlobalStyles.irregularshadow,
+                      GlobalStyles.p2text,
+                    ]}
+                  >
+                    (8 character min)
+                  </Text>
+                </View>
+
+                <View style={[GlobalStyles.shadow, styles.inputwrapper]}>
+                  <TextInput
+                    placeholder="••••••••••"
+                    textAlign="center"
+                    placeholderTextColor={Colors.PrimaryOff}
+                    style={[styles.inputbox, GlobalStyles.h3text]}
+                    onChangeText={UpdatePassword}
+                    value={passwordValue}
+                    keyboardType="default"
+                  />
+                </View>
+              </View>
+              <View style={styles.buttonholder}>
+                <PastyHalfbarButtons
+                  label={"New code"}
+                  active={false}
+                  disabled={false}
+                  Action={() => GetForgotPasswordCode({ username, dispatch })}
+                />
+                <PastyHalfbarButtons
+                  label={"Confirm"}
+                  active={passwordSatisfied}
+                  disabled={!passwordSatisfied}
+                  Action={() =>
+                    ConfirmChangePassword({
+                      username,
+                      code: codeValue,
+                      new_password: passwordValue,
+                      currentuser,
+                      navigation,
+                      dispatch,
+                    })
+                  }
                 />
               </View>
+            </KeyboardAvoidingView>
+            <View style={{ position: "absolute" }}>
+              <BackArrow />
             </View>
-            <View style={styles.buttonholder}>
-              <PastyHalfbarButtons
-                label={"Back"}
-                active={false}
-                disabled={false}
-                Action={() => navigation.goBack()}
-              />
-              <PastyHalfbarButtons
-                label={"Confirm"}
-                active={passwordSatisfied}
-                disabled={!passwordSatisfied}
-                Action={() => console.log("Pressed")}
-              />
-            </View>
-          </KeyboardAvoidingView>
+          </View>
         </SafeAreaView>
+        <SystemmessageModal />
+        <ErrormessageModal />
       </View>
     </DismissKeyboard>
   );
@@ -230,17 +316,6 @@ const styles = StyleSheet.create({
     width: Environment.FullBar,
     justifyContent: "space-between",
     marginBottom: Environment.LargePadding,
-  },
-  buttonwrapper: {
-    height: Environment.CubeSize,
-    width: Environment.HalfBar,
-    borderRadius: Environment.StandardRadius,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttontext: {
-    textAlign: "center",
-    color: Colors.Primary,
   },
 });
 
