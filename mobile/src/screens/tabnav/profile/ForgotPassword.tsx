@@ -69,7 +69,11 @@ async function ConfirmChangePassword({
 }: ConfirmChangePasswordPropTypes) {
   try {
     await Auth.forgotPasswordSubmit(username, code, new_password);
-    if (currentuser.setpassword === false) {
+    if (
+      currentuser.setpassword === false ||
+      currentuser.setpassword === "unknown" ||
+      currentuser.setpassword === null
+    ) {
       const updatedUser = {
         id: currentuser.id,
         setpassword: true,
@@ -87,7 +91,7 @@ async function ConfirmChangePassword({
   } catch (error) {
     console.log("Error: " + error);
     dispatch(
-      setSystemmessageActive(UserDialogue().systemmessage.incorrectcode)
+      setSystemmessageActive(UserDialogue().systemmessage.incorrectpasswordcode)
     );
   }
 }

@@ -41,7 +41,7 @@ USERTOOYOUNG = [
 
 */
 
-const UserDialogue = (prop) => {
+const UserDialogue = (prop?: string) => {
   const UserDialogue = {
     errormessage: {
       systemerror: {
@@ -111,6 +111,11 @@ const UserDialogue = (prop) => {
         header: "🪩",
         title: "New password saved",
         description: "What can't you do!",
+      },
+      incorrectpasswordcode: {
+        header: "🤨",
+        title: "Incorrect code",
+        description: "Please request a new code and try again.",
       },
     },
   };
