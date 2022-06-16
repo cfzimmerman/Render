@@ -1,6 +1,4 @@
-import {
-  View, Text, TouchableOpacity, StyleSheet, Image,
-} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { setSystemmessageActive } from "../../../redux/system/systemmessage";
@@ -12,14 +10,16 @@ import {
 } from "../../../resources/project";
 import { CollapsingHeaderBox, PrimaryDivider } from "../../../resources/atoms";
 import HomeTopLogo from "../home/HomeTopLogo";
+import SetPasswordBox from "./SetPasswordBox";
 import StoriesBox from "./StoriesBox";
 
-function HomeVaultHeader({
+const HomeVaultHeader = ({
   navigation,
   dispatch,
   storiesfullview,
   storiessectionlist,
-}) {
+  currentuser,
+}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logoboxwrapper}>
@@ -34,11 +34,13 @@ function HomeVaultHeader({
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => dispatch(
-            setSystemmessageActive(
-              UserDialogue().systemmessage.searchconstruction,
-            ),
-          )}
+          onPress={() =>
+            dispatch(
+              setSystemmessageActive(
+                UserDialogue().systemmessage.searchconstruction
+              )
+            )
+          }
         >
           <View style={[GlobalStyles.shadow, styles.searchbarwrapper]}>
             <Text
@@ -61,10 +63,12 @@ function HomeVaultHeader({
         storiessectionlist={storiessectionlist}
       />
 
+      <SetPasswordBox currentuser={currentuser} navigation={navigation} />
+
       <PrimaryDivider />
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

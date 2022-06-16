@@ -1,17 +1,14 @@
-import { TouchableOpacity, StyleSheet, View, Text } from "react-native";
-import { Environment, Colors, GlobalStyles } from "../project/index";
+import { TouchableOpacity, View, StyleSheet, Text } from "react-native";
+import { GlobalStyles, Colors, Environment } from "../project";
 
-// Use example
-// <HalfbarButton label={'words'} Action={() => console.log('pressed')} />
-
-const HalfbarButton = ({ label, Action, active }) => {
+const PastyHalfbarButtons = ({ active, label, Action, disabled }) => {
   return (
-    <TouchableOpacity onPress={() => Action()}>
+    <TouchableOpacity onPress={() => Action()} disabled={disabled}>
       <View
         style={[
           GlobalStyles.shadow,
           styles.buttonwrapper,
-          { backgroundColor: active ? Colors.AccentOn : Colors.Primary },
+          { backgroundColor: active ? Colors.AccentOn : Colors.AccentOff },
         ]}
       >
         <Text
@@ -19,7 +16,6 @@ const HalfbarButton = ({ label, Action, active }) => {
             GlobalStyles.irregularshadow,
             GlobalStyles.h3text,
             styles.buttontext,
-            { color: active ? Colors.Primary : Colors.AccentOn },
           ]}
         >
           {label}
@@ -39,7 +35,8 @@ const styles = StyleSheet.create({
   },
   buttontext: {
     textAlign: "center",
+    color: Colors.Primary,
   },
 });
 
-export default HalfbarButton;
+export default PastyHalfbarButtons;

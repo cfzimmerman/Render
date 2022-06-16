@@ -35,19 +35,19 @@ import InitiateAuthFlow from "./InitiateAuthFlow";
 
 import { updateUsers } from "../../../graphql/mutations";
 
-const IsComplete = ({
-  input, email, navigation, dispatch, cognitoUser,
-}) => {
+const IsComplete = ({ input, email, navigation, dispatch, cognitoUser }) => {
   if (input.length === 6) {
     HandleCode({
-      input, email, navigation, dispatch, cognitoUser,
+      input,
+      email,
+      navigation,
+      dispatch,
+      cognitoUser,
     });
   }
 };
 
-async function HandleCode({
-  input, email, navigation, dispatch, cognitoUser,
-}) {
+async function HandleCode({ input, email, navigation, dispatch, cognitoUser }) {
   try {
     await Auth.sendCustomChallengeAnswer(cognitoUser, input);
   } catch (error) {
@@ -62,7 +62,7 @@ async function HandleCode({
   } catch (error) {
     console.log(`Error: ${error}`);
     dispatch(
-      setSystemmessageActive(UserDialogue().systemmessage.incorrectcode),
+      setSystemmessageActive(UserDialogue().systemmessage.incorrectcode)
     );
   }
 }
@@ -77,7 +77,7 @@ const ResendCode = ({ username, dispatch, navigation }) => {
   }
 
   dispatch(
-    setSystemmessageActive(UserDialogue().systemmessage.resendcodesuccess),
+    setSystemmessageActive(UserDialogue().systemmessage.resendcodesuccess)
   );
 };
 
@@ -106,7 +106,7 @@ const animateCell = ({ hasValue, index, isFocused }) => {
   ]).start();
 };
 
-function LoginCode({ navigation, route }) {
+const LoginCode = ({ navigation, route }) => {
   // value is the current contents of the filled boxes. Amplify Auth so-far seems comfortable with the string format. Convert to int later if necessary or optimal
   const [value, setValue] = useState("");
 
@@ -129,13 +129,13 @@ function LoginCode({ navigation, route }) {
     const animatedCellStyle = {
       backgroundColor: hasValue
         ? animationsScale[index].interpolate({
-          inputRange: [0, 1],
-          outputRange: [Colors.AccentPartial, Colors.AccentOn],
-        })
+            inputRange: [0, 1],
+            outputRange: [Colors.AccentPartial, Colors.AccentOn],
+          })
         : animationsColor[index].interpolate({
-          inputRange: [0, 1],
-          outputRange: [Colors.AccentOff, Colors.AccentOn],
-        }),
+            inputRange: [0, 1],
+            outputRange: [Colors.AccentOff, Colors.AccentOn],
+          }),
 
       transform: [
         {
@@ -217,7 +217,7 @@ function LoginCode({ navigation, route }) {
       </View>
     </OnboardingScreenTemplate>
   );
-}
+};
 
 const styles = StyleSheet.create({
   cell: {
