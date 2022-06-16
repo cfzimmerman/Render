@@ -11,29 +11,6 @@
       "StackId": "arn:aws:cloudformation:us-east-1:280592462047:stack/amplify-mobile-monostage-180223/91f82ea0-e523-11ec-a533-128e6a1cd335",
       "AmplifyAppId": "d88kw0i3xs9f9",
       "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-mobile-monostage-180223-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
-    },
-    "categories": {
-      "function": {
-        "MobileCreateAuthChallenge": {
-          "deploymentBucketName": "amplify-mobile-monostage-180223-deployment",
-          "s3Key": "amplify-builds/MobileCreateAuthChallenge-6537302b2f536555346c-build.zip"
-        },
-        "MobileDefineAuthChallenge": {
-          "deploymentBucketName": "amplify-mobile-monostage-180223-deployment",
-          "s3Key": "amplify-builds/MobileDefineAuthChallenge-6e744e5a78564e323341-build.zip"
-        },
-        "MobileVerifyAuthChallengeResponse": {
-          "deploymentBucketName": "amplify-mobile-monostage-180223-deployment",
-          "s3Key": "amplify-builds/MobileVerifyAuthChallengeResponse-41354d72756d6a553372-build.zip"
-        },
-        "MobilePreSignup": {
-          "deploymentBucketName": "amplify-mobile-monostage-180223-deployment",
-          "s3Key": "amplify-builds/MobilePreSignup-6b6b59417a4f57744a52-build.zip"
-        }
-      },
-      "auth": {
-        "Mobile": {}
-      }
     }
   }
 }
