@@ -3,18 +3,14 @@ import {
   View,
   StyleSheet,
   TouchableWithoutFeedback,
-  Text,
   TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { BlurView } from "expo-blur";
 import { Audio, Video, AVPlaybackStatus } from "expo-av";
 import VideoPlayer from "expo-video-player";
 import TouchableScale from "react-native-touchable-scale";
 import GestureRecognizer from "react-native-swipe-gestures";
-import GestureHandler, {
-  PinchGestureHandler,
-} from "react-native-gesture-handler";
+import { PinchGestureHandler } from "react-native-gesture-handler";
 
 import { useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
@@ -33,6 +29,7 @@ import AddVideoToGalleryData from "../profile/AddVideoToGalleryData";
 import AddVideoToOtherUserGallery from "../explore/AddVideoToOtherUserGallery";
 import AddVideoToPublicFeed from "../home/AddVideoToPublicFeed";
 import AddVideoToStories from "../home/AddVideoToStories";
+import ChangeFocusView from "./ChangeFocusView";
 import PostOptionsModal from "./PostOptionsModal";
 import PostTextModal from "./PostTextModal";
 import SetOptions from "./SetOptions";
@@ -299,49 +296,60 @@ const FullViewContent = ({ item, index, dispatch, navigation, usecase }) => {
           })
         }
       >
-        <View style={styles.container}>
-          <Image
-            source={{ uri: item.signedurl }}
-            style={[StyleSheet.absoluteFill, styles.backgroundimage]}
-            blurRadius={Environment.BlurRadius}
-          />
-          {/* <BlurView intensity={80} tint={'dark'}  style={StyleSheet.absoluteFill} /> */}
-
-          <SafeAreaView>
-            <TouchableScale
-              tension={250}
-              friction={25}
-              delayPressIn={750}
-              onPress={() =>
-                SetOptions({
-                  shouldshowoptions: true,
-                  optionstatus,
-                  dispatch,
-                  postid: item.id,
-                })
-              }
-              onLongPress={() => {
-                console.log("LongPress");
-              }}
-            >
-              <View style={[GlobalStyles.shadow, { backgroundColor: "black" }]}>
-                <Image
-                  style={[
-                    styles.postimage,
-                    { height: dimensions.height, width: dimensions.width },
-                  ]}
-                  source={{ uri: item.signedurl }}
-                />
-              </View>
-            </TouchableScale>
-
-            <PostTextModalButton
-              dispatch={dispatch}
-              item={item}
-              dimensions={dimensions}
+        <PinchGestureHandler
+          onBegan={() => {
+            ChangeFocusView({ dispatch, set: true }),
+              navigation.navigate("VaultPostFocusView", {
+                usecase,
+              });
+          }}
+        >
+          <View style={styles.container}>
+            <Image
+              source={{ uri: item.signedurl }}
+              style={[StyleSheet.absoluteFill, styles.backgroundimage]}
+              blurRadius={Environment.BlurRadius}
             />
-          </SafeAreaView>
-        </View>
+            {/* <BlurView intensity={80} tint={'dark'}  style={StyleSheet.absoluteFill} /> */}
+
+            <SafeAreaView>
+              <TouchableScale
+                tension={250}
+                friction={25}
+                delayPressIn={750}
+                onPress={() =>
+                  SetOptions({
+                    shouldshowoptions: true,
+                    optionstatus,
+                    dispatch,
+                    postid: item.id,
+                  })
+                }
+                onLongPress={() => {
+                  console.log("LongPress");
+                }}
+              >
+                <View
+                  style={[GlobalStyles.shadow, { backgroundColor: "black" }]}
+                >
+                  <Image
+                    style={[
+                      styles.postimage,
+                      { height: dimensions.height, width: dimensions.width },
+                    ]}
+                    source={{ uri: item.signedurl }}
+                  />
+                </View>
+              </TouchableScale>
+
+              <PostTextModalButton
+                dispatch={dispatch}
+                item={item}
+                dimensions={dimensions}
+              />
+            </SafeAreaView>
+          </View>
+        </PinchGestureHandler>
       </TouchableWithoutFeedback>
       <PostOptionsModal
         navigation={navigation}

@@ -1,14 +1,9 @@
 import { IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-import {
-  Icons,
-  Colors,
-  Environment,
-  GlobalStyles,
-} from "../project";
+import { Icons, Colors, Environment, GlobalStyles } from "../project";
 import { ToPortrait } from "../utilities";
 
-function BackArrow() {
+const BackArrow = () => {
   const navigation = useNavigation();
 
   return (
@@ -29,6 +24,6 @@ function BackArrow() {
       }}
     />
   );
-}
+};
 
 export default BackArrow;

@@ -180,19 +180,20 @@ const VaultPostFullView = ({ navigation, route }) => {
 
   const dispatch = useDispatch();
 
-  /*
-    ScreenOrientation.unlockAsync()
+  ScreenOrientation.unlockAsync();
 
-    const listener = ScreenOrientation.addOrientationChangeListener(( change ) => {
-        if ((change.orientationInfo.orientation === 3) || (change.orientationInfo.orientation === 4)) {
-            ChangeLandscape({ dispatch: dispatch, set: true })
-            ChangeFocusView({ dispatch: dispatch, set: true })
-            navigation.navigate('VaultPostFocusView', { usecase: usecase })
-        } else {
-            ChangeLandscape({ dispatch: dispatch, set: false })
-        }
-    })
-    */
+  const listener = ScreenOrientation.addOrientationChangeListener((change) => {
+    if (
+      change.orientationInfo.orientation === 3 ||
+      change.orientationInfo.orientation === 4
+    ) {
+      ChangeLandscape({ dispatch: dispatch, set: true });
+      ChangeFocusView({ dispatch: dispatch, set: true });
+      navigation.navigate("VaultPostFocusView", { usecase: usecase });
+    } else {
+      ChangeLandscape({ dispatch: dispatch, set: false });
+    }
+  });
 
   const onviewref = useRef((viewableItems) => {
     ChangeActivePost({
