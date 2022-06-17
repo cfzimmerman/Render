@@ -20,6 +20,8 @@ code {
 
   /* colors */
   --translucent-white: rgba(255, 255, 255, 0.5);
+  --dark-blue: #111d40;
+  --midnight-blue: #000028;
 
   /* vars */
   --button-size: 3rem;
@@ -40,6 +42,12 @@ code {
   font-weight: 400;
   color: white;
   width: fit-content;
+}
+
+:root h3 {
+  font-size: 40px;
+  font-weight: 400;
+  color: var(--translucent-white);
 }
 
 :root h4 {
