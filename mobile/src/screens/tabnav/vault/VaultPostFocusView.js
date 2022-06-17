@@ -1,5 +1,12 @@
 import react, { useRef } from "react";
-import { View, Image, StyleSheet, Animated, PanResponder } from "react-native";
+import {
+  View,
+  Image,
+  StyleSheet,
+  Animated,
+  PanResponder,
+  TouchableWithoutFeedback,
+} from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 import * as ScreenOrientation from "expo-screen-orientation";
 import VideoPlayer from "expo-video-player";
@@ -19,8 +26,8 @@ const ExitFocusView = ({ navigation, dispatch, listener }) => {
   ChangeFocusView({ dispatch, set: false });
   ToPortrait(), ScreenOrientation.removeOrientationChangeListener(listener);
   navigation.goBack();
-  // ScreenOrientation.unlockAsync();
-  // ToPortrait()
+  ScreenOrientation.unlockAsync();
+  // ToPortrait();
 };
 
 const VaultPostFocusView = ({ navigation, route }) => {
@@ -61,6 +68,12 @@ const VaultPostFocusView = ({ navigation, route }) => {
   const onPinchEvent = Animated.event([{ nativeEvent: { scale: scale } }], {
     useNativeDriver: false,
   });
+
+  /*
+  const onPinchEventBegan = () => {
+    console.log("Nice");
+  };
+  */
 
   const onPinchStateChange = (event) => {
     Animated.spring(scale, {
@@ -113,24 +126,44 @@ const VaultPostFocusView = ({ navigation, route }) => {
     }
   };
 
+  // If the user goes super sayan speed mode through posts, sometimes the index doesn't update fast enough. So, the goBack() checks send the user back to fullview to prevent an "TypeError undefined" error
   const ActivePostType = () => {
     if (usecase === "vault") {
-      return feeddata[index].contenttype;
-    }
-    if (usecase === "gallery") {
-      return gallerydata[index].contenttype;
-    }
-    if (usecase === "otherusergallery") {
-      return otherusergallerydata[index].contenttype;
-    }
-    if (usecase === "stories") {
-      return storiesfullview[index].contenttype;
-    }
-    if (usecase === "addedfeed") {
-      return addedfeed[index].contenttype;
-    }
-    if (usecase === "publicfeed") {
-      return publicfeed[index].contenttype;
+      if (typeof feeddata[index] != "undefined") {
+        return feeddata[index].contenttype;
+      } else {
+        return navigation.goBack();
+      }
+    } else if (usecase === "gallery") {
+      if (typeof gallerydata[index] != "undefined") {
+        return gallerydata[index].contenttype;
+      } else {
+        return navigation.goBack();
+      }
+    } else if (usecase === "otherusergallery") {
+      if (typeof otherusergallerydata[index] != "undefined") {
+        return otherusergallerydata[index].contenttype;
+      } else {
+        return navigation.goBack();
+      }
+    } else if (usecase === "stories") {
+      if (typeof storiesfullview[index] != "undefined") {
+        return storiesfullview[index].contenttype;
+      } else {
+        return navigation.goBack();
+      }
+    } else if (usecase === "addedfeed") {
+      if (typeof addedfeed[index] != "undefined") {
+        return addedfeed[index].contenttype;
+      } else {
+        return navigation.goBack();
+      }
+    } else if (usecase === "publicfeed") {
+      if (typeof publicfeed[index] != "undefined") {
+        return publicfeed[index].contenttype;
+      } else {
+        return navigation.goBack();
+      }
     }
   };
 
@@ -191,12 +224,16 @@ const VaultPostFocusView = ({ navigation, route }) => {
       onSwipeDown={() => {
         ExitFocusView({ navigation, dispatch, listener });
       }}
+      onSwipeUp={() => {
+        ExitFocusView({ navigation, dispatch, listener });
+      }}
       style={styles.gesturewrapper}
     >
       <View style={styles.container}>
         <PinchGestureHandler
           onGestureEvent={onPinchEvent}
           onHandlerStateChange={onPinchStateChange}
+          // onBegan={onPinchEventBegan}
         >
           <Animated.Image
             {...panResponder.panHandlers}

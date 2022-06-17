@@ -1,22 +1,23 @@
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import "react-native-gesture-handler";
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import {
   useFonts,
   Inter_400Regular,
   Inter_500Medium,
   Inter_600SemiBold,
-} from '@expo-google-fonts/inter';
-import AppLoading from 'expo-app-loading';
+} from "@expo-google-fonts/inter";
+import AppLoading from "expo-app-loading";
 
-import { Provider } from 'react-redux';
-import Amplify, { Storage, Auth } from 'aws-amplify';
-import { StorageChunkUpload } from 'amplify-s3-chunk-upload';
-import { Credentials } from '@aws-amplify/core';
-import store from './src/redux/store';
+import { Provider } from "react-redux";
+import Amplify, { Storage, Auth } from "aws-amplify";
+import { StorageChunkUpload } from "amplify-s3-chunk-upload";
+import { Credentials } from "@aws-amplify/core";
+import store from "./src/redux/store";
 
-import MasterStack from './src/MasterStack';
+import MasterStack from "./src/MasterStack";
 
-import awsconfig from './src/aws-exports';
-import { Colors } from './src/resources/project';
+import awsconfig from "./src/aws-exports";
+import { Colors } from "./src/resources/project";
 
 Amplify.configure(awsconfig);
 
@@ -47,7 +48,7 @@ function App() {
   };
 
   Auth.configure({
-    authenticationFlowType: 'CUSTOM_AUTH',
+    authenticationFlowType: "CUSTOM_AUTH",
   });
 
   return (
