@@ -8,7 +8,7 @@
   padding-top: 1rem;
   padding-bottom: 1rem;
   align-items: center;
-  bottom: 5%;
+  margin-top: 0.5rem;
 }
 
 .renderIcon {
@@ -19,4 +19,8 @@
 
 .logOut {
   padding-right: 1.5rem;
+  font-size: 40px;
+  font-weight: 400;
+  color: var(--translucent-white);
+  background-color: inherit;
 }

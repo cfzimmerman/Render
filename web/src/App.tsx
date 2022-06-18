@@ -19,7 +19,7 @@ const App: React.FC<{}> = () => {
     <div className={styles.App}>
       <UserContext.Provider value={userContext}>
         {!user && <SignIn />}
-        {!!user && <Upload />}
+        {!!user && <Upload signOut={() => setUser(null)} />}
       </UserContext.Provider>
     </div>
   );

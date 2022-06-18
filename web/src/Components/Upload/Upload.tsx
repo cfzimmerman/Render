@@ -2,12 +2,17 @@ import React from 'react';
 import { TopBar } from './TopBar/TopBar';
 import styles from './Upload.module.css';
 
-// eslint-disable-next-line arrow-body-style
-export const Upload: React.FC<{}> = () => {
+interface Props {
+  signOut: () => void;
+}
+
+export const Upload: React.FC<Props> = (props) => {
+  const { signOut } = props;
+
   return (
     <div className={styles.uploadContainer}>
-      <div style={{ width: '100%', display: 'absolute', top: '5%', right: '50%' }}>
-        <TopBar />
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', top: '5%' }}>
+        <TopBar signOut={signOut} />
       </div>
 
       <div className={styles.content}>
