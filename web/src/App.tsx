@@ -6,6 +6,7 @@ import styles from './App.module.css';
 import awsconfig from './aws-exports';
 import { SignIn } from './Components/SignIn/SignIn';
 import { UserContext } from './Context/UserContext';
+import { Upload } from './Components/Upload/Upload';
 
 Amplify.configure(awsconfig);
 
@@ -18,7 +19,7 @@ const App: React.FC<{}> = () => {
     <div className={styles.App}>
       <UserContext.Provider value={userContext}>
         {!user && <SignIn />}
-        {!!user && <h1>Signed in</h1>}
+        {!!user && <Upload signOut={() => setUser(null)} />}
       </UserContext.Provider>
     </div>
   );

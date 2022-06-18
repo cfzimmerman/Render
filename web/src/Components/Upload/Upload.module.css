@@ -1,0 +1,25 @@
+.uploadContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--dark-blue);
+}
+
+.uploadContainer h3 {
+  margin: 0;
+}
+
+.topBar {
+  top: 5%;
+}
+
+.uploadButton {
+  background-color: inherit;
+}
+
+.content {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
