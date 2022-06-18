@@ -1,0 +1,26 @@
+.topBarContainer {
+  width: 99%;
+  background-color: var(--midnight-blue);
+  border-radius: 8px;
+  background-image: none;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.renderIcon {
+  height: 80px;
+  width: 377px;
+  padding-left: 1.5rem;
+}
+
+.logOut {
+  padding-right: 1.5rem;
+  font-size: 40px;
+  font-weight: 400;
+  color: var(--translucent-white);
+  background-color: inherit;
+}

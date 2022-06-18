@@ -87,7 +87,7 @@ export const SignIn: React.FC<{}> = () => {
     console.log('password: ', pass);
     const result = await Auth.signUp({
       username: email,
-      password: pass
+      password: '123456789'
     }).then(() => signOut()); // After signUp, we are going to signIn()
     return result;
   };
