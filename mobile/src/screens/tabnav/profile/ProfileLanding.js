@@ -10,7 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import TouchableScale from "react-native-touchable-scale";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setSystemmessageActive } from "../../../redux/system/systemmessage";
+import { setSystemmessageActive } from "../../../redux/system/messagemodal";
 import {
   GlobalStyles,
   Environment,

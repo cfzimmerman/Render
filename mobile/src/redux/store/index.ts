@@ -5,9 +5,10 @@ import { useDispatch } from "react-redux";
 import appstart from "../system/appstart";
 
 import errormessage from "../system/errormessage";
-import systemmessage from "../system/systemmessage";
+import messagemodal from "../system/messagemodal";
 import loadprogressmessage from "../system/loadprogressmessage";
 import onboarding from "../system/onboarding";
+import localsync from "../system/localsync";
 
 import pageoptions from "../general/pageoptions";
 
@@ -28,7 +29,7 @@ import socialmain from "../social/socialmain";
 
 const reducer = combineReducers({
   errormessage,
-  systemmessage,
+  messagemodal,
   loadprogressmessage,
   pageoptions,
   vaultpostdata,
@@ -41,6 +42,7 @@ const reducer = combineReducers({
   homemain,
   onboarding,
   socialmain,
+  localsync,
 });
 
 const store = configureStore({

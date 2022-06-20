@@ -81,17 +81,22 @@ const SettingsMain = ({ navigation }) => {
           </View>
           <View style={styles.buttonrowwrapper}>
             <HalfbarButton
+              label="Local sync"
+              Action={() => navigation.navigate("LocalSyncSettings")}
+              active={false}
+            />
+            <HalfbarButton
               label="Our Discord"
               Action={() => Linking.openURL("https://discord.gg/nrpHKgKfrJ")}
               active={false}
             />
+          </View>
+          <View style={styles.buttonrowwrapper}>
             <HalfbarButton
               label="Password"
               Action={() => navigation.navigate("ForgotPassword")}
               active={false}
             />
-          </View>
-          <View style={styles.buttonrowwrapper}>
             <HalfbarButton
               label="Log out"
               Action={() => LogOut({ dispatch, navigation })}

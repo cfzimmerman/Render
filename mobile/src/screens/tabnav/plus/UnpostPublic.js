@@ -2,7 +2,7 @@ import { batch } from "react-redux";
 import { API, graphqlOperation } from "aws-amplify";
 import { UserDialogue } from "../../../resources/project";
 
-import { setSystemmessageActive } from "../../../redux/system/systemmessage";
+import { setSystemmessageActive } from "../../../redux/system/messagemodal";
 import { clearGalleryData } from "../../../redux/profile/profilemain";
 
 import ChangeGalleryPostPublic from "../profile/ChangeGalleryPostPublic";

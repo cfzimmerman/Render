@@ -18,3 +18,6 @@ export { default as SearchbarTouchable } from "./SearchbarTouchable";
 
 // Displays percentage completion of content upload
 export { default as LoadProgressModal } from "./LoadProgressModal";
+
+// SystemmessageModal with customizable buttons
+export { default as ButtonMessageModal } from "./ButtonMessageModal";

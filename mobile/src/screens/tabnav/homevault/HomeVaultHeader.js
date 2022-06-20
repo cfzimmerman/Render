@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { setSystemmessageActive } from "../../../redux/system/systemmessage";
+import { setSystemmessageActive } from "../../../redux/system/messagemodal";
 import {
   Environment,
   GlobalStyles,

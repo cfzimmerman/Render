@@ -8,7 +8,7 @@ import {
   Colors,
 } from "../../../resources/project";
 import { CubeSizeButton } from "../../../resources/atoms";
-import { setSystemmessageActive } from "../../../redux/system/systemmessage";
+import { setSystemmessageActive } from "../../../redux/system/messagemodal";
 
 const IsActive = ({ currentScreen, buttonScreen }) => {
   if (currentScreen === buttonScreen) {

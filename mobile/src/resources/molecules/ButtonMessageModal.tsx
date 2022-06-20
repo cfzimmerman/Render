@@ -1,38 +1,43 @@
 import {
   View,
   Modal,
+  TouchableOpacity,
   Text,
   StyleSheet,
   TouchableWithoutFeedback,
 } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { RootStateType } from "../../redux/store";
+import { setButtonMessageInactive } from "../../redux/system/messagemodal";
 import { BlurView } from "expo-blur";
-
-import { useDispatch, useSelector } from "react-redux";
-import { setSystemmessageInactive } from "../../redux/system/messagemodal";
 import { Environment, Colors, GlobalStyles } from "../project";
 
-const SystemmessageModal = () => {
-  const systemmessage = useSelector(
-    (state) => state.messagemodal.systemmessagemodal
+const ButtonMessageModal = () => {
+  const buttonmessage = useSelector(
+    (state: RootStateType) => state.messagemodal.buttonmessagemodal
   );
   const dispatch = useDispatch();
 
+  /*
+  Restore the code below to auto-hide the message
+  
   setTimeout(() => {
-    dispatch(setSystemmessageInactive());
+    dispatch(setButtonMessageInactive());
   }, 10000);
+  */
 
   return (
     <Modal
       animationType="fade"
       transparent
-      visible={systemmessage.isactive}
+      visible={buttonmessage.isactive}
       onRequestClose={() => {
-        setModalVisible(false);
+        dispatch(setButtonMessageInactive());
       }}
     >
       <TouchableWithoutFeedback
         onPress={() => {
-          dispatch(setSystemmessageInactive());
+          dispatch(setButtonMessageInactive());
         }}
       >
         <View style={styles.modalcontainer}>
@@ -43,13 +48,13 @@ const SystemmessageModal = () => {
           />
           <View style={[styles.modalbox, GlobalStyles.shadow]}>
             <Text style={[styles.header, GlobalStyles.h1text]}>
-              {systemmessage.header}
+              {buttonmessage.header}
             </Text>
             <Text style={[styles.header, GlobalStyles.h2text]}>
-              {systemmessage.title}
+              {buttonmessage.title}
             </Text>
             <Text style={[styles.description, GlobalStyles.p1text]}>
-              {systemmessage.description}
+              {buttonmessage.description}
             </Text>
           </View>
         </View>
@@ -83,33 +88,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SystemmessageModal;
-
-/* Example:
-
-import { useDispatch } from 'react-redux';
-
-import { setSystemmessageActive } from "../../../redux/system/systemmessage";
-import { UserDialogue } from '../../../resources/project'
-import { SystemmessageModal } from "../../../resources/molecules";
-
-const Helper = () => {
-    if (condition === met) {
-        dispatch(setSystemmessageActive(UserDialogue().systemmessage.resendcodesuccess))
-    }
-}
-
-const Example = () => {
-
-    const dispatch = useDispatch()
-
-    Helper( dispatch );
-    return (
-        ...
-        <SystemmessageModal />
-        ...
-    )
-}
-
-export default Example;
-*/
+export default ButtonMessageModal;

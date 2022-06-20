@@ -1,0 +1,22 @@
+Local Sync is a local-only process by which users may choose to save images and/or videos to their local device in order to speed Vault loading.
+This is the current structure upon which it rests/
+
+{
+    ... 
+    /FileSystem.documentDirectory {
+    ...
+    LocalConfig.txt: {
+        contents: {
+            const localConfig = {
+                syncPreference: "Partial",
+            };
+            (use JSON.parse() to read, JSON.stringify() to write)
+        },
+    },
+    /LocalSync: {
+        ... (image and video files named as they are in AWS S3 [DynamoDB/Posts/contentkey] - file extension already included)
+        contentkey
+    }
+
+}
+}

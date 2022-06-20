@@ -10,6 +10,7 @@ const Colors = {
   AccentFaint: "#FFFFFF30",
   Background: "#000000",
   BackgroundPartial: "#00000099",
+  WarmAccent: "#FFC5D6",
 };
 
 export default Colors;
