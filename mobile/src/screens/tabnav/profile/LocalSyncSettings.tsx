@@ -24,8 +24,11 @@ import { LocalConfigType } from "../../../redux/system/localsync";
 import {
   ButtonMessagePropTypes,
   setButtonMessageActive,
+  setButtonMessageInactive,
 } from "../../../redux/system/messagemodal";
 import { ButtonMessageModal } from "../../../resources/molecules";
+import { Navigation } from "react-native-feather";
+import LSClearStorage from "./LSClearStorage";
 
 // Width of 3 buttons in a fullbar row separated by standard padding
 const TriBoxSize = (Environment.FullBar - Environment.LargePadding) / 3;
@@ -302,19 +305,35 @@ const ChangeSyncButton = ({ selectedMode, syncPreference, dispatch }) => {
   }
 };
 
-async function GetStorageInfo({ setAvailableStorage, setTotalStorage }) {
+// Address for LocalSync directory
+const directoryAddress = FileSystem.documentDirectory + "LocalSync/";
+
+async function GetStorageInfo({
+  setAvailableStorage,
+  setTotalStorage,
+  setRenderLocalStorage,
+}) {
   try {
     const availableBytes = await FileSystem.getFreeDiskStorageAsync();
     const totalBytes = await FileSystem.getTotalDiskCapacityAsync();
+    const directoryExists = await FileSystem.getInfoAsync(directoryAddress);
 
     setAvailableStorage(availableBytes);
     setTotalStorage(totalBytes);
+    if (directoryExists.exists === true) {
+      setRenderLocalStorage(directoryExists.size);
+    }
   } catch (error) {
     console.log("Error");
   }
 }
 
-const StorageIndicator = ({ totalStorage, availableStorage }) => {
+const StorageIndicator = ({
+  totalStorage,
+  availableStorage,
+  renderLocalStorage,
+  storagesizeinbytes,
+}) => {
   if (typeof totalStorage != "number" || typeof availableStorage != "number") {
     return null;
   } else {
@@ -336,10 +355,26 @@ const StorageIndicator = ({ totalStorage, availableStorage }) => {
             />
           </Text>
           <Text>
-            <BoldText text={"Available: "} />
+            <BoldText text={"Device available: "} />
             <ParagraphText
               text={
                 Math.round(availableStorage * 0.000000001).toString() + " GB"
+              }
+            />
+          </Text>
+          <Text>
+            <BoldText text={"Render cache: "} />
+            <ParagraphText
+              text={
+                (renderLocalStorage * 0.000000001).toFixed(3).toString() + " GB"
+              }
+            />
+          </Text>
+          <Text>
+            <BoldText text={"Render cloud: "} />
+            <ParagraphText
+              text={
+                (storagesizeinbytes * 0.000000001).toFixed(3).toString() + " GB"
               }
             />
           </Text>
@@ -371,35 +406,39 @@ const StorageIndicator = ({ totalStorage, availableStorage }) => {
             </View>
           </View>
         </View>
+        <View>
+          <Text
+            style={[
+              GlobalStyles.p2text,
+              {
+                color: Colors.AccentPartial,
+                textAlign: "right",
+                marginTop: Environment.SmallPadding,
+              },
+            ]}
+          >
+            Device storage used
+          </Text>
+        </View>
       </View>
     );
   }
 };
 
-const ButtonMessageProps: ButtonMessagePropTypes = {
-  isactive: true,
-  header: "🗑",
-  title: "Clear local cache?",
-  description: "Disable local sync below to prevent future Vault caching.",
-  leftButton: {
-    Action: () => console.log("Goback"),
-    title: "Go back",
-  },
-  rightButton: {
-    Action: () => console.log("Continue"),
-    title: "Confirm",
-  },
-};
-
-const LocalSyncSettings = () => {
+const LocalSyncSettings = ({ navigation }) => {
   const [selectedMode, setSelectedMode] = useState(null);
   // availableStorage: null | number of bytes
   const [availableStorage, setAvailableStorage] = useState(null);
   // totalStorage: null | number of bytes
-  const [totalStorage, setTotalStorage] = useState(null);
   const [gotStorageInfo, setGotStorageInfo] = useState(false);
+  const [totalStorage, setTotalStorage] = useState(null);
+  const [renderLocalStorage, setRenderLocalStorage] = useState(0);
+
   const localConfig = useSelector(
     (state: RootStateType) => state.localsync.localConfig
+  );
+  const currentuser = useSelector(
+    (state: RootStateType) => state.profilemain.currentuser
   );
 
   const dispatch = useDispatch();
@@ -409,9 +448,33 @@ const LocalSyncSettings = () => {
   }
 
   if (gotStorageInfo === false) {
-    GetStorageInfo({ setAvailableStorage, setTotalStorage });
+    console.log("GetStorageInfo");
+    GetStorageInfo({
+      setAvailableStorage,
+      setTotalStorage,
+      setRenderLocalStorage,
+    });
     setGotStorageInfo(true);
   }
+
+  const ConfirmClearStorage = () => {
+    LSClearStorage({ dispatch, setGotStorageInfo });
+  };
+
+  const ButtonMessageProps: ButtonMessagePropTypes = {
+    isactive: true,
+    header: "🗑",
+    title: "Clear local cache?",
+    description: 'Set local sync "None" below to prevent future Vault caching.',
+    leftButton: {
+      Action: () => dispatch(setButtonMessageInactive()),
+      title: "No, go back",
+    },
+    rightButton: {
+      Action: ConfirmClearStorage,
+      title: "Yes, clear",
+    },
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -443,6 +506,8 @@ const LocalSyncSettings = () => {
           <StorageIndicator
             totalStorage={totalStorage}
             availableStorage={availableStorage}
+            renderLocalStorage={renderLocalStorage}
+            storagesizeinbytes={currentuser.storagesizeinbytes}
           />
           <FullbarButton
             backgroundColor={Colors.Primary}
@@ -483,7 +548,7 @@ const LocalSyncSettings = () => {
             <CategoryDescription selectedMode={selectedMode} />
             <Button
               onPress={() => LSGetConfig({ dispatch })}
-              title="LSConfigureDirectory"
+              title="LSGetConfig"
             />
           </View>
         </View>

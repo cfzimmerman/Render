@@ -76,7 +76,8 @@ const slice = createSlice({
 
       state.buttonmessagemodal.description = action.payload.description;
 
-      state.buttonmessagemodal.leftButton.title = action.payload.title;
+      state.buttonmessagemodal.leftButton.title =
+        action.payload.leftButton.title;
 
       state.buttonmessagemodal.leftButton.Action =
         action.payload.leftButton.Action;

@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootStateType } from "../../redux/store";
 import { setButtonMessageInactive } from "../../redux/system/messagemodal";
 import { BlurView } from "expo-blur";
+import { HalfbarButton } from "../atoms";
 import { Environment, Colors, GlobalStyles } from "../project";
 
 const ButtonMessageModal = () => {
@@ -46,16 +47,37 @@ const ButtonMessageModal = () => {
             tint="dark"
             style={StyleSheet.absoluteFill}
           />
-          <View style={[styles.modalbox, GlobalStyles.shadow]}>
-            <Text style={[styles.header, GlobalStyles.h1text]}>
-              {buttonmessage.header}
-            </Text>
-            <Text style={[styles.header, GlobalStyles.h2text]}>
-              {buttonmessage.title}
-            </Text>
-            <Text style={[styles.description, GlobalStyles.p1text]}>
-              {buttonmessage.description}
-            </Text>
+          <View>
+            <View style={[styles.modalbox, GlobalStyles.shadow]}>
+              <Text style={[styles.header, GlobalStyles.h1text]}>
+                {buttonmessage.header}
+              </Text>
+              <Text style={[styles.header, GlobalStyles.h2text]}>
+                {buttonmessage.title}
+              </Text>
+              <Text style={[styles.description, GlobalStyles.p1text]}>
+                {buttonmessage.description}
+              </Text>
+            </View>
+            <View
+              style={{
+                width: Environment.FullBar,
+                marginTop: Environment.StandardPadding,
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <HalfbarButton
+                label={buttonmessage.leftButton.title}
+                active={false}
+                Action={() => buttonmessage.leftButton.Action()}
+              />
+              <HalfbarButton
+                label={buttonmessage.rightButton.title}
+                active={false}
+                Action={() => buttonmessage.rightButton.Action()}
+              />
+            </View>
           </View>
         </View>
       </TouchableWithoutFeedback>
