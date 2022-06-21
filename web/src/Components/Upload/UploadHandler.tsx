@@ -21,7 +21,9 @@ export const UploadHandler: React.FC<Props> = (props) => {
     if (fileList[0].type.includes('image')) {
       setFilePreviewUrl(URL.createObjectURL(fileList[0]));
     }
-    upload(fileList[0].name, fileList[0], setUploadProgress);
+    upload(fileList[0].name, fileList[0], (progress) => {
+      setUploadProgress(Math.round((progress.loaded / progress.total) * 100));
+    });
   };
 
   return (
@@ -31,7 +33,11 @@ export const UploadHandler: React.FC<Props> = (props) => {
       </div>
       <div className={styles.fileContainer}>
         {!files && <Upload setFiles={handleUploadFiles} />}
-        {!!filePreviewUrl && <RoundedImage source={filePreviewUrl} alt="uploaded-file-preview" />}
+        {filePreviewUrl ? (
+          <RoundedImage source={filePreviewUrl} alt="uploaded-file-preview" />
+        ) : (
+          <h3>Uploading video...</h3>
+        )}
         {!!files && <h3>{`${uploadProgress}% uploaded`}</h3>}
       </div>
     </div>
