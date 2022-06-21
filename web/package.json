@@ -5,6 +5,7 @@
   "dependencies": {
     "@aws-amplify/auth": "^4.5.4",
     "@aws-amplify/core": "^4.5.4",
+    "@aws-amplify/storage": "^4.4.27",
     "@aws-amplify/ui-components": "^1.9.6",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
@@ -13,6 +14,7 @@
     "@types/node": "^16.11.34",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.3",
+    "amplify-s3-chunk-upload": "^2.0.1",
     "aws-amplify": "^4.3.22",
     "aws-amplify-react": "^5.1.9",
     "clsx": "^1.1.1",
@@ -63,5 +65,8 @@
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "prettier": "^2.6.2"
+  },
+  "resolutions": {
+    "@aws-amplify/core": "^4.5.4"
   }
 }
