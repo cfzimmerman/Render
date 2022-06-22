@@ -4,10 +4,12 @@ This is the current structure upon which it functions.
 Local Sync Constituents:
 /profile
     • LocalSyncSettings.tsx
-    • LSGetConfig.ts
+    • LSAddItem.ts
     • LSChangeConfig.ts
     • LSClearStorage.ts
-    • 
+    • LSGetConfig.ts
+    • LSRemoveItem.ts
+    • LSRewriteLocalLibrary.ts
 
 File path:
 {

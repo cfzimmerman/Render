@@ -31,6 +31,7 @@ import { Navigation } from "react-native-feather";
 import LSClearStorage from "./LSClearStorage";
 import LSGetLibrary from "./LSGetLibrary";
 import LSAddItem from "./LSAddItem";
+import LSRemoveItem from "./LSRemoveItem";
 
 // Width of 3 buttons in a fullbar row separated by standard padding
 const TriBoxSize = (Environment.FullBar - Environment.LargePadding) / 3;
@@ -439,6 +440,9 @@ const LocalSyncSettings = ({ navigation }) => {
   const localConfig = useSelector(
     (state: RootStateType) => state.localsync.localConfig
   );
+  const localLibrary = useSelector(
+    (state: RootStateType) => state.localsync.localLibrary
+  );
   const currentuser = useSelector(
     (state: RootStateType) => state.profilemain.currentuser
   );
@@ -565,9 +569,20 @@ const LocalSyncSettings = ({ navigation }) => {
                   dispatch,
                   signedurl: pfpsignedurl,
                   contentkey: currentuser.pfp,
+                  localLibrary,
                 })
               }
               title="LSAddItem"
+            />
+            <Button
+              onPress={() =>
+                LSRemoveItem({
+                  dispatch,
+                  contentkey: currentuser.pfp,
+                  localLibrary,
+                })
+              }
+              title="LSRemoveItem"
             />
           </View>
         </View>
