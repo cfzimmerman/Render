@@ -15,11 +15,12 @@ const defaultLocalConfig: LocalConfigType = {
 async function LSGetConfig({ dispatch }) {
   const configAddress = FileSystem.documentDirectory + "LocalConfig.txt";
   const directoryAddress = FileSystem.documentDirectory + "LocalSync/";
+
   try {
     const configExists = await FileSystem.getInfoAsync(configAddress);
     const directoryExists = await FileSystem.getInfoAsync(directoryAddress);
+
     if (configExists.exists === false) {
-      console.log("\nWrite file");
       // Create new default config file
       const defaultConfigString = JSON.stringify(defaultLocalConfig);
       await FileSystem.writeAsStringAsync(configAddress, defaultConfigString);
@@ -32,6 +33,7 @@ async function LSGetConfig({ dispatch }) {
       const localConfig: LocalConfigType = JSON.parse(localConfigString);
       dispatch(setLocalConfig(localConfig));
     }
+
     if (directoryExists.exists === false) {
       // If the local sync content folder doesn't exist yet, create it.
       await FileSystem.makeDirectoryAsync(directoryAddress);

@@ -29,6 +29,8 @@ import {
 import { ButtonMessageModal } from "../../../resources/molecules";
 import { Navigation } from "react-native-feather";
 import LSClearStorage from "./LSClearStorage";
+import LSGetLibrary from "./LSGetLibrary";
+import LSAddItem from "./LSAddItem";
 
 // Width of 3 buttons in a fullbar row separated by standard padding
 const TriBoxSize = (Environment.FullBar - Environment.LargePadding) / 3;
@@ -440,7 +442,10 @@ const LocalSyncSettings = ({ navigation }) => {
   const currentuser = useSelector(
     (state: RootStateType) => state.profilemain.currentuser
   );
-
+  const pfpsignedurl = useSelector(
+    (state: RootStateType) => state.profilemain.pfpsignedurl
+  );
+  // ^^ This can be deleted after testing
   const dispatch = useDispatch();
 
   if (selectedMode === null && localConfig.syncPreference != null) {
@@ -549,6 +554,20 @@ const LocalSyncSettings = ({ navigation }) => {
             <Button
               onPress={() => LSGetConfig({ dispatch })}
               title="LSGetConfig"
+            />
+            <Button
+              onPress={() => LSGetLibrary({ dispatch })}
+              title="LSGetLibrary"
+            />
+            <Button
+              onPress={() =>
+                LSAddItem({
+                  dispatch,
+                  signedurl: pfpsignedurl,
+                  contentkey: currentuser.pfp,
+                })
+              }
+              title="LSAddItem"
             />
           </View>
         </View>

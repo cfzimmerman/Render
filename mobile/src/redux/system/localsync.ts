@@ -2,6 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface DefaultSliceType {
   localConfig: LocalConfigType;
+  localLibrary: {} | Record<string, LSLibraryItemType>;
+}
+
+export interface LSLibraryItemType {
+  lastUpdated: string;
 }
 
 export interface LocalConfigType {
@@ -14,6 +19,7 @@ const slice = createSlice({
     localConfig: {
       syncPreference: null,
     },
+    localLibrary: {},
   } as DefaultSliceType,
   reducers: {
     clearLocalSync: (state) => {
@@ -22,9 +28,16 @@ const slice = createSlice({
     setLocalConfig: (state, action: PayloadAction<LocalConfigType>) => {
       state.localConfig.syncPreference = action.payload.syncPreference;
     },
+    setLocalLibrary: (
+      state,
+      action: PayloadAction<Record<string, LSLibraryItemType>>
+    ) => {
+      state.localLibrary = action.payload;
+    },
   },
 });
 
-export const { clearLocalSync, setLocalConfig } = slice.actions;
+export const { clearLocalSync, setLocalConfig, setLocalLibrary } =
+  slice.actions;
 
 export default slice.reducer;
