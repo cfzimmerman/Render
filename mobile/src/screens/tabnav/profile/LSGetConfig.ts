@@ -19,7 +19,6 @@ async function LSGetConfig({ dispatch }) {
   try {
     const configExists = await FileSystem.getInfoAsync(configAddress);
     const directoryExists = await FileSystem.getInfoAsync(directoryAddress);
-
     if (configExists.exists === false) {
       // Create new default config file
       const defaultConfigString = JSON.stringify(defaultLocalConfig);

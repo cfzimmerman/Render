@@ -20,7 +20,6 @@ async function LSGetLibrary({ dispatch }) {
       const localLibrary: Record<string, LSLibraryItemType> =
         JSON.parse(localLibraryString);
       dispatch(setLocalLibrary(localLibrary));
-      console.log("LocalLibrary: " + JSON.stringify(localLibrary));
     } else {
       // If library doesn't exist, create a default empty library and send it to the localsync Redux slice
       const defaultLibraryString = JSON.stringify(defaultLibrary);

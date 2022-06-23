@@ -102,6 +102,8 @@ const FullViewContent = ({ item, index, dispatch, navigation, usecase }) => {
   const optionstatus = useSelector((state) => state.vaultpostdata.options);
   const textactive = useSelector((state) => state.vaultpostdata.textactive);
   const postindex = useSelector((state) => state.vaultpostdata.activepost);
+  const localLibrary = useSelector((state) => state.localsync.localLibrary);
+  const localConfig = useSelector((state) => state.localsync.localConfig);
 
   if (item.contenttype === "video") {
     if (item.signedurl === null) {
@@ -110,6 +112,8 @@ const FullViewContent = ({ item, index, dispatch, navigation, usecase }) => {
           dispatch,
           index,
           contentkey: item.contentkey,
+          localLibrary,
+          syncPreference: localConfig.syncPreference,
         });
       } else if (usecase === "gallery") {
         AddVideoToGalleryData({

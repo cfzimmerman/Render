@@ -555,35 +555,6 @@ const LocalSyncSettings = ({ navigation }) => {
               dispatch={dispatch}
             />
             <CategoryDescription selectedMode={selectedMode} />
-            <Button
-              onPress={() => LSGetConfig({ dispatch })}
-              title="LSGetConfig"
-            />
-            <Button
-              onPress={() => LSGetLibrary({ dispatch })}
-              title="LSGetLibrary"
-            />
-            <Button
-              onPress={() =>
-                LSAddItem({
-                  dispatch,
-                  signedurl: pfpsignedurl,
-                  contentkey: currentuser.pfp,
-                  localLibrary,
-                })
-              }
-              title="LSAddItem"
-            />
-            <Button
-              onPress={() =>
-                LSRemoveItem({
-                  dispatch,
-                  contentkey: currentuser.pfp,
-                  localLibrary,
-                })
-              }
-              title="LSRemoveItem"
-            />
           </View>
         </View>
       </ScrollView>

@@ -3,6 +3,7 @@ import {
   AddToLocalLibraryPropsType,
   addToLocalLibrary,
   LSLibraryItemType,
+  removeFromLocalLibrary,
 } from "../../../redux/system/localsync";
 import LSGetConfig from "./LSGetConfig";
 import LSGetLibrary from "./LSGetLibrary";
@@ -54,8 +55,8 @@ async function LSAddItem({
           contentExists.exists === false &&
           typeof localLibrary[`${contentkey}`] != "undefined"
         ) {
-          // 🌾🌾🌾 localLibrary declares an instance for a piece of content that doesn't exist in LocalSync/. Delete the localLibrary item to match the LocalSync/ folder.
-          console.log("Case 1");
+          // localLibrary declares an instance for a piece of content that doesn't exist in LocalSync/. Delete the localLibrary item to match the LocalSync/ folder.
+          dispatch(removeFromLocalLibrary(contentkey));
         } else if (
           contentExists.exists === true &&
           typeof typeof localLibrary[`${contentkey}`] === "undefined"
@@ -81,7 +82,8 @@ async function LSAddItem({
       }
     }
   } catch (error) {
-    console.log("Error: " + JSON.stringify(error));
+    // console.log("Error: " + JSON.stringify(error));
+    console.log("🛑 Big Error");
   }
 }
 
