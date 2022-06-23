@@ -72,6 +72,7 @@ type Posts @model @searchable @auth(rules: [{ allow: public }]) {
   contentkey: String @index(name: "postsByContentKey", queryField: "postsByContentKey")
   contenttype: String
   createdAt: String!
+  deleteddate: AWSDateTime
   posttext: String
   publicpost: Boolean
   publicpostdate: AWSDateTime
@@ -83,7 +84,13 @@ type Posts @model @searchable @auth(rules: [{ allow: public }]) {
       queryField: "postsByPublicDate"
       sortKeyFields: ["publicpostdate"]
     )
-  usersID: ID! @index(name: "byUsers")
+  usersID: ID!
+    @index(name: "byUsers")
+    @index(
+      name: "postsByDeletedDate"
+      queryField: "postsByDeletedDate"
+      sortKeyFields: ["deleteddate"]
+    )
   Users: Users @belongsTo(fields: ["usersID"])
   Comments: [Comments] @hasMany(indexName: "byPosts", fields: ["id"])
   PostViewTrackers: [PostViewTracker] @hasMany(indexName: "byPosts", fields: ["id"])

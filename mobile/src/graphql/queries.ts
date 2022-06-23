@@ -15,6 +15,7 @@ export const getPostViewTracker = /* GraphQL */ `
         contentkey
         contenttype
         createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -285,6 +286,7 @@ export const getComments = /* GraphQL */ `
         contentkey
         contenttype
         createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -379,6 +381,7 @@ export const getPosts = /* GraphQL */ `
       contentkey
       contenttype
       createdAt
+      deleteddate
       posttext
       publicpost
       publicpostdate
@@ -432,6 +435,7 @@ export const listPosts = /* GraphQL */ `
         contentkey
         contenttype
         createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -470,6 +474,7 @@ export const postsByCreatedDate = /* GraphQL */ `
         contentkey
         contenttype
         createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -508,6 +513,7 @@ export const postsByPostedDate = /* GraphQL */ `
         contentkey
         contenttype
         createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -546,6 +552,7 @@ export const postsByContentDate = /* GraphQL */ `
         contentkey
         contenttype
         createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -582,6 +589,7 @@ export const postsByContentKey = /* GraphQL */ `
         contentkey
         contenttype
         createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -620,6 +628,46 @@ export const postsByPublicDate = /* GraphQL */ `
         contentkey
         contenttype
         createdAt
+        deleteddate
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const postsByDeletedDate = /* GraphQL */ `
+  query PostsByDeletedDate(
+    $usersID: ID!
+    $deleteddate: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    postsByDeletedDate(
+      usersID: $usersID
+      deleteddate: $deleteddate
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contenttype
+        createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -658,6 +706,7 @@ export const searchPosts = /* GraphQL */ `
         contentkey
         contenttype
         createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
