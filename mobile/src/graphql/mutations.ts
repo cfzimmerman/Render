@@ -18,6 +18,7 @@ export const createPostViewTracker = /* GraphQL */ `
         contentkey
         contenttype
         createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -70,6 +71,7 @@ export const updatePostViewTracker = /* GraphQL */ `
         contentkey
         contenttype
         createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -122,6 +124,7 @@ export const deletePostViewTracker = /* GraphQL */ `
         contentkey
         contenttype
         createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -283,6 +286,7 @@ export const createComments = /* GraphQL */ `
         contentkey
         contenttype
         createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -336,6 +340,7 @@ export const updateComments = /* GraphQL */ `
         contentkey
         contenttype
         createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -389,6 +394,7 @@ export const deleteComments = /* GraphQL */ `
         contentkey
         contenttype
         createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -438,6 +444,7 @@ export const createPosts = /* GraphQL */ `
       contentkey
       contenttype
       createdAt
+      deleteddate
       posttext
       publicpost
       publicpostdate
@@ -489,6 +496,7 @@ export const updatePosts = /* GraphQL */ `
       contentkey
       contenttype
       createdAt
+      deleteddate
       posttext
       publicpost
       publicpostdate
@@ -540,6 +548,7 @@ export const deletePosts = /* GraphQL */ `
       contentkey
       contenttype
       createdAt
+      deleteddate
       posttext
       publicpost
       publicpostdate
