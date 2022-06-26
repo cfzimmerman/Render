@@ -28,7 +28,6 @@ import {
 import GetContentDate from "./GetContentDate";
 import UploadImage from "./UploadImage";
 import UploadVideo from "./UploadVideo";
-import CheckDeletedPosts from "../homevault/CheckDeletedPosts";
 
 const HalfbarIconBox = ({ Icon, header, description, Action }) => {
   return (
@@ -86,7 +85,6 @@ function PlusLanding({ navigation }) {
     (state) => state.vaultpostdata.vaultfeeddata
   );
   const vaultnexttoken = useSelector((state) => state.vaultpostdata.nextToken);
-  const localLibrary = useSelector((state) => state.localsync.localLibrary);
 
   const dispatch = useDispatch();
 
@@ -169,17 +167,6 @@ function PlusLanding({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Button
-        title="CheckDeletedPosts"
-        color={"coral"}
-        onPress={() =>
-          CheckDeletedPosts({
-            userID: "cacaa58e-6a7c-4d97-84a1-885ca95f5128",
-            localLibrary,
-            dispatch,
-          })
-        }
-      />
       <ScrollView
         style={styles.scrollviewstyle}
         contentContainerStyle={styles.scrollviewcontainerstyle}

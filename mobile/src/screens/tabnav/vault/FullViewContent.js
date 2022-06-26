@@ -265,6 +265,19 @@ const FullViewContent = ({ item, index, dispatch, navigation, usecase }) => {
       </GestureRecognizer>
     );
   }
+
+  /*
+
+        <PinchGestureHandler
+          onBegan={() => {
+            ChangeFocusView({ dispatch, set: true }),
+              navigation.navigate("VaultPostFocusView", {
+                usecase,
+              });
+          }}
+        >
+
+  */
   return (
     <GestureRecognizer
       onSwipeDown={() => {
@@ -302,60 +315,49 @@ const FullViewContent = ({ item, index, dispatch, navigation, usecase }) => {
           })
         }
       >
-        <PinchGestureHandler
-          onBegan={() => {
-            ChangeFocusView({ dispatch, set: true }),
-              navigation.navigate("VaultPostFocusView", {
-                usecase,
-              });
-          }}
-        >
-          <View style={styles.container}>
-            <Image
-              source={{ uri: item.signedurl }}
-              style={[StyleSheet.absoluteFill, styles.backgroundimage]}
-              blurRadius={Environment.BlurRadius}
+        <View style={styles.container}>
+          <Image
+            source={{ uri: item.signedurl }}
+            style={[StyleSheet.absoluteFill, styles.backgroundimage]}
+            blurRadius={Environment.BlurRadius}
+          />
+          {/* <BlurView intensity={80} tint={'dark'}  style={StyleSheet.absoluteFill} /> */}
+
+          <SafeAreaView>
+            <TouchableScale
+              tension={250}
+              friction={25}
+              delayPressIn={750}
+              onPress={() =>
+                SetOptions({
+                  shouldshowoptions: true,
+                  optionstatus,
+                  dispatch,
+                  postid: item.id,
+                })
+              }
+              onLongPress={() => {
+                console.log("LongPress");
+              }}
+            >
+              <View style={[GlobalStyles.shadow, { backgroundColor: "black" }]}>
+                <Image
+                  style={[
+                    styles.postimage,
+                    { height: dimensions.height, width: dimensions.width },
+                  ]}
+                  source={{ uri: item.signedurl }}
+                />
+              </View>
+            </TouchableScale>
+
+            <PostTextModalButton
+              dispatch={dispatch}
+              item={item}
+              dimensions={dimensions}
             />
-            {/* <BlurView intensity={80} tint={'dark'}  style={StyleSheet.absoluteFill} /> */}
-
-            <SafeAreaView>
-              <TouchableScale
-                tension={250}
-                friction={25}
-                delayPressIn={750}
-                onPress={() =>
-                  SetOptions({
-                    shouldshowoptions: true,
-                    optionstatus,
-                    dispatch,
-                    postid: item.id,
-                  })
-                }
-                onLongPress={() => {
-                  console.log("LongPress");
-                }}
-              >
-                <View
-                  style={[GlobalStyles.shadow, { backgroundColor: "black" }]}
-                >
-                  <Image
-                    style={[
-                      styles.postimage,
-                      { height: dimensions.height, width: dimensions.width },
-                    ]}
-                    source={{ uri: item.signedurl }}
-                  />
-                </View>
-              </TouchableScale>
-
-              <PostTextModalButton
-                dispatch={dispatch}
-                item={item}
-                dimensions={dimensions}
-              />
-            </SafeAreaView>
-          </View>
-        </PinchGestureHandler>
+          </SafeAreaView>
+        </View>
       </TouchableWithoutFeedback>
       <PostOptionsModal
         navigation={navigation}

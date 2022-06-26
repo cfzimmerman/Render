@@ -20,6 +20,7 @@ async function DeleteIfExists({ address, key, dispatch, localLibrary }) {
 }
 
 async function CheckDeletedPosts({ userID, dispatch, localLibrary }) {
+  console.log("CheckDeletedPosts: ");
   // Get deleted posts
   // If any are in local ibrary or /ContentSync, delete them
   const postsResult = (await API.graphql(

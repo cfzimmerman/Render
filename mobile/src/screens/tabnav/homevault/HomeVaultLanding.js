@@ -25,8 +25,17 @@ import VaultSectionHeader from "../vault/VaultSectionHeader";
 import VaultSectionItem from "../vault/VaultSectionItem";
 import LSGetConfig from "../profile/LSGetConfig";
 import LSGetLibrary from "../profile/LSGetLibrary";
+import CheckDeletedPosts from "./CheckDeletedPosts";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function DelayCheckPosts({ dispatch, localLibrary, currentuser }) {
+  if (typeof currentuser.id != "undefined") {
+    setTimeout(() => {
+      CheckDeletedPosts({ userID: currentuser.id, dispatch, localLibrary });
+    }, 6000);
+  }
+}
 
 const HomeVaultLanding = ({ navigation }) => {
   // How to initial load without flickering? Long splash screen?
@@ -96,6 +105,7 @@ const HomeVaultLanding = ({ navigation }) => {
       currentuser,
       addedusersfilter,
     });
+    DelayCheckPosts({ dispatch, localLibrary, currentuser });
     setInitialLoad(true);
   }
 
