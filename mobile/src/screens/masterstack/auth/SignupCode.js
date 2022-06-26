@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Auth, API, graphqlOperation } from "aws-amplify";
 import { setErrormessageActive } from "../../../redux/system/errormessage";
-import { setSystemmessageActive } from "../../../redux/system/systemmessage";
+import { setSystemmessageActive } from "../../../redux/system/messagemodal";
 import {
   Environment,
   Colors,
@@ -34,20 +34,20 @@ import GetCurrentUser from "../../tabnav/profile/GetCurrentUser";
 import { listUsers, getUsers } from "../../../graphql/queries";
 import { updateUsers } from "../../../graphql/mutations";
 
-const IsComplete = ({
-  input, email, navigation, dispatch, userid,
-}) => {
+const IsComplete = ({ input, email, navigation, dispatch, userid }) => {
   // If all six boxes are filled, check the code
   if (input.length === 6) {
     ConfirmSignUp({
-      input, email, navigation, dispatch, userid,
+      input,
+      email,
+      navigation,
+      dispatch,
+      userid,
     });
   }
 };
 
-async function ConfirmSignUp({
-  input, email, navigation, dispatch, userid,
-}) {
+async function ConfirmSignUp({ input, email, navigation, dispatch, userid }) {
   // Amplify function confirms user's email, navigates to next screen
   const username = email;
   const code = input;
@@ -56,19 +56,21 @@ async function ConfirmSignUp({
     await Auth.confirmSignUp(username, code);
   } catch (error) {
     dispatch(
-      setSystemmessageActive(UserDialogue().systemmessage.incorrectcode),
+      setSystemmessageActive(UserDialogue().systemmessage.incorrectcode)
     );
     return;
   }
 
   SetConfirmed({
-    input, email, navigation, dispatch, userid,
+    input,
+    email,
+    navigation,
+    dispatch,
+    userid,
   });
 }
 
-async function SetConfirmed({
-  input, email, navigation, dispatch, userid,
-}) {
+async function SetConfirmed({ input, email, navigation, dispatch, userid }) {
   const usersresult = await API.graphql(
     graphqlOperation(`
     query GetUser {
@@ -80,7 +82,7 @@ async function SetConfirmed({
             password
         }
     }
-  `),
+  `)
   );
 
   const user = usersresult.data.getUsers;
@@ -114,11 +116,11 @@ async function ResendConfirmationCode({ email, dispatch }) {
   try {
     await Auth.resendSignUp(email);
     dispatch(
-      setSystemmessageActive(UserDialogue().systemmessage.resendcodesuccess),
+      setSystemmessageActive(UserDialogue().systemmessage.resendcodesuccess)
     );
   } catch (err) {
     dispatch(
-      setErrormessageActive(UserDialogue("11").errormessage.systemerror),
+      setErrormessageActive(UserDialogue("11").errormessage.systemerror)
     );
   }
 }
@@ -173,13 +175,13 @@ function SignupCode({ route }) {
     const animatedCellStyle = {
       backgroundColor: hasValue
         ? animationsScale[index].interpolate({
-          inputRange: [0, 1],
-          outputRange: [Colors.AccentPartial, Colors.AccentOn],
-        })
+            inputRange: [0, 1],
+            outputRange: [Colors.AccentPartial, Colors.AccentOn],
+          })
         : animationsColor[index].interpolate({
-          inputRange: [0, 1],
-          outputRange: [Colors.AccentOff, Colors.AccentOn],
-        }),
+            inputRange: [0, 1],
+            outputRange: [Colors.AccentOff, Colors.AccentOn],
+          }),
 
       transform: [
         {

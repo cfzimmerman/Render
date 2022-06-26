@@ -69,25 +69,27 @@ function Tile({ item, navigation, index }) {
   );
 }
 
-function SelectFromVault({ navigation }) {
+const SelectFromVault = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const currentuser = useSelector((state) => state.profilemain.currentuser);
   const vaultpostdata = useSelector(
-    (state) => state.vaultpostdata.vaultpostdata,
+    (state) => state.vaultpostdata.vaultpostdata
   );
   const vaultnexttoken = useSelector((state) => state.vaultpostdata.nextToken);
   const vaultfeeddata = useSelector(
-    (state) => state.vaultpostdata.vaultfeeddata,
+    (state) => state.vaultpostdata.vaultfeeddata
   );
   const fetchingdata = useSelector((state) => state.vaultpostdata.fetchingdata);
+  const localConfig = useSelector((state) => state.localsync.localConfig);
+  const localLibrary = useSelector((state) => state.localsync.localLibrary);
 
   const isFocused = useIsFocused();
 
   if (
-    isFocused === true
-    && vaultpostdata.length === 0
-    && vaultnexttoken === null
+    isFocused === true &&
+    vaultpostdata.length === 0 &&
+    vaultnexttoken === null
   ) {
     GetVaultData({
       dispatch,
@@ -95,14 +97,16 @@ function SelectFromVault({ navigation }) {
       limit: 100,
       cognitosub: currentuser.cognitosub,
       nextToken: vaultnexttoken,
+      localLibrary,
+      syncPreference: localConfig.syncPreference,
     }); // .then((result) => console.log(result))
   }
 
   const EndReached = () => {
     if (
-      vaultpostdata.length > 0
-      && vaultnexttoken != null
-      && fetchingdata === false
+      vaultpostdata.length > 0 &&
+      vaultnexttoken != null &&
+      fetchingdata === false
     ) {
       dispatch(setFetchingData(true));
       GetVaultData({
@@ -111,6 +115,8 @@ function SelectFromVault({ navigation }) {
         cognitosub: currentuser.cognitosub,
         nextToken: vaultnexttoken,
         limit: 100,
+        localLibrary,
+        syncPreference: localConfig.syncPreference,
       });
     }
   };
@@ -128,8 +134,7 @@ function SelectFromVault({ navigation }) {
             ]}
           >
             {" "}
-            Select
-            {" "}
+            Select{" "}
           </Text>
         </View>
       </View>
@@ -149,7 +154,7 @@ function SelectFromVault({ navigation }) {
       <SystemmessageModal />
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -11,7 +11,7 @@ import * as ImagePicker from "expo-image-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setSystemmessageActive } from "../../../redux/system/systemmessage";
+import { setSystemmessageActive } from "../../../redux/system/messagemodal";
 import {
   GlobalStyles,
   Environment,
@@ -29,9 +29,7 @@ import GetContentDate from "./GetContentDate";
 import UploadImage from "./UploadImage";
 import UploadVideo from "./UploadVideo";
 
-function HalfbarIconBox({
-  Icon, header, description, Action,
-}) {
+const HalfbarIconBox = ({ Icon, header, description, Action }) => {
   return (
     <TouchableOpacity onPress={() => Action()}>
       <View style={[GlobalStyles.shadow, styles.halfbarboxwrapper]}>
@@ -63,7 +61,7 @@ function HalfbarIconBox({
       </View>
     </TouchableOpacity>
   );
-}
+};
 
 const TodaysDate = () => {
   const isodate = new Date().toISOString();
@@ -73,26 +71,26 @@ const TodaysDate = () => {
 function PlusLanding({ navigation }) {
   const currentuser = useSelector((state) => state.profilemain.currentuser);
   const gotaddedusersfilter = useSelector(
-    (state) => state.homemain.gotaddedusersfilter,
+    (state) => state.homemain.gotaddedusersfilter
   );
 
   const uploadcanceled = useSelector(
-    (state) => state.loadprogressmessage.uploadcanceled,
+    (state) => state.loadprogressmessage.uploadcanceled
   );
 
   const vaultpostdata = useSelector(
-    (state) => state.vaultpostdata.vaultpostdata,
+    (state) => state.vaultpostdata.vaultpostdata
   );
   const vaultfeeddata = useSelector(
-    (state) => state.vaultpostdata.vaultfeeddata,
+    (state) => state.vaultpostdata.vaultfeeddata
   );
   const vaultnexttoken = useSelector((state) => state.vaultpostdata.nextToken);
 
   const dispatch = useDispatch();
 
   if (
-    typeof currentuser.cognitosub === "undefined"
-    || currentuser.fullyauthenticated === false
+    typeof currentuser.cognitosub === "undefined" ||
+    currentuser.fullyauthenticated === false
   ) {
     return (
       <SafeAreaView style={styles.emptypagewrapper}>
@@ -117,15 +115,15 @@ function PlusLanding({ navigation }) {
     });
 
     if (
-      !result.cancelled
-        && result.type === "video"
-        && result.duration > 120000
+      !result.cancelled &&
+      result.type === "video" &&
+      result.duration > 120000
     ) {
       const userdialogue = {
         header: "😨",
         title: "Unsupported upload",
         description: `Video uploads must be 120 seconds or fewer. This is ${parseInt(
-          result.duration / 1000,
+          result.duration / 1000
         )} seconds.`,
       };
 
@@ -184,8 +182,7 @@ function PlusLanding({ navigation }) {
             ]}
           >
             {" "}
-            Upload
-            {" "}
+            Upload{" "}
           </Text>
           <PrimaryDivider />
           <View style={styles.cardrow}>
@@ -199,11 +196,13 @@ function PlusLanding({ navigation }) {
               Icon={Icons.OriginalSize.Web}
               header="Browser"
               description="Best for content on your PC."
-              Action={() => dispatch(
-                setSystemmessageActive(
-                  UserDialogue().systemmessage.webuploadconstruction,
-                ),
-              )}
+              Action={() =>
+                dispatch(
+                  setSystemmessageActive(
+                    UserDialogue().systemmessage.webuploadconstruction
+                  )
+                )
+              }
             />
           </View>
         </View>
@@ -217,8 +216,7 @@ function PlusLanding({ navigation }) {
             ]}
           >
             {" "}
-            Post
-            {" "}
+            Post{" "}
           </Text>
           <PrimaryDivider />
           <View style={styles.cardrow}>

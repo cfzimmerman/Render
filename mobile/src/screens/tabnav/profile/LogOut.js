@@ -1,6 +1,7 @@
 import { batch } from "react-redux";
 import { Auth } from "aws-amplify";
 import * as Updates from "expo-updates";
+import LSClearStorage from "./LSClearStorage";
 import GetCurrentUser from "./GetCurrentUser";
 // import { Restart } from 'fiction-expo-restart';
 
@@ -36,6 +37,8 @@ import { clearVaultPostData } from "../../../redux/vault/vaultpostdata";
 */
 
 async function LogOut({ dispatch, navigation }) {
+  LSClearStorage({ dispatch });
+
   try {
     await Auth.signOut();
   } catch (error) {

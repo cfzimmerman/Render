@@ -1,5 +1,4 @@
-import { format } from "date-fns";
-
+import * as FileSystem from "expo-file-system";
 import { setFetchingData } from "../../../redux/vault/vaultpostdata";
 import { Environment } from "../../../resources/project";
 import CreateNewMonth from "./CreateNewMonth";
@@ -11,15 +10,12 @@ import { Storage, API, graphqlOperation } from "aws-amplify";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { filteredPostsByContentDate } from "../../../graphql/customqueries";
 import { PostsByContentDateQuery } from "../../../API";
+import { LSLibraryItemType } from "../../../redux/system/localsync";
+import { GetDate } from "../../../resources/utilities";
 
 import { DispatchType } from "../../../redux/store";
 import { PostHeaderType } from "../../../resources/CommonTypes";
-
-const GetDate = (contentdate: string): string => {
-  const awsdate = new Date(contentdate);
-  const simpledate = format(awsdate, "MMMM yyyy");
-  return simpledate;
-};
+import LSAddItem from "../profile/LSAddItem";
 
 // Eliminate GetUserInfo element
 // Error check: [Unhandled promise rejection: TypeError: undefined is not an object (evaluating 'vaultpostdata[vaultpostdata.length - 1].data.length')]
@@ -31,19 +27,21 @@ interface GetVaultDataProps {
   limit: number | undefined;
   cognitosub: string;
   nextToken: string | null;
+  syncPreference: "All" | "Partial" | "None";
+  localLibrary: {} | Record<string, LSLibraryItemType>;
 }
 
 interface GetPostsReturnType {
   id: string | null;
-  contenttype: string | null;
-  aspectratio: number | null;
-  contentkey: string | null;
-  publicpost: boolean | null;
+  contenttype?: string | null;
+  aspectratio?: number | null;
+  contentkey?: string | null;
+  publicpost?: boolean | null;
   cognitosub: string | null;
-  contentdate: string | null;
-  thumbnailkey: string | null;
-  posttext: string | null;
-  publicpostdate: string | null;
+  contentdate?: string | null;
+  thumbnailkey?: string | null;
+  posttext?: string | null;
+  publicpostdate?: string | null;
   createdAt: string | null;
   usersID: string | null;
   updatedAt: string | null;
@@ -82,6 +80,8 @@ async function GetVaultData({
   limit,
   cognitosub,
   nextToken,
+  syncPreference,
+  localLibrary,
 }: GetVaultDataProps) {
   if (nextToken === null && vaultpostdata.length > 0) {
     console.log("Caught");
@@ -122,40 +122,98 @@ async function GetVaultData({
     userposts.forEach((item) => {
       const simpleDate = GetDate(item.contentdate);
 
+      // This if - else chain actually started pretty small (non isn't not anymore). At this point, the top layer should be shaved off so that the current month / new month distinction is decided after the content is prepared
+      // Todo later. Not done atm because I don't want to introduce bugs that aren't part of the LocalSync testing process.
       if (
         activemonth[0] === "empty" ||
         activemonth[0] != GetDate(item.contentdate)
       ) {
         // Add new month to section list
-        async function GetUrl({ item }) {
+        async function GetUrl({ item }: { item: GetPostsReturnType }) {
           if (item.contenttype === "video") {
-            const signedurl = null;
-            const thumbnailurl = await Storage.get(item.thumbnailkey, {
-              expires: 86400,
-            });
+            const thumbnailAddress =
+              FileSystem.documentDirectory + "LocalSync/" + item.thumbnailkey;
+            const contentExists = await FileSystem.getInfoAsync(
+              thumbnailAddress
+            );
+            if (contentExists.exists === true) {
+              const signedurl = null;
+              const thumbnailurl = thumbnailAddress;
 
-            AddToFullviewList({
-              dispatch,
-              item,
-              signedurl,
-              thumbnailurl,
-              header: true,
-            });
-            CreateNewMonth({ dispatch, item, signedurl, thumbnailurl });
+              AddToFullviewList({
+                dispatch,
+                item,
+                signedurl,
+                thumbnailurl,
+                header: true,
+              });
+              CreateNewMonth({ dispatch, item, signedurl, thumbnailurl });
+            } else {
+              const signedurl = null;
+              const thumbnailurl = await Storage.get(item.thumbnailkey, {
+                expires: 86400,
+              });
+
+              AddToFullviewList({
+                dispatch,
+                item,
+                signedurl,
+                thumbnailurl,
+                header: true,
+              });
+              CreateNewMonth({ dispatch, item, signedurl, thumbnailurl });
+
+              if (syncPreference === "All" || syncPreference === "Partial") {
+                // Add to local storage so it can be retrieved next time (if that's what the user wants)
+                LSAddItem({
+                  contentkey: item.thumbnailkey,
+                  signedurl: thumbnailurl,
+                  localLibrary,
+                  dispatch,
+                });
+              }
+            }
           } else {
-            const signedurl = await Storage.get(item.contentkey, {
-              expires: 86400,
-            });
-            const thumbnailurl = null;
+            const contentAddress =
+              FileSystem.documentDirectory + "LocalSync/" + item.contentkey;
+            const contentExists = await FileSystem.getInfoAsync(contentAddress);
 
-            AddToFullviewList({
-              dispatch,
-              item,
-              signedurl,
-              thumbnailurl,
-              header: true,
-            });
-            CreateNewMonth({ dispatch, item, signedurl, thumbnailurl });
+            if (contentExists.exists === true) {
+              const signedurl = contentAddress;
+              const thumbnailurl = null;
+
+              AddToFullviewList({
+                dispatch,
+                item,
+                signedurl,
+                thumbnailurl,
+                header: true,
+              });
+              CreateNewMonth({ dispatch, item, signedurl, thumbnailurl });
+            } else {
+              const signedurl = await Storage.get(item.contentkey, {
+                expires: 86400,
+              });
+              const thumbnailurl = null;
+
+              AddToFullviewList({
+                dispatch,
+                item,
+                signedurl,
+                thumbnailurl,
+                header: true,
+              });
+              CreateNewMonth({ dispatch, item, signedurl, thumbnailurl });
+
+              if (syncPreference === "All" || syncPreference === "Partial") {
+                LSAddItem({
+                  contentkey: item.contentkey,
+                  signedurl,
+                  localLibrary,
+                  dispatch,
+                });
+              }
+            }
           }
         }
 
@@ -167,31 +225,85 @@ async function GetVaultData({
 
         async function GetUrl({ item }) {
           if (item.contenttype === "video") {
-            const signedurl = null;
-            const thumbnailurl = await Storage.get(item.thumbnailkey, {
-              expires: 86400,
-            });
-            AddToFullviewList({
-              dispatch,
-              item,
-              signedurl,
-              thumbnailurl,
-              header: false,
-            });
-            AddToCurrentMonth({ dispatch, item, signedurl, thumbnailurl });
+            const thumbnailAddress =
+              FileSystem.documentDirectory + "LocalSync/" + item.thumbnailkey;
+            const contentExists = await FileSystem.getInfoAsync(
+              thumbnailAddress
+            );
+
+            if (contentExists.exists === true) {
+              const signedurl = null;
+              const thumbnailurl = thumbnailAddress;
+              AddToFullviewList({
+                dispatch,
+                item,
+                signedurl,
+                thumbnailurl,
+                header: false,
+              });
+              AddToCurrentMonth({ dispatch, item, signedurl, thumbnailurl });
+            } else {
+              const signedurl = null;
+              const thumbnailurl = await Storage.get(item.thumbnailkey, {
+                expires: 86400,
+              });
+              AddToFullviewList({
+                dispatch,
+                item,
+                signedurl,
+                thumbnailurl,
+                header: false,
+              });
+              AddToCurrentMonth({ dispatch, item, signedurl, thumbnailurl });
+
+              if (syncPreference === "All" || syncPreference === "Partial") {
+                LSAddItem({
+                  contentkey: item.thumbnailkey,
+                  signedurl: thumbnailurl,
+                  localLibrary,
+                  dispatch,
+                });
+              }
+            }
           } else {
-            const signedurl = await Storage.get(item.contentkey, {
-              expires: 86400,
-            });
-            const thumbnailurl = null;
-            AddToFullviewList({
-              dispatch,
-              item,
-              signedurl,
-              thumbnailurl,
-              header: false,
-            });
-            AddToCurrentMonth({ dispatch, item, signedurl, thumbnailurl });
+            const contentAddress =
+              FileSystem.documentDirectory + "LocalSync/" + item.contentkey;
+            const contentExists = await FileSystem.getInfoAsync(contentAddress);
+
+            if (contentExists.exists === true) {
+              const signedurl = contentAddress;
+              const thumbnailurl = null;
+              AddToFullviewList({
+                dispatch,
+                item,
+                signedurl,
+                thumbnailurl,
+                header: false,
+              });
+              AddToCurrentMonth({ dispatch, item, signedurl, thumbnailurl });
+            } else {
+              const signedurl = await Storage.get(item.contentkey, {
+                expires: 86400,
+              });
+              const thumbnailurl = null;
+              AddToFullviewList({
+                dispatch,
+                item,
+                signedurl,
+                thumbnailurl,
+                header: false,
+              });
+              AddToCurrentMonth({ dispatch, item, signedurl, thumbnailurl });
+
+              if (syncPreference === "All" || syncPreference === "Partial") {
+                LSAddItem({
+                  contentkey: item.contentkey,
+                  signedurl: signedurl,
+                  localLibrary,
+                  dispatch,
+                });
+              }
+            }
           }
         }
         GetUrl({ item });

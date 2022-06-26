@@ -24,13 +24,20 @@ const SettingsMain = ({ navigation }) => {
 
   const currentuser = useSelector((state) => state.profilemain.currentuser);
   const pfpsignedurl = useSelector((state) => state.profilemain.pfpsignedurl);
+  const localLibrary = useSelector((state) => state.localsync.localLibrary);
+  const localConfig = useSelector((state) => state.localsync.localConfig);
 
   if (typeof currentuser.cognitosub === "undefined") {
     navigation.navigate("ProfileLanding");
   }
 
   if (pfpsignedurl === null && typeof currentuser.id !== "undefined") {
-    GetPfp({ dispatch, pfpkey: currentuser.pfp });
+    GetPfp({
+      dispatch,
+      pfpkey: currentuser.pfp,
+      localLibrary,
+      syncPreference: localConfig.syncPreference,
+    });
   }
 
   return (
@@ -54,6 +61,8 @@ const SettingsMain = ({ navigation }) => {
                 dispatch,
                 currentpfpkey: currentuser.pfp,
                 cognitosub: currentuser.cognitosub,
+                localLibrary,
+                syncPreference: localConfig.syncPreference,
               })
             }
           >
@@ -81,17 +90,22 @@ const SettingsMain = ({ navigation }) => {
           </View>
           <View style={styles.buttonrowwrapper}>
             <HalfbarButton
+              label="Local sync"
+              Action={() => navigation.navigate("LocalSyncSettings")}
+              active={false}
+            />
+            <HalfbarButton
               label="Our Discord"
               Action={() => Linking.openURL("https://discord.gg/nrpHKgKfrJ")}
               active={false}
             />
+          </View>
+          <View style={styles.buttonrowwrapper}>
             <HalfbarButton
               label="Password"
               Action={() => navigation.navigate("ForgotPassword")}
               active={false}
             />
-          </View>
-          <View style={styles.buttonrowwrapper}>
             <HalfbarButton
               label="Log out"
               Action={() => LogOut({ dispatch, navigation })}

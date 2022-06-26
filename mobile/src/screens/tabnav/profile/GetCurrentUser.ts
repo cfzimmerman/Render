@@ -46,6 +46,7 @@ async function GetCurrentUser({ dispatch, navigation }) {
                         createdAt
                         addedmecount
                         addedcount
+                        storagesizeinbytes
                         emailconfirmed
                         acceptedtos
                         setpassword
@@ -94,6 +95,7 @@ async function GetCurrentUser({ dispatch, navigation }) {
         addedmecount: user.addedmecount,
         addedcount: user.addedcount,
         setpassword: user.setpassword,
+        storagesizeinbytes: user.storagesizeinbytes,
       };
 
       batch(() => {

@@ -1,6 +1,4 @@
-import {
-  View, Text, FlatList, StyleSheet,
-} from "react-native";
+import { View, Text, FlatList, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -9,13 +7,13 @@ import { BackArrow } from "../../../resources/atoms";
 import GetAddedMeUsers from "./GetAddedMeUsers";
 import RelationUserTile from "./RelationUserTile";
 
-function AddedMeUsers({ navigation }) {
+const AddedMeUsers = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const currentuser = useSelector((state) => state.profilemain.currentuser);
   const addedmeusers = useSelector((state) => state.relationships.addedme);
   const addedmenexttoken = useSelector(
-    (state) => state.relationships.addedmenexttoken,
+    (state) => state.relationships.addedmenexttoken
   );
   const addbackusers = useSelector((state) => state.profilemain.addbackusers);
 
@@ -65,7 +63,7 @@ function AddedMeUsers({ navigation }) {
       />
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

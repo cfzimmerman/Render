@@ -79,6 +79,9 @@ const VaultPostFullView = ({ navigation, route }) => {
 
   const commentsdata = useSelector((state) => state.socialmain.commentsdata);
 
+  const localConfig = useSelector((state) => state.localsync.localConfig);
+  const localLibrary = useSelector((state) => state.localsync.localLibrary);
+
   const { cognitosub } = currentuser;
 
   const { usecase } = route.params;
@@ -118,6 +121,8 @@ const VaultPostFullView = ({ navigation, route }) => {
         cognitosub,
         cognitosub,
         nextToken: vaultnexttoken,
+        localLibrary,
+        syncPreference: localConfig.syncPreference,
       });
     } else if (
       usecase === "gallery" &&
@@ -132,6 +137,8 @@ const VaultPostFullView = ({ navigation, route }) => {
         cognitosub,
         nextToken: gallerynexttoken,
         userID: currentuser.id,
+        localLibrary,
+        syncPreference: localConfig.syncPreference,
       });
     } else if (
       usecase === "otherusergallery" &&
