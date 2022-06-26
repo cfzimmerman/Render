@@ -32,7 +32,7 @@ const HalfBar = TransformDimensions((FullBar - StandardPadding) / 2);
 
 // Used to determine vertical or horizontal maximization of image when in full (not focus) view
 const PostViewAspectRatio = TransformDimensions(
-  ScreenWidth / (ScreenHeight - CubeSize * 2),
+  ScreenWidth / (ScreenHeight - CubeSize * 2)
 );
 
 // The border radius practically every shape and card in the app is cut to
@@ -55,7 +55,7 @@ const FontDimensions = FontSize(StandardPadding);
 
 // In a lineup of 6 cubesize buttons, this output is the (right side?) margin each must have to stay within FullBar width and fill the available space (use only when FlexBox capabilities aren't available)
 const InputMargin6 = TransformDimensions(
-  (ScreenWidth - LargePadding - CubeSize * 6) / 10,
+  (ScreenWidth - LargePadding - CubeSize * 6) / 10
 );
 
 // Standard size of an Icon. Feather, our current library, uses baseline 20 which is a little small and isn't dynamic.
@@ -66,6 +66,8 @@ const BlurRadius = 20;
 const BackgroundOpacity = 0.6;
 
 const GetVaultDataLimit = 10;
+
+const DeletedBufferInDays = 10;
 
 const Environment = {
   Region: "us-east-1",
@@ -89,6 +91,7 @@ const Environment = {
   BlurRadius,
   BackgroundOpacity,
   GetVaultDataLimit,
+  DeletedBufferInDays,
 };
 
 export default Environment;

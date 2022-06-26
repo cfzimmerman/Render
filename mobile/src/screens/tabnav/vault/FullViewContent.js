@@ -120,6 +120,8 @@ const FullViewContent = ({ item, index, dispatch, navigation, usecase }) => {
           dispatch,
           index,
           contentkey: item.contentkey,
+          localLibrary,
+          syncPreference: localConfig.syncPreference,
         });
       } else if (usecase === "otherusergallery") {
         AddVideoToOtherUserGallery({

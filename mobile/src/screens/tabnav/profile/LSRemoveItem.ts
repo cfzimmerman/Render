@@ -5,6 +5,7 @@ const libraryAddress = FileSystem.documentDirectory + "LocalLibrary.txt";
 const directoryAddress = FileSystem.documentDirectory + "LocalSync/";
 
 async function LSRemoveItem({ dispatch, contentkey, localLibrary }) {
+  // contentkey is a poorly named variable. Also accepts thumbnailkey values
   const contentAddress = directoryAddress + contentkey;
 
   try {

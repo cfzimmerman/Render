@@ -137,6 +137,8 @@ const VaultPostFullView = ({ navigation, route }) => {
         cognitosub,
         nextToken: gallerynexttoken,
         userID: currentuser.id,
+        localLibrary,
+        syncPreference: localConfig.syncPreference,
       });
     } else if (
       usecase === "otherusergallery" &&
