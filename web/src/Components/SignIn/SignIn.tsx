@@ -1,5 +1,5 @@
 import { Auth, CognitoUser } from '@aws-amplify/auth';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { SetStateAction, useContext, useEffect, useRef, useState } from 'react';
 import RenderIcon from '../../assets/render_icon_white.png';
 import { UserContext } from '../../Context/UserContext';
 import { AbsoluteButton } from '../Auth/BackButton/AbsoluteButton';
@@ -21,6 +21,7 @@ export const SignIn: React.FC<{}> = () => {
   const [titleWidth, setTitleWidth] = useState(0);
   const [signup, setSignup] = useState(false);
   const [isSigningIn, setIsSigningIn] = useState(false);
+  const [authError, setAuthError] = useState(false);
 
   const signIn = async () => {
     // Ensure only one code is sent
@@ -34,9 +35,12 @@ export const SignIn: React.FC<{}> = () => {
       setUser(cognitoUser);
     } catch (err) {
       setIsSigningIn(false);
+      console.log(err);
       if ((err as Error).toString().includes('UserNotFoundException')) {
         // User does not exist, direct to sign up with app
         setSignup(true);
+      } else if ((err as Error).toString().includes('NotAuthorizedException')) {
+        setAuthError(true);
       }
     }
     setPassword('');
@@ -80,6 +84,14 @@ export const SignIn: React.FC<{}> = () => {
     setSession(null);
   };
 
+  const clearAuthErrorAndSetValue = (
+    val: string,
+    setVal: (value: SetStateAction<string>) => void
+  ) => {
+    setAuthError(false);
+    setVal(val);
+  };
+
   // TODO: Temp func, remove when render app is linked
   // const signUp = async () => {
   //   const pass = v4();
@@ -110,16 +122,17 @@ export const SignIn: React.FC<{}> = () => {
                 <TextInput
                   value={email}
                   placeholder="Email"
-                  onChange={(val) => setEmail(val)}
+                  onChange={(val) => clearAuthErrorAndSetValue(val, setEmail)}
                   onSubmit={signIn}
                 />
                 <TextInput
                   type="password"
                   value={password}
                   placeholder="Password"
-                  onChange={(val) => setPassword(val)}
+                  onChange={(val) => clearAuthErrorAndSetValue(val, setPassword)}
                   onSubmit={signIn}
                 />
+                {authError && <h4>Incorrect username or password</h4>}
               </div>
             )}
           </div>
