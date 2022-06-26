@@ -21,7 +21,8 @@ async function GetSearchResults({
       if (input.length === 0) {
         const landingfilter = `type: "user"`;
         return landingfilter;
-      } if (input.length > 0) {
+      }
+      if (input.length > 0) {
         const dynamicfilter = `type: "user", gamertag: { beginsWith: "${input}"}`;
         return dynamicfilter;
       }
@@ -45,7 +46,7 @@ async function GetSearchResults({
                     }
                 }
             }
-        `),
+        `)
     );
 
     const userarray = result.data.searchByGamertag.items;
@@ -55,7 +56,7 @@ async function GetSearchResults({
         cognitosub,
         targetcognitosub: item.cognitosub,
       });
-      async function GetPfp() {
+      async function GetOtherUserPfp() {
         const pfpurl = await Storage.get(item.pfp, { expires: 86400 });
         AddUserSearchResult({
           dispatch,
@@ -65,7 +66,7 @@ async function GetSearchResults({
         });
       }
 
-      GetPfp();
+      GetOtherUserPfp();
     });
   } else {
     console.log("currently only user search is supported");

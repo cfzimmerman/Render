@@ -6,14 +6,6 @@ import CleanupFailedUpload from "./CleanupFailedUpload";
 import ModifyVaultData from "../vault/ModifyVaultData";
 
 const CorrectUserUpdate = ({ currentuser, newSize }) => {
-  if (currentuser.firstvaultupload === true) {
-    const updatedUser = {
-      id: currentuser.id,
-      storagesizeinbytes: newSize,
-    };
-
-    return updatedUser;
-  }
   const updatedUser = {
     id: currentuser.id,
     storagesizeinbytes: newSize,
@@ -52,7 +44,7 @@ async function AddToDB({
 
   try {
     const createPostResult = await API.graphql(
-      graphqlOperation(createPosts, { input: newpost }),
+      graphqlOperation(createPosts, { input: newpost })
     );
 
     // Update storage size
@@ -65,7 +57,7 @@ async function AddToDB({
                     storagesizeinbytes
                 }
             }
-        `),
+        `)
     );
 
     const currentSize = userResult.data.getUsers.storagesizeinbytes;
@@ -98,7 +90,7 @@ async function AddToDB({
     });
   }
   console.log(
-    `Successfully uploaded post to ${currentuser.displayname}'s Vault`,
+    `Successfully uploaded post to ${currentuser.displayname}'s Vault`
   );
 }
 

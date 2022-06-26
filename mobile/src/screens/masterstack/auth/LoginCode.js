@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Auth, API, graphqlOperation } from "aws-amplify";
 import { setErrormessageActive } from "../../../redux/system/errormessage";
-import { setSystemmessageActive } from "../../../redux/system/systemmessage";
+import { setSystemmessageActive } from "../../../redux/system/messagemodal";
 import {
   Environment,
   Colors,

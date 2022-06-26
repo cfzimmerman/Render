@@ -29,6 +29,7 @@ const slice = createSlice({
       createdAt: null,
       addedmecount: null,
       addedcount: null,
+      storagesizeinbytes: 0,
       setpassword: "unknown",
     },
     pfpsignedurl: null,
@@ -51,6 +52,7 @@ const slice = createSlice({
         createdAt: null,
         addedmecount: null,
         addedcount: null,
+        storagesizeinbytes: 0,
         setpassword: "unknown",
       };
       state.pfpsignedurl = null;

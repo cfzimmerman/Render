@@ -18,6 +18,8 @@ async function SetNewPfp({
   dispatch,
   cognitosub,
   currentuserid,
+  localLibrary,
+  syncPreference,
 }) {
   const size = await FileSystem.getInfoAsync(uri);
   const content = await fetch(uri);
@@ -49,6 +51,8 @@ async function SetNewPfp({
       oldpfpkey,
       dispatch,
       currentuserid,
+      localLibrary,
+      syncPreference,
     });
 
     dispatch(setPercentComplete("Success!"));
@@ -66,6 +70,7 @@ async function UpdateProfile({
   oldpfpkey,
   dispatch,
   currentuserid,
+  syncPreference,
 }) {
   const updateduser = {
     id: currentuserid,
@@ -82,7 +87,7 @@ async function UpdateProfile({
     RemoveOldPfp(oldpfpkey);
   }
 
-  GetPfp({ dispatch, pfpkey: newpfpkey });
+  GetPfp({ dispatch, pfpkey: newpfpkey, localLibrary, syncPreference });
 }
 
 async function RemoveOldPfp(oldpfpkey) {
@@ -98,6 +103,8 @@ async function ChangePfp({
   dispatch,
   currentpfpkey,
   currentuserid,
+  localLibrary,
+  syncPreference,
 }) {
   const result = await ImagePicker.launchImageLibraryAsync({
     allowsEditing: true,
@@ -112,6 +119,8 @@ async function ChangePfp({
       dispatch,
       cognitosub,
       currentuserid,
+      localLibrary,
+      syncPreference,
     });
   } else if (!result.cancelled && result.type === "video") {
     console.log("error: cannot select video");

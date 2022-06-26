@@ -16,6 +16,8 @@ const GalleryMain = ({ navigation }) => {
   const gallerynexttoken = useSelector(
     (state) => state.profilemain.gallerynexttoken
   );
+  const localConfig = useSelector((state) => state.localsync.localConfig);
+  const localLibrary = useSelector((state) => state.localsync.localLibrary);
 
   const isFocused = useIsFocused();
 
@@ -30,6 +32,8 @@ const GalleryMain = ({ navigation }) => {
       cognitosub: currentuser.cognitosub,
       nextToken: gallerynexttoken,
       userID: currentuser.id,
+      localLibrary,
+      syncPreference: localConfig.syncPreference,
     });
   }
 
@@ -41,6 +45,8 @@ const GalleryMain = ({ navigation }) => {
         cognitosub: currentuser.cognitosub,
         nextToken: gallerynexttoken,
         userID: currentuser.id,
+        localLibrary,
+        syncPreference: localConfig.syncPreference,
       });
     }
   };

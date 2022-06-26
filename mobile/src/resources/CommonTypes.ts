@@ -18,6 +18,7 @@ export interface CurrentUserType {
   createdAt: string | null;
   addedmecount: number | null;
   addedcount: number | null;
+  storagesizeinbytes: number | null;
 }
 
 export interface PostType {

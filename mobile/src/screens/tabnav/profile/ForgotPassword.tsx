@@ -25,7 +25,7 @@ import { DismissKeyboard } from "../../../resources/utilities";
 import { BackArrow, PastyHalfbarButtons } from "../../../resources/atoms";
 import { DispatchType, RootStateType } from "../../../redux/store";
 import { CurrentUserType } from "../../../resources/CommonTypes";
-import { setSystemmessageActive } from "../../../redux/system/systemmessage";
+import { setSystemmessageActive } from "../../../redux/system/messagemodal";
 import { setErrormessageActive } from "../../../redux/system/errormessage";
 import { updateUsers } from "../../../graphql/mutations";
 import { setSetPassword } from "../../../redux/profile/profilemain";

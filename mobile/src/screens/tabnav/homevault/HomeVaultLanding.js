@@ -23,15 +23,24 @@ import NoUploads from "./NoUploads";
 import SectionGridFooter from "../vault/SectionGridFooter";
 import VaultSectionHeader from "../vault/VaultSectionHeader";
 import VaultSectionItem from "../vault/VaultSectionItem";
+import LSGetConfig from "../profile/LSGetConfig";
+import LSGetLibrary from "../profile/LSGetLibrary";
+import CheckDeletedPosts from "./CheckDeletedPosts";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function DelayCheckPosts({ dispatch, localLibrary, currentuser }) {
+  if (typeof currentuser.id != "undefined") {
+    setTimeout(() => {
+      CheckDeletedPosts({ userID: currentuser.id, dispatch, localLibrary });
+    }, 6000);
+  }
+}
 
 const HomeVaultLanding = ({ navigation }) => {
   // How to initial load without flickering? Long splash screen?
 
   const [initialLoad, setInitialLoad] = useState(false);
-
-  const [gotCurrentUser, setGotCurrentUser] = useState(false);
 
   const [gotAddedUsersFilter, setGotAddedUsersFilter] = useState(false);
 
@@ -67,6 +76,9 @@ const HomeVaultLanding = ({ navigation }) => {
     (state) => state.homemain.storiesfullview
   );
 
+  const localConfig = useSelector((state) => state.localsync.localConfig);
+  const localLibrary = useSelector((state) => state.localsync.localLibrary);
+
   const dispatch = useDispatch();
 
   const ref = useRef(null);
@@ -74,17 +86,13 @@ const HomeVaultLanding = ({ navigation }) => {
   useScrollToTop(ref);
 
   if (
-    typeof currentuser.cognitosub === "undefined" &&
-    gotCurrentUser === false
-  ) {
-    // GetCurrentUser({ dispatch, navigation });
-    setGotCurrentUser(true);
-  } else if (
     gotAddedUsersFilter === false &&
     typeof currentuser.cognitosub !== "undefined" &&
     currentuser.cognitosub != null
   ) {
     GetAddedUsersFilter({ dispatch, currentuser });
+    LSGetConfig({ dispatch });
+    LSGetLibrary({ dispatch });
     setGotAddedUsersFilter(true);
   } else if (
     typeof currentuser.cognitosub !== "undefined" &&
@@ -97,6 +105,7 @@ const HomeVaultLanding = ({ navigation }) => {
       currentuser,
       addedusersfilter,
     });
+    DelayCheckPosts({ dispatch, localLibrary, currentuser });
     setInitialLoad(true);
   }
 
@@ -115,6 +124,8 @@ const HomeVaultLanding = ({ navigation }) => {
       vaultpostdata,
       cognitosub: currentuser.cognitosub,
       nextToken,
+      syncPreference: localConfig.syncPreference,
+      localLibrary,
     }); // .then((result) => console.log(result))
     HideSplash();
     setGotInitialVaultData(true);
@@ -132,6 +143,8 @@ const HomeVaultLanding = ({ navigation }) => {
         vaultpostdata,
         cognitosub: currentuser.cognitosub,
         nextToken,
+        syncPreference: localConfig.syncPreference,
+        localLibrary,
       });
     }
   };

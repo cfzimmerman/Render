@@ -3,6 +3,7 @@ import { ProfileLanding } from "../screens/tabnav/profile";
 import GalleryMain from "../screens/tabnav/profile/GalleryMain";
 import SettingsMain from "../screens/tabnav/profile/SettingsMain";
 import AddedUsers from "../screens/tabnav/profile/AddedUsers";
+import LocalSyncSettings from "../screens/tabnav/profile/LocalSyncSettings";
 import AddedMeUsers from "../screens/tabnav/profile/AddedMeUsers";
 
 const Stack = createNativeStackNavigator();
@@ -19,6 +20,7 @@ const Profile = () => {
       <Stack.Screen name="GalleryMain" component={GalleryMain} />
       <Stack.Screen name="SettingsMain" component={SettingsMain} />
       <Stack.Screen name="AddedUsers" component={AddedUsers} />
+      <Stack.Screen name="LocalSyncSettings" component={LocalSyncSettings} />
       <Stack.Screen name="AddedMeUsers" component={AddedMeUsers} />
     </Stack.Navigator>
   );

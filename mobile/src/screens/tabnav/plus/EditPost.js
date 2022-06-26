@@ -21,16 +21,18 @@ function EditPost({ route, navigation }) {
   const currentuser = useSelector((state) => state.profilemain.currentuser);
 
   const vaultpostdata = useSelector(
-    (state) => state.vaultpostdata.vaultpostdata,
+    (state) => state.vaultpostdata.vaultpostdata
   );
   const vaultfeeddata = useSelector(
-    (state) => state.vaultpostdata.vaultfeeddata,
+    (state) => state.vaultpostdata.vaultfeeddata
   );
   const vaultnexttoken = useSelector((state) => state.vaultpostdata.nextToken);
   const edittextmodalactive = useSelector(
-    (state) => state.plusmain.edittextmodalactive,
+    (state) => state.plusmain.edittextmodalactive
   );
   const gallerydata = useSelector((state) => state.profilemain.gallerydata);
+  const localLibrary = useSelector((state) => state.localsync.localLibrary);
+  const localConfig = useSelector((state) => state.localsync.localConfig);
 
   const dispatch = useDispatch();
 
@@ -50,6 +52,8 @@ function EditPost({ route, navigation }) {
         dispatch,
         index,
         contentkey: item.contentkey,
+        localLibrary,
+        syncPreference: localConfig.syncPreference,
       });
     }
 
@@ -74,35 +78,35 @@ function EditPost({ route, navigation }) {
             <View style={[GlobalStyles.shadow]}>
               <View style={styles.videowrapper}>
                 <VideoPlayer
-                    videoProps={{
-                      shouldPlay: false,
-                      resizeMode: Video.RESIZE_MODE_COVER,
-                      source: { uri: item.signedurl },
-                      useNativeControls: false,
-                    }}
-                    style={{
-                      height: dimensions.height,
-                      width: dimensions.width,
-                      borderRadius: Environment.StandardRadius,
-                      controlsBackgroundColor: Colors.AccentOn,
-                    }}
-                    slider={{
-                      maximumTrackTintColor: Colors.AccentOn,
-                      minimumTrackTintColor: Colors.Primary,
-                      thumbTintColor: Colors.Primary,
-                      tapToSeek: true,
-                    }}
-                    textStyle={{
-                      color: Colors.Primary,
-                      fontFamily: "Inter_500Medium",
-                    }}
-                    icon={{
-                      color: Colors.Primary,
-                    }}
-                    fullscreen={{
-                      visible: false,
-                    }}
-                  />
+                  videoProps={{
+                    shouldPlay: false,
+                    resizeMode: Video.RESIZE_MODE_COVER,
+                    source: { uri: item.signedurl },
+                    useNativeControls: false,
+                  }}
+                  style={{
+                    height: dimensions.height,
+                    width: dimensions.width,
+                    borderRadius: Environment.StandardRadius,
+                    controlsBackgroundColor: Colors.AccentOn,
+                  }}
+                  slider={{
+                    maximumTrackTintColor: Colors.AccentOn,
+                    minimumTrackTintColor: Colors.Primary,
+                    thumbTintColor: Colors.Primary,
+                    tapToSeek: true,
+                  }}
+                  textStyle={{
+                    color: Colors.Primary,
+                    fontFamily: "Inter_500Medium",
+                  }}
+                  icon={{
+                    color: Colors.Primary,
+                  }}
+                  fullscreen={{
+                    visible: false,
+                  }}
+                />
               </View>
             </View>
           </SafeAreaView>
@@ -129,7 +133,8 @@ function EditPost({ route, navigation }) {
         />
       </GestureRecognizer>
     );
-  } if (item.contenttype === "image") {
+  }
+  if (item.contenttype === "image") {
     return (
       <GestureRecognizer
         style={styles.gesturewrapper}
@@ -155,12 +160,12 @@ function EditPost({ route, navigation }) {
             >
               <View style={GlobalStyles.shadow}>
                 <Image
-                    style={[
-                      styles.imagestyle,
-                      { height: dimensions.height, width: dimensions.width },
-                    ]}
-                    source={{ uri: item.signedurl }}
-                  />
+                  style={[
+                    styles.imagestyle,
+                    { height: dimensions.height, width: dimensions.width },
+                  ]}
+                  source={{ uri: item.signedurl }}
+                />
               </View>
             </TouchableScale>
           </SafeAreaView>

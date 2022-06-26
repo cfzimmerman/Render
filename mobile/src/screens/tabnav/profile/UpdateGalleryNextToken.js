@@ -1,7 +1,7 @@
 import { setGalleryNextToken } from "../../../redux/profile/profilemain";
 
-const UpdateGalleryNextToken = ({ token, dispatch }) => {
-  dispatch(setGalleryNextToken(token));
+const UpdateGalleryNextToken = ({ nextToken, dispatch }) => {
+  dispatch(setGalleryNextToken(nextToken));
 };
 
 export default UpdateGalleryNextToken;

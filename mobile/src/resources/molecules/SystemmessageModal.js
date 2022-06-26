@@ -8,11 +8,13 @@ import {
 import { BlurView } from "expo-blur";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setSystemmessageInactive } from "../../redux/system/systemmessage";
+import { setSystemmessageInactive } from "../../redux/system/messagemodal";
 import { Environment, Colors, GlobalStyles } from "../project";
 
 const SystemmessageModal = () => {
-  const systemmessage = useSelector((state) => state.systemmessage);
+  const systemmessage = useSelector(
+    (state) => state.messagemodal.systemmessagemodal
+  );
   const dispatch = useDispatch();
 
   setTimeout(() => {

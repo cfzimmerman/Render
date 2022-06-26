@@ -10,7 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import TouchableScale from "react-native-touchable-scale";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setSystemmessageActive } from "../../../redux/system/systemmessage";
+import { setSystemmessageActive } from "../../../redux/system/messagemodal";
 import {
   GlobalStyles,
   Environment,
@@ -34,7 +34,7 @@ import {
 // To add: (1) Remove follower, (2) clear add back recommendation
 // First, implement 'AddBackDisplay'
 
-function ProfileLanding({ navigation }) {
+const ProfileLanding = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const currentuser = useSelector((state) => state.profilemain.currentuser);
@@ -45,7 +45,8 @@ function ProfileLanding({ navigation }) {
     (state) => state.relationships.addedmenexttoken
   );
   const addbackusers = useSelector((state) => state.profilemain.addbackusers);
-
+  const localConfig = useSelector((state) => state.localsync.localConfig);
+  const localLibrary = useSelector((state) => state.localsync.localLibrary);
   if (typeof currentuser.id === "undefined") {
     GetCurrentUser({ dispatch });
   }
@@ -69,7 +70,12 @@ function ProfileLanding({ navigation }) {
     );
   }
   if (pfpsignedurl === null && typeof currentuser.id !== "undefined") {
-    GetPfp({ dispatch, pfpkey: currentuser.pfp });
+    GetPfp({
+      dispatch,
+      pfpkey: currentuser.pfp,
+      syncPreference: localConfig.syncPreference,
+      localLibrary,
+    });
   } else if (addedmeusers.length === 0 && addedmenexttoken === null) {
     GetAddedMeUsers({
       addedmenexttoken,
@@ -170,7 +176,7 @@ function ProfileLanding({ navigation }) {
       <SystemmessageModal />
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
