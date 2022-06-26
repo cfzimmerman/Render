@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { upload } from '../../Utils/Storage';
+import { getUserSub } from '../../Utils/Users';
+import { Button } from '../Common/Button/Button';
 import { RoundedImage } from '../Common/RoundedImage/RoundedImage';
 import { TopBar } from './TopBar/TopBar';
 import { Upload } from './Upload/Upload';
@@ -9,21 +11,50 @@ interface Props {
   signOut: () => void;
 }
 
+const getAspectRatio = (height: number, width: number) => parseFloat((height / width).toFixed(3));
+
 export const UploadHandler: React.FC<Props> = (props) => {
   const { signOut } = props;
 
   const [files, setFiles] = useState<FileList>();
   const [filePreviewUrl, setFilePreviewUrl] = useState('');
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadComplete, setUploadComplete] = useState(false);
+  const [aspectRatio, setAspectRatio] = useState(0);
 
-  const handleUploadFiles = (fileList: FileList) => {
+  const handleUploadFiles = async (fileList: FileList) => {
     setFiles(fileList);
+    let contentType: 'video' | 'image' = 'video';
     if (fileList[0].type.includes('image')) {
       setFilePreviewUrl(URL.createObjectURL(fileList[0]));
+      contentType = 'image';
     }
-    upload(fileList[0].name, fileList[0], (progress) => {
-      setUploadProgress(Math.round((progress.loaded / progress.total) * 100));
-    });
+    const userSub = await getUserSub();
+    upload(
+      fileList[0],
+      userSub,
+      contentType,
+      aspectRatio,
+      (progress) => {
+        setUploadProgress(Math.round((progress.loaded / progress.total) * 100));
+
+        // Ideally would use completeCallback, but that is not firing as expected
+        if (progress.loaded / progress.total === 1) {
+          setUploadComplete(true);
+        }
+      },
+      () => {
+        setUploadComplete(true);
+      }
+    );
+  };
+
+  const resetUploadData = () => {
+    setFiles(undefined);
+    setFilePreviewUrl('');
+    setUploadProgress(0);
+    setUploadComplete(false);
+    setAspectRatio(0);
   };
 
   return (
@@ -33,12 +64,26 @@ export const UploadHandler: React.FC<Props> = (props) => {
       </div>
       <div className={styles.fileContainer}>
         {!files && <Upload setFiles={handleUploadFiles} />}
-        {filePreviewUrl ? (
-          <RoundedImage source={filePreviewUrl} alt="uploaded-file-preview" />
-        ) : (
-          <h3>Uploading video...</h3>
+        {filePreviewUrl && (
+          <RoundedImage
+            source={filePreviewUrl}
+            alt="uploaded-file-preview"
+            setImageDimensions={(height, width) => setAspectRatio(getAspectRatio(height, width))}
+          />
+          //  ) : (
+          //    <h3>Uploading video...</h3>
         )}
         {!!files && <h3>{`${uploadProgress}% uploaded`}</h3>}
+        {uploadComplete && (
+          <div className={styles.finishedContainer}>
+            <h3>Upload finished!</h3>
+            <Button
+              text="Upload another file"
+              onClick={resetUploadData}
+              classNames={[styles.uploadAgainButton]}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

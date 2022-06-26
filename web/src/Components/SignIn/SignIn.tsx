@@ -1,6 +1,5 @@
 import { Auth, CognitoUser } from '@aws-amplify/auth';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { v4 } from 'uuid';
 import RenderIcon from '../../assets/render_icon_white.png';
 import { UserContext } from '../../Context/UserContext';
 import { AbsoluteButton } from '../Auth/BackButton/AbsoluteButton';
@@ -82,15 +81,15 @@ export const SignIn: React.FC<{}> = () => {
   };
 
   // TODO: Temp func, remove when render app is linked
-  const signUp = async () => {
-    const pass = v4();
-    console.log('password: ', pass);
-    const result = await Auth.signUp({
-      username: email,
-      password: '123456789'
-    }).then(() => signOut()); // After signUp, we are going to signIn()
-    return result;
-  };
+  // const signUp = async () => {
+  //   const pass = v4();
+  //   console.log('password: ', pass);
+  //   const result = await Auth.signUp({
+  //     username: email,
+  //     password: '123456789'
+  //   }).then(() => signOut()); // After signUp, we are going to signIn()
+  //   return result;
+  // };
 
   useEffect(() => {
     if (!titleRef || !titleRef.current) {
@@ -155,7 +154,7 @@ export const SignIn: React.FC<{}> = () => {
             <Button
               text="Get Render"
               classNames={[styles.getRenderButton]}
-              onClick={signUp} // TODO: Link to render app
+              onClick={() => {}} // TODO: Link to render app
             />
           </div>
         </div>

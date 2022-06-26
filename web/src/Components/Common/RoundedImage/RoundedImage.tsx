@@ -5,6 +5,7 @@ interface Props {
   source: string;
   alt: string;
   baseWidth?: number;
+  setImageDimensions: (height: number, width: number) => void;
 }
 
 interface Dimensions {
@@ -15,7 +16,7 @@ interface Dimensions {
 const toRem = (num: number): string => `${num}rem`;
 
 export const RoundedImage: React.FC<Props> = (props) => {
-  const { source, alt, baseWidth } = props;
+  const { source, alt, baseWidth, setImageDimensions } = props;
 
   const [dimensions, setDimensions] = useState<Dimensions>({ height: '', width: '' });
 
@@ -23,7 +24,8 @@ export const RoundedImage: React.FC<Props> = (props) => {
     const { height, width } = event.currentTarget;
     const modifier = height / width;
     const base = baseWidth ?? 28;
-    setDimensions({ height: toRem(base * modifier), width: toRem(base / modifier) });
+    setDimensions({ height: toRem(base * modifier), width: toRem(base) });
+    setImageDimensions(height, width);
   };
 
   return (

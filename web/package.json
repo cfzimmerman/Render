@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aws-amplify/api": "^4.0.44",
     "@aws-amplify/auth": "^4.5.4",
     "@aws-amplify/core": "^4.5.4",
     "@aws-amplify/storage": "^4.4.27",
@@ -14,7 +15,6 @@
     "@types/node": "^16.11.34",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.3",
-    "amplify-s3-chunk-upload": "^2.0.1",
     "aws-amplify": "^4.3.22",
     "aws-amplify-react": "^5.1.9",
     "clsx": "^1.1.1",

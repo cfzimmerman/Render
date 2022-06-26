@@ -21,6 +21,10 @@
   align-items: center;
 }
 
+.fileContainer img {
+  margin-bottom: 0.2rem;
+}
+
 .uploadContainer input {
   display: none;
 }
@@ -42,4 +46,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.finishedContainer {
+  margin-top: 2rem;
+}
+
+.uploadAgainButton {
+  margin-top: 0.75rem;
+  padding: 0 0.75rem;
 }
