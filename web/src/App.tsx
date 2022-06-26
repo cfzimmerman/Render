@@ -6,9 +6,15 @@ import styles from './App.module.css';
 import awsconfig from './aws-exports';
 import { SignIn } from './Components/SignIn/SignIn';
 import { UserContext } from './Context/UserContext';
-import { Upload } from './Components/Upload/Upload';
+import { UploadHandler } from './Components/Upload/UploadHandler';
 
 Amplify.configure(awsconfig);
+
+// Plugin allows streaming uploads to S3
+// Typescript throws an error due to a conflict in the definitions for CredentialsClass, which was not fixed by yarn dependency resolution. Thus, "as any"
+// const storagePlugin = new StorageChunkUpload({}, Credentials as any);
+// Storage.addPluggable(storagePlugin);
+// storagePlugin.configure(awsconfig);
 
 const App: React.FC<{}> = () => {
   const [user, setUser] = useState<CognitoUser | null>(null);
@@ -19,7 +25,7 @@ const App: React.FC<{}> = () => {
     <div className={styles.App}>
       <UserContext.Provider value={userContext}>
         {!user && <SignIn />}
-        {!!user && <Upload signOut={() => setUser(null)} />}
+        {!!user && <UploadHandler signOut={() => setUser(null)} />}
       </UserContext.Provider>
     </div>
   );

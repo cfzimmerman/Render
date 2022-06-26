@@ -11,6 +11,10 @@
   },
   "workspaces": [
     "render-web",
-    "render-mobile"
-  ]
+    "render-mobile",
+    "amplify-s3-chunk-upload-render"
+  ],
+  "resolutions": {
+    "@aws-amplify/core": "^4.5.4"
+  }
 }
