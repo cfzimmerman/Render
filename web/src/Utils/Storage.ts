@@ -47,11 +47,12 @@ export const generatePostData = (
   sub: string,
   contentKey: string,
   aspectRatio: number,
-  contentType: 'image' | 'video'
+  contentType: 'image' | 'video',
+  thumbnailKey?: string
 ): DbPostData => ({
   contenttype: contentType,
   contentkey: contentKey,
-  thumbnailkey: null,
+  thumbnailkey: thumbnailKey ?? null,
   publicpost: false,
   cognitosub: sub,
   contentdate: new Date().toISOString(),
@@ -66,7 +67,8 @@ export const upload = async (
   contentType: 'image' | 'video',
   aspectRatio: number,
   progressCallback: (progress: any) => void,
-  completeCallback: (event: any) => void
+  completeCallback: (event: any) => void,
+  thumbnail?: File
 ) => {
   const contentKey = v4();
   await Storage.put(contentKey, file, {
@@ -74,11 +76,29 @@ export const upload = async (
     completeCallback
   });
 
+  let thumbnailKey = '';
+  if (thumbnail) {
+    thumbnailKey = v4();
+    await Storage.put(thumbnailKey, thumbnail, { progressCallback, completeCallback });
+  }
+
   try {
-    const postData = generatePostData(file, sub, contentKey, aspectRatio, contentType);
+    const postData = generatePostData(
+      file,
+      sub,
+      contentKey,
+      aspectRatio,
+      contentType,
+      thumbnailKey
+    );
     await addPostToDb(postData, sub);
   } catch (err) {
     // DB data add failed, remove S3 upload
     await Storage.remove(contentKey);
+
+    // Remove video thumbnail if exist
+    if (thumbnail) {
+      await Storage.remove(thumbnailKey);
+    }
   }
 };

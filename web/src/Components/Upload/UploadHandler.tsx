@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { generateVideoThumbnail } from '../../Utils/Content';
 import { upload } from '../../Utils/Storage';
 import { getUserSub } from '../../Utils/Users';
 import { Button } from '../Common/Button/Button';
@@ -17,6 +18,7 @@ export const UploadHandler: React.FC<Props> = (props) => {
   const { signOut } = props;
 
   const [files, setFiles] = useState<FileList>();
+  const [thumbnail, setThumbnail] = useState<File>();
   const [filePreviewUrl, setFilePreviewUrl] = useState('');
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadComplete, setUploadComplete] = useState(false);
@@ -28,6 +30,10 @@ export const UploadHandler: React.FC<Props> = (props) => {
     if (fileList[0].type.includes('image')) {
       setFilePreviewUrl(URL.createObjectURL(fileList[0]));
       contentType = 'image';
+    } else if (fileList[0].type.includes('video')) {
+      const newThumbnail = await generateVideoThumbnail(fileList[0]);
+      setFilePreviewUrl(URL.createObjectURL(newThumbnail));
+      setThumbnail(newThumbnail);
     }
     const userSub = await getUserSub();
     upload(
@@ -45,7 +51,8 @@ export const UploadHandler: React.FC<Props> = (props) => {
       },
       () => {
         setUploadComplete(true);
-      }
+      },
+      thumbnail
     );
   };
 
@@ -55,6 +62,7 @@ export const UploadHandler: React.FC<Props> = (props) => {
     setUploadProgress(0);
     setUploadComplete(false);
     setAspectRatio(0);
+    setThumbnail(undefined);
   };
 
   return (
