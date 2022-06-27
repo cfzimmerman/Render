@@ -20,7 +20,7 @@
       "userInterfaceStyle": "automatic",
       "requireFullScreen": true,
       "bundleIdentifier": "com.render.render",
-      "buildNumber": "0.1.1"
+      "buildNumber": "0.1.2"
     },
     "android": {
       "adaptiveIcon": {
@@ -29,7 +29,7 @@
       },
       "userInterfaceStyle": "automatic",
       "package": "com.render.render",
-      "versionCode": 1
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/favicon.png"
