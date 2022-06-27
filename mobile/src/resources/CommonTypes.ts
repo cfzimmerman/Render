@@ -21,21 +21,22 @@ export interface CurrentUserType {
   storagesizeinbytes: number | null;
 }
 
+// When these fields are made imperative in schema.graphql, remove the optional (?) nature of associated fields
 export interface PostType {
   id: string;
-  aspectratio: number;
+  aspectratio?: number;
   // hascomments: boolean;
-  contentdate: string;
-  contentkey: string | null;
-  contenttype: string;
+  contentdate?: string;
+  contentkey?: string | null;
+  contenttype?: string;
   header?: boolean;
-  posttext: string | null;
-  publicpost: boolean | null;
+  posttext?: string | null;
+  publicpost?: boolean | null;
   publicpostdate?: string | null;
-  signedurl: string | null;
+  signedurl?: string | null;
   thumbnailkey?: string;
-  thumbnailurl: string | null;
-  userid: string | null;
+  thumbnailurl?: string | null;
+  userid?: string | null;
 }
 
 interface PostSubHeader {

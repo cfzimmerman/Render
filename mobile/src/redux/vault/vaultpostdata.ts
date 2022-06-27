@@ -28,6 +28,7 @@ const slice = createSlice({
       changestatus: false,
       postid: null,
     },
+    vaultrefreshdate: new Date().toISOString(),
   },
   reducers: {
     clearVaultPostData: (state) => {
@@ -50,7 +51,7 @@ const slice = createSlice({
     },
     addToLastVaultPostDataArray: (state, action: PayloadAction<PostType>) => {
       state.vaultpostdata[state.vaultpostdata.length - 1].data.push(
-        action.payload,
+        action.payload
       );
     },
     addToVaultFeedData: (state, action: PayloadAction<PostType>) => {
@@ -58,9 +59,10 @@ const slice = createSlice({
     },
     addVideoToFeedData: (
       state,
-      action: PayloadAction<AddVideoToFeedDataPropsType>,
+      action: PayloadAction<AddVideoToFeedDataPropsType>
     ) => {
-      state.vaultfeeddata[action.payload.index].signedurl = action.payload.signedurl;
+      state.vaultfeeddata[action.payload.index].signedurl =
+        action.payload.signedurl;
     },
     setActivePost: (state, action: PayloadAction<number>) => {
       state.activepost = action.payload;
@@ -88,52 +90,53 @@ const slice = createSlice({
     },
     injectNewHeaderPost: (
       state,
-      action: PayloadAction<InjectNewHeaderPostPropsType>,
+      action: PayloadAction<InjectNewHeaderPostPropsType>
     ) => {
-      state.vaultpostdata[action.payload.sectionIndex].header.post = action.payload.newHeaderPost;
+      state.vaultpostdata[action.payload.sectionIndex].header.post =
+        action.payload.newHeaderPost;
       state.vaultpostdata[action.payload.sectionIndex].data.unshift(
-        action.payload.oldHeaderPost,
+        action.payload.oldHeaderPost
       );
       state.vaultfeeddata.splice(
         action.payload.feedIndex,
         0,
-        action.payload.newHeaderPost,
+        action.payload.newHeaderPost
       );
     },
     injectNewTrailingPost: (
       state,
-      action: PayloadAction<InjectNewTrailingPostPropsType>,
+      action: PayloadAction<InjectNewTrailingPostPropsType>
     ) => {
       if (action.payload.sectionDataIndex > -1) {
         state.vaultpostdata[action.payload.sectionIndex].data.splice(
           action.payload.sectionDataIndex,
           0,
-          action.payload.newPost,
+          action.payload.newPost
         );
       } else {
         state.vaultpostdata[action.payload.sectionIndex].data.push(
-          action.payload.newPost,
+          action.payload.newPost
         );
       }
       state.vaultfeeddata.splice(
         action.payload.feedIndex,
         0,
-        action.payload.newPost,
+        action.payload.newPost
       );
     },
     injectNewSection: (
       state,
-      action: PayloadAction<InjectNewSectionPropsType>,
+      action: PayloadAction<InjectNewSectionPropsType>
     ) => {
       state.vaultpostdata.splice(
         action.payload.sectionPlacement,
         0,
-        action.payload.newSection,
+        action.payload.newSection
       );
       state.vaultfeeddata.splice(
         action.payload.feedIndex,
         0,
-        action.payload.newPost,
+        action.payload.newPost
       );
     },
     exciseSection: (state, action: PayloadAction<ExciseGeneralPropsType>) => {
@@ -142,19 +145,20 @@ const slice = createSlice({
     },
     exciseHeaderPost: (
       state,
-      action: PayloadAction<ExciseGeneralPropsType>,
+      action: PayloadAction<ExciseGeneralPropsType>
     ) => {
-      state.vaultpostdata[action.payload.sectionIndex].header.post = action.payload.newSectionHeaderPost;
+      state.vaultpostdata[action.payload.sectionIndex].header.post =
+        action.payload.newSectionHeaderPost;
       state.vaultpostdata[action.payload.sectionIndex].data.splice(0, 1);
       state.vaultfeeddata.splice(action.payload.feedIndex, 1);
     },
     exciseTrailingPost: (
       state,
-      action: PayloadAction<ExciseGeneralPropsType>,
+      action: PayloadAction<ExciseGeneralPropsType>
     ) => {
       state.vaultpostdata[action.payload.sectionIndex].data.splice(
         action.payload.sectionDataIndex,
-        1,
+        1
       );
       state.vaultfeeddata.splice(action.payload.feedIndex, 1);
     },
@@ -168,21 +172,24 @@ const slice = createSlice({
       state.textactive = action.payload;
     },
     updateNonHeaderText: (state, action: PayloadAction<TextUpdateType>) => {
-      state.vaultfeeddata[action.payload.vaultFeedIndex].posttext = action.payload.newText;
+      state.vaultfeeddata[action.payload.vaultFeedIndex].posttext =
+        action.payload.newText;
       state.vaultpostdata[action.payload.sectionIndex].data[
         action.payload.sectionDataIndex
       ].posttext = action.payload.newText;
     },
     updateHeaderText: (state, action: PayloadAction<TextUpdateType>) => {
-      state.vaultfeeddata[action.payload.vaultFeedIndex].posttext = action.payload.newText;
-      state.vaultpostdata[action.payload.sectionIndex].header.post.posttext = action.payload.newText;
+      state.vaultfeeddata[action.payload.vaultFeedIndex].posttext =
+        action.payload.newText;
+      state.vaultpostdata[action.payload.sectionIndex].header.post.posttext =
+        action.payload.newText;
     },
     setPostPublicModal: (state, action: PayloadAction<boolean>) => {
       state.postpublicmodal = action.payload;
     },
     updatePostPublic: (
       state,
-      action: PayloadAction<PostPublicUpdatePropsType>,
+      action: PayloadAction<PostPublicUpdatePropsType>
     ) => {
       if (action.payload.header === false) {
         state.vaultpostdata[action.payload.sectionIndex].data[
@@ -198,10 +205,16 @@ const slice = createSlice({
         ].header.post.publicpost = action.payload.postOperation.publicpost;
         state.vaultpostdata[
           action.payload.sectionIndex
-        ].header.post.publicpostdate = action.payload.postOperation.publicpostdate;
+        ].header.post.publicpostdate =
+          action.payload.postOperation.publicpostdate;
       }
-      state.vaultfeeddata[action.payload.vaultFeedIndex].publicpost = action.payload.postOperation.publicpost;
-      state.vaultfeeddata[action.payload.vaultFeedIndex].publicpostdate = action.payload.postOperation.publicpostdate;
+      state.vaultfeeddata[action.payload.vaultFeedIndex].publicpost =
+        action.payload.postOperation.publicpost;
+      state.vaultfeeddata[action.payload.vaultFeedIndex].publicpostdate =
+        action.payload.postOperation.publicpostdate;
+    },
+    setVaultRefreshDate: (state, action: PayloadAction<string>) => {
+      state.vaultrefreshdate = action.payload;
     },
   },
 });
@@ -232,6 +245,7 @@ export const {
   updateNonHeaderText,
   setPostPublicModal,
   updatePostPublic,
+  setVaultRefreshDate,
 } = slice.actions;
 
 export default slice.reducer;

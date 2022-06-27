@@ -23,6 +23,7 @@ import {
 } from "../../../API";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { getUsers } from "../../../graphql/queries";
+import { PostType } from "../../../resources/CommonTypes";
 
 async function SentencePost({
   postid,
@@ -46,7 +47,7 @@ async function SentencePost({
     const updatePostResult = (await API.graphql(
       graphqlOperation(updatePosts, { input: postUpdate })
     )) as GraphQLResult<UpdatePostsMutation>;
-    const updatedPost = updatePostResult.data.updatePosts;
+    const deletedPost = updatePostResult.data.updatePosts;
 
     const currentUserResult = (await API.graphql(
       graphqlOperation(getUsers, { id: currentuser.id })
@@ -68,7 +69,7 @@ async function SentencePost({
       dispatch,
       vaultfeeddata,
       vaultpostdata,
-      post: updatedPost,
+      post: deletedPost,
       vaultnexttoken,
       newPostID: null,
     });
@@ -76,7 +77,7 @@ async function SentencePost({
     // Also remove from local sync
     LSRemoveItem({
       dispatch,
-      contentkey: updatedPost.contentkey,
+      contentkey: deletedPost.contentkey,
       localLibrary,
     });
   } catch (error) {
