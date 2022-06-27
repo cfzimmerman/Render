@@ -2,6 +2,7 @@ import API, { graphqlOperation } from '@aws-amplify/api';
 import { Storage } from '@aws-amplify/storage';
 import { v4 } from 'uuid';
 import { createPosts, updateUsers } from '../graphql/mutations';
+import { dataURItoBlob, getFileType } from './Content';
 import { getUserByCognitoSub } from './Users';
 
 export interface DbPostData {
@@ -68,9 +69,9 @@ export const upload = async (
   aspectRatio: number,
   progressCallback: (progress: any) => void,
   completeCallback: (event: any) => void,
-  thumbnail?: File
+  thumbnail?: string
 ) => {
-  const contentKey = v4();
+  const contentKey = `${v4()}.${getFileType(file.type)}`;
   await Storage.put(contentKey, file, {
     progressCallback,
     completeCallback
@@ -78,8 +79,11 @@ export const upload = async (
 
   let thumbnailKey = '';
   if (thumbnail) {
-    thumbnailKey = v4();
-    await Storage.put(thumbnailKey, thumbnail, { progressCallback, completeCallback });
+    thumbnailKey = `${v4()}.png`;
+    await Storage.put(thumbnailKey, dataURItoBlob(thumbnail), {
+      progressCallback,
+      completeCallback
+    });
   }
 
   try {
