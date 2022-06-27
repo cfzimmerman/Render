@@ -70,6 +70,7 @@ type Posts @model @searchable @auth(rules: [{ allow: public }]) {
     )
   contentdate: AWSDateTime
   contentkey: String @index(name: "postsByContentKey", queryField: "postsByContentKey")
+  contentlastupdated: AWSDateTime
   contenttype: String
   createdAt: String!
   deleteddate: AWSDateTime
