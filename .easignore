@@ -1,5 +1,3 @@
-# Should mirror .gitignore aside from the deleted 'aws-config' taken out for this file.
-
 node_modules/
 .expo/
 dist/
