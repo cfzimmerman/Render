@@ -6,7 +6,10 @@ import { useScrollToTop } from "@react-navigation/native";
 import * as SplashScreen from "expo-splash-screen";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setFetchingData } from "../../../redux/vault/vaultpostdata";
+import {
+  setFetchingData,
+  setVaultRefreshDate,
+} from "../../../redux/vault/vaultpostdata";
 import {
   GlobalStyles,
   Environment,
@@ -26,6 +29,7 @@ import VaultSectionItem from "../vault/VaultSectionItem";
 import LSGetConfig from "../profile/LSGetConfig";
 import LSGetLibrary from "../profile/LSGetLibrary";
 import CheckDeletedPosts from "./CheckDeletedPosts";
+import RefreshHomeVault from "./RefreshHomeVault";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -74,6 +78,9 @@ const HomeVaultLanding = ({ navigation }) => {
   );
   const storiesfullview = useSelector(
     (state) => state.homemain.storiesfullview
+  );
+  const vaultRefreshDate = useSelector(
+    (state) => state.vaultpostdata.vaultrefreshdate
   );
 
   const localConfig = useSelector((state) => state.localsync.localConfig);
@@ -167,7 +174,19 @@ const HomeVaultLanding = ({ navigation }) => {
 
   async function OnRefresh() {
     setIsRefreshing(true);
+    RefreshHomeVault({
+      cognitosub: currentuser.cognitosub,
+      userID: currentuser.id,
+      dispatch,
+      vaultpostdata,
+      vaultfeeddata,
+      syncPreference: localConfig.syncPreference,
+      localLibrary,
+      vaultNextToken: nextToken,
+      refreshDateString: vaultRefreshDate,
+    });
     await sleep(2000);
+    dispatch(setVaultRefreshDate(new Date().toISOString()));
     setIsRefreshing(false);
   }
 
@@ -181,8 +200,8 @@ const HomeVaultLanding = ({ navigation }) => {
         ref={ref}
         fixed
         spacing={0}
-        // refreshing={isRefreshing}
-        // onRefresh={OnRefresh}
+        refreshing={isRefreshing}
+        onRefresh={OnRefresh}
         stickySectionHeadersEnabled={false}
         additionalRowStyle={styles.sectiongridrowstyle}
         renderItem={renderItem}
