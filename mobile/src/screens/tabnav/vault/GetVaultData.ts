@@ -17,10 +17,6 @@ import { DispatchType } from "../../../redux/store";
 import { PostHeaderType } from "../../../resources/CommonTypes";
 import LSAddItem from "../profile/LSAddItem";
 
-// Eliminate GetUserInfo element
-// Error check: [Unhandled promise rejection: TypeError: undefined is not an object (evaluating 'vaultpostdata[vaultpostdata.length - 1].data.length')]
-// If token === null and length of vaultpostdata > 0, return
-
 interface GetVaultDataProps {
   dispatch: DispatchType;
   vaultpostdata: PostHeaderType[];
@@ -122,8 +118,9 @@ async function GetVaultData({
     userposts.forEach((item) => {
       const simpleDate = GetDate(item.contentdate);
 
-      // This if - else chain actually started pretty small (non isn't not anymore). At this point, the top layer should be shaved off so that the current month / new month distinction is decided after the content is prepared
-      // Todo later. Not done atm because I don't want to introduce bugs that aren't part of the LocalSync testing process.
+      // This if - else chain actually started pretty small (def isn't anymore).
+      // However, refactoring so that the "video" | "image" if-else condition sits on top only brought the total number of lines down by 28 (183 to 155 for that specific section). It also introduced a bug, so I'll keep this structure until we can optimize vault fetch more completely.
+
       if (
         activemonth[0] === "empty" ||
         activemonth[0] != GetDate(item.contentdate)

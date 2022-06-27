@@ -5,6 +5,7 @@ import {
   exciseHeaderPost,
   exciseSection,
   exciseTrailingPost,
+  setVaultRefreshDate,
 } from "../../../redux/vault/vaultpostdata";
 import { PostHeaderType, PostType } from "../../../resources/CommonTypes";
 import { GetDate } from "../../../resources/utilities";
@@ -48,9 +49,11 @@ const ModifyVaultData = ({
   post,
   vaultnexttoken,
   newPostID,
-}) => {
+}: ModifyVaultData) => {
   const postDate = new Date(post.contentdate);
   const postSimpleDate = GetDate(postDate);
+
+  dispatch(setVaultRefreshDate(new Date().toISOString()));
 
   if (action === "add") {
     const index = vaultfeeddata.findIndex(
