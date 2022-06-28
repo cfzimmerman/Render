@@ -13,10 +13,8 @@ export const getPostViewTracker = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
-        contentlastupdated
         contenttype
         createdAt
-        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -285,10 +283,8 @@ export const getComments = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
-        contentlastupdated
         contenttype
         createdAt
-        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -381,10 +377,8 @@ export const getPosts = /* GraphQL */ `
       cognitosub
       contentdate
       contentkey
-      contentlastupdated
       contenttype
       createdAt
-      deleteddate
       posttext
       publicpost
       publicpostdate
@@ -436,10 +430,8 @@ export const listPosts = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
-        contentlastupdated
         contenttype
         createdAt
-        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -476,10 +468,8 @@ export const postsByCreatedDate = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
-        contentlastupdated
         contenttype
         createdAt
-        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -516,10 +506,8 @@ export const postsByPostedDate = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
-        contentlastupdated
         contenttype
         createdAt
-        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -556,10 +544,8 @@ export const postsByContentDate = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
-        contentlastupdated
         contenttype
         createdAt
-        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -594,10 +580,8 @@ export const postsByContentKey = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
-        contentlastupdated
         contenttype
         createdAt
-        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -634,50 +618,8 @@ export const postsByPublicDate = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
-        contentlastupdated
         contenttype
         createdAt
-        deleteddate
-        posttext
-        publicpost
-        publicpostdate
-        sizeinbytes
-        thumbnailkey
-        type
-        usersID
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const postsByDeletedDate = /* GraphQL */ `
-  query PostsByDeletedDate(
-    $usersID: ID!
-    $deleteddate: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelPostsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    postsByDeletedDate(
-      usersID: $usersID
-      deleteddate: $deleteddate
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        aspectratio
-        cognitosub
-        contentdate
-        contentkey
-        contentlastupdated
-        contenttype
-        createdAt
-        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -714,10 +656,8 @@ export const searchPosts = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
-        contentlastupdated
         contenttype
         createdAt
-        deleteddate
         posttext
         publicpost
         publicpostdate
