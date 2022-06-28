@@ -13,10 +13,8 @@ export const onCreatePostViewTracker = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
-        contentlastupdated
         contenttype
         createdAt
-        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -64,10 +62,8 @@ export const onUpdatePostViewTracker = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
-        contentlastupdated
         contenttype
         createdAt
-        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -115,10 +111,8 @@ export const onDeletePostViewTracker = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
-        contentlastupdated
         contenttype
         createdAt
-        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -266,10 +260,8 @@ export const onCreateComments = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
-        contentlastupdated
         contenttype
         createdAt
-        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -318,10 +310,8 @@ export const onUpdateComments = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
-        contentlastupdated
         contenttype
         createdAt
-        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -370,10 +360,8 @@ export const onDeleteComments = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
-        contentlastupdated
         contenttype
         createdAt
-        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -418,10 +406,8 @@ export const onCreatePosts = /* GraphQL */ `
       cognitosub
       contentdate
       contentkey
-      contentlastupdated
       contenttype
       createdAt
-      deleteddate
       posttext
       publicpost
       publicpostdate
@@ -468,10 +454,8 @@ export const onUpdatePosts = /* GraphQL */ `
       cognitosub
       contentdate
       contentkey
-      contentlastupdated
       contenttype
       createdAt
-      deleteddate
       posttext
       publicpost
       publicpostdate
@@ -518,10 +502,8 @@ export const onDeletePosts = /* GraphQL */ `
       cognitosub
       contentdate
       contentkey
-      contentlastupdated
       contenttype
       createdAt
-      deleteddate
       posttext
       publicpost
       publicpostdate
