@@ -2,6 +2,7 @@ import API, { graphqlOperation } from '@aws-amplify/api';
 import { Storage } from '@aws-amplify/storage';
 import { v4 } from 'uuid';
 import { createPosts, updateUsers } from '../graphql/mutations';
+import { dataURItoBlob, getFileType } from './Content';
 import { getUserByCognitoSub } from './Users';
 
 export interface DbPostData {
@@ -47,11 +48,12 @@ export const generatePostData = (
   sub: string,
   contentKey: string,
   aspectRatio: number,
-  contentType: 'image' | 'video'
+  contentType: 'image' | 'video',
+  thumbnailKey?: string
 ): DbPostData => ({
   contenttype: contentType,
   contentkey: contentKey,
-  thumbnailkey: null,
+  thumbnailkey: thumbnailKey ?? null,
   publicpost: false,
   cognitosub: sub,
   contentdate: new Date().toISOString(),
@@ -66,19 +68,41 @@ export const upload = async (
   contentType: 'image' | 'video',
   aspectRatio: number,
   progressCallback: (progress: any) => void,
-  completeCallback: (event: any) => void
+  completeCallback: (event: any) => void,
+  thumbnail?: string
 ) => {
-  const contentKey = v4();
+  const contentKey = `${v4()}.${getFileType(file.type)}`;
   await Storage.put(contentKey, file, {
     progressCallback,
     completeCallback
   });
 
+  let thumbnailKey = '';
+  if (thumbnail) {
+    thumbnailKey = `${v4()}.png`;
+    await Storage.put(thumbnailKey, dataURItoBlob(thumbnail), {
+      progressCallback,
+      completeCallback
+    });
+  }
+
   try {
-    const postData = generatePostData(file, sub, contentKey, aspectRatio, contentType);
+    const postData = generatePostData(
+      file,
+      sub,
+      contentKey,
+      aspectRatio,
+      contentType,
+      thumbnailKey
+    );
     await addPostToDb(postData, sub);
   } catch (err) {
     // DB data add failed, remove S3 upload
     await Storage.remove(contentKey);
+
+    // Remove video thumbnail if exist
+    if (thumbnail) {
+      await Storage.remove(thumbnailKey);
+    }
   }
 };
