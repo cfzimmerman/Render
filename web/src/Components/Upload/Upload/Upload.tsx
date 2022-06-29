@@ -26,8 +26,8 @@ export const Upload: React.FC<Props> = (props) => {
     <div className={styles.content}>
       <input type="file" ref={fileInput} onChange={handleUpload} accept="image/*,video/*" />
       <button className={styles.uploadButton} type="button" onClick={handleClickUpload}>
-        <h3>Drag and drop or</h3>
-        <h3>click here to upload</h3>
+        {/* <h3>Drag and drop or</h3> */}
+        <h3>Click here to upload</h3>
       </button>
     </div>
   );
