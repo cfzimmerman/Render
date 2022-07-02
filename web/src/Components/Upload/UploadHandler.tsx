@@ -12,7 +12,7 @@ interface Props {
   signOut: () => void;
 }
 
-const getAspectRatio = (height: number, width: number) => parseFloat((height / width).toFixed(3));
+const getAspectRatio = (height: number, width: number) => parseFloat((width / height).toFixed(3));
 
 export const UploadHandler: React.FC<Props> = (props) => {
   const { signOut } = props;
