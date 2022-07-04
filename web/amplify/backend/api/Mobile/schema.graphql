@@ -31,8 +31,10 @@ type UserRelationships @model @auth(rules: [{ allow: public }]) {
     @index(name: "addedUsersByCurrentUser", queryField: "addedUsersByCurrentUser")
   usersID: ID! @index(name: "byUsers")
   Users: Users @belongsTo(fields: ["usersID"])
-  receiverID: ID
-  senderID: ID
+  senderID: ID @index(name: "bySender")
+  SenderUser: Users @belongsTo(fields: ["senderID"])
+  receiverID: ID @index(name: "byReceiver")
+  ReceiverUser: Users @belongsTo(fields: ["receiverID"])
 }
 
 type Comments @model @auth(rules: [{ allow: public }]) {
@@ -122,4 +124,6 @@ type Users @model @searchable @auth(rules: [{ allow: public }]) {
   Posts: [Posts] @hasMany(indexName: "byUsers", fields: ["id"])
   PostViewTrackers: [PostViewTracker] @hasMany(indexName: "byUsers", fields: ["id"])
   UserRelationships: [UserRelationships] @hasMany(indexName: "byUsers", fields: ["id"])
+  SenderRelationships: [UserRelationships] @hasMany(indexName: "bySender", fields: ["id"])
+  ReceiverRelationships: [UserRelationships] @hasMany(indexName: "byReceiver", fields: ["id"])
 }
