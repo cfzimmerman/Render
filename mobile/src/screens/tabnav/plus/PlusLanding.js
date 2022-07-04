@@ -196,13 +196,7 @@ function PlusLanding({ navigation }) {
               Icon={Icons.OriginalSize.Web}
               header="Browser"
               description="Best for content on your PC."
-              Action={() =>
-                dispatch(
-                  setSystemmessageActive(
-                    UserDialogue().systemmessage.webuploadconstruction
-                  )
-                )
-              }
+              Action={() => navigation.navigate("WebUploadPreview")}
             />
           </View>
         </View>
