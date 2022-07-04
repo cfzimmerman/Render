@@ -18,3 +18,5 @@ export { default as ObservePostDB } from "./Global/ObservePostDB";
 
 // Takes date object or string and returns "Month YYYY" string
 export { default as GetDate } from "./GetDate";
+
+export { default as CopyToClipboard } from "./CopyToClipboard";
