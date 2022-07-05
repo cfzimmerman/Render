@@ -170,12 +170,56 @@ export const createUserRelationships = /* GraphQL */ `
     $condition: ModelUserRelationshipsConditionInput
   ) {
     createUserRelationships(input: $input, condition: $condition) {
-      id
-      createdAt
       receivercognitosub
       sendercognitosub
+      id
+      createdAt
       usersID
       Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      senderID
+      SenderUser {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      receiverID
+      ReceiverUser {
         id
         acceptedtos
         addedcount
@@ -206,12 +250,56 @@ export const updateUserRelationships = /* GraphQL */ `
     $condition: ModelUserRelationshipsConditionInput
   ) {
     updateUserRelationships(input: $input, condition: $condition) {
-      id
-      createdAt
       receivercognitosub
       sendercognitosub
+      id
+      createdAt
       usersID
       Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      senderID
+      SenderUser {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      receiverID
+      ReceiverUser {
         id
         acceptedtos
         addedcount
@@ -242,12 +330,56 @@ export const deleteUserRelationships = /* GraphQL */ `
     $condition: ModelUserRelationshipsConditionInput
   ) {
     deleteUserRelationships(input: $input, condition: $condition) {
-      id
-      createdAt
       receivercognitosub
       sendercognitosub
+      id
+      createdAt
       usersID
       Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      senderID
+      SenderUser {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      receiverID
+      ReceiverUser {
         id
         acceptedtos
         addedcount
@@ -631,6 +763,12 @@ export const createUsers = /* GraphQL */ `
       UserRelationships {
         nextToken
       }
+      SenderRelationships {
+        nextToken
+      }
+      ReceiverRelationships {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -671,6 +809,12 @@ export const updateUsers = /* GraphQL */ `
       UserRelationships {
         nextToken
       }
+      SenderRelationships {
+        nextToken
+      }
+      ReceiverRelationships {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -709,6 +853,12 @@ export const deleteUsers = /* GraphQL */ `
         nextToken
       }
       UserRelationships {
+        nextToken
+      }
+      SenderRelationships {
+        nextToken
+      }
+      ReceiverRelationships {
         nextToken
       }
       createdAt
