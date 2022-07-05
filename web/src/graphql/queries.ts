@@ -13,8 +13,10 @@ export const getPostViewTracker = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
+        contentlastupdated
         contenttype
         createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -104,12 +106,56 @@ export const postViewByPostID = /* GraphQL */ `
 export const getUserRelationships = /* GraphQL */ `
   query GetUserRelationships($id: ID!) {
     getUserRelationships(id: $id) {
-      id
-      createdAt
       receivercognitosub
       sendercognitosub
+      id
+      createdAt
       usersID
       Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      senderID
+      SenderUser {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      receiverID
+      ReceiverUser {
         id
         acceptedtos
         addedcount
@@ -146,11 +192,13 @@ export const listUserRelationships = /* GraphQL */ `
       nextToken: $nextToken
     ) {
       items {
-        id
-        createdAt
         receivercognitosub
         sendercognitosub
+        id
+        createdAt
         usersID
+        senderID
+        receiverID
         updatedAt
       }
       nextToken
@@ -175,11 +223,13 @@ export const relationshipsByReceiverDate = /* GraphQL */ `
       nextToken: $nextToken
     ) {
       items {
-        id
-        createdAt
         receivercognitosub
         sendercognitosub
+        id
+        createdAt
         usersID
+        senderID
+        receiverID
         updatedAt
       }
       nextToken
@@ -204,11 +254,13 @@ export const relationshipsBySenderDate = /* GraphQL */ `
       nextToken: $nextToken
     ) {
       items {
-        id
-        createdAt
         receivercognitosub
         sendercognitosub
+        id
+        createdAt
         usersID
+        senderID
+        receiverID
         updatedAt
       }
       nextToken
@@ -233,11 +285,13 @@ export const verifyAddedUser = /* GraphQL */ `
       nextToken: $nextToken
     ) {
       items {
-        id
-        createdAt
         receivercognitosub
         sendercognitosub
+        id
+        createdAt
         usersID
+        senderID
+        receiverID
         updatedAt
       }
       nextToken
@@ -260,11 +314,135 @@ export const addedUsersByCurrentUser = /* GraphQL */ `
       nextToken: $nextToken
     ) {
       items {
-        id
-        createdAt
         receivercognitosub
         sendercognitosub
+        id
+        createdAt
         usersID
+        senderID
+        receiverID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const senderRelationshipsByDate = /* GraphQL */ `
+  query SenderRelationshipsByDate(
+    $senderID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserRelationshipsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    senderRelationshipsByDate(
+      senderID: $senderID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        receivercognitosub
+        sendercognitosub
+        id
+        createdAt
+        usersID
+        senderID
+        receiverID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const addedByCurrentUser = /* GraphQL */ `
+  query AddedByCurrentUser(
+    $senderID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserRelationshipsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    addedByCurrentUser(
+      senderID: $senderID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        receivercognitosub
+        sendercognitosub
+        id
+        createdAt
+        usersID
+        senderID
+        receiverID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const checkAddedUser = /* GraphQL */ `
+  query CheckAddedUser(
+    $senderID: ID!
+    $receiverID: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserRelationshipsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    checkAddedUser(
+      senderID: $senderID
+      receiverID: $receiverID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        receivercognitosub
+        sendercognitosub
+        id
+        createdAt
+        usersID
+        senderID
+        receiverID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const receiverRelationshipsByDate = /* GraphQL */ `
+  query ReceiverRelationshipsByDate(
+    $receiverID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserRelationshipsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    receiverRelationshipsByDate(
+      receiverID: $receiverID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        receivercognitosub
+        sendercognitosub
+        id
+        createdAt
+        usersID
+        senderID
+        receiverID
         updatedAt
       }
       nextToken
@@ -283,8 +461,10 @@ export const getComments = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
+        contentlastupdated
         contenttype
         createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -377,8 +557,10 @@ export const getPosts = /* GraphQL */ `
       cognitosub
       contentdate
       contentkey
+      contentlastupdated
       contenttype
       createdAt
+      deleteddate
       posttext
       publicpost
       publicpostdate
@@ -430,8 +612,10 @@ export const listPosts = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
+        contentlastupdated
         contenttype
         createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -468,8 +652,10 @@ export const postsByCreatedDate = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
+        contentlastupdated
         contenttype
         createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -506,8 +692,10 @@ export const postsByPostedDate = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
+        contentlastupdated
         contenttype
         createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -544,8 +732,10 @@ export const postsByContentDate = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
+        contentlastupdated
         contenttype
         createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -580,8 +770,10 @@ export const postsByContentKey = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
+        contentlastupdated
         contenttype
         createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -618,8 +810,50 @@ export const postsByPublicDate = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
+        contentlastupdated
         contenttype
         createdAt
+        deleteddate
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const postsByDeletedDate = /* GraphQL */ `
+  query PostsByDeletedDate(
+    $usersID: ID!
+    $deleteddate: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    postsByDeletedDate(
+      usersID: $usersID
+      deleteddate: $deleteddate
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contentlastupdated
+        contenttype
+        createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -656,8 +890,10 @@ export const searchPosts = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
+        contentlastupdated
         contenttype
         createdAt
+        deleteddate
         posttext
         publicpost
         publicpostdate
@@ -716,6 +952,12 @@ export const getUsers = /* GraphQL */ `
         nextToken
       }
       UserRelationships {
+        nextToken
+      }
+      SenderRelationships {
+        nextToken
+      }
+      ReceiverRelationships {
         nextToken
       }
       createdAt
