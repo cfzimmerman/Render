@@ -8,6 +8,7 @@
     "@aws-amplify/core": "^4.5.4",
     "@aws-amplify/storage": "^4.4.27",
     "@aws-amplify/ui-components": "^1.9.6",
+    "@rajesh896/video-thumbnails-generator": "^2.3.9",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",

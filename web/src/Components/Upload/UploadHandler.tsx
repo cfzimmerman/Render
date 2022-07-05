@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { generateVideoThumbnail } from '../../Utils/Content';
 import { upload } from '../../Utils/Storage';
 import { getUserSub } from '../../Utils/Users';
 import { Button } from '../Common/Button/Button';
@@ -11,12 +12,13 @@ interface Props {
   signOut: () => void;
 }
 
-const getAspectRatio = (height: number, width: number) => parseFloat((height / width).toFixed(3));
+const getAspectRatio = (height: number, width: number) => parseFloat((width / height).toFixed(3));
 
 export const UploadHandler: React.FC<Props> = (props) => {
   const { signOut } = props;
 
   const [files, setFiles] = useState<FileList>();
+  const [thumbnail, setThumbnail] = useState<string>('');
   const [filePreviewUrl, setFilePreviewUrl] = useState('');
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadComplete, setUploadComplete] = useState(false);
@@ -24,29 +26,13 @@ export const UploadHandler: React.FC<Props> = (props) => {
 
   const handleUploadFiles = async (fileList: FileList) => {
     setFiles(fileList);
-    let contentType: 'video' | 'image' = 'video';
     if (fileList[0].type.includes('image')) {
       setFilePreviewUrl(URL.createObjectURL(fileList[0]));
-      contentType = 'image';
+    } else if (fileList[0].type.includes('video')) {
+      const newThumbnail = await generateVideoThumbnail(fileList[0]);
+      setFilePreviewUrl(newThumbnail);
+      setThumbnail(newThumbnail);
     }
-    const userSub = await getUserSub();
-    upload(
-      fileList[0],
-      userSub,
-      contentType,
-      aspectRatio,
-      (progress) => {
-        setUploadProgress(Math.round((progress.loaded / progress.total) * 100));
-
-        // Ideally would use completeCallback, but that is not firing as expected
-        if (progress.loaded / progress.total === 1) {
-          setUploadComplete(true);
-        }
-      },
-      () => {
-        setUploadComplete(true);
-      }
-    );
   };
 
   const resetUploadData = () => {
@@ -55,7 +41,47 @@ export const UploadHandler: React.FC<Props> = (props) => {
     setUploadProgress(0);
     setUploadComplete(false);
     setAspectRatio(0);
+    setThumbnail('');
   };
+
+  // Kick off upload when aspect ratio is set from loaded image
+  // Ideally would be done using a setState callback like in class based React,
+  // but useState does not natively provide callback functionality.
+  useEffect(() => {
+    const doUpload = async () => {
+      if (!files || !files[0]) {
+        return;
+      }
+
+      let contentType: 'video' | 'image' = 'video';
+      if (files[0].type.includes('image')) {
+        contentType = 'image';
+      }
+
+      const userSub = await getUserSub();
+      upload(
+        files[0],
+        userSub,
+        contentType,
+        aspectRatio,
+        (progress) => {
+          setUploadProgress(Math.round((progress.loaded / progress.total) * 100));
+
+          // Ideally would use completeCallback, but that is not firing as expected
+          if (progress.loaded / progress.total === 1) {
+            setUploadComplete(true);
+          }
+        },
+        () => {
+          setUploadComplete(true);
+        },
+        thumbnail
+      );
+    };
+    if (aspectRatio && files) {
+      doUpload();
+    }
+  }, [aspectRatio, files, thumbnail]);
 
   return (
     <div className={styles.uploadContainer}>
