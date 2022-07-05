@@ -9,8 +9,6 @@ type PostViewTracker @model @auth(rules: [{ allow: public }]) {
 }
 
 type UserRelationships @model @auth(rules: [{ allow: public }]) {
-  id: ID!
-  createdAt: String!
   receivercognitosub: String
     @index(
       name: "relationshipsByReceiverDate"
@@ -29,11 +27,21 @@ type UserRelationships @model @auth(rules: [{ allow: public }]) {
       sortKeyFields: ["receivercognitosub"]
     )
     @index(name: "addedUsersByCurrentUser", queryField: "addedUsersByCurrentUser")
+
+  id: ID!
+  createdAt: String!
   usersID: ID! @index(name: "byUsers")
   Users: Users @belongsTo(fields: ["usersID"])
   senderID: ID @index(name: "bySender")
+
   SenderUser: Users @belongsTo(fields: ["senderID"])
-  receiverID: ID @index(name: "byReceiver")
+  receiverID: ID
+    @index(name: "byReceiver")
+    @index(
+      name: "receiverRelationshipsByDate"
+      queryField: "receiverRelationshipsByDate"
+      sortKeyFields: ["createdAt"]
+    )
   ReceiverUser: Users @belongsTo(fields: ["receiverID"])
 }
 
