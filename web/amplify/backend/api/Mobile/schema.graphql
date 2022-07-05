@@ -32,8 +32,15 @@ type UserRelationships @model @auth(rules: [{ allow: public }]) {
   createdAt: String!
   usersID: ID! @index(name: "byUsers")
   Users: Users @belongsTo(fields: ["usersID"])
-  senderID: ID @index(name: "bySender")
-
+  senderID: ID
+    @index(name: "bySender")
+    @index(
+      name: "senderRelationshipsByDate"
+      queryField: "senderRelationshipsByDate"
+      sortKeyFields: ["createdAt"]
+    )
+    @index(name: "addedByCurrentUser", queryField: "addedByCurrentUser")
+    @index(name: "checkAddedUser", queryField: "checkAddedUser", sortKeyFields: ["receiverID"])
   SenderUser: Users @belongsTo(fields: ["senderID"])
   receiverID: ID
     @index(name: "byReceiver")
