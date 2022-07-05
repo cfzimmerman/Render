@@ -5,6 +5,8 @@ import { setGotAddedUsersFilter } from "../../../redux/home/homemain";
 async function GetAddedUsersFilter({ dispatch, currentuser }) {
   const searchLimitBuffer = 2;
 
+  console.log("GetAddedUsersFilter");
+
   searchlimit = currentuser.addedcount + searchLimitBuffer;
 
   const userResult = await API.graphql(
