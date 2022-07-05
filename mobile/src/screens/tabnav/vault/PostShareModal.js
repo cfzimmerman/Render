@@ -13,6 +13,7 @@ import { BlurView } from "expo-blur";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
 import * as Sharing from "expo-sharing";
+import { Storage } from "aws-amplify";
 
 import { setShareActive } from "../../../redux/vault/vaultpostdata";
 import {
@@ -24,20 +25,27 @@ import {
 import { HalfbarButton } from "../../../resources/atoms";
 
 async function DownloadPost({ item, dispatch }) {
-  let fileURI;
+  let cacheUri;
   try {
-    const { uri } = await FileSystem.downloadAsync(
-      item.signedurl,
-      `${FileSystem.cacheDirectory}shareable${item.contentkey}`,
+    // Fetch a new url because only cloud content is supported by Filesystem.downloadAsync()
+    const cloudSignedURL = await Storage.get(item.contentkey, {
+      expires: 86400,
+    });
+
+    const cacheAddress =
+      FileSystem.cacheDirectory + "shareable-" + item.contentkey;
+
+    const downloadResult = await FileSystem.downloadAsync(
+      cloudSignedURL,
+      cacheAddress
     );
 
-    fileURI = uri;
-
-    await MediaLibrary.saveToLibraryAsync(uri);
+    cacheUri = downloadResult.uri;
+    await MediaLibrary.saveToLibraryAsync(downloadResult.uri);
   } catch (error) {
     console.log(error);
   } finally {
-    FileSystem.deleteAsync(fileURI);
+    await FileSystem.deleteAsync(cacheUri);
     dispatch(setShareActive(false));
   }
 }
@@ -45,9 +53,16 @@ async function DownloadPost({ item, dispatch }) {
 async function NativeShare({ item, dispatch, setUserMessage }) {
   let fileURI;
   try {
+    const cloudSignedURL = await Storage.get(item.contentkey, {
+      expires: 86400,
+    });
+
+    const cacheAddress =
+      FileSystem.cacheDirectory + "shareable-" + item.contentkey;
+
     const { uri } = await FileSystem.downloadAsync(
-      item.signedurl,
-      `${FileSystem.documentDirectory}shareable${item.contentkey}`,
+      cloudSignedURL,
+      cacheAddress
     );
 
     fileURI = uri;
@@ -62,7 +77,7 @@ async function NativeShare({ item, dispatch, setUserMessage }) {
   }
 }
 
-function PostShareModal({ dispatch, item }) {
+const PostShareModal = ({ dispatch, item }) => {
   const [userMessage, setUserMessage] = useState("Download content");
 
   const shareactive = useSelector((state) => state.vaultpostdata.shareactive);
@@ -108,7 +123,7 @@ function PostShareModal({ dispatch, item }) {
               active={false}
               Action={() => {
                 NativeShare({ item, dispatch, setUserMessage }),
-                setUserMessage("Exporting");
+                  setUserMessage("Exporting");
               }}
             />
           </View>
@@ -116,7 +131,7 @@ function PostShareModal({ dispatch, item }) {
       </TouchableWithoutFeedback>
     </Modal>
   );
-}
+};
 
 const styles = StyleSheet.create({
   modalcontainer: {

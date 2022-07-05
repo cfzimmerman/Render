@@ -13,6 +13,7 @@ export const onCreatePostViewTracker = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
+        contentlastupdated
         contenttype
         createdAt
         deleteddate
@@ -63,6 +64,7 @@ export const onUpdatePostViewTracker = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
+        contentlastupdated
         contenttype
         createdAt
         deleteddate
@@ -113,6 +115,7 @@ export const onDeletePostViewTracker = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
+        contentlastupdated
         contenttype
         createdAt
         deleteddate
@@ -155,12 +158,56 @@ export const onDeletePostViewTracker = /* GraphQL */ `
 export const onCreateUserRelationships = /* GraphQL */ `
   subscription OnCreateUserRelationships {
     onCreateUserRelationships {
-      id
-      createdAt
       receivercognitosub
       sendercognitosub
+      id
+      createdAt
       usersID
       Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      senderID
+      SenderUser {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      receiverID
+      ReceiverUser {
         id
         acceptedtos
         addedcount
@@ -188,12 +235,56 @@ export const onCreateUserRelationships = /* GraphQL */ `
 export const onUpdateUserRelationships = /* GraphQL */ `
   subscription OnUpdateUserRelationships {
     onUpdateUserRelationships {
-      id
-      createdAt
       receivercognitosub
       sendercognitosub
+      id
+      createdAt
       usersID
       Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      senderID
+      SenderUser {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      receiverID
+      ReceiverUser {
         id
         acceptedtos
         addedcount
@@ -221,12 +312,56 @@ export const onUpdateUserRelationships = /* GraphQL */ `
 export const onDeleteUserRelationships = /* GraphQL */ `
   subscription OnDeleteUserRelationships {
     onDeleteUserRelationships {
-      id
-      createdAt
       receivercognitosub
       sendercognitosub
+      id
+      createdAt
       usersID
       Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      senderID
+      SenderUser {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      receiverID
+      ReceiverUser {
         id
         acceptedtos
         addedcount
@@ -263,6 +398,7 @@ export const onCreateComments = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
+        contentlastupdated
         contenttype
         createdAt
         deleteddate
@@ -314,6 +450,7 @@ export const onUpdateComments = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
+        contentlastupdated
         contenttype
         createdAt
         deleteddate
@@ -365,6 +502,7 @@ export const onDeleteComments = /* GraphQL */ `
         cognitosub
         contentdate
         contentkey
+        contentlastupdated
         contenttype
         createdAt
         deleteddate
@@ -412,6 +550,7 @@ export const onCreatePosts = /* GraphQL */ `
       cognitosub
       contentdate
       contentkey
+      contentlastupdated
       contenttype
       createdAt
       deleteddate
@@ -461,6 +600,7 @@ export const onUpdatePosts = /* GraphQL */ `
       cognitosub
       contentdate
       contentkey
+      contentlastupdated
       contenttype
       createdAt
       deleteddate
@@ -510,6 +650,7 @@ export const onDeletePosts = /* GraphQL */ `
       cognitosub
       contentdate
       contentkey
+      contentlastupdated
       contenttype
       createdAt
       deleteddate
@@ -583,6 +724,12 @@ export const onCreateUsers = /* GraphQL */ `
       UserRelationships {
         nextToken
       }
+      SenderRelationships {
+        nextToken
+      }
+      ReceiverRelationships {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -620,6 +767,12 @@ export const onUpdateUsers = /* GraphQL */ `
       UserRelationships {
         nextToken
       }
+      SenderRelationships {
+        nextToken
+      }
+      ReceiverRelationships {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -655,6 +808,12 @@ export const onDeleteUsers = /* GraphQL */ `
         nextToken
       }
       UserRelationships {
+        nextToken
+      }
+      SenderRelationships {
+        nextToken
+      }
+      ReceiverRelationships {
         nextToken
       }
       createdAt
