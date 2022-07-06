@@ -29,8 +29,6 @@ import GetContentDate from "./GetContentDate";
 import UploadImage from "./UploadImage";
 import UploadVideo from "./UploadVideo";
 
-import TemporaryRelationalShenanigans from "../../../TemporaryRelationalShenanigans";
-
 const HalfbarIconBox = ({ Icon, header, description, Action }) => {
   return (
     <TouchableOpacity onPress={() => Action()}>
@@ -169,15 +167,6 @@ function PlusLanding({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Button
-        title="TemporaryRelationalSchenanigans"
-        color="coral"
-        onPress={() =>
-          /* TemporaryRelationalShenanigans({ currentuser })*/ console.log(
-            "Enable it first bro"
-          )
-        }
-      />
       <ScrollView
         style={styles.scrollviewstyle}
         contentContainerStyle={styles.scrollviewcontainerstyle}
