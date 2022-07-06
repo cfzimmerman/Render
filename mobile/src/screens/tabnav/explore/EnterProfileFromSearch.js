@@ -28,7 +28,7 @@ const EnterProfileFromSearch = ({
 
   AssembleData();
   GetFullUserRelationship({
-    targetcognitosub: item.cognitosub,
+    targetID: item.id,
     dispatch,
     currentuser,
   });
