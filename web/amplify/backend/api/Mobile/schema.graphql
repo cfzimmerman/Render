@@ -117,7 +117,6 @@ type Users @model @searchable @auth(rules: [{ allow: public }]) {
   Comments: [Comments] @hasMany(indexName: "byUsers", fields: ["id"])
   Posts: [Posts] @hasMany(indexName: "byUsers", fields: ["id"])
   PostViewTrackers: [PostViewTracker] @hasMany(indexName: "byUsers", fields: ["id"])
-  UserRelationships: [UserRelationships] @hasMany(indexName: "byUsers", fields: ["id"])
   SenderRelationships: [UserRelationships] @hasMany(indexName: "bySender", fields: ["id"])
   ReceiverRelationships: [UserRelationships] @hasMany(indexName: "byReceiver", fields: ["id"])
 }
