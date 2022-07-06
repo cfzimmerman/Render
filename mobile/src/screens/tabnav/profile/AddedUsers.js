@@ -1,6 +1,4 @@
-import {
-  View, Text, FlatList, StyleSheet,
-} from "react-native";
+import { View, Text, FlatList, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -15,12 +13,12 @@ function AddedUsers({ navigation }) {
   const currentuser = useSelector((state) => state.profilemain.currentuser);
   const addedusers = useSelector((state) => state.relationships.added);
   const addednexttoken = useSelector(
-    (state) => state.relationships.addednexttoken,
+    (state) => state.relationships.addednexttoken
   );
 
   if (addedusers.length === 0 && addednexttoken === null) {
     GetAddedUsers({
-      cognitosub: currentuser.cognitosub,
+      currentuser,
       dispatch,
       addednexttoken,
       addedusers,

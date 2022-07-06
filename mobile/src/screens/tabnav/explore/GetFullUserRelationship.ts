@@ -1,48 +1,46 @@
+import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { API, graphqlOperation } from "aws-amplify";
+import { CheckAddedUserQuery } from "../../../API";
 import { setOtherUserRelationship } from "../../../redux/explore/otheruserprofile";
 
-async function GetFullUserRelationship({
-  targetcognitosub,
-  dispatch,
-  currentuser,
-}) {
+async function GetFullUserRelationship({ targetID, dispatch, currentuser }) {
   // Outputs: 'unauthenticated', 'user', true, false
 
   if (
-    typeof currentuser.cognitosub === "undefined"
-    || typeof targetcognitosub === "undefined"
+    typeof currentuser.id === "undefined" ||
+    typeof targetID === "undefined"
   ) {
     const otheruser = {
       relationship: "unauthenticated",
       increment: 0,
     };
     dispatch(setOtherUserRelationship(otheruser));
-  } else if (currentuser.cognitosub === targetcognitosub) {
+  } else if (currentuser.id === targetID) {
     const otheruser = {
       relationship: "user",
       increment: 0,
     };
     dispatch(setOtherUserRelationship(otheruser));
   } else {
-    const result = await API.graphql(
+    const result = (await API.graphql(
       graphqlOperation(`
-            query VerifyAddedUser {
-                verifyAddedUser (
-                    limit: 1,
-                    sendercognitosub: "${currentuser.cognitosub}",
-                    receivercognitosub: { 
-                        eq: "${targetcognitosub}"
-                    }
-                ) {
-                    items {
-                        id
-                    }
-                }
-            }
-        `),
-    );
+        query CheckAddedUser {
+          checkAddedUser (
+              limit: 1,
+              senderID: "${currentuser.id}",
+              receiverID: {
+                eq: "${targetID}"
+              }
+          ) {
+              items {
+                  id
+              }
+          }
+        }
+    `)
+    )) as GraphQLResult<CheckAddedUserQuery>;
 
-    const existingrelationship = result.data.verifyAddedUser.items;
+    const existingrelationship = result.data.checkAddedUser.items;
 
     if (existingrelationship.length > 0) {
       const otheruser = {

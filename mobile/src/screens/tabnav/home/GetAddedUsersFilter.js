@@ -5,15 +5,13 @@ import { setGotAddedUsersFilter } from "../../../redux/home/homemain";
 async function GetAddedUsersFilter({ dispatch, currentuser }) {
   const searchLimitBuffer = 2;
 
-  console.log("GetAddedUsersFilter");
-
   searchlimit = currentuser.addedcount + searchLimitBuffer;
 
   const userResult = await API.graphql(
     graphqlOperation(`
-        query AddedUsersByCurrentUser {
-            addedUsersByCurrentUser (
-                sendercognitosub: "${currentuser.cognitosub}"
+        query AddedByCurrentUser {
+          addedByCurrentUser (
+                senderID: "${currentuser.id}"
                 limit: ${searchlimit},
             ) {
                 items {
@@ -26,19 +24,20 @@ async function GetAddedUsersFilter({ dispatch, currentuser }) {
     `)
   );
 
-  const userArray = userResult.data.addedUsersByCurrentUser.items;
+  const userArray = userResult.data.addedByCurrentUser.items;
 
   if (userArray.length === 0) {
     dispatch(setGotAddedUsersFilter(true));
   } else {
     userArray.forEach((item) => {
-      const filterObject = {
-        usersID: {
-          eq: item.Users.id,
-        },
-      };
-
-      AddToAddedUsersFilter({ dispatch, filterObject });
+      if (item.Users != null) {
+        const filterObject = {
+          usersID: {
+            eq: item.Users.id,
+          },
+        };
+        AddToAddedUsersFilter({ dispatch, filterObject });
+      }
 
       if (
         typeof userArray[searchlimit - 1 - searchLimitBuffer] === "undefined" ||

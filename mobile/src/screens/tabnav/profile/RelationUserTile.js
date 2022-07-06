@@ -48,6 +48,32 @@ const TileBottom = ({
   addbackusers,
   addedmeusers,
 }) => {
+  return (
+    <View style={styles.tbtruewrapper}>
+      <View style={styles.tbtruetextwrapper}>
+        <Text
+          style={[
+            GlobalStyles.p1text,
+            GlobalStyles.irregularshadow,
+            styles.displayname,
+          ]}
+        >
+          {item.displayname}
+        </Text>
+        <Text
+          style={[
+            GlobalStyles.p2text,
+            GlobalStyles.irregularshadow,
+            styles.gamertag,
+          ]}
+        >
+          @{item.gamertag}
+        </Text>
+      </View>
+    </View>
+  );
+  /*
+  // Other configurations provide an addback button. I'm taking it out in July 2022 for efficiency purposes.
   if (origin === "AddedUsers" || item.relationship === true) {
     return (
       <View style={styles.tbtruewrapper}>
@@ -182,6 +208,7 @@ const TileBottom = ({
       </View>
     );
   }
+      */
 };
 
 function RelationUserTile({
