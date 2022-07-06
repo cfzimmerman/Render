@@ -11,8 +11,6 @@ type PostViewTracker @model @auth(rules: [{ allow: public }]) {
 type UserRelationships @model @auth(rules: [{ allow: public }]) {
   id: ID!
   createdAt: String!
-  usersID: ID @index(name: "byUsers")
-  Users: Users @belongsTo(fields: ["usersID"])
   senderID: ID
     @index(name: "bySender")
     @index(
