@@ -30,13 +30,14 @@ async function GetAddedUsersFilter({ dispatch, currentuser }) {
     dispatch(setGotAddedUsersFilter(true));
   } else {
     userArray.forEach((item) => {
-      const filterObject = {
-        usersID: {
-          eq: item.Users.id,
-        },
-      };
-
-      AddToAddedUsersFilter({ dispatch, filterObject });
+      if (item.Users != null) {
+        const filterObject = {
+          usersID: {
+            eq: item.Users.id,
+          },
+        };
+        AddToAddedUsersFilter({ dispatch, filterObject });
+      }
 
       if (
         typeof userArray[searchlimit - 1 - searchLimitBuffer] === "undefined" ||

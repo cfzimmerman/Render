@@ -73,8 +73,8 @@ async function AddUser({
       API.graphql(
         graphqlOperation(createUserRelationships, { input: newrelationship })
       ),
-      // API.graphql(graphqlOperation(updateUsers, { input: newcurrentuser })),
-      // API.graphql(graphqlOperation(updateUsers, { input: newtargetuser })),
+      API.graphql(graphqlOperation(updateUsers, { input: newcurrentuser })),
+      API.graphql(graphqlOperation(updateUsers, { input: newtargetuser })),
     ]);
   } catch (error) {
     console.log(`\nError: ${JSON.stringify(error)}`);
