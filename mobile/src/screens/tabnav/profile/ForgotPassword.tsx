@@ -103,9 +103,12 @@ async function GetBackground({
 }: {
   setBackgroundImg: Function;
 }) {
-  const signedURL = await Storage.get("CompanyStock/forgotpasswordacnh.JPG", {
-    expires: 86400,
-  });
+  const signedURL = await Storage.get(
+    "CompanyStock/forgotpasswordbackground.png",
+    {
+      expires: 86400,
+    }
+  );
   setBackgroundImg(signedURL);
 }
 
