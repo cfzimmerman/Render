@@ -8,6 +8,8 @@ import {
   updateUsers,
   deleteUserRelationships,
 } from "../../../graphql/mutations";
+import { GraphQLResult } from "@aws-amplify/api-graphql";
+import { CheckAddedUserQuery, GetUsersQuery } from "../../../API";
 
 const UpdateOtherUserProfile = ({ action, dispatch }) => {
   const addeduser = {
@@ -52,9 +54,8 @@ async function AddUser({
   }
 
   const newrelationship = {
-    sendercognitosub: currentuser.cognitosub,
-    receivercognitosub: targetuser.cognitosub,
-    usersID: targetuser.id,
+    senderID: currentuser.id,
+    receiverID: targetuser.id,
   };
 
   const newcurrentuser = {
@@ -70,13 +71,13 @@ async function AddUser({
   try {
     await Promise.all([
       API.graphql(
-        graphqlOperation(createUserRelationships, { input: newrelationship }),
+        graphqlOperation(createUserRelationships, { input: newrelationship })
       ),
-      API.graphql(graphqlOperation(updateUsers, { input: newcurrentuser })),
-      API.graphql(graphqlOperation(updateUsers, { input: newtargetuser })),
+      // API.graphql(graphqlOperation(updateUsers, { input: newcurrentuser })),
+      // API.graphql(graphqlOperation(updateUsers, { input: newtargetuser })),
     ]);
   } catch (error) {
-    console.log(`\nError: ${error}`);
+    console.log(`\nError: ${JSON.stringify(error)}`);
   }
 
   console.log("Successfully added");
@@ -110,7 +111,7 @@ async function RemoveUser({
       API.graphql(
         graphqlOperation(deleteUserRelationships, {
           input: { id: existingrelationship[0].id },
-        }),
+        })
       ),
       API.graphql(graphqlOperation(updateUsers, { input: newcurrentuser })),
       API.graphql(graphqlOperation(updateUsers, { input: newtargetuser })),
@@ -130,25 +131,26 @@ async function ChangeUserRelationship({
   dispatch,
   currentuserid,
   targetuserid,
-  currentusercognitosub,
-  targetusercognitosub,
   origin,
   addbackusersindex,
   addedmeusersindex,
 }) {
-  // Current supported origins: 'otheruserprofile', 'AddedMeUsers', 'ProfileLanding'
-  // Supported actions: 'add', 'remove', 'approve', 'unrequest', 'reject'
-  // FriendStatus options: true, false, 'incomingpending', 'outgoingpending', 'user', 'unauthenticated'
+  try {
+    // Current supported origins: 'otheruserprofile', 'AddedMeUsers', 'ProfileLanding'
+    // Supported actions: 'add', 'remove', 'approve', 'unrequest', 'reject'
+    // FriendStatus options: true, false, 'incomingpending', 'outgoingpending', 'user', 'unauthenticated'
 
-  const [existingresult, currentuserresult, targetuserresult] = await Promise.all([
-    API.graphql(
-      graphqlOperation(`
-            query VerifyAddedUser {
-                verifyAddedUser (
+    // @ts-ignore
+    const [existingresult, currentuserresult, targetuserresult] =
+      (await Promise.all([
+        API.graphql(
+          graphqlOperation(`
+            query CheckAddedUser {
+              checkAddedUser (
                     limit: 1,
-                    sendercognitosub: "${currentusercognitosub}",
-                    receivercognitosub: { 
-                        eq: "${targetusercognitosub}"
+                    senderID: "${currentuserid}",
+                    receiverID: { 
+                        eq: "${targetuserid}"
                     }
                 ) {
                     items {
@@ -156,11 +158,11 @@ async function ChangeUserRelationship({
                     }
                 }
             }
-        `),
-    ),
+        `)
+        ) as GraphQLResult<CheckAddedUserQuery>,
 
-    API.graphql(
-      graphqlOperation(`
+        API.graphql(
+          graphqlOperation(`
             query GetUsers {
                 getUsers (
                     id: "${currentuserid}"
@@ -171,11 +173,11 @@ async function ChangeUserRelationship({
                     addedmecount
                 }
             }
-        `),
-    ),
+        `)
+        ) as GraphQLResult<GetUsersQuery>,
 
-    API.graphql(
-      graphqlOperation(`
+        API.graphql(
+          graphqlOperation(`
             query GetUsers {
                 getUsers (
                     id: "${targetuserid}"
@@ -186,43 +188,54 @@ async function ChangeUserRelationship({
                     addedmecount
                 }
             }
-        `),
-    ),
-  ]);
+        `)
+        ),
+      ])) as GraphQLResult<GetUsersQuery>;
 
-  const existingrelationship = existingresult.data.verifyAddedUser.items;
-  const currentuser = currentuserresult.data.getUsers;
-  const targetuser = targetuserresult.data.getUsers;
+    const existingrelationship = existingresult.data.checkAddedUser.items;
+    const currentuser = currentuserresult.data.getUsers;
+    const targetuser = targetuserresult.data.getUsers;
 
-  if (action === "add") {
-    AddUser({
-      dispatch, existingrelationship, currentuser, targetuser,
-    });
-  } else if (action === "remove") {
-    RemoveUser({
-      dispatch, existingrelationship, currentuser, targetuser,
-    });
+    if (action === "add") {
+      AddUser({
+        dispatch,
+        existingrelationship,
+        currentuser,
+        targetuser,
+      });
+    } else if (action === "remove") {
+      RemoveUser({
+        dispatch,
+        existingrelationship,
+        currentuser,
+        targetuser,
+      });
+    }
+
+    if (origin === "otheruserprofile") {
+      UpdateOtherUserProfile({ dispatch, action });
+    }
+    /* 
+    // Addback profile functionality is tempoarily disabled
+    else if (origin === "AddedMeUsers") {
+      // 'index' in this situation is the index of the Redux addedme users array
+      UpdateAddedMeUsers({
+        dispatch,
+        index,
+        addbackusersindex,
+      });
+    } else if (origin === "ProfileLanding") {
+      // 'index' in this situation is the index of the Redux addback users array
+      UpdateAddBackUsers({
+        dispatch,
+        index,
+        addedmeusersindex,
+      });
+    }
+    */
+  } catch (error) {
+    console.log("error: " + error);
   }
-
-  if (origin === "otheruserprofile") {
-    UpdateOtherUserProfile({ dispatch, action });
-  } else if (origin === "AddedMeUsers") {
-    // 'index' in this situation is the index of the Redux addedme users array
-    UpdateAddedMeUsers({
-      dispatch,
-      index,
-      addbackusersindex,
-    });
-  } else if (origin === "ProfileLanding") {
-    // 'index' in this situation is the index of the Redux addback users array
-    UpdateAddBackUsers({
-      dispatch,
-      index,
-      addedmeusersindex,
-    });
-  }
-
-  return null;
 }
 
 export default ChangeUserRelationship;

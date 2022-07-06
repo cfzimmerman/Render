@@ -76,7 +76,8 @@ const ProfileLanding = ({ navigation }) => {
       syncPreference: localConfig.syncPreference,
       localLibrary,
     });
-  } else if (addedmeusers.length === 0 && addedmenexttoken === null) {
+  }
+  /*else if (addedmeusers.length === 0 && addedmenexttoken === null) {
     GetAddedMeUsers({
       addedmenexttoken,
       dispatch,
@@ -84,6 +85,7 @@ const ProfileLanding = ({ navigation }) => {
       addedmeusers,
     });
   }
+  */
 
   return (
     <ScrollView

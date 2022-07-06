@@ -74,8 +74,6 @@ function CorrectFriendButton({
             dispatch,
             currentuserid,
             targetuserid,
-            currentusercognitosub,
-            targetusercognitosub,
             origin: "otheruserprofile",
           })
         }
@@ -96,8 +94,6 @@ function CorrectFriendButton({
             dispatch,
             currentuserid,
             targetuserid,
-            currentusercognitosub,
-            targetusercognitosub,
             origin: "otheruserprofile",
           })
         }

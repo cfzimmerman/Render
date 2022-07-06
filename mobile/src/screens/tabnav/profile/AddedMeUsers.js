@@ -21,7 +21,7 @@ const AddedMeUsers = ({ navigation }) => {
     GetAddedMeUsers({
       addedmenexttoken,
       dispatch,
-      cognitosub: currentuser.cognitosub,
+      currentuser,
       addedmeusers,
     });
   }
