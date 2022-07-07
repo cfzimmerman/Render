@@ -170,32 +170,8 @@ export const createUserRelationships = /* GraphQL */ `
     $condition: ModelUserRelationshipsConditionInput
   ) {
     createUserRelationships(input: $input, condition: $condition) {
-      receivercognitosub
-      sendercognitosub
       id
       createdAt
-      usersID
-      Users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
       senderID
       SenderUser {
         id
@@ -250,32 +226,8 @@ export const updateUserRelationships = /* GraphQL */ `
     $condition: ModelUserRelationshipsConditionInput
   ) {
     updateUserRelationships(input: $input, condition: $condition) {
-      receivercognitosub
-      sendercognitosub
       id
       createdAt
-      usersID
-      Users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
       senderID
       SenderUser {
         id
@@ -330,32 +282,8 @@ export const deleteUserRelationships = /* GraphQL */ `
     $condition: ModelUserRelationshipsConditionInput
   ) {
     deleteUserRelationships(input: $input, condition: $condition) {
-      receivercognitosub
-      sendercognitosub
       id
       createdAt
-      usersID
-      Users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
       senderID
       SenderUser {
         id
@@ -760,9 +688,6 @@ export const createUsers = /* GraphQL */ `
       PostViewTrackers {
         nextToken
       }
-      UserRelationships {
-        nextToken
-      }
       SenderRelationships {
         nextToken
       }
@@ -806,9 +731,6 @@ export const updateUsers = /* GraphQL */ `
       PostViewTrackers {
         nextToken
       }
-      UserRelationships {
-        nextToken
-      }
       SenderRelationships {
         nextToken
       }
@@ -850,9 +772,6 @@ export const deleteUsers = /* GraphQL */ `
         nextToken
       }
       PostViewTrackers {
-        nextToken
-      }
-      UserRelationships {
         nextToken
       }
       SenderRelationships {

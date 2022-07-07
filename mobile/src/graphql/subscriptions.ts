@@ -158,32 +158,8 @@ export const onDeletePostViewTracker = /* GraphQL */ `
 export const onCreateUserRelationships = /* GraphQL */ `
   subscription OnCreateUserRelationships {
     onCreateUserRelationships {
-      receivercognitosub
-      sendercognitosub
       id
       createdAt
-      usersID
-      Users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
       senderID
       SenderUser {
         id
@@ -235,32 +211,8 @@ export const onCreateUserRelationships = /* GraphQL */ `
 export const onUpdateUserRelationships = /* GraphQL */ `
   subscription OnUpdateUserRelationships {
     onUpdateUserRelationships {
-      receivercognitosub
-      sendercognitosub
       id
       createdAt
-      usersID
-      Users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
       senderID
       SenderUser {
         id
@@ -312,32 +264,8 @@ export const onUpdateUserRelationships = /* GraphQL */ `
 export const onDeleteUserRelationships = /* GraphQL */ `
   subscription OnDeleteUserRelationships {
     onDeleteUserRelationships {
-      receivercognitosub
-      sendercognitosub
       id
       createdAt
-      usersID
-      Users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
       senderID
       SenderUser {
         id
@@ -721,9 +649,6 @@ export const onCreateUsers = /* GraphQL */ `
       PostViewTrackers {
         nextToken
       }
-      UserRelationships {
-        nextToken
-      }
       SenderRelationships {
         nextToken
       }
@@ -764,9 +689,6 @@ export const onUpdateUsers = /* GraphQL */ `
       PostViewTrackers {
         nextToken
       }
-      UserRelationships {
-        nextToken
-      }
       SenderRelationships {
         nextToken
       }
@@ -805,9 +727,6 @@ export const onDeleteUsers = /* GraphQL */ `
         nextToken
       }
       PostViewTrackers {
-        nextToken
-      }
-      UserRelationships {
         nextToken
       }
       SenderRelationships {

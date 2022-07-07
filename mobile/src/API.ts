@@ -113,7 +113,6 @@ export type Users = {
   Comments?: ModelCommentsConnection | null,
   Posts?: ModelPostsConnection | null,
   PostViewTrackers?: ModelPostViewTrackerConnection | null,
-  UserRelationships?: ModelUserRelationshipsConnection | null,
   SenderRelationships?: ModelUserRelationshipsConnection | null,
   ReceiverRelationships?: ModelUserRelationshipsConnection | null,
   createdAt: string,
@@ -158,12 +157,8 @@ export type ModelUserRelationshipsConnection = {
 
 export type UserRelationships = {
   __typename: "UserRelationships",
-  receivercognitosub?: string | null,
-  sendercognitosub?: string | null,
   id: string,
   createdAt: string,
-  usersID: string,
-  Users?: Users | null,
   senderID?: string | null,
   SenderUser?: Users | null,
   receiverID?: string | null,
@@ -182,20 +177,14 @@ export type DeletePostViewTrackerInput = {
 };
 
 export type CreateUserRelationshipsInput = {
-  receivercognitosub?: string | null,
-  sendercognitosub?: string | null,
   id?: string | null,
   createdAt?: string | null,
-  usersID: string,
   senderID?: string | null,
   receiverID?: string | null,
 };
 
 export type ModelUserRelationshipsConditionInput = {
-  receivercognitosub?: ModelStringInput | null,
-  sendercognitosub?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  usersID?: ModelIDInput | null,
   senderID?: ModelIDInput | null,
   receiverID?: ModelIDInput | null,
   and?: Array< ModelUserRelationshipsConditionInput | null > | null,
@@ -220,11 +209,8 @@ export type ModelStringInput = {
 };
 
 export type UpdateUserRelationshipsInput = {
-  receivercognitosub?: string | null,
-  sendercognitosub?: string | null,
   id: string,
   createdAt?: string | null,
-  usersID?: string | null,
   senderID?: string | null,
   receiverID?: string | null,
 };
@@ -449,11 +435,8 @@ export enum ModelSortDirection {
 
 
 export type ModelUserRelationshipsFilterInput = {
-  receivercognitosub?: ModelStringInput | null,
-  sendercognitosub?: ModelStringInput | null,
   id?: ModelIDInput | null,
   createdAt?: ModelStringInput | null,
-  usersID?: ModelIDInput | null,
   senderID?: ModelIDInput | null,
   receiverID?: ModelIDInput | null,
   and?: Array< ModelUserRelationshipsFilterInput | null > | null,
@@ -988,33 +971,8 @@ export type CreateUserRelationshipsMutationVariables = {
 export type CreateUserRelationshipsMutation = {
   createUserRelationships?:  {
     __typename: "UserRelationships",
-    receivercognitosub?: string | null,
-    sendercognitosub?: string | null,
     id: string,
     createdAt: string,
-    usersID: string,
-    Users?:  {
-      __typename: "Users",
-      id: string,
-      acceptedtos?: boolean | null,
-      addedcount?: number | null,
-      addedmecount?: number | null,
-      birthday?: string | null,
-      cognitosub?: string | null,
-      displayname?: string | null,
-      email?: string | null,
-      emailconfirmed?: boolean | null,
-      firstvaultupload?: boolean | null,
-      fullyauthenticated?: boolean | null,
-      gamertag?: string | null,
-      mostrecentpublicpost?: string | null,
-      pfp?: string | null,
-      setpassword?: boolean | null,
-      storagesizeinbytes?: number | null,
-      type?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     senderID?: string | null,
     SenderUser?:  {
       __typename: "Users",
@@ -1073,33 +1031,8 @@ export type UpdateUserRelationshipsMutationVariables = {
 export type UpdateUserRelationshipsMutation = {
   updateUserRelationships?:  {
     __typename: "UserRelationships",
-    receivercognitosub?: string | null,
-    sendercognitosub?: string | null,
     id: string,
     createdAt: string,
-    usersID: string,
-    Users?:  {
-      __typename: "Users",
-      id: string,
-      acceptedtos?: boolean | null,
-      addedcount?: number | null,
-      addedmecount?: number | null,
-      birthday?: string | null,
-      cognitosub?: string | null,
-      displayname?: string | null,
-      email?: string | null,
-      emailconfirmed?: boolean | null,
-      firstvaultupload?: boolean | null,
-      fullyauthenticated?: boolean | null,
-      gamertag?: string | null,
-      mostrecentpublicpost?: string | null,
-      pfp?: string | null,
-      setpassword?: boolean | null,
-      storagesizeinbytes?: number | null,
-      type?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     senderID?: string | null,
     SenderUser?:  {
       __typename: "Users",
@@ -1158,33 +1091,8 @@ export type DeleteUserRelationshipsMutationVariables = {
 export type DeleteUserRelationshipsMutation = {
   deleteUserRelationships?:  {
     __typename: "UserRelationships",
-    receivercognitosub?: string | null,
-    sendercognitosub?: string | null,
     id: string,
     createdAt: string,
-    usersID: string,
-    Users?:  {
-      __typename: "Users",
-      id: string,
-      acceptedtos?: boolean | null,
-      addedcount?: number | null,
-      addedmecount?: number | null,
-      birthday?: string | null,
-      cognitosub?: string | null,
-      displayname?: string | null,
-      email?: string | null,
-      emailconfirmed?: boolean | null,
-      firstvaultupload?: boolean | null,
-      fullyauthenticated?: boolean | null,
-      gamertag?: string | null,
-      mostrecentpublicpost?: string | null,
-      pfp?: string | null,
-      setpassword?: boolean | null,
-      storagesizeinbytes?: number | null,
-      type?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     senderID?: string | null,
     SenderUser?:  {
       __typename: "Users",
@@ -1623,10 +1531,6 @@ export type CreateUsersMutation = {
       __typename: "ModelPostViewTrackerConnection",
       nextToken?: string | null,
     } | null,
-    UserRelationships?:  {
-      __typename: "ModelUserRelationshipsConnection",
-      nextToken?: string | null,
-    } | null,
     SenderRelationships?:  {
       __typename: "ModelUserRelationshipsConnection",
       nextToken?: string | null,
@@ -1677,10 +1581,6 @@ export type UpdateUsersMutation = {
       __typename: "ModelPostViewTrackerConnection",
       nextToken?: string | null,
     } | null,
-    UserRelationships?:  {
-      __typename: "ModelUserRelationshipsConnection",
-      nextToken?: string | null,
-    } | null,
     SenderRelationships?:  {
       __typename: "ModelUserRelationshipsConnection",
       nextToken?: string | null,
@@ -1729,10 +1629,6 @@ export type DeleteUsersMutation = {
     } | null,
     PostViewTrackers?:  {
       __typename: "ModelPostViewTrackerConnection",
-      nextToken?: string | null,
-    } | null,
-    UserRelationships?:  {
-      __typename: "ModelUserRelationshipsConnection",
       nextToken?: string | null,
     } | null,
     SenderRelationships?:  {
@@ -1857,33 +1753,8 @@ export type GetUserRelationshipsQueryVariables = {
 export type GetUserRelationshipsQuery = {
   getUserRelationships?:  {
     __typename: "UserRelationships",
-    receivercognitosub?: string | null,
-    sendercognitosub?: string | null,
     id: string,
     createdAt: string,
-    usersID: string,
-    Users?:  {
-      __typename: "Users",
-      id: string,
-      acceptedtos?: boolean | null,
-      addedcount?: number | null,
-      addedmecount?: number | null,
-      birthday?: string | null,
-      cognitosub?: string | null,
-      displayname?: string | null,
-      email?: string | null,
-      emailconfirmed?: boolean | null,
-      firstvaultupload?: boolean | null,
-      fullyauthenticated?: boolean | null,
-      gamertag?: string | null,
-      mostrecentpublicpost?: string | null,
-      pfp?: string | null,
-      setpassword?: boolean | null,
-      storagesizeinbytes?: number | null,
-      type?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     senderID?: string | null,
     SenderUser?:  {
       __typename: "Users",
@@ -1945,118 +1816,8 @@ export type ListUserRelationshipsQuery = {
     __typename: "ModelUserRelationshipsConnection",
     items:  Array< {
       __typename: "UserRelationships",
-      receivercognitosub?: string | null,
-      sendercognitosub?: string | null,
       id: string,
       createdAt: string,
-      usersID: string,
-      senderID?: string | null,
-      receiverID?: string | null,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type RelationshipsByReceiverDateQueryVariables = {
-  receivercognitosub: string,
-  createdAt?: ModelStringKeyConditionInput | null,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelUserRelationshipsFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type RelationshipsByReceiverDateQuery = {
-  relationshipsByReceiverDate?:  {
-    __typename: "ModelUserRelationshipsConnection",
-    items:  Array< {
-      __typename: "UserRelationships",
-      receivercognitosub?: string | null,
-      sendercognitosub?: string | null,
-      id: string,
-      createdAt: string,
-      usersID: string,
-      senderID?: string | null,
-      receiverID?: string | null,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type RelationshipsBySenderDateQueryVariables = {
-  sendercognitosub: string,
-  createdAt?: ModelStringKeyConditionInput | null,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelUserRelationshipsFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type RelationshipsBySenderDateQuery = {
-  relationshipsBySenderDate?:  {
-    __typename: "ModelUserRelationshipsConnection",
-    items:  Array< {
-      __typename: "UserRelationships",
-      receivercognitosub?: string | null,
-      sendercognitosub?: string | null,
-      id: string,
-      createdAt: string,
-      usersID: string,
-      senderID?: string | null,
-      receiverID?: string | null,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type VerifyAddedUserQueryVariables = {
-  sendercognitosub: string,
-  receivercognitosub?: ModelStringKeyConditionInput | null,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelUserRelationshipsFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type VerifyAddedUserQuery = {
-  verifyAddedUser?:  {
-    __typename: "ModelUserRelationshipsConnection",
-    items:  Array< {
-      __typename: "UserRelationships",
-      receivercognitosub?: string | null,
-      sendercognitosub?: string | null,
-      id: string,
-      createdAt: string,
-      usersID: string,
-      senderID?: string | null,
-      receiverID?: string | null,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type AddedUsersByCurrentUserQueryVariables = {
-  sendercognitosub: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelUserRelationshipsFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type AddedUsersByCurrentUserQuery = {
-  addedUsersByCurrentUser?:  {
-    __typename: "ModelUserRelationshipsConnection",
-    items:  Array< {
-      __typename: "UserRelationships",
-      receivercognitosub?: string | null,
-      sendercognitosub?: string | null,
-      id: string,
-      createdAt: string,
-      usersID: string,
       senderID?: string | null,
       receiverID?: string | null,
       updatedAt: string,
@@ -2079,11 +1840,8 @@ export type SenderRelationshipsByDateQuery = {
     __typename: "ModelUserRelationshipsConnection",
     items:  Array< {
       __typename: "UserRelationships",
-      receivercognitosub?: string | null,
-      sendercognitosub?: string | null,
       id: string,
       createdAt: string,
-      usersID: string,
       senderID?: string | null,
       receiverID?: string | null,
       updatedAt: string,
@@ -2105,11 +1863,8 @@ export type AddedByCurrentUserQuery = {
     __typename: "ModelUserRelationshipsConnection",
     items:  Array< {
       __typename: "UserRelationships",
-      receivercognitosub?: string | null,
-      sendercognitosub?: string | null,
       id: string,
       createdAt: string,
-      usersID: string,
       senderID?: string | null,
       receiverID?: string | null,
       updatedAt: string,
@@ -2132,11 +1887,8 @@ export type CheckAddedUserQuery = {
     __typename: "ModelUserRelationshipsConnection",
     items:  Array< {
       __typename: "UserRelationships",
-      receivercognitosub?: string | null,
-      sendercognitosub?: string | null,
       id: string,
       createdAt: string,
-      usersID: string,
       senderID?: string | null,
       receiverID?: string | null,
       updatedAt: string,
@@ -2159,11 +1911,8 @@ export type ReceiverRelationshipsByDateQuery = {
     __typename: "ModelUserRelationshipsConnection",
     items:  Array< {
       __typename: "UserRelationships",
-      receivercognitosub?: string | null,
-      sendercognitosub?: string | null,
       id: string,
       createdAt: string,
-      usersID: string,
       senderID?: string | null,
       receiverID?: string | null,
       updatedAt: string,
@@ -2671,10 +2420,6 @@ export type GetUsersQuery = {
       __typename: "ModelPostViewTrackerConnection",
       nextToken?: string | null,
     } | null,
-    UserRelationships?:  {
-      __typename: "ModelUserRelationshipsConnection",
-      nextToken?: string | null,
-    } | null,
     SenderRelationships?:  {
       __typename: "ModelUserRelationshipsConnection",
       nextToken?: string | null,
@@ -3089,33 +2834,8 @@ export type OnDeletePostViewTrackerSubscription = {
 export type OnCreateUserRelationshipsSubscription = {
   onCreateUserRelationships?:  {
     __typename: "UserRelationships",
-    receivercognitosub?: string | null,
-    sendercognitosub?: string | null,
     id: string,
     createdAt: string,
-    usersID: string,
-    Users?:  {
-      __typename: "Users",
-      id: string,
-      acceptedtos?: boolean | null,
-      addedcount?: number | null,
-      addedmecount?: number | null,
-      birthday?: string | null,
-      cognitosub?: string | null,
-      displayname?: string | null,
-      email?: string | null,
-      emailconfirmed?: boolean | null,
-      firstvaultupload?: boolean | null,
-      fullyauthenticated?: boolean | null,
-      gamertag?: string | null,
-      mostrecentpublicpost?: string | null,
-      pfp?: string | null,
-      setpassword?: boolean | null,
-      storagesizeinbytes?: number | null,
-      type?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     senderID?: string | null,
     SenderUser?:  {
       __typename: "Users",
@@ -3169,33 +2889,8 @@ export type OnCreateUserRelationshipsSubscription = {
 export type OnUpdateUserRelationshipsSubscription = {
   onUpdateUserRelationships?:  {
     __typename: "UserRelationships",
-    receivercognitosub?: string | null,
-    sendercognitosub?: string | null,
     id: string,
     createdAt: string,
-    usersID: string,
-    Users?:  {
-      __typename: "Users",
-      id: string,
-      acceptedtos?: boolean | null,
-      addedcount?: number | null,
-      addedmecount?: number | null,
-      birthday?: string | null,
-      cognitosub?: string | null,
-      displayname?: string | null,
-      email?: string | null,
-      emailconfirmed?: boolean | null,
-      firstvaultupload?: boolean | null,
-      fullyauthenticated?: boolean | null,
-      gamertag?: string | null,
-      mostrecentpublicpost?: string | null,
-      pfp?: string | null,
-      setpassword?: boolean | null,
-      storagesizeinbytes?: number | null,
-      type?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     senderID?: string | null,
     SenderUser?:  {
       __typename: "Users",
@@ -3249,33 +2944,8 @@ export type OnUpdateUserRelationshipsSubscription = {
 export type OnDeleteUserRelationshipsSubscription = {
   onDeleteUserRelationships?:  {
     __typename: "UserRelationships",
-    receivercognitosub?: string | null,
-    sendercognitosub?: string | null,
     id: string,
     createdAt: string,
-    usersID: string,
-    Users?:  {
-      __typename: "Users",
-      id: string,
-      acceptedtos?: boolean | null,
-      addedcount?: number | null,
-      addedmecount?: number | null,
-      birthday?: string | null,
-      cognitosub?: string | null,
-      displayname?: string | null,
-      email?: string | null,
-      emailconfirmed?: boolean | null,
-      firstvaultupload?: boolean | null,
-      fullyauthenticated?: boolean | null,
-      gamertag?: string | null,
-      mostrecentpublicpost?: string | null,
-      pfp?: string | null,
-      setpassword?: boolean | null,
-      storagesizeinbytes?: number | null,
-      type?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     senderID?: string | null,
     SenderUser?:  {
       __typename: "Users",
@@ -3679,10 +3349,6 @@ export type OnCreateUsersSubscription = {
       __typename: "ModelPostViewTrackerConnection",
       nextToken?: string | null,
     } | null,
-    UserRelationships?:  {
-      __typename: "ModelUserRelationshipsConnection",
-      nextToken?: string | null,
-    } | null,
     SenderRelationships?:  {
       __typename: "ModelUserRelationshipsConnection",
       nextToken?: string | null,
@@ -3728,10 +3394,6 @@ export type OnUpdateUsersSubscription = {
       __typename: "ModelPostViewTrackerConnection",
       nextToken?: string | null,
     } | null,
-    UserRelationships?:  {
-      __typename: "ModelUserRelationshipsConnection",
-      nextToken?: string | null,
-    } | null,
     SenderRelationships?:  {
       __typename: "ModelUserRelationshipsConnection",
       nextToken?: string | null,
@@ -3775,10 +3437,6 @@ export type OnDeleteUsersSubscription = {
     } | null,
     PostViewTrackers?:  {
       __typename: "ModelPostViewTrackerConnection",
-      nextToken?: string | null,
-    } | null,
-    UserRelationships?:  {
-      __typename: "ModelUserRelationshipsConnection",
       nextToken?: string | null,
     } | null,
     SenderRelationships?:  {
