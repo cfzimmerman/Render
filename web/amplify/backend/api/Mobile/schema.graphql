@@ -8,6 +8,30 @@ type PostViewTracker @model @auth(rules: [{ allow: public }]) {
   Users: Users @belongsTo
 }
 
+type Notifications @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  code: Int
+  payload: String
+  createdAt: String!
+  usersID: ID
+}
+
+type Comments @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  commenttext: String
+  postsID: ID
+    @index(name: "byPosts")
+    @index(
+      name: "commentsByCreatedDate"
+      queryField: "commentsByCreatedDate"
+      sortKeyFields: ["createdAt"]
+    )
+  Posts: Posts @belongsTo(fields: ["postsID"])
+  usersID: ID @index(name: "byUsers")
+  Users: Users @belongsTo(fields: ["usersID"])
+  createdAt: String!
+}
+
 type UserRelationships @model @auth(rules: [{ allow: public }]) {
   id: ID!
   createdAt: String!
@@ -29,22 +53,6 @@ type UserRelationships @model @auth(rules: [{ allow: public }]) {
       sortKeyFields: ["createdAt"]
     )
   ReceiverUser: Users @belongsTo(fields: ["receiverID"])
-}
-
-type Comments @model @auth(rules: [{ allow: public }]) {
-  id: ID!
-  commenttext: String
-  postsID: ID
-    @index(name: "byPosts")
-    @index(
-      name: "commentsByCreatedDate"
-      queryField: "commentsByCreatedDate"
-      sortKeyFields: ["createdAt"]
-    )
-  Posts: Posts @belongsTo(fields: ["postsID"])
-  usersID: ID @index(name: "byUsers")
-  Users: Users @belongsTo(fields: ["usersID"])
-  createdAt: String!
 }
 
 type Posts @model @searchable @auth(rules: [{ allow: public }]) {
