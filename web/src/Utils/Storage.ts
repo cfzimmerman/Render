@@ -71,20 +71,17 @@ export const upload = async (
   completeCallback: (event: any) => void,
   thumbnail?: string
 ) => {
+  let thumbnailKey = '';
+  if (thumbnail) {
+    thumbnailKey = `${v4()}.png`;
+    await Storage.put(thumbnailKey, dataURItoBlob(thumbnail));
+  }
+
   const contentKey = `${v4()}.${getFileType(file.type)}`;
   await Storage.put(contentKey, file, {
     progressCallback,
     completeCallback
   });
-
-  let thumbnailKey = '';
-  if (thumbnail) {
-    thumbnailKey = `${v4()}.png`;
-    await Storage.put(thumbnailKey, dataURItoBlob(thumbnail), {
-      progressCallback,
-      completeCallback
-    });
-  }
 
   try {
     const postData = generatePostData(
