@@ -11,6 +11,7 @@ import {
 import { CollapsingHeaderBox, PrimaryDivider } from "../../../resources/atoms";
 import HomeTopLogo from "../home/HomeTopLogo";
 import SetPasswordBox from "./SetPasswordBox";
+import HeaderButtons from "./HeaderButtons";
 import StoriesBox from "./StoriesBox";
 
 const HomeVaultHeader = ({
@@ -55,6 +56,8 @@ const HomeVaultHeader = ({
           </View>
         </TouchableOpacity>
       </View>
+
+      <HeaderButtons navigation={navigation} />
 
       <StoriesBox
         navigation={navigation}
