@@ -2,7 +2,7 @@ import React, { ChangeEvent, useRef } from 'react';
 import styles from './Upload.module.css';
 
 interface Props {
-  setFiles: (files: FileList) => void;
+  setFiles: (files: File[]) => void;
 }
 
 export const Upload: React.FC<Props> = (props) => {
@@ -12,7 +12,16 @@ export const Upload: React.FC<Props> = (props) => {
 
   const handleUpload = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      setFiles(event.target.files);
+      const sorted = Array.from(event.target.files).sort((a, b) => {
+        if (a.type.includes('image') && b.type.includes('video')) {
+          return -1;
+        }
+        if (a.type.includes('video') && b.type.includes('image')) {
+          return 1;
+        }
+        return 0;
+      });
+      setFiles(sorted);
     }
   };
 
@@ -24,7 +33,13 @@ export const Upload: React.FC<Props> = (props) => {
 
   return (
     <div className={styles.content}>
-      <input type="file" ref={fileInput} onChange={handleUpload} accept="image/*,video/*" />
+      <input
+        type="file"
+        ref={fileInput}
+        onChange={handleUpload}
+        accept="image/*,video/*"
+        multiple
+      />
       <button className={styles.uploadButton} type="button" onClick={handleClickUpload}>
         {/* <h3>Drag and drop or</h3> */}
         <h3>Click here to upload</h3>
