@@ -106,32 +106,8 @@ export const postViewByPostID = /* GraphQL */ `
 export const getUserRelationships = /* GraphQL */ `
   query GetUserRelationships($id: ID!) {
     getUserRelationships(id: $id) {
-      receivercognitosub
-      sendercognitosub
       id
       createdAt
-      usersID
-      Users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
       senderID
       SenderUser {
         id
@@ -192,133 +168,8 @@ export const listUserRelationships = /* GraphQL */ `
       nextToken: $nextToken
     ) {
       items {
-        receivercognitosub
-        sendercognitosub
         id
         createdAt
-        usersID
-        senderID
-        receiverID
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const relationshipsByReceiverDate = /* GraphQL */ `
-  query RelationshipsByReceiverDate(
-    $receivercognitosub: String!
-    $createdAt: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserRelationshipsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    relationshipsByReceiverDate(
-      receivercognitosub: $receivercognitosub
-      createdAt: $createdAt
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        receivercognitosub
-        sendercognitosub
-        id
-        createdAt
-        usersID
-        senderID
-        receiverID
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const relationshipsBySenderDate = /* GraphQL */ `
-  query RelationshipsBySenderDate(
-    $sendercognitosub: String!
-    $createdAt: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserRelationshipsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    relationshipsBySenderDate(
-      sendercognitosub: $sendercognitosub
-      createdAt: $createdAt
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        receivercognitosub
-        sendercognitosub
-        id
-        createdAt
-        usersID
-        senderID
-        receiverID
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const verifyAddedUser = /* GraphQL */ `
-  query VerifyAddedUser(
-    $sendercognitosub: String!
-    $receivercognitosub: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserRelationshipsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    verifyAddedUser(
-      sendercognitosub: $sendercognitosub
-      receivercognitosub: $receivercognitosub
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        receivercognitosub
-        sendercognitosub
-        id
-        createdAt
-        usersID
-        senderID
-        receiverID
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const addedUsersByCurrentUser = /* GraphQL */ `
-  query AddedUsersByCurrentUser(
-    $sendercognitosub: String!
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserRelationshipsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    addedUsersByCurrentUser(
-      sendercognitosub: $sendercognitosub
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        receivercognitosub
-        sendercognitosub
-        id
-        createdAt
-        usersID
         senderID
         receiverID
         updatedAt
@@ -345,11 +196,8 @@ export const senderRelationshipsByDate = /* GraphQL */ `
       nextToken: $nextToken
     ) {
       items {
-        receivercognitosub
-        sendercognitosub
         id
         createdAt
-        usersID
         senderID
         receiverID
         updatedAt
@@ -374,11 +222,8 @@ export const addedByCurrentUser = /* GraphQL */ `
       nextToken: $nextToken
     ) {
       items {
-        receivercognitosub
-        sendercognitosub
         id
         createdAt
-        usersID
         senderID
         receiverID
         updatedAt
@@ -405,11 +250,8 @@ export const checkAddedUser = /* GraphQL */ `
       nextToken: $nextToken
     ) {
       items {
-        receivercognitosub
-        sendercognitosub
         id
         createdAt
-        usersID
         senderID
         receiverID
         updatedAt
@@ -436,11 +278,8 @@ export const receiverRelationshipsByDate = /* GraphQL */ `
       nextToken: $nextToken
     ) {
       items {
-        receivercognitosub
-        sendercognitosub
         id
         createdAt
-        usersID
         senderID
         receiverID
         updatedAt
@@ -949,9 +788,6 @@ export const getUsers = /* GraphQL */ `
         nextToken
       }
       PostViewTrackers {
-        nextToken
-      }
-      UserRelationships {
         nextToken
       }
       SenderRelationships {
