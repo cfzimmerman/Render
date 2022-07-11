@@ -13,7 +13,13 @@ type Notifications @model @auth(rules: [{ allow: public }]) {
   createdAt: String!
   code: Int
   payload: String
-  usersID: ID @index(name: "byUsers")
+  usersID: ID
+    @index(name: "byUsers")
+    @index(
+      name: "notificationsByDate"
+      queryField: "notificationsByDate"
+      sortKeyFields: ["createdAt"]
+    )
   Users: Users @belongsTo(fields: ["usersID"])
 }
 
