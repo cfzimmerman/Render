@@ -11,28 +11,25 @@ const notificationStoreAddress =
   FileSystem.documentDirectory + "NotificationStore.txt";
 
 async function LSGetNotificationStore({ dispatch }) {
-  const storeExists = await FileSystem.getInfoAsync(notificationStoreAddress);
-  const testFunction = () => {
-    return console.log("Try me fam");
-  };
-  const testFunctionString = JSON.stringify(testFunction);
-  console.log(testFunctionString);
+  try {
+    const storeExists = await FileSystem.getInfoAsync(notificationStoreAddress);
 
-  const testFunctionParse = JSON.parse(testFunctionString);
-  testFunctionParse();
-  if (storeExists.exists === false) {
-    LSCreateNotificationStore();
-  } else {
-    const notificationStoreString = await FileSystem.readAsStringAsync(
-      notificationStoreAddress
-    );
-    const notificationStoreObject: NotificationStoreType = JSON.parse(
-      notificationStoreString
-    );
-    batch(() => {
-      dispatch(setNotificationData(notificationStoreObject.notificationData));
-      dispatch(setUnreadCutoffDate(notificationStoreObject.unreadCutoffDate));
-    });
+    if (storeExists.exists === false) {
+      LSCreateNotificationStore();
+    } else {
+      const notificationStoreString = await FileSystem.readAsStringAsync(
+        notificationStoreAddress
+      );
+      const notificationStoreObject: NotificationStoreType = JSON.parse(
+        notificationStoreString
+      );
+      batch(() => {
+        dispatch(setNotificationData(notificationStoreObject.notificationData));
+        dispatch(setUnreadCutoffDate(notificationStoreObject.unreadCutoffDate));
+      });
+    }
+  } catch (error) {
+    console.log("error: " + error);
   }
 }
 

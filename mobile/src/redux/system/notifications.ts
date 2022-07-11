@@ -38,6 +38,12 @@ const slice = createSlice({
     ) => {
       state.notificationData.unshift(action.payload);
     },
+    addToNewNotificationData: (
+      state,
+      action: PayloadAction<NotificationDataItem>
+    ) => {
+      state.newNotificationData.unshift(action.payload);
+    },
   },
 });
 
@@ -47,5 +53,6 @@ export const {
   setUnreadCutoffDate,
   setNotificationData,
   addToNotificationData,
+  addToNewNotificationData,
 } = slice.actions;
 export default slice.reducer;

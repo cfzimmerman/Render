@@ -26,7 +26,9 @@ import { CurrentUserType } from "../../../resources/CommonTypes";
 import Code3001 from "./NotificationActions/Code3001";
 
 export interface NotificationDataItem {
+  notificationID: string;
   code: Number;
+  payload: string;
   unread: Boolean;
   createdAt: String;
   front: {
@@ -56,9 +58,8 @@ export interface Code3001PayloadType {
 export interface NotificationLibraryPropTypes {
   code: number;
   payload: string;
+  notificationID: string;
   dispatch: DispatchType;
-  navigation: any;
-  currentuser: CurrentUserType;
 }
 
 export interface NotificationStoreType {
@@ -69,19 +70,17 @@ export interface NotificationStoreType {
 const NotificationLibrary = ({
   code,
   payload,
+  notificationID,
   dispatch,
-  navigation,
-  currentuser,
 }: NotificationLibraryPropTypes) => {
   // All Notification Actions generate an object of type NotificationDataItem and add it to the appropriate Redux location
   if (code === 3001) {
     Code3001({
       code,
       payload,
+      notificationID,
       createdAt: new Date().toISOString(),
       dispatch,
-      navigation,
-      currentuser,
     });
   }
 };

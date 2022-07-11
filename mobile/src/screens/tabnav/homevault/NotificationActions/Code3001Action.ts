@@ -3,16 +3,18 @@ import { setOtherUser } from "../../../../redux/explore/otheruserprofile";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { GetUsersQuery } from "../../../../API";
 import { Storage, API, graphqlOperation } from "aws-amplify";
+import { Code3001PayloadType } from "../NotificationLibrary";
+import { DispatchType } from "../../../../redux/store";
+import { CurrentUserType } from "../../../../resources/CommonTypes";
 
 async function EnterProfileFromNotifications({
-  ouID,
   dispatch,
   navigation,
   currentuser,
   user,
 }) {
   GetFullUserRelationship({
-    targetID: ouID,
+    targetID: user.id,
     dispatch,
     currentuser,
   });
@@ -36,23 +38,43 @@ async function EnterProfileFromNotifications({
   });
 }
 
-async function Code3001Action({ payloadObject }) {
-  const {
-    data: { getUsers: user },
-  } = (await API.graphql(
-    graphqlOperation(`
-            query GetUsers {
-                getUsers (
-                    id: "${payloadObject.ouID}"
-                ) {
-                    id
-                    displayname
-                    gamertag
-                    cognitosub
-                    pfp
-                    addedmecount
-                }
-            }
-          `)
-  )) as GraphQLResult<GetUsersQuery>;
+interface Code3001ActionPropsType {
+  payloadObject: Code3001PayloadType;
+  dispatch: DispatchType;
+  navigation: any;
+  currentuser: CurrentUserType;
 }
+
+async function Code3001Action({
+  payloadObject,
+  dispatch,
+  navigation,
+  currentuser,
+}: Code3001ActionPropsType) {
+  try {
+    const {
+      data: { getUsers: user },
+    } = (await API.graphql(
+      graphqlOperation(`
+              query GetUsers {
+                  getUsers (
+                      id: "${payloadObject.ouID}"
+                  ) {
+                      id
+                      displayname
+                      gamertag
+                      cognitosub
+                      pfp
+                      addedmecount
+                  }
+              }
+            `)
+    )) as GraphQLResult<GetUsersQuery>;
+
+    EnterProfileFromNotifications({ dispatch, navigation, currentuser, user });
+  } catch (error) {
+    console.log("error: " + error);
+  }
+}
+
+export default Code3001Action;

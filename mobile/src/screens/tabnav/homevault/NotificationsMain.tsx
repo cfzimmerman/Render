@@ -17,10 +17,15 @@ import NotificationItem from "./NotificationItem";
 import { RootStateType } from "../../../redux/store";
 import LSCreateNotificationStore from "./LSCreateNotificationStore";
 import LSGetNotificationStore from "./LSGetNotificationStore";
+import AddNewNotification, {
+  AddNewNotificationPropTypes,
+} from "./AddNewNotification";
 
 const headerData: NotificationDataItem[] = [
   {
+    notificationID: "poof",
     code: 3001,
+    payload: "no",
     unread: true,
     createdAt: new Date().toISOString(),
     front: {
@@ -53,6 +58,7 @@ const NotificationsTitleBox = () => {
     </View>
   );
 };
+
 const HintMessage = ({ message }) => {
   return (
     <View style={styles.hintMessageWrapper}>
@@ -81,10 +87,9 @@ const NotificationsMain = ({ navigation }) => {
 
   const notificationObject: NotificationLibraryPropTypes = {
     code: 3001,
+    notificationID: "bo-fa",
     payload: JSON.stringify(dummyPayload),
-    navigation,
     dispatch,
-    currentuser,
   };
 
   return (
@@ -105,6 +110,21 @@ const NotificationsMain = ({ navigation }) => {
         <Button
           title={"LSGetNotificationStore"}
           onPress={() => LSGetNotificationStore({ dispatch })}
+        />
+        <Button
+          title={"AddNewNotification"}
+          onPress={() => {
+            const newPayload: Code3001PayloadType = {
+              ouID: "cacaa58e-6a7c-4d97-84a1-885ca95f5128",
+            };
+            const newNotification: AddNewNotificationPropTypes = {
+              targetUserID: "67caff7a-841a-45c6-9902-85813297e59b",
+              code: 3001,
+              payloadString: JSON.stringify(newPayload),
+            };
+            console.log("bring it back dingus");
+            // AddNewNotification(newNotification);
+          }}
         />
       </View>
     </SafeAreaView>

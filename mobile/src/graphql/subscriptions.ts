@@ -34,12 +34,14 @@ export const onCreatePostViewTracker = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -85,12 +87,14 @@ export const onUpdatePostViewTracker = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -136,12 +140,14 @@ export const onDeletePostViewTracker = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -155,13 +161,13 @@ export const onDeletePostViewTracker = /* GraphQL */ `
     }
   }
 `;
-export const onCreateUserRelationships = /* GraphQL */ `
-  subscription OnCreateUserRelationships {
-    onCreateUserRelationships {
-      receivercognitosub
-      sendercognitosub
+export const onCreateNotifications = /* GraphQL */ `
+  subscription OnCreateNotifications {
+    onCreateNotifications {
       id
       createdAt
+      code
+      payload
       usersID
       Users {
         id
@@ -170,56 +176,14 @@ export const onCreateUserRelationships = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
-      senderID
-      SenderUser {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
-      receiverID
-      ReceiverUser {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -232,13 +196,13 @@ export const onCreateUserRelationships = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateUserRelationships = /* GraphQL */ `
-  subscription OnUpdateUserRelationships {
-    onUpdateUserRelationships {
-      receivercognitosub
-      sendercognitosub
+export const onUpdateNotifications = /* GraphQL */ `
+  subscription OnUpdateNotifications {
+    onUpdateNotifications {
       id
       createdAt
+      code
+      payload
       usersID
       Users {
         id
@@ -247,56 +211,14 @@ export const onUpdateUserRelationships = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
-      senderID
-      SenderUser {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
-      receiverID
-      ReceiverUser {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -309,13 +231,13 @@ export const onUpdateUserRelationships = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteUserRelationships = /* GraphQL */ `
-  subscription OnDeleteUserRelationships {
-    onDeleteUserRelationships {
-      receivercognitosub
-      sendercognitosub
+export const onDeleteNotifications = /* GraphQL */ `
+  subscription OnDeleteNotifications {
+    onDeleteNotifications {
       id
       createdAt
+      code
+      payload
       usersID
       Users {
         id
@@ -324,56 +246,14 @@ export const onDeleteUserRelationships = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
-      senderID
-      SenderUser {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
-      receiverID
-      ReceiverUser {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -419,12 +299,14 @@ export const onCreateComments = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -471,12 +353,14 @@ export const onUpdateComments = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -523,12 +407,14 @@ export const onDeleteComments = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -538,6 +424,177 @@ export const onDeleteComments = /* GraphQL */ `
         updatedAt
       }
       createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateUserRelationships = /* GraphQL */ `
+  subscription OnCreateUserRelationships {
+    onCreateUserRelationships {
+      id
+      createdAt
+      senderID
+      SenderUser {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      receiverID
+      ReceiverUser {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      updatedAt
+    }
+  }
+`;
+export const onUpdateUserRelationships = /* GraphQL */ `
+  subscription OnUpdateUserRelationships {
+    onUpdateUserRelationships {
+      id
+      createdAt
+      senderID
+      SenderUser {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      receiverID
+      ReceiverUser {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      updatedAt
+    }
+  }
+`;
+export const onDeleteUserRelationships = /* GraphQL */ `
+  subscription OnDeleteUserRelationships {
+    onDeleteUserRelationships {
+      id
+      createdAt
+      senderID
+      SenderUser {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      receiverID
+      ReceiverUser {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
       updatedAt
     }
   }
@@ -568,12 +625,14 @@ export const onCreatePosts = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -618,12 +677,14 @@ export const onUpdatePosts = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -668,12 +729,14 @@ export const onDeletePosts = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -701,12 +764,14 @@ export const onCreateUsers = /* GraphQL */ `
       addedmecount
       birthday
       cognitosub
+      disablednotifications
       displayname
       email
       emailconfirmed
       firstvaultupload
       fullyauthenticated
       gamertag
+      lastopened
       mostrecentpublicpost
       pfp
       setpassword
@@ -715,13 +780,13 @@ export const onCreateUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
+      Notifications {
+        nextToken
+      }
       Posts {
         nextToken
       }
       PostViewTrackers {
-        nextToken
-      }
-      UserRelationships {
         nextToken
       }
       SenderRelationships {
@@ -744,12 +809,14 @@ export const onUpdateUsers = /* GraphQL */ `
       addedmecount
       birthday
       cognitosub
+      disablednotifications
       displayname
       email
       emailconfirmed
       firstvaultupload
       fullyauthenticated
       gamertag
+      lastopened
       mostrecentpublicpost
       pfp
       setpassword
@@ -758,13 +825,13 @@ export const onUpdateUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
+      Notifications {
+        nextToken
+      }
       Posts {
         nextToken
       }
       PostViewTrackers {
-        nextToken
-      }
-      UserRelationships {
         nextToken
       }
       SenderRelationships {
@@ -787,12 +854,14 @@ export const onDeleteUsers = /* GraphQL */ `
       addedmecount
       birthday
       cognitosub
+      disablednotifications
       displayname
       email
       emailconfirmed
       firstvaultupload
       fullyauthenticated
       gamertag
+      lastopened
       mostrecentpublicpost
       pfp
       setpassword
@@ -801,13 +870,13 @@ export const onDeleteUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
+      Notifications {
+        nextToken
+      }
       Posts {
         nextToken
       }
       PostViewTrackers {
-        nextToken
-      }
-      UserRelationships {
         nextToken
       }
       SenderRelationships {
