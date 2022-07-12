@@ -180,6 +180,36 @@ export const listNotifications = /* GraphQL */ `
     }
   }
 `;
+export const notificationsByUsers = /* GraphQL */ `
+  query NotificationsByUsers(
+    $usersID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelNotificationsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    notificationsByUsers(
+      usersID: $usersID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        code
+        payload
+        postsID
+        usersID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const notificationsByDate = /* GraphQL */ `
   query NotificationsByDate(
     $usersID: ID!

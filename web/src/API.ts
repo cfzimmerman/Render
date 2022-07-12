@@ -2160,6 +2160,32 @@ export type ListNotificationsQuery = {
   } | null,
 };
 
+export type NotificationsByUsersQueryVariables = {
+  usersID: string,
+  createdAt?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelNotificationsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type NotificationsByUsersQuery = {
+  notificationsByUsers?:  {
+    __typename: "ModelNotificationsConnection",
+    items:  Array< {
+      __typename: "Notifications",
+      id: string,
+      createdAt: string,
+      code?: number | null,
+      payload?: string | null,
+      postsID?: string | null,
+      usersID?: string | null,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type NotificationsByDateQueryVariables = {
   usersID: string,
   createdAt?: ModelStringKeyConditionInput | null,

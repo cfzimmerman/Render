@@ -17,7 +17,7 @@ type Notifications @model @auth(rules: [{ allow: public }]) {
   postsID: ID @index(name: "byPosts")
   Posts: Posts @belongsTo
   usersID: ID
-    @index(name: "byUsers", sortKeyFields: ["createdAt"])
+    @index(name: "byUsers", queryField: "notificationsByUsers", sortKeyFields: ["createdAt"])
     @index(
       name: "notificationsByDate"
       queryField: "notificationsByDate"
