@@ -8,21 +8,28 @@ type PostViewTracker @model @auth(rules: [{ allow: public }]) {
   Users: Users @belongsTo
 }
 
-# Delete me later
 type Notifications @model @auth(rules: [{ allow: public }]) {
   id: ID!
   createdAt: String!
   code: Int
   payload: String
   postsID: ID @index(name: "byPosts")
-  Posts: Posts @belongsTo
-  usersID: ID
-    @index(name: "byUsers", queryField: "notificationsByUsers", sortKeyFields: ["createdAt"])
+  Posts: Posts @belongsTo(fields: ["postsID"])
+  UserNotifications: [UserNotifications] @hasMany(indexName: "byNotifications", fields: ["id"])
+}
+
+type UserNotifications @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  createdAt: String!
+  notificationsID: ID
     @index(
-      name: "notificationsByDate"
-      queryField: "notificationsByDate"
+      name: "byNotifications"
+      queryField: "userNotificationsByNotifications"
       sortKeyFields: ["createdAt"]
     )
+  usersID: ID
+    @index(name: "byUsers", queryField: "userNotificationsByUsers", sortKeyFields: ["createdAt"])
+  Notifications: Notifications @belongsTo(fields: ["notificationsID"])
   Users: Users @belongsTo(fields: ["usersID"])
 }
 
@@ -136,7 +143,7 @@ type Users @model @searchable @auth(rules: [{ allow: public }]) {
   type: String
     @index(name: "searchByGamertag", sortKeyFields: ["gamertag"], queryField: "searchByGamertag")
   Comments: [Comments] @hasMany(indexName: "byUsers", fields: ["id"])
-  Notifications: [Notifications] @hasMany(indexName: "byUsers", fields: ["id"])
+  UserNotifications: [UserNotifications] @hasMany(indexName: "byUsers", fields: ["id"])
   Posts: [Posts] @hasMany(indexName: "byUsers", fields: ["id"])
   PostViewTrackers: [PostViewTracker] @hasMany(indexName: "byUsers", fields: ["id"])
   SenderRelationships: [UserRelationships] @hasMany(indexName: "bySender", fields: ["id"])
