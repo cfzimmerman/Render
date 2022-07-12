@@ -182,27 +182,7 @@ export const createNotifications = /* GraphQL */ `
       payload
       usersID
       Users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        disablednotifications
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        lastopened
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
+        nextToken
       }
       updatedAt
     }
@@ -220,27 +200,7 @@ export const updateNotifications = /* GraphQL */ `
       payload
       usersID
       Users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        disablednotifications
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        lastopened
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
+        nextToken
       }
       updatedAt
     }
@@ -258,27 +218,7 @@ export const deleteNotifications = /* GraphQL */ `
       payload
       usersID
       Users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        disablednotifications
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        lastopened
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
+        nextToken
       }
       updatedAt
     }
@@ -828,9 +768,6 @@ export const createUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
-      Notifications {
-        nextToken
-      }
       Posts {
         nextToken
       }
@@ -841,6 +778,9 @@ export const createUsers = /* GraphQL */ `
         nextToken
       }
       ReceiverRelationships {
+        nextToken
+      }
+      Notifications {
         nextToken
       }
       createdAt
@@ -876,9 +816,6 @@ export const updateUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
-      Notifications {
-        nextToken
-      }
       Posts {
         nextToken
       }
@@ -889,6 +826,9 @@ export const updateUsers = /* GraphQL */ `
         nextToken
       }
       ReceiverRelationships {
+        nextToken
+      }
+      Notifications {
         nextToken
       }
       createdAt
@@ -924,9 +864,6 @@ export const deleteUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
-      Notifications {
-        nextToken
-      }
       Posts {
         nextToken
       }
@@ -938,6 +875,144 @@ export const deleteUsers = /* GraphQL */ `
       }
       ReceiverRelationships {
         nextToken
+      }
+      Notifications {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createUserNotifications = /* GraphQL */ `
+  mutation CreateUserNotifications(
+    $input: CreateUserNotificationsInput!
+    $condition: ModelUserNotificationsConditionInput
+  ) {
+    createUserNotifications(input: $input, condition: $condition) {
+      id
+      notificationsID
+      usersID
+      notifications {
+        id
+        createdAt
+        code
+        payload
+        usersID
+        updatedAt
+      }
+      users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUserNotifications = /* GraphQL */ `
+  mutation UpdateUserNotifications(
+    $input: UpdateUserNotificationsInput!
+    $condition: ModelUserNotificationsConditionInput
+  ) {
+    updateUserNotifications(input: $input, condition: $condition) {
+      id
+      notificationsID
+      usersID
+      notifications {
+        id
+        createdAt
+        code
+        payload
+        usersID
+        updatedAt
+      }
+      users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUserNotifications = /* GraphQL */ `
+  mutation DeleteUserNotifications(
+    $input: DeleteUserNotificationsInput!
+    $condition: ModelUserNotificationsConditionInput
+  ) {
+    deleteUserNotifications(input: $input, condition: $condition) {
+      id
+      notificationsID
+      usersID
+      notifications {
+        id
+        createdAt
+        code
+        payload
+        usersID
+        updatedAt
+      }
+      users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt

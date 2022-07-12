@@ -170,27 +170,7 @@ export const onCreateNotifications = /* GraphQL */ `
       payload
       usersID
       Users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        disablednotifications
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        lastopened
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
+        nextToken
       }
       updatedAt
     }
@@ -205,27 +185,7 @@ export const onUpdateNotifications = /* GraphQL */ `
       payload
       usersID
       Users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        disablednotifications
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        lastopened
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
+        nextToken
       }
       updatedAt
     }
@@ -240,27 +200,7 @@ export const onDeleteNotifications = /* GraphQL */ `
       payload
       usersID
       Users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        disablednotifications
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        lastopened
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
+        nextToken
       }
       updatedAt
     }
@@ -780,9 +720,6 @@ export const onCreateUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
-      Notifications {
-        nextToken
-      }
       Posts {
         nextToken
       }
@@ -793,6 +730,9 @@ export const onCreateUsers = /* GraphQL */ `
         nextToken
       }
       ReceiverRelationships {
+        nextToken
+      }
+      Notifications {
         nextToken
       }
       createdAt
@@ -825,9 +765,6 @@ export const onUpdateUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
-      Notifications {
-        nextToken
-      }
       Posts {
         nextToken
       }
@@ -838,6 +775,9 @@ export const onUpdateUsers = /* GraphQL */ `
         nextToken
       }
       ReceiverRelationships {
+        nextToken
+      }
+      Notifications {
         nextToken
       }
       createdAt
@@ -870,9 +810,6 @@ export const onDeleteUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
-      Notifications {
-        nextToken
-      }
       Posts {
         nextToken
       }
@@ -884,6 +821,135 @@ export const onDeleteUsers = /* GraphQL */ `
       }
       ReceiverRelationships {
         nextToken
+      }
+      Notifications {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateUserNotifications = /* GraphQL */ `
+  subscription OnCreateUserNotifications {
+    onCreateUserNotifications {
+      id
+      notificationsID
+      usersID
+      notifications {
+        id
+        createdAt
+        code
+        payload
+        usersID
+        updatedAt
+      }
+      users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateUserNotifications = /* GraphQL */ `
+  subscription OnUpdateUserNotifications {
+    onUpdateUserNotifications {
+      id
+      notificationsID
+      usersID
+      notifications {
+        id
+        createdAt
+        code
+        payload
+        usersID
+        updatedAt
+      }
+      users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteUserNotifications = /* GraphQL */ `
+  subscription OnDeleteUserNotifications {
+    onDeleteUserNotifications {
+      id
+      notificationsID
+      usersID
+      notifications {
+        id
+        createdAt
+        code
+        payload
+        usersID
+        updatedAt
+      }
+      users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt
