@@ -55,6 +55,7 @@ async function GetNotificationsCloud({
         code: item.code,
         payload: item.payload,
         notificationID: item.id,
+        postsID: item.postsID,
         dispatch,
       });
     });

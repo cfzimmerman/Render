@@ -112,29 +112,29 @@ export const getNotifications = /* GraphQL */ `
       createdAt
       code
       payload
+      postsID
+      Posts {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contentlastupdated
+        contenttype
+        createdAt
+        deleteddate
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        updatedAt
+      }
       usersID
       Users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        disablednotifications
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        lastopened
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
+        nextToken
       }
       updatedAt
     }
@@ -152,6 +152,7 @@ export const listNotifications = /* GraphQL */ `
         createdAt
         code
         payload
+        postsID
         usersID
         updatedAt
       }
@@ -181,6 +182,7 @@ export const notificationsByDate = /* GraphQL */ `
         createdAt
         code
         payload
+        postsID
         usersID
         updatedAt
       }
@@ -522,6 +524,9 @@ export const getPosts = /* GraphQL */ `
         updatedAt
       }
       Comments {
+        nextToken
+      }
+      Notifications {
         nextToken
       }
       PostViewTrackers {
@@ -879,9 +884,6 @@ export const getUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
-      Notifications {
-        nextToken
-      }
       Posts {
         nextToken
       }
@@ -892,6 +894,9 @@ export const getUsers = /* GraphQL */ `
         nextToken
       }
       ReceiverRelationships {
+        nextToken
+      }
+      Notifications {
         nextToken
       }
       createdAt
@@ -1159,6 +1164,71 @@ export const searchUsers = /* GraphQL */ `
           }
         }
       }
+    }
+  }
+`;
+export const getUserNotifications = /* GraphQL */ `
+  query GetUserNotifications($id: ID!) {
+    getUserNotifications(id: $id) {
+      id
+      notificationsID
+      usersID
+      notifications {
+        id
+        createdAt
+        code
+        payload
+        postsID
+        usersID
+        updatedAt
+      }
+      users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listUserNotifications = /* GraphQL */ `
+  query ListUserNotifications(
+    $filter: ModelUserNotificationsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserNotifications(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        notificationsID
+        usersID
+        createdAt
+        updatedAt
+      }
+      nextToken
     }
   }
 `;

@@ -7,17 +7,20 @@ export interface AddNewNotificationPropTypes {
   // targetUserID is the id of the user *receiving* the notification, not sending it
   code: number;
   payloadString: string;
+  postsID: null | string;
 }
 
 async function AddNewNotification({
   targetUserID,
   code,
   payloadString,
+  postsID,
 }: AddNewNotificationPropTypes) {
   const newNotification: CreateNotificationsInput = {
     usersID: targetUserID,
     code: code,
     payload: payloadString,
+    postsID: postsID,
   };
 
   try {

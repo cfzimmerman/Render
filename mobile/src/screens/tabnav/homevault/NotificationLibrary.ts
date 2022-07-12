@@ -29,6 +29,7 @@ export interface NotificationDataItem {
   notificationID: string;
   code: Number;
   payload: string;
+  postsID: null | string;
   unread: Boolean;
   createdAt: String;
   front: {
@@ -59,6 +60,7 @@ export interface NotificationLibraryPropTypes {
   code: number;
   payload: string;
   notificationID: string;
+  postsID: null | string;
   dispatch: DispatchType;
 }
 
@@ -71,6 +73,7 @@ const NotificationLibrary = ({
   code,
   payload,
   notificationID,
+  postsID,
   dispatch,
 }: NotificationLibraryPropTypes) => {
   // All Notification Actions generate an object of type NotificationDataItem and add it to the appropriate Redux location
@@ -79,6 +82,7 @@ const NotificationLibrary = ({
       code,
       payload,
       notificationID,
+      postsID,
       createdAt: new Date().toISOString(),
       dispatch,
     });

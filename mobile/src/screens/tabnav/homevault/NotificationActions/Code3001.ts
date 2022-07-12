@@ -17,6 +17,7 @@ import LSUpdateNotificationStore from "../LSUpdateNotificationStore";
 interface Code3001PropTypes {
   code: number;
   payload: string;
+  postsID: null | string;
   createdAt: string;
   notificationID: string;
   dispatch: DispatchType;
@@ -27,6 +28,7 @@ async function Code3001({
   payload,
   createdAt,
   notificationID,
+  postsID,
   dispatch,
 }: Code3001PropTypes) {
   try {
@@ -52,6 +54,7 @@ async function Code3001({
       unread: true,
       createdAt,
       payload,
+      postsID,
       front: {
         title: "New follower",
         message: `${user.displayname} added you. Would you like to add back?`,

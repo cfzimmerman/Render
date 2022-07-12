@@ -13,6 +13,8 @@ type Notifications @model @auth(rules: [{ allow: public }]) {
   createdAt: String!
   code: Int
   payload: String
+  postsID: ID @index(name: "byPosts")
+  Posts: Posts @belongsTo
   usersID: ID
     @index(name: "byUsers")
     @index(
@@ -108,6 +110,7 @@ type Posts @model @searchable @auth(rules: [{ allow: public }]) {
     )
   Users: Users @belongsTo(fields: ["usersID"])
   Comments: [Comments] @hasMany(indexName: "byPosts", fields: ["id"])
+  Notifications: [Notifications] @hasMany(indexName: "byPosts", fields: ["id"])
   PostViewTrackers: [PostViewTracker] @hasMany(indexName: "byPosts", fields: ["id"])
 }
 

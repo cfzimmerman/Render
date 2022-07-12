@@ -112,6 +112,26 @@ export const getNotifications = /* GraphQL */ `
       createdAt
       code
       payload
+      postsID
+      Posts {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contentlastupdated
+        contenttype
+        createdAt
+        deleteddate
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        updatedAt
+      }
       usersID
       Users {
         nextToken
@@ -132,6 +152,7 @@ export const listNotifications = /* GraphQL */ `
         createdAt
         code
         payload
+        postsID
         usersID
         updatedAt
       }
@@ -161,6 +182,7 @@ export const notificationsByDate = /* GraphQL */ `
         createdAt
         code
         payload
+        postsID
         usersID
         updatedAt
       }
@@ -502,6 +524,9 @@ export const getPosts = /* GraphQL */ `
         updatedAt
       }
       Comments {
+        nextToken
+      }
+      Notifications {
         nextToken
       }
       PostViewTrackers {
@@ -1153,6 +1178,7 @@ export const getUserNotifications = /* GraphQL */ `
         createdAt
         code
         payload
+        postsID
         usersID
         updatedAt
       }

@@ -168,6 +168,26 @@ export const onCreateNotifications = /* GraphQL */ `
       createdAt
       code
       payload
+      postsID
+      Posts {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contentlastupdated
+        contenttype
+        createdAt
+        deleteddate
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        updatedAt
+      }
       usersID
       Users {
         nextToken
@@ -183,6 +203,26 @@ export const onUpdateNotifications = /* GraphQL */ `
       createdAt
       code
       payload
+      postsID
+      Posts {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contentlastupdated
+        contenttype
+        createdAt
+        deleteddate
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        updatedAt
+      }
       usersID
       Users {
         nextToken
@@ -198,6 +238,26 @@ export const onDeleteNotifications = /* GraphQL */ `
       createdAt
       code
       payload
+      postsID
+      Posts {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contentlastupdated
+        contenttype
+        createdAt
+        deleteddate
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        updatedAt
+      }
       usersID
       Users {
         nextToken
@@ -584,6 +644,9 @@ export const onCreatePosts = /* GraphQL */ `
       Comments {
         nextToken
       }
+      Notifications {
+        nextToken
+      }
       PostViewTrackers {
         nextToken
       }
@@ -636,6 +699,9 @@ export const onUpdatePosts = /* GraphQL */ `
       Comments {
         nextToken
       }
+      Notifications {
+        nextToken
+      }
       PostViewTrackers {
         nextToken
       }
@@ -686,6 +752,9 @@ export const onDeletePosts = /* GraphQL */ `
         updatedAt
       }
       Comments {
+        nextToken
+      }
+      Notifications {
         nextToken
       }
       PostViewTrackers {
@@ -841,6 +910,7 @@ export const onCreateUserNotifications = /* GraphQL */ `
         createdAt
         code
         payload
+        postsID
         usersID
         updatedAt
       }
@@ -883,6 +953,7 @@ export const onUpdateUserNotifications = /* GraphQL */ `
         createdAt
         code
         payload
+        postsID
         usersID
         updatedAt
       }
@@ -925,6 +996,7 @@ export const onDeleteUserNotifications = /* GraphQL */ `
         createdAt
         code
         payload
+        postsID
         usersID
         updatedAt
       }
