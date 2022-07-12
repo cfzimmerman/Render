@@ -20,7 +20,7 @@ type Notifications @model @auth(rules: [{ allow: public }]) {
       queryField: "notificationsByDate"
       sortKeyFields: ["createdAt"]
     )
-  Users: Users @belongsTo(fields: ["usersID"])
+  # Users: Users @belongsTo(fields: ["usersID"])
 }
 
 type Comments @model @auth(rules: [{ allow: public }]) {
@@ -132,7 +132,7 @@ type Users @model @searchable @auth(rules: [{ allow: public }]) {
   type: String
     @index(name: "searchByGamertag", sortKeyFields: ["gamertag"], queryField: "searchByGamertag")
   Comments: [Comments] @hasMany(indexName: "byUsers", fields: ["id"])
-  Notifications: [Notifications] @hasMany(indexName: "byUsers", fields: ["id"])
+  # Notifications: [Notifications] @hasMany(indexName: "byUsers", fields: ["id"])
   Posts: [Posts] @hasMany(indexName: "byUsers", fields: ["id"])
   PostViewTrackers: [PostViewTracker] @hasMany(indexName: "byUsers", fields: ["id"])
   SenderRelationships: [UserRelationships] @hasMany(indexName: "bySender", fields: ["id"])
