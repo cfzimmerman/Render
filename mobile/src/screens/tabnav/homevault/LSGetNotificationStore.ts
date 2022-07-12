@@ -6,11 +6,16 @@ import {
   setUnreadCutoffDate,
 } from "../../../redux/system/notifications";
 import { NotificationStoreType } from "./NotificationLibrary";
+import { DispatchType } from "../../../redux/store";
 
 const notificationStoreAddress =
   FileSystem.documentDirectory + "NotificationStore.txt";
 
-async function LSGetNotificationStore({ dispatch }) {
+async function LSGetNotificationStore({
+  dispatch,
+}: {
+  dispatch: DispatchType;
+}) {
   try {
     const storeExists = await FileSystem.getInfoAsync(notificationStoreAddress);
 

@@ -34,12 +34,14 @@ export const getPostViewTracker = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -103,13 +105,13 @@ export const postViewByPostID = /* GraphQL */ `
     }
   }
 `;
-export const getUserRelationships = /* GraphQL */ `
-  query GetUserRelationships($id: ID!) {
-    getUserRelationships(id: $id) {
-      receivercognitosub
-      sendercognitosub
+export const getNotifications = /* GraphQL */ `
+  query GetNotifications($id: ID!) {
+    getNotifications(id: $id) {
       id
       createdAt
+      code
+      payload
       usersID
       Users {
         id
@@ -118,56 +120,14 @@ export const getUserRelationships = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
-      senderID
-      SenderUser {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
-      receiverID
-      ReceiverUser {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -180,42 +140,36 @@ export const getUserRelationships = /* GraphQL */ `
     }
   }
 `;
-export const listUserRelationships = /* GraphQL */ `
-  query ListUserRelationships(
-    $filter: ModelUserRelationshipsFilterInput
+export const listNotifications = /* GraphQL */ `
+  query ListNotifications(
+    $filter: ModelNotificationsFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listUserRelationships(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
+    listNotifications(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
-        receivercognitosub
-        sendercognitosub
         id
         createdAt
+        code
+        payload
         usersID
-        senderID
-        receiverID
         updatedAt
       }
       nextToken
     }
   }
 `;
-export const relationshipsByReceiverDate = /* GraphQL */ `
-  query RelationshipsByReceiverDate(
-    $receivercognitosub: String!
+export const notificationsByDate = /* GraphQL */ `
+  query NotificationsByDate(
+    $usersID: ID!
     $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
-    $filter: ModelUserRelationshipsFilterInput
+    $filter: ModelNotificationsFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    relationshipsByReceiverDate(
-      receivercognitosub: $receivercognitosub
+    notificationsByDate(
+      usersID: $usersID
       createdAt: $createdAt
       sortDirection: $sortDirection
       filter: $filter
@@ -223,226 +177,11 @@ export const relationshipsByReceiverDate = /* GraphQL */ `
       nextToken: $nextToken
     ) {
       items {
-        receivercognitosub
-        sendercognitosub
         id
         createdAt
+        code
+        payload
         usersID
-        senderID
-        receiverID
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const relationshipsBySenderDate = /* GraphQL */ `
-  query RelationshipsBySenderDate(
-    $sendercognitosub: String!
-    $createdAt: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserRelationshipsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    relationshipsBySenderDate(
-      sendercognitosub: $sendercognitosub
-      createdAt: $createdAt
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        receivercognitosub
-        sendercognitosub
-        id
-        createdAt
-        usersID
-        senderID
-        receiverID
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const verifyAddedUser = /* GraphQL */ `
-  query VerifyAddedUser(
-    $sendercognitosub: String!
-    $receivercognitosub: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserRelationshipsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    verifyAddedUser(
-      sendercognitosub: $sendercognitosub
-      receivercognitosub: $receivercognitosub
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        receivercognitosub
-        sendercognitosub
-        id
-        createdAt
-        usersID
-        senderID
-        receiverID
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const addedUsersByCurrentUser = /* GraphQL */ `
-  query AddedUsersByCurrentUser(
-    $sendercognitosub: String!
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserRelationshipsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    addedUsersByCurrentUser(
-      sendercognitosub: $sendercognitosub
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        receivercognitosub
-        sendercognitosub
-        id
-        createdAt
-        usersID
-        senderID
-        receiverID
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const senderRelationshipsByDate = /* GraphQL */ `
-  query SenderRelationshipsByDate(
-    $senderID: ID!
-    $createdAt: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserRelationshipsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    senderRelationshipsByDate(
-      senderID: $senderID
-      createdAt: $createdAt
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        receivercognitosub
-        sendercognitosub
-        id
-        createdAt
-        usersID
-        senderID
-        receiverID
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const addedByCurrentUser = /* GraphQL */ `
-  query AddedByCurrentUser(
-    $senderID: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserRelationshipsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    addedByCurrentUser(
-      senderID: $senderID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        receivercognitosub
-        sendercognitosub
-        id
-        createdAt
-        usersID
-        senderID
-        receiverID
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const checkAddedUser = /* GraphQL */ `
-  query CheckAddedUser(
-    $senderID: ID!
-    $receiverID: ModelIDKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserRelationshipsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    checkAddedUser(
-      senderID: $senderID
-      receiverID: $receiverID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        receivercognitosub
-        sendercognitosub
-        id
-        createdAt
-        usersID
-        senderID
-        receiverID
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const receiverRelationshipsByDate = /* GraphQL */ `
-  query ReceiverRelationshipsByDate(
-    $receiverID: ID!
-    $createdAt: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserRelationshipsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    receiverRelationshipsByDate(
-      receiverID: $receiverID
-      createdAt: $createdAt
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        receivercognitosub
-        sendercognitosub
-        id
-        createdAt
-        usersID
-        senderID
-        receiverID
         updatedAt
       }
       nextToken
@@ -482,12 +221,14 @@ export const getComments = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -549,6 +290,195 @@ export const commentsByCreatedDate = /* GraphQL */ `
     }
   }
 `;
+export const getUserRelationships = /* GraphQL */ `
+  query GetUserRelationships($id: ID!) {
+    getUserRelationships(id: $id) {
+      id
+      createdAt
+      senderID
+      SenderUser {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      receiverID
+      ReceiverUser {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      updatedAt
+    }
+  }
+`;
+export const listUserRelationships = /* GraphQL */ `
+  query ListUserRelationships(
+    $filter: ModelUserRelationshipsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserRelationships(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        senderID
+        receiverID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const senderRelationshipsByDate = /* GraphQL */ `
+  query SenderRelationshipsByDate(
+    $senderID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserRelationshipsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    senderRelationshipsByDate(
+      senderID: $senderID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        senderID
+        receiverID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const addedByCurrentUser = /* GraphQL */ `
+  query AddedByCurrentUser(
+    $senderID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserRelationshipsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    addedByCurrentUser(
+      senderID: $senderID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        senderID
+        receiverID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const checkAddedUser = /* GraphQL */ `
+  query CheckAddedUser(
+    $senderID: ID!
+    $receiverID: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserRelationshipsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    checkAddedUser(
+      senderID: $senderID
+      receiverID: $receiverID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        senderID
+        receiverID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const receiverRelationshipsByDate = /* GraphQL */ `
+  query ReceiverRelationshipsByDate(
+    $receiverID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserRelationshipsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    receiverRelationshipsByDate(
+      receiverID: $receiverID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        senderID
+        receiverID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getPosts = /* GraphQL */ `
   query GetPosts($id: ID!) {
     getPosts(id: $id) {
@@ -575,12 +505,14 @@ export const getPosts = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -931,12 +863,14 @@ export const getUsers = /* GraphQL */ `
       addedmecount
       birthday
       cognitosub
+      disablednotifications
       displayname
       email
       emailconfirmed
       firstvaultupload
       fullyauthenticated
       gamertag
+      lastopened
       mostrecentpublicpost
       pfp
       setpassword
@@ -945,13 +879,13 @@ export const getUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
+      Notifications {
+        nextToken
+      }
       Posts {
         nextToken
       }
       PostViewTrackers {
-        nextToken
-      }
-      UserRelationships {
         nextToken
       }
       SenderRelationships {
@@ -979,12 +913,14 @@ export const listUsers = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -1019,12 +955,14 @@ export const userByCognitosub = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -1059,12 +997,14 @@ export const userByEmail = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -1099,12 +1039,14 @@ export const userByGamertag = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -1141,12 +1083,14 @@ export const searchByGamertag = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -1183,12 +1127,14 @@ export const searchUsers = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword

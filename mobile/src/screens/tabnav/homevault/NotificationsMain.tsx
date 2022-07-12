@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, Platform, Button } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Platform,
+  Button,
+  FlatList,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BackArrow, PrimaryDivider } from "../../../resources/atoms";
 import {
@@ -20,6 +27,8 @@ import LSGetNotificationStore from "./LSGetNotificationStore";
 import AddNewNotification, {
   AddNewNotificationPropTypes,
 } from "./AddNewNotification";
+import GetNotificationsCloud from "./GetNotificationsCloud";
+import LSUpdateNotificationStore from "./LSUpdateNotificationStore";
 
 const headerData: NotificationDataItem[] = [
   {
@@ -30,7 +39,7 @@ const headerData: NotificationDataItem[] = [
     createdAt: new Date().toISOString(),
     front: {
       title: "New follower",
-      message: "Eko36 added you. Would you like to add back?",
+      message: "Eko36 added you 🎉. Would you like to add back?",
     },
     back: {
       rightIcon: Icons.OriginalSize.AddUser,
@@ -92,27 +101,49 @@ const NotificationsMain = ({ navigation }) => {
     dispatch,
   };
 
+  console.log("notificationData: " + JSON.stringify(notificationData));
+
+  const renderItem = ({ index, item }) => {
+    return NotificationItem({ item });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <NotificationsTitleBox />
       <PrimaryDivider />
       <HintMessage message={"Tap for options"} />
-      <NotificationItem item={headerData[0]} />
+      <FlatList
+        data={notificationData}
+        keyExtractor={(item) => item.notificationID}
+        renderItem={renderItem}
+      />
       <View style={{ marginTop: Environment.CubeSize }}>
         <Button
+          title={"GetNotificationsCloud"}
+          color={"moccasin"}
+          onPress={() =>
+            GetNotificationsCloud({
+              currentuser,
+              unreadCutoffDate: "2011-10-05T14:48:00.000Z",
+              dispatch,
+            })
+          }
+        />
+        <Button
           title={"Notification Library"}
+          color={"indianred"}
           onPress={() => NotificationLibrary(notificationObject)}
         />
         <Button
-          title={"LSCreateNotificationStore"}
-          onPress={() => LSCreateNotificationStore()}
-        />
-        <Button
-          title={"LSGetNotificationStore"}
-          onPress={() => LSGetNotificationStore({ dispatch })}
+          title={"LSUpdateNotificationStore"}
+          color={"goldenrod"}
+          onPress={() =>
+            LSUpdateNotificationStore({ newItem: notificationData[0] })
+          }
         />
         <Button
           title={"AddNewNotification"}
+          color={"wheat"}
           onPress={() => {
             const newPayload: Code3001PayloadType = {
               ouID: "cacaa58e-6a7c-4d97-84a1-885ca95f5128",

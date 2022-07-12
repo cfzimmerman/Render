@@ -8,13 +8,13 @@ import {
 const notificationStoreAddress =
   FileSystem.documentDirectory + "NotificationStore.txt";
 
-interface LSUpdateNotificationStorePropTypes {
-  newItem: NotificationDataItem;
+interface LSUNSDPropsType {
+  newUnreadDate: string;
 }
 
-async function LSUpdateNotificationStore({
-  newItem,
-}: LSUpdateNotificationStorePropTypes) {
+async function LSUpdateNotificationStoreDate({
+  newUnreadDate,
+}: LSUNSDPropsType) {
   try {
     const storeExists = await FileSystem.getInfoAsync(notificationStoreAddress);
     if (storeExists.exists === false) {
@@ -26,22 +26,19 @@ async function LSUpdateNotificationStore({
       const notificationStoreObject: NotificationStoreType = JSON.parse(
         notificationStoreString
       );
-      const foundInArray = notificationStoreObject.notificationData.findIndex(
-        (item: NotificationDataItem) =>
-          item.notificationID === newItem.notificationID
+      const updatedNotificationStoreObject: NotificationStoreType = {
+        ...notificationStoreObject,
+        unreadCutoffDate: newUnreadDate,
+      };
+      const newStoreString = JSON.stringify(updatedNotificationStoreObject);
+      await FileSystem.writeAsStringAsync(
+        notificationStoreAddress,
+        newStoreString
       );
-      if (foundInArray === -1) {
-        notificationStoreObject.notificationData.unshift(newItem);
-        const newStoreString = JSON.stringify(notificationStoreObject);
-        await FileSystem.writeAsStringAsync(
-          notificationStoreAddress,
-          newStoreString
-        );
-      }
     }
   } catch (error) {
-    console.log("Error: " + error);
+    console.log("Error: " + JSON.stringify(error));
   }
 }
 
-export default LSUpdateNotificationStore;
+export default LSUpdateNotificationStoreDate;

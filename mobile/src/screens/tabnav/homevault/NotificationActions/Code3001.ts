@@ -7,7 +7,12 @@ import {
   NotificationDataItem,
 } from "../NotificationLibrary";
 import Icons from "../../../../resources/project/Icons";
-import { addToNewNotificationData } from "../../../../redux/system/notifications";
+import {
+  addToNewNotificationData,
+  addToNotificationData,
+} from "../../../../redux/system/notifications";
+import { batch } from "react-redux";
+import LSUpdateNotificationStore from "../LSUpdateNotificationStore";
 
 interface Code3001PropTypes {
   code: number;
@@ -42,7 +47,7 @@ async function Code3001({
     )) as GraphQLResult<GetUsersQuery>;
 
     const notificationObject: NotificationDataItem = {
-      notificationID: "8675309",
+      notificationID,
       code,
       unread: true,
       createdAt,
@@ -56,7 +61,12 @@ async function Code3001({
         rightTitle: "Visit profile",
       },
     };
-    dispatch(addToNewNotificationData(notificationObject));
+    batch(() => {
+      dispatch(addToNotificationData(notificationObject));
+      dispatch(addToNewNotificationData(notificationObject));
+    });
+    const readNotificationItem = { ...notificationObject, unread: false };
+    LSUpdateNotificationStore({ newItem: readNotificationItem });
   } catch (error) {
     console.log("error: " + error);
   }

@@ -26,60 +26,6 @@ const UnreadIndicator = ({ unread }: { unread: boolean }) => {
   }
 };
 
-const NotificationFront = ({ item, flipRef }) => {
-  const FlipCard = () => {
-    flipRef.current.flip();
-  };
-
-  return (
-    <TouchableOpacity onPress={FlipCard}>
-      <View style={[GlobalStyles.shadow, styles.frontContainer]}>
-        <View style={styles.frontTitleWrapper}>
-          <Text
-            style={[
-              GlobalStyles.irregularshadow,
-              GlobalStyles.p1text,
-              styles.frontTitle,
-            ]}
-          >
-            {item.front.title}
-          </Text>
-          <UnreadIndicator unread={item.unread} />
-        </View>
-        <View style={styles.frontMessageWrapper}>
-          <Text
-            style={[GlobalStyles.p1text, styles.frontMessage]}
-            numberOfLines={2}
-          >
-            {item.front.message}
-          </Text>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
-};
-
-const NotificationBack = ({ flipRef, item }) => {
-  const FlipCard = () => {
-    flipRef.current.flip();
-  };
-
-  return (
-    <View style={styles.backWrapper}>
-      <NotificationIconTile
-        title={"Close"}
-        Icon={Icons.OriginalSize.X}
-        Action={FlipCard}
-      />
-      <NotificationIconTile
-        title={item.back.rightTitle}
-        Icon={item.back.rightIcon}
-        Action={() => console.log("Visit profile")}
-      />
-    </View>
-  );
-};
-
 const NotificationIconTile = ({ title, Icon, Action }) => {
   const PerformAction = () => {
     Action();
@@ -109,30 +55,82 @@ const NotificationIconTile = ({ title, Icon, Action }) => {
 };
 
 const NotificationItem = ({ item }) => {
-  const flipRef = useRef(null);
+  var flipRef;
+  // ^ This admittedly looks hella sus, but useRef in FlatList children is forbidden. If there's a better solution, feel free to implement it.
+
+  const FlipCard = () => {
+    flipRef.flip();
+  };
+
+  const NotificationFront = ({ item }) => {
+    return (
+      <TouchableOpacity onPress={FlipCard}>
+        <View style={[GlobalStyles.shadow, styles.frontContainer]}>
+          <View style={styles.frontTitleWrapper}>
+            <Text
+              style={[
+                GlobalStyles.irregularshadow,
+                GlobalStyles.p1text,
+                styles.frontTitle,
+              ]}
+            >
+              {item.front.title}
+            </Text>
+            <UnreadIndicator unread={item.unread} />
+          </View>
+          <View style={styles.frontMessageWrapper}>
+            <Text
+              style={[GlobalStyles.p1text, styles.frontMessage]}
+              numberOfLines={2}
+            >
+              {item.front.message}
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const NotificationBack = ({ item }) => {
+    return (
+      <View style={styles.backWrapper}>
+        <NotificationIconTile
+          title={"Close"}
+          Icon={Icons.OriginalSize.X}
+          Action={FlipCard}
+        />
+        <NotificationIconTile
+          title={item.back.rightTitle}
+          Icon={item.back.rightIcon}
+          Action={() => console.log("Visit profile")}
+        />
+      </View>
+    );
+  };
+
   return (
     <CardFlip
-      ref={flipRef}
+      ref={(card) => (flipRef = card)}
       flipDirection={"x"}
       duration={300}
       style={styles.cardFlipContainer}
     >
-      <NotificationFront item={item} flipRef={flipRef} />
-      <NotificationBack item={item} flipRef={flipRef} />
+      <NotificationFront item={item} />
+      <NotificationBack item={item} />
     </CardFlip>
   );
 };
 
 const styles = StyleSheet.create({
   cardFlipContainer: {
-    height: Environment.CubeSize + Environment.StandardPadding * 3,
+    height: Environment.CubeSize + Environment.StandardPadding * 4,
     width: Environment.FullBar,
   },
   frontContainer: {
     width: Environment.FullBar,
     padding: Environment.StandardPadding,
     backgroundColor: Colors.Primary,
-    height: Environment.CubeSize + Environment.StandardPadding * 3,
+    height: Environment.CubeSize + Environment.StandardPadding * 4,
     marginTop: Environment.StandardPadding,
   },
   frontTitleWrapper: {
@@ -161,13 +159,13 @@ const styles = StyleSheet.create({
   },
   backWrapper: {
     width: Environment.FullBar,
-    height: Environment.CubeSize + Environment.StandardPadding * 3,
+    height: Environment.CubeSize + Environment.StandardPadding * 4,
     marginTop: Environment.StandardPadding,
     justifyContent: "space-between",
     flexDirection: "row",
   },
   iconTileWrapper: {
-    height: Environment.CubeSize + Environment.StandardPadding * 3,
+    height: Environment.CubeSize + Environment.StandardPadding * 4,
     width: (Environment.FullBar - Environment.StandardPadding) / 2,
     borderRadius: Environment.StandardRadius,
     backgroundColor: Colors.AccentOn,
