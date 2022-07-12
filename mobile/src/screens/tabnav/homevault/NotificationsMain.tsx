@@ -29,24 +29,7 @@ import AddNewNotification, {
 } from "./AddNewNotification";
 import GetNotificationsCloud from "./GetNotificationsCloud";
 import LSUpdateNotificationStore from "./LSUpdateNotificationStore";
-
-const headerData: NotificationDataItem[] = [
-  {
-    notificationID: "poof",
-    code: 3001,
-    payload: "no",
-    unread: true,
-    createdAt: new Date().toISOString(),
-    front: {
-      title: "New follower",
-      message: "Eko36 added you 🎉. Would you like to add back?",
-    },
-    back: {
-      rightIcon: Icons.OriginalSize.AddUser,
-      rightTitle: "Visit profile",
-    },
-  },
-];
+import BreakReality from "./BreakReality";
 
 const NotificationsTitleBox = () => {
   return (
@@ -94,15 +77,6 @@ const NotificationsMain = ({ navigation }) => {
     (state: RootStateType) => state.notifications.unreadCutoffDate
   );
 
-  const notificationObject: NotificationLibraryPropTypes = {
-    code: 3001,
-    notificationID: "bo-fa",
-    payload: JSON.stringify(dummyPayload),
-    dispatch,
-  };
-
-  console.log("notificationData: " + JSON.stringify(notificationData));
-
   const renderItem = ({ index, item }) => {
     return NotificationItem({ item });
   };
@@ -119,6 +93,11 @@ const NotificationsMain = ({ navigation }) => {
       />
       <View style={{ marginTop: Environment.CubeSize }}>
         <Button
+          title={"Break Reality"}
+          color={"moccasin"}
+          onPress={() => BreakReality()}
+        />
+        <Button
           title={"GetNotificationsCloud"}
           color={"moccasin"}
           onPress={() =>
@@ -130,32 +109,11 @@ const NotificationsMain = ({ navigation }) => {
           }
         />
         <Button
-          title={"Notification Library"}
-          color={"indianred"}
-          onPress={() => NotificationLibrary(notificationObject)}
-        />
-        <Button
           title={"LSUpdateNotificationStore"}
           color={"goldenrod"}
           onPress={() =>
             LSUpdateNotificationStore({ newItem: notificationData[0] })
           }
-        />
-        <Button
-          title={"AddNewNotification"}
-          color={"wheat"}
-          onPress={() => {
-            const newPayload: Code3001PayloadType = {
-              ouID: "cacaa58e-6a7c-4d97-84a1-885ca95f5128",
-            };
-            const newNotification: AddNewNotificationPropTypes = {
-              targetUserID: "67caff7a-841a-45c6-9902-85813297e59b",
-              code: 3001,
-              payloadString: JSON.stringify(newPayload),
-            };
-            console.log("bring it back dingus");
-            // AddNewNotification(newNotification);
-          }}
         />
       </View>
     </SafeAreaView>

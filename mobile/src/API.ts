@@ -114,11 +114,11 @@ export type Users = {
   storagesizeinbytes?: number | null,
   type?: string | null,
   Comments?: ModelCommentsConnection | null,
+  Notifications?: ModelNotificationsConnection | null,
   Posts?: ModelPostsConnection | null,
   PostViewTrackers?: ModelPostViewTrackerConnection | null,
   SenderRelationships?: ModelUserRelationshipsConnection | null,
   ReceiverRelationships?: ModelUserRelationshipsConnection | null,
-  Notifications?: ModelUserNotificationsConnection | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -138,6 +138,25 @@ export type Comments = {
   usersID?: string | null,
   Users?: Users | null,
   createdAt: string,
+  updatedAt: string,
+};
+
+export type ModelNotificationsConnection = {
+  __typename: "ModelNotificationsConnection",
+  items:  Array<Notifications | null >,
+  nextToken?: string | null,
+};
+
+export type Notifications = {
+  __typename: "Notifications",
+  id: string,
+  createdAt: string,
+  code?: number | null,
+  payload?: string | null,
+  postsID?: string | null,
+  Posts?: Posts | null,
+  usersID?: string | null,
+  Users?: Users | null,
   updatedAt: string,
 };
 
@@ -168,42 +187,6 @@ export type UserRelationships = {
   receiverID?: string | null,
   ReceiverUser?: Users | null,
   updatedAt: string,
-};
-
-export type ModelUserNotificationsConnection = {
-  __typename: "ModelUserNotificationsConnection",
-  items:  Array<UserNotifications | null >,
-  nextToken?: string | null,
-};
-
-export type UserNotifications = {
-  __typename: "UserNotifications",
-  id: string,
-  notificationsID: string,
-  usersID: string,
-  notifications: Notifications,
-  users: Users,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type Notifications = {
-  __typename: "Notifications",
-  id: string,
-  createdAt: string,
-  code?: number | null,
-  payload?: string | null,
-  postsID?: string | null,
-  Posts?: Posts | null,
-  usersID?: string | null,
-  Users?: ModelUserNotificationsConnection | null,
-  updatedAt: string,
-};
-
-export type ModelNotificationsConnection = {
-  __typename: "ModelNotificationsConnection",
-  items:  Array<Notifications | null >,
-  nextToken?: string | null,
 };
 
 export type UpdatePostViewTrackerInput = {
@@ -485,30 +468,6 @@ export type UpdateUsersInput = {
 };
 
 export type DeleteUsersInput = {
-  id: string,
-};
-
-export type CreateUserNotificationsInput = {
-  id?: string | null,
-  notificationsID: string,
-  usersID: string,
-};
-
-export type ModelUserNotificationsConditionInput = {
-  notificationsID?: ModelIDInput | null,
-  usersID?: ModelIDInput | null,
-  and?: Array< ModelUserNotificationsConditionInput | null > | null,
-  or?: Array< ModelUserNotificationsConditionInput | null > | null,
-  not?: ModelUserNotificationsConditionInput | null,
-};
-
-export type UpdateUserNotificationsInput = {
-  id: string,
-  notificationsID?: string | null,
-  usersID?: string | null,
-};
-
-export type DeleteUserNotificationsInput = {
   id: string,
 };
 
@@ -912,15 +871,6 @@ export type SearchableUsersConnection = {
   aggregateItems:  Array<SearchableAggregateResult | null >,
 };
 
-export type ModelUserNotificationsFilterInput = {
-  id?: ModelIDInput | null,
-  notificationsID?: ModelIDInput | null,
-  usersID?: ModelIDInput | null,
-  and?: Array< ModelUserNotificationsFilterInput | null > | null,
-  or?: Array< ModelUserNotificationsFilterInput | null > | null,
-  not?: ModelUserNotificationsFilterInput | null,
-};
-
 export type CreatePostViewTrackerMutationVariables = {
   input: CreatePostViewTrackerInput,
   condition?: ModelPostViewTrackerConditionInput | null,
@@ -1136,8 +1086,28 @@ export type CreateNotificationsMutation = {
     } | null,
     usersID?: string | null,
     Users?:  {
-      __typename: "ModelUserNotificationsConnection",
-      nextToken?: string | null,
+      __typename: "Users",
+      id: string,
+      acceptedtos?: boolean | null,
+      addedcount?: number | null,
+      addedmecount?: number | null,
+      birthday?: string | null,
+      cognitosub?: string | null,
+      disablednotifications?: string | null,
+      displayname?: string | null,
+      email?: string | null,
+      emailconfirmed?: boolean | null,
+      firstvaultupload?: boolean | null,
+      fullyauthenticated?: boolean | null,
+      gamertag?: string | null,
+      lastopened?: string | null,
+      mostrecentpublicpost?: string | null,
+      pfp?: string | null,
+      setpassword?: boolean | null,
+      storagesizeinbytes?: number | null,
+      type?: string | null,
+      createdAt: string,
+      updatedAt: string,
     } | null,
     updatedAt: string,
   } | null,
@@ -1178,8 +1148,28 @@ export type UpdateNotificationsMutation = {
     } | null,
     usersID?: string | null,
     Users?:  {
-      __typename: "ModelUserNotificationsConnection",
-      nextToken?: string | null,
+      __typename: "Users",
+      id: string,
+      acceptedtos?: boolean | null,
+      addedcount?: number | null,
+      addedmecount?: number | null,
+      birthday?: string | null,
+      cognitosub?: string | null,
+      disablednotifications?: string | null,
+      displayname?: string | null,
+      email?: string | null,
+      emailconfirmed?: boolean | null,
+      firstvaultupload?: boolean | null,
+      fullyauthenticated?: boolean | null,
+      gamertag?: string | null,
+      lastopened?: string | null,
+      mostrecentpublicpost?: string | null,
+      pfp?: string | null,
+      setpassword?: boolean | null,
+      storagesizeinbytes?: number | null,
+      type?: string | null,
+      createdAt: string,
+      updatedAt: string,
     } | null,
     updatedAt: string,
   } | null,
@@ -1220,8 +1210,28 @@ export type DeleteNotificationsMutation = {
     } | null,
     usersID?: string | null,
     Users?:  {
-      __typename: "ModelUserNotificationsConnection",
-      nextToken?: string | null,
+      __typename: "Users",
+      id: string,
+      acceptedtos?: boolean | null,
+      addedcount?: number | null,
+      addedmecount?: number | null,
+      birthday?: string | null,
+      cognitosub?: string | null,
+      disablednotifications?: string | null,
+      displayname?: string | null,
+      email?: string | null,
+      emailconfirmed?: boolean | null,
+      firstvaultupload?: boolean | null,
+      fullyauthenticated?: boolean | null,
+      gamertag?: string | null,
+      lastopened?: string | null,
+      mostrecentpublicpost?: string | null,
+      pfp?: string | null,
+      setpassword?: boolean | null,
+      storagesizeinbytes?: number | null,
+      type?: string | null,
+      createdAt: string,
+      updatedAt: string,
     } | null,
     updatedAt: string,
   } | null,
@@ -1825,6 +1835,10 @@ export type CreateUsersMutation = {
       __typename: "ModelCommentsConnection",
       nextToken?: string | null,
     } | null,
+    Notifications?:  {
+      __typename: "ModelNotificationsConnection",
+      nextToken?: string | null,
+    } | null,
     Posts?:  {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
@@ -1839,10 +1853,6 @@ export type CreateUsersMutation = {
     } | null,
     ReceiverRelationships?:  {
       __typename: "ModelUserRelationshipsConnection",
-      nextToken?: string | null,
-    } | null,
-    Notifications?:  {
-      __typename: "ModelUserNotificationsConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -1881,6 +1891,10 @@ export type UpdateUsersMutation = {
       __typename: "ModelCommentsConnection",
       nextToken?: string | null,
     } | null,
+    Notifications?:  {
+      __typename: "ModelNotificationsConnection",
+      nextToken?: string | null,
+    } | null,
     Posts?:  {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
@@ -1895,10 +1909,6 @@ export type UpdateUsersMutation = {
     } | null,
     ReceiverRelationships?:  {
       __typename: "ModelUserRelationshipsConnection",
-      nextToken?: string | null,
-    } | null,
-    Notifications?:  {
-      __typename: "ModelUserNotificationsConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -1937,6 +1947,10 @@ export type DeleteUsersMutation = {
       __typename: "ModelCommentsConnection",
       nextToken?: string | null,
     } | null,
+    Notifications?:  {
+      __typename: "ModelNotificationsConnection",
+      nextToken?: string | null,
+    } | null,
     Posts?:  {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
@@ -1953,160 +1967,6 @@ export type DeleteUsersMutation = {
       __typename: "ModelUserRelationshipsConnection",
       nextToken?: string | null,
     } | null,
-    Notifications?:  {
-      __typename: "ModelUserNotificationsConnection",
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type CreateUserNotificationsMutationVariables = {
-  input: CreateUserNotificationsInput,
-  condition?: ModelUserNotificationsConditionInput | null,
-};
-
-export type CreateUserNotificationsMutation = {
-  createUserNotifications?:  {
-    __typename: "UserNotifications",
-    id: string,
-    notificationsID: string,
-    usersID: string,
-    notifications:  {
-      __typename: "Notifications",
-      id: string,
-      createdAt: string,
-      code?: number | null,
-      payload?: string | null,
-      postsID?: string | null,
-      usersID?: string | null,
-      updatedAt: string,
-    },
-    users:  {
-      __typename: "Users",
-      id: string,
-      acceptedtos?: boolean | null,
-      addedcount?: number | null,
-      addedmecount?: number | null,
-      birthday?: string | null,
-      cognitosub?: string | null,
-      disablednotifications?: string | null,
-      displayname?: string | null,
-      email?: string | null,
-      emailconfirmed?: boolean | null,
-      firstvaultupload?: boolean | null,
-      fullyauthenticated?: boolean | null,
-      gamertag?: string | null,
-      lastopened?: string | null,
-      mostrecentpublicpost?: string | null,
-      pfp?: string | null,
-      setpassword?: boolean | null,
-      storagesizeinbytes?: number | null,
-      type?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type UpdateUserNotificationsMutationVariables = {
-  input: UpdateUserNotificationsInput,
-  condition?: ModelUserNotificationsConditionInput | null,
-};
-
-export type UpdateUserNotificationsMutation = {
-  updateUserNotifications?:  {
-    __typename: "UserNotifications",
-    id: string,
-    notificationsID: string,
-    usersID: string,
-    notifications:  {
-      __typename: "Notifications",
-      id: string,
-      createdAt: string,
-      code?: number | null,
-      payload?: string | null,
-      postsID?: string | null,
-      usersID?: string | null,
-      updatedAt: string,
-    },
-    users:  {
-      __typename: "Users",
-      id: string,
-      acceptedtos?: boolean | null,
-      addedcount?: number | null,
-      addedmecount?: number | null,
-      birthday?: string | null,
-      cognitosub?: string | null,
-      disablednotifications?: string | null,
-      displayname?: string | null,
-      email?: string | null,
-      emailconfirmed?: boolean | null,
-      firstvaultupload?: boolean | null,
-      fullyauthenticated?: boolean | null,
-      gamertag?: string | null,
-      lastopened?: string | null,
-      mostrecentpublicpost?: string | null,
-      pfp?: string | null,
-      setpassword?: boolean | null,
-      storagesizeinbytes?: number | null,
-      type?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type DeleteUserNotificationsMutationVariables = {
-  input: DeleteUserNotificationsInput,
-  condition?: ModelUserNotificationsConditionInput | null,
-};
-
-export type DeleteUserNotificationsMutation = {
-  deleteUserNotifications?:  {
-    __typename: "UserNotifications",
-    id: string,
-    notificationsID: string,
-    usersID: string,
-    notifications:  {
-      __typename: "Notifications",
-      id: string,
-      createdAt: string,
-      code?: number | null,
-      payload?: string | null,
-      postsID?: string | null,
-      usersID?: string | null,
-      updatedAt: string,
-    },
-    users:  {
-      __typename: "Users",
-      id: string,
-      acceptedtos?: boolean | null,
-      addedcount?: number | null,
-      addedmecount?: number | null,
-      birthday?: string | null,
-      cognitosub?: string | null,
-      disablednotifications?: string | null,
-      displayname?: string | null,
-      email?: string | null,
-      emailconfirmed?: boolean | null,
-      firstvaultupload?: boolean | null,
-      fullyauthenticated?: boolean | null,
-      gamertag?: string | null,
-      lastopened?: string | null,
-      mostrecentpublicpost?: string | null,
-      pfp?: string | null,
-      setpassword?: boolean | null,
-      storagesizeinbytes?: number | null,
-      type?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    },
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2250,8 +2110,28 @@ export type GetNotificationsQuery = {
     } | null,
     usersID?: string | null,
     Users?:  {
-      __typename: "ModelUserNotificationsConnection",
-      nextToken?: string | null,
+      __typename: "Users",
+      id: string,
+      acceptedtos?: boolean | null,
+      addedcount?: number | null,
+      addedmecount?: number | null,
+      birthday?: string | null,
+      cognitosub?: string | null,
+      disablednotifications?: string | null,
+      displayname?: string | null,
+      email?: string | null,
+      emailconfirmed?: boolean | null,
+      firstvaultupload?: boolean | null,
+      fullyauthenticated?: boolean | null,
+      gamertag?: string | null,
+      lastopened?: string | null,
+      mostrecentpublicpost?: string | null,
+      pfp?: string | null,
+      setpassword?: boolean | null,
+      storagesizeinbytes?: number | null,
+      type?: string | null,
+      createdAt: string,
+      updatedAt: string,
     } | null,
     updatedAt: string,
   } | null,
@@ -2986,6 +2866,10 @@ export type GetUsersQuery = {
       __typename: "ModelCommentsConnection",
       nextToken?: string | null,
     } | null,
+    Notifications?:  {
+      __typename: "ModelNotificationsConnection",
+      nextToken?: string | null,
+    } | null,
     Posts?:  {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
@@ -3000,10 +2884,6 @@ export type GetUsersQuery = {
     } | null,
     ReceiverRelationships?:  {
       __typename: "ModelUserRelationshipsConnection",
-      nextToken?: string | null,
-    } | null,
-    Notifications?:  {
-      __typename: "ModelUserNotificationsConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -3262,76 +3142,6 @@ export type SearchUsersQuery = {
   } | null,
 };
 
-export type GetUserNotificationsQueryVariables = {
-  id: string,
-};
-
-export type GetUserNotificationsQuery = {
-  getUserNotifications?:  {
-    __typename: "UserNotifications",
-    id: string,
-    notificationsID: string,
-    usersID: string,
-    notifications:  {
-      __typename: "Notifications",
-      id: string,
-      createdAt: string,
-      code?: number | null,
-      payload?: string | null,
-      postsID?: string | null,
-      usersID?: string | null,
-      updatedAt: string,
-    },
-    users:  {
-      __typename: "Users",
-      id: string,
-      acceptedtos?: boolean | null,
-      addedcount?: number | null,
-      addedmecount?: number | null,
-      birthday?: string | null,
-      cognitosub?: string | null,
-      disablednotifications?: string | null,
-      displayname?: string | null,
-      email?: string | null,
-      emailconfirmed?: boolean | null,
-      firstvaultupload?: boolean | null,
-      fullyauthenticated?: boolean | null,
-      gamertag?: string | null,
-      lastopened?: string | null,
-      mostrecentpublicpost?: string | null,
-      pfp?: string | null,
-      setpassword?: boolean | null,
-      storagesizeinbytes?: number | null,
-      type?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type ListUserNotificationsQueryVariables = {
-  filter?: ModelUserNotificationsFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListUserNotificationsQuery = {
-  listUserNotifications?:  {
-    __typename: "ModelUserNotificationsConnection",
-    items:  Array< {
-      __typename: "UserNotifications",
-      id: string,
-      notificationsID: string,
-      usersID: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
 export type OnCreatePostViewTrackerSubscription = {
   onCreatePostViewTracker?:  {
     __typename: "PostViewTracker",
@@ -3527,8 +3337,28 @@ export type OnCreateNotificationsSubscription = {
     } | null,
     usersID?: string | null,
     Users?:  {
-      __typename: "ModelUserNotificationsConnection",
-      nextToken?: string | null,
+      __typename: "Users",
+      id: string,
+      acceptedtos?: boolean | null,
+      addedcount?: number | null,
+      addedmecount?: number | null,
+      birthday?: string | null,
+      cognitosub?: string | null,
+      disablednotifications?: string | null,
+      displayname?: string | null,
+      email?: string | null,
+      emailconfirmed?: boolean | null,
+      firstvaultupload?: boolean | null,
+      fullyauthenticated?: boolean | null,
+      gamertag?: string | null,
+      lastopened?: string | null,
+      mostrecentpublicpost?: string | null,
+      pfp?: string | null,
+      setpassword?: boolean | null,
+      storagesizeinbytes?: number | null,
+      type?: string | null,
+      createdAt: string,
+      updatedAt: string,
     } | null,
     updatedAt: string,
   } | null,
@@ -3564,8 +3394,28 @@ export type OnUpdateNotificationsSubscription = {
     } | null,
     usersID?: string | null,
     Users?:  {
-      __typename: "ModelUserNotificationsConnection",
-      nextToken?: string | null,
+      __typename: "Users",
+      id: string,
+      acceptedtos?: boolean | null,
+      addedcount?: number | null,
+      addedmecount?: number | null,
+      birthday?: string | null,
+      cognitosub?: string | null,
+      disablednotifications?: string | null,
+      displayname?: string | null,
+      email?: string | null,
+      emailconfirmed?: boolean | null,
+      firstvaultupload?: boolean | null,
+      fullyauthenticated?: boolean | null,
+      gamertag?: string | null,
+      lastopened?: string | null,
+      mostrecentpublicpost?: string | null,
+      pfp?: string | null,
+      setpassword?: boolean | null,
+      storagesizeinbytes?: number | null,
+      type?: string | null,
+      createdAt: string,
+      updatedAt: string,
     } | null,
     updatedAt: string,
   } | null,
@@ -3601,8 +3451,28 @@ export type OnDeleteNotificationsSubscription = {
     } | null,
     usersID?: string | null,
     Users?:  {
-      __typename: "ModelUserNotificationsConnection",
-      nextToken?: string | null,
+      __typename: "Users",
+      id: string,
+      acceptedtos?: boolean | null,
+      addedcount?: number | null,
+      addedmecount?: number | null,
+      birthday?: string | null,
+      cognitosub?: string | null,
+      disablednotifications?: string | null,
+      displayname?: string | null,
+      email?: string | null,
+      emailconfirmed?: boolean | null,
+      firstvaultupload?: boolean | null,
+      fullyauthenticated?: boolean | null,
+      gamertag?: string | null,
+      lastopened?: string | null,
+      mostrecentpublicpost?: string | null,
+      pfp?: string | null,
+      setpassword?: boolean | null,
+      storagesizeinbytes?: number | null,
+      type?: string | null,
+      createdAt: string,
+      updatedAt: string,
     } | null,
     updatedAt: string,
   } | null,
@@ -4156,6 +4026,10 @@ export type OnCreateUsersSubscription = {
       __typename: "ModelCommentsConnection",
       nextToken?: string | null,
     } | null,
+    Notifications?:  {
+      __typename: "ModelNotificationsConnection",
+      nextToken?: string | null,
+    } | null,
     Posts?:  {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
@@ -4170,10 +4044,6 @@ export type OnCreateUsersSubscription = {
     } | null,
     ReceiverRelationships?:  {
       __typename: "ModelUserRelationshipsConnection",
-      nextToken?: string | null,
-    } | null,
-    Notifications?:  {
-      __typename: "ModelUserNotificationsConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -4207,6 +4077,10 @@ export type OnUpdateUsersSubscription = {
       __typename: "ModelCommentsConnection",
       nextToken?: string | null,
     } | null,
+    Notifications?:  {
+      __typename: "ModelNotificationsConnection",
+      nextToken?: string | null,
+    } | null,
     Posts?:  {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
@@ -4221,10 +4095,6 @@ export type OnUpdateUsersSubscription = {
     } | null,
     ReceiverRelationships?:  {
       __typename: "ModelUserRelationshipsConnection",
-      nextToken?: string | null,
-    } | null,
-    Notifications?:  {
-      __typename: "ModelUserNotificationsConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -4258,6 +4128,10 @@ export type OnDeleteUsersSubscription = {
       __typename: "ModelCommentsConnection",
       nextToken?: string | null,
     } | null,
+    Notifications?:  {
+      __typename: "ModelNotificationsConnection",
+      nextToken?: string | null,
+    } | null,
     Posts?:  {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
@@ -4274,145 +4148,6 @@ export type OnDeleteUsersSubscription = {
       __typename: "ModelUserRelationshipsConnection",
       nextToken?: string | null,
     } | null,
-    Notifications?:  {
-      __typename: "ModelUserNotificationsConnection",
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnCreateUserNotificationsSubscription = {
-  onCreateUserNotifications?:  {
-    __typename: "UserNotifications",
-    id: string,
-    notificationsID: string,
-    usersID: string,
-    notifications:  {
-      __typename: "Notifications",
-      id: string,
-      createdAt: string,
-      code?: number | null,
-      payload?: string | null,
-      postsID?: string | null,
-      usersID?: string | null,
-      updatedAt: string,
-    },
-    users:  {
-      __typename: "Users",
-      id: string,
-      acceptedtos?: boolean | null,
-      addedcount?: number | null,
-      addedmecount?: number | null,
-      birthday?: string | null,
-      cognitosub?: string | null,
-      disablednotifications?: string | null,
-      displayname?: string | null,
-      email?: string | null,
-      emailconfirmed?: boolean | null,
-      firstvaultupload?: boolean | null,
-      fullyauthenticated?: boolean | null,
-      gamertag?: string | null,
-      lastopened?: string | null,
-      mostrecentpublicpost?: string | null,
-      pfp?: string | null,
-      setpassword?: boolean | null,
-      storagesizeinbytes?: number | null,
-      type?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateUserNotificationsSubscription = {
-  onUpdateUserNotifications?:  {
-    __typename: "UserNotifications",
-    id: string,
-    notificationsID: string,
-    usersID: string,
-    notifications:  {
-      __typename: "Notifications",
-      id: string,
-      createdAt: string,
-      code?: number | null,
-      payload?: string | null,
-      postsID?: string | null,
-      usersID?: string | null,
-      updatedAt: string,
-    },
-    users:  {
-      __typename: "Users",
-      id: string,
-      acceptedtos?: boolean | null,
-      addedcount?: number | null,
-      addedmecount?: number | null,
-      birthday?: string | null,
-      cognitosub?: string | null,
-      disablednotifications?: string | null,
-      displayname?: string | null,
-      email?: string | null,
-      emailconfirmed?: boolean | null,
-      firstvaultupload?: boolean | null,
-      fullyauthenticated?: boolean | null,
-      gamertag?: string | null,
-      lastopened?: string | null,
-      mostrecentpublicpost?: string | null,
-      pfp?: string | null,
-      setpassword?: boolean | null,
-      storagesizeinbytes?: number | null,
-      type?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteUserNotificationsSubscription = {
-  onDeleteUserNotifications?:  {
-    __typename: "UserNotifications",
-    id: string,
-    notificationsID: string,
-    usersID: string,
-    notifications:  {
-      __typename: "Notifications",
-      id: string,
-      createdAt: string,
-      code?: number | null,
-      payload?: string | null,
-      postsID?: string | null,
-      usersID?: string | null,
-      updatedAt: string,
-    },
-    users:  {
-      __typename: "Users",
-      id: string,
-      acceptedtos?: boolean | null,
-      addedcount?: number | null,
-      addedmecount?: number | null,
-      birthday?: string | null,
-      cognitosub?: string | null,
-      disablednotifications?: string | null,
-      displayname?: string | null,
-      email?: string | null,
-      emailconfirmed?: boolean | null,
-      firstvaultupload?: boolean | null,
-      fullyauthenticated?: boolean | null,
-      gamertag?: string | null,
-      lastopened?: string | null,
-      mostrecentpublicpost?: string | null,
-      pfp?: string | null,
-      setpassword?: boolean | null,
-      storagesizeinbytes?: number | null,
-      type?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    },
     createdAt: string,
     updatedAt: string,
   } | null,

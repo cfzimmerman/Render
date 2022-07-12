@@ -134,7 +134,27 @@ export const getNotifications = /* GraphQL */ `
       }
       usersID
       Users {
-        nextToken
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
       }
       updatedAt
     }
@@ -884,6 +904,9 @@ export const getUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
+      Notifications {
+        nextToken
+      }
       Posts {
         nextToken
       }
@@ -894,9 +917,6 @@ export const getUsers = /* GraphQL */ `
         nextToken
       }
       ReceiverRelationships {
-        nextToken
-      }
-      Notifications {
         nextToken
       }
       createdAt
@@ -1164,71 +1184,6 @@ export const searchUsers = /* GraphQL */ `
           }
         }
       }
-    }
-  }
-`;
-export const getUserNotifications = /* GraphQL */ `
-  query GetUserNotifications($id: ID!) {
-    getUserNotifications(id: $id) {
-      id
-      notificationsID
-      usersID
-      notifications {
-        id
-        createdAt
-        code
-        payload
-        postsID
-        usersID
-        updatedAt
-      }
-      users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        disablednotifications
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        lastopened
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listUserNotifications = /* GraphQL */ `
-  query ListUserNotifications(
-    $filter: ModelUserNotificationsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listUserNotifications(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        notificationsID
-        usersID
-        createdAt
-        updatedAt
-      }
-      nextToken
     }
   }
 `;
