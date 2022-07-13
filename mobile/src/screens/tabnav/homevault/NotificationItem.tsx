@@ -7,6 +7,10 @@ import {
   Icons,
 } from "../../../resources/project";
 import CardFlip from "react-native-card-flip";
+import NotificationActionRouter from "./NotificationActionRouter";
+import { NotificationDataItem } from "./NotificationLibrary";
+import { DispatchType } from "../../../redux/store";
+import { CurrentUserType } from "../../../resources/CommonTypes";
 
 const UnreadIndicator = ({ unread }: { unread: boolean }) => {
   if (unread === true) {
@@ -54,7 +58,19 @@ const NotificationIconTile = ({ title, Icon, Action }) => {
   );
 };
 
-const NotificationItem = ({ item }) => {
+interface NotificationItemPropsType {
+  item: NotificationDataItem;
+  navigation: any;
+  dispatch: DispatchType;
+  currentuser: CurrentUserType;
+}
+
+const NotificationItem = ({
+  item,
+  navigation,
+  dispatch,
+  currentuser,
+}: NotificationItemPropsType) => {
   var flipRef;
   // ^ This admittedly looks hella sus, but useRef in FlatList children is forbidden. If there's a better solution, feel free to implement it.
 
@@ -91,6 +107,15 @@ const NotificationItem = ({ item }) => {
     );
   };
 
+  const NotificationBackRightAction = () => {
+    NotificationActionRouter({
+      notificationDataItem: item,
+      currentuser,
+      dispatch,
+      navigation,
+    });
+  };
+
   const NotificationBack = ({ item }) => {
     return (
       <View style={styles.backWrapper}>
@@ -101,8 +126,8 @@ const NotificationItem = ({ item }) => {
         />
         <NotificationIconTile
           title={item.back.rightTitle}
-          Icon={item.back.rightIcon}
-          Action={() => console.log("Visit profile")}
+          Icon={Icons.OriginalSize[item.back.rightIcon]}
+          Action={NotificationBackRightAction}
         />
       </View>
     );

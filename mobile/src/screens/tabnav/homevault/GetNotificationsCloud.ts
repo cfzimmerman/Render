@@ -22,32 +22,6 @@ async function GetNotificationsCloud({
   const notificationLimit = 100;
   LSGetNotificationStore({ dispatch });
   try {
-    /*
-    const { data } = (await API.graphql(
-      graphqlOperation(`
-            query NotificationsByDate {
-              notificationsByDate (
-                usersID: "${currentuser.id}",
-                limit: ${notificationLimit},
-                sortDirection: DESC,
-                createdAt: {
-                  gt: "${unreadCutoffDate}"
-                }
-              ) {
-                  items {
-                    id
-                    createdAt
-                    code
-                    payload
-                    usersID
-                    updatedAt
-                  }
-              }
-          }
-    `)
-    )) as GraphQLResult<NotificationsByDateQuery>;
-    */
-
     const {
       data: {
         userNotificationsByUsers: { items: newNotificationsArray },

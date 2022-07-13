@@ -37,7 +37,7 @@ export interface NotificationDataItem {
     message: String;
   };
   back: {
-    rightIcon: Function;
+    rightIcon: String;
     rightTitle: String;
   };
 }

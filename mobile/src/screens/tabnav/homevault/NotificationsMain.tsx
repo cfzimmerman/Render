@@ -29,7 +29,7 @@ import AddNewNotification, {
 } from "./AddNewNotification";
 import GetNotificationsCloud from "./GetNotificationsCloud";
 import LSUpdateNotificationStore from "./LSUpdateNotificationStore";
-import BreakReality from "./BreakReality";
+import LSClearNotificationStore from "./LSClearNotificationStore";
 
 const NotificationsTitleBox = () => {
   return (
@@ -61,10 +61,6 @@ const HintMessage = ({ message }) => {
   );
 };
 
-const dummyPayload = {
-  ouID: "67caff7a-841a-45c6-9902-85813297e59b",
-};
-
 const NotificationsMain = ({ navigation }) => {
   const dispatch = useDispatch();
   const currentuser = useSelector(
@@ -78,7 +74,7 @@ const NotificationsMain = ({ navigation }) => {
   );
 
   const renderItem = ({ index, item }) => {
-    return NotificationItem({ item });
+    return NotificationItem({ item, currentuser, dispatch, navigation });
   };
 
   return (
@@ -86,41 +82,34 @@ const NotificationsMain = ({ navigation }) => {
       <NotificationsTitleBox />
       <PrimaryDivider />
       <HintMessage message={"Tap for options"} />
+      <View style={{ marginTop: Environment.CubeSize }}>
+        <Button
+          title={"LSGetNotificationStore"}
+          color={"crimson"}
+          onPress={() => LSGetNotificationStore({ dispatch })}
+        />
+        <Button
+          title={"GetNotificationsCloud"}
+          color={"goldenrod"}
+          onPress={() =>
+            GetNotificationsCloud({
+              currentuser,
+              unreadCutoffDate,
+              dispatch,
+            })
+          }
+        />
+        <Button
+          title={"ClearNotificationStore"}
+          color={"moccasin"}
+          onPress={() => LSClearNotificationStore()}
+        />
+      </View>
       <FlatList
         data={notificationData}
         keyExtractor={(item) => item.notificationID}
         renderItem={renderItem}
       />
-      <View style={{ marginTop: Environment.CubeSize }}>
-        <Button
-          title={"AddNewNotification"}
-          color={"goldenrod"}
-          onPress={() =>
-            AddNewNotification({
-              targetUserID: "67caff7a-841a-45c6-9902-85813297e59b",
-              code: 3001,
-              payloadString: '{"ouID":"cacaa58e-6a7c-4d97-84a1-885ca95f5128"}',
-              postsID: null,
-            })
-          }
-        />
-        <Button
-          title={"Break Reality"}
-          color={"moccasin"}
-          onPress={() => BreakReality()}
-        />
-        <Button
-          title={"GetNotificationsCloud"}
-          color={"moccasin"}
-          onPress={() =>
-            GetNotificationsCloud({
-              currentuser,
-              unreadCutoffDate: "2011-10-05T14:48:00.000Z",
-              dispatch,
-            })
-          }
-        />
-      </View>
     </SafeAreaView>
   );
 };

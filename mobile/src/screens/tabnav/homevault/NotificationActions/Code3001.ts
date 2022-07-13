@@ -56,11 +56,11 @@ async function Code3001({
       payload,
       postsID,
       front: {
-        title: "New follower",
+        title: "🎉 New follower",
         message: `${user.displayname} added you. Would you like to add back?`,
       },
       back: {
-        rightIcon: Icons.OriginalSize.AddUser,
+        rightIcon: "AddUser",
         rightTitle: "Visit profile",
       },
     };
