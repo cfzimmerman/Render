@@ -93,6 +93,18 @@ const NotificationsMain = ({ navigation }) => {
       />
       <View style={{ marginTop: Environment.CubeSize }}>
         <Button
+          title={"AddNewNotification"}
+          color={"goldenrod"}
+          onPress={() =>
+            AddNewNotification({
+              targetUserID: "67caff7a-841a-45c6-9902-85813297e59b",
+              code: 3001,
+              payloadString: '{"ouID":"cacaa58e-6a7c-4d97-84a1-885ca95f5128"}',
+              postsID: null,
+            })
+          }
+        />
+        <Button
           title={"Break Reality"}
           color={"moccasin"}
           onPress={() => BreakReality()}
@@ -106,13 +118,6 @@ const NotificationsMain = ({ navigation }) => {
               unreadCutoffDate: "2011-10-05T14:48:00.000Z",
               dispatch,
             })
-          }
-        />
-        <Button
-          title={"LSUpdateNotificationStore"}
-          color={"goldenrod"}
-          onPress={() =>
-            LSUpdateNotificationStore({ newItem: notificationData[0] })
           }
         />
       </View>

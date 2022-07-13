@@ -1,6 +1,4 @@
-import {
-  Auth, Storage, API, graphqlOperation,
-} from "aws-amplify";
+import { Auth, Storage, API, graphqlOperation } from "aws-amplify";
 import { createPostViewTracker } from "../../../graphql/mutations";
 
 async function UpdatePostInteraction({ postid, currentuserid }) {
@@ -20,7 +18,7 @@ async function UpdatePostInteraction({ postid, currentuserid }) {
                     }
                 }
             }
-        `),
+        `)
     );
 
     const viewarray = result.data.postViewByPostID.items;
@@ -32,7 +30,7 @@ async function UpdatePostInteraction({ postid, currentuserid }) {
       };
 
       await API.graphql(
-        graphqlOperation(createPostViewTracker, { input: newinteraction }),
+        graphqlOperation(createPostViewTracker, { input: newinteraction })
       );
     }
   }

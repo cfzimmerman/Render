@@ -1,6 +1,12 @@
 import { API, graphqlOperation } from "aws-amplify";
-import { CreateNotificationsInput } from "../../../API";
-import { createNotifications } from "../../../graphql/mutations";
+import {
+  CreateNotificationsInput,
+  CreateUserNotificationsInput,
+} from "../../../API";
+import {
+  createNotifications,
+  createUserNotifications,
+} from "../../../graphql/mutations";
 
 export interface AddNewNotificationPropTypes {
   targetUserID: string;
@@ -16,17 +22,52 @@ async function AddNewNotification({
   payloadString,
   postsID,
 }: AddNewNotificationPropTypes) {
+  /*
   const newNotification: CreateNotificationsInput = {
     usersID: targetUserID,
     code: code,
     payload: payloadString,
     postsID: postsID,
   };
+  */
+
+  const notification = {
+    usersID: targetUserID,
+    Notifications: {
+      code: code,
+      payload: payloadString,
+      postsID: postsID,
+    },
+  };
 
   try {
+    /*
+    const createdUN = await API.graphql(
+      graphqlOperation(createUserNotifications, { input: notification })
+    );
+    */
+    const createdUN = await API.graphql(
+      graphqlOperation(`
+        mutation createUserNotifications {
+          createUserNotifications () {
+            usersID: "${targetUserID}"
+            Notifications: {
+              code: ${code}
+              payload: "${payloadString}"
+              postsID: "${postsID}"
+            }
+          }
+      }
+      
+   `)
+    );
+    console.log(JSON.stringify(createdUN));
+    // Copy the version in mutations and remove the TS declaration
+    /*
     await API.graphql(
       graphqlOperation(createNotifications, { input: newNotification })
     );
+    */
   } catch (error) {
     console.log("error: " + error);
   }
