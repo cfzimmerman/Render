@@ -132,7 +132,47 @@ export const getNotifications = /* GraphQL */ `
         usersID
         updatedAt
       }
+      UserNotifications {
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const listNotifications = /* GraphQL */ `
+  query ListNotifications(
+    $filter: ModelNotificationsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listNotifications(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        createdAt
+        code
+        payload
+        postsID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getUserNotifications = /* GraphQL */ `
+  query GetUserNotifications($id: ID!) {
+    getUserNotifications(id: $id) {
+      id
+      createdAt
+      notificationsID
       usersID
+      Notifications {
+        id
+        createdAt
+        code
+        payload
+        postsID
+        updatedAt
+      }
       Users {
         id
         acceptedtos
@@ -160,19 +200,21 @@ export const getNotifications = /* GraphQL */ `
     }
   }
 `;
-export const listNotifications = /* GraphQL */ `
-  query ListNotifications(
-    $filter: ModelNotificationsFilterInput
+export const listUserNotifications = /* GraphQL */ `
+  query ListUserNotifications(
+    $filter: ModelUserNotificationsFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listNotifications(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listUserNotifications(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
       items {
         id
         createdAt
-        code
-        payload
-        postsID
+        notificationsID
         usersID
         updatedAt
       }
@@ -180,16 +222,44 @@ export const listNotifications = /* GraphQL */ `
     }
   }
 `;
-export const notificationsByUsers = /* GraphQL */ `
-  query NotificationsByUsers(
-    $usersID: ID!
+export const userNotificationsByNotifications = /* GraphQL */ `
+  query UserNotificationsByNotifications(
+    $notificationsID: ID!
     $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
-    $filter: ModelNotificationsFilterInput
+    $filter: ModelUserNotificationsFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    notificationsByUsers(
+    userNotificationsByNotifications(
+      notificationsID: $notificationsID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        notificationsID
+        usersID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const userNotificationsByUsers = /* GraphQL */ `
+  query UserNotificationsByUsers(
+    $usersID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserNotificationsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    userNotificationsByUsers(
       usersID: $usersID
       createdAt: $createdAt
       sortDirection: $sortDirection
@@ -200,39 +270,7 @@ export const notificationsByUsers = /* GraphQL */ `
       items {
         id
         createdAt
-        code
-        payload
-        postsID
-        usersID
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const notificationsByDate = /* GraphQL */ `
-  query NotificationsByDate(
-    $usersID: ID!
-    $createdAt: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelNotificationsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    notificationsByDate(
-      usersID: $usersID
-      createdAt: $createdAt
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        createdAt
-        code
-        payload
-        postsID
+        notificationsID
         usersID
         updatedAt
       }
@@ -934,7 +972,7 @@ export const getUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
-      Notifications {
+      UserNotifications {
         nextToken
       }
       Posts {

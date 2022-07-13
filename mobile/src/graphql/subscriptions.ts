@@ -188,29 +188,8 @@ export const onCreateNotifications = /* GraphQL */ `
         usersID
         updatedAt
       }
-      usersID
-      Users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        disablednotifications
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        lastopened
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
+      UserNotifications {
+        nextToken
       }
       updatedAt
     }
@@ -243,29 +222,8 @@ export const onUpdateNotifications = /* GraphQL */ `
         usersID
         updatedAt
       }
-      usersID
-      Users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        disablednotifications
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        lastopened
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
+      UserNotifications {
+        nextToken
       }
       updatedAt
     }
@@ -298,7 +256,112 @@ export const onDeleteNotifications = /* GraphQL */ `
         usersID
         updatedAt
       }
+      UserNotifications {
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const onCreateUserNotifications = /* GraphQL */ `
+  subscription OnCreateUserNotifications {
+    onCreateUserNotifications {
+      id
+      createdAt
+      notificationsID
       usersID
+      Notifications {
+        id
+        createdAt
+        code
+        payload
+        postsID
+        updatedAt
+      }
+      Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      updatedAt
+    }
+  }
+`;
+export const onUpdateUserNotifications = /* GraphQL */ `
+  subscription OnUpdateUserNotifications {
+    onUpdateUserNotifications {
+      id
+      createdAt
+      notificationsID
+      usersID
+      Notifications {
+        id
+        createdAt
+        code
+        payload
+        postsID
+        updatedAt
+      }
+      Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      updatedAt
+    }
+  }
+`;
+export const onDeleteUserNotifications = /* GraphQL */ `
+  subscription OnDeleteUserNotifications {
+    onDeleteUserNotifications {
+      id
+      createdAt
+      notificationsID
+      usersID
+      Notifications {
+        id
+        createdAt
+        code
+        payload
+        postsID
+        updatedAt
+      }
       Users {
         id
         acceptedtos
@@ -849,7 +912,7 @@ export const onCreateUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
-      Notifications {
+      UserNotifications {
         nextToken
       }
       Posts {
@@ -894,7 +957,7 @@ export const onUpdateUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
-      Notifications {
+      UserNotifications {
         nextToken
       }
       Posts {
@@ -939,7 +1002,7 @@ export const onDeleteUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
-      Notifications {
+      UserNotifications {
         nextToken
       }
       Posts {
