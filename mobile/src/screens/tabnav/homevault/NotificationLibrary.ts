@@ -49,12 +49,15 @@ export interface NotificationDataItem {
 
 3000 series: Social notifications
     * 3001: Someone added the current user. Ask the current user if they would like to view the other user's profile and add them back.
+    * 3002: One or more people have commented on a post made by the user. Ask the current user if they would like to view the post.
 */
 
 export interface Code3001PayloadType {
   ouID: String;
   // ^ otherUserID (shortened). The ID of the user that added the current user
 }
+
+// 🌳 CORY - my dude... find this comment later. For recurring notifications on a single post, update the createdAt field on UserNotifications
 
 export interface NotificationLibraryPropTypes {
   code: number;

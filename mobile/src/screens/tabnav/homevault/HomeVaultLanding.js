@@ -30,6 +30,8 @@ import LSGetConfig from "../profile/LSGetConfig";
 import LSGetLibrary from "../profile/LSGetLibrary";
 import CheckDeletedPosts from "./CheckDeletedPosts";
 import RefreshHomeVault from "./RefreshHomeVault";
+import LSGetNotificationStore from "./LSGetNotificationStore";
+import GetNotificationsCloud from "./GetNotificationsCloud";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -85,6 +87,9 @@ const HomeVaultLanding = ({ navigation }) => {
 
   const localConfig = useSelector((state) => state.localsync.localConfig);
   const localLibrary = useSelector((state) => state.localsync.localLibrary);
+  const unreadCutoffDate = useSelector(
+    (state) => state.notifications.unreadCutoffDate
+  );
 
   const dispatch = useDispatch();
 
@@ -100,6 +105,7 @@ const HomeVaultLanding = ({ navigation }) => {
     GetAddedUsersFilter({ dispatch, currentuser });
     LSGetConfig({ dispatch });
     LSGetLibrary({ dispatch });
+    LSGetNotificationStore({ dispatch });
     setGotAddedUsersFilter(true);
   } else if (
     typeof currentuser.cognitosub !== "undefined" &&
@@ -114,6 +120,8 @@ const HomeVaultLanding = ({ navigation }) => {
     });
     DelayCheckPosts({ dispatch, localLibrary, currentuser });
     setInitialLoad(true);
+  } else if (unreadCutoffDate != null) {
+    GetNotificationsCloud({ currentuser, unreadCutoffDate, dispatch });
   }
 
   async function HideSplash() {

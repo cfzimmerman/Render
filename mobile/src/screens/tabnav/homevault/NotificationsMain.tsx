@@ -15,21 +15,8 @@ import {
   Icons,
 } from "../../../resources/project";
 import { useDispatch, useSelector } from "react-redux";
-import NotificationLibrary, {
-  Code3001PayloadType,
-  NotificationDataItem,
-  NotificationLibraryPropTypes,
-} from "./NotificationLibrary";
 import NotificationItem from "./NotificationItem";
 import { RootStateType } from "../../../redux/store";
-import LSCreateNotificationStore from "./LSCreateNotificationStore";
-import LSGetNotificationStore from "./LSGetNotificationStore";
-import AddNewNotification, {
-  AddNewNotificationPropTypes,
-} from "./AddNewNotification";
-import GetNotificationsCloud from "./GetNotificationsCloud";
-import LSUpdateNotificationStore from "./LSUpdateNotificationStore";
-import LSClearNotificationStore from "./LSClearNotificationStore";
 
 const NotificationsTitleBox = () => {
   return (
@@ -82,29 +69,6 @@ const NotificationsMain = ({ navigation }) => {
       <NotificationsTitleBox />
       <PrimaryDivider />
       <HintMessage message={"Tap for options"} />
-      <View style={{ marginTop: Environment.CubeSize }}>
-        <Button
-          title={"LSGetNotificationStore"}
-          color={"crimson"}
-          onPress={() => LSGetNotificationStore({ dispatch })}
-        />
-        <Button
-          title={"GetNotificationsCloud"}
-          color={"goldenrod"}
-          onPress={() =>
-            GetNotificationsCloud({
-              currentuser,
-              unreadCutoffDate,
-              dispatch,
-            })
-          }
-        />
-        <Button
-          title={"ClearNotificationStore"}
-          color={"moccasin"}
-          onPress={() => LSClearNotificationStore()}
-        />
-      </View>
       <FlatList
         data={notificationData}
         keyExtractor={(item) => item.notificationID}
