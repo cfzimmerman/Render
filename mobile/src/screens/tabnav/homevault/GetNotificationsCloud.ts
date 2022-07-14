@@ -1,4 +1,3 @@
-import { listNotifications } from "../../../graphql/queries";
 import { API, graphqlOperation } from "aws-amplify";
 import { CurrentUserType } from "../../../resources/CommonTypes";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
@@ -28,7 +27,7 @@ async function GetNotificationsCloud({
       },
     } = (await API.graphql(
       graphqlOperation(`
-            query byUsers {
+            query UserNotificationsByUsers {
               userNotificationsByUsers (
                     limit: ${notificationLimit},
                     usersID: "${currentuser.id}",

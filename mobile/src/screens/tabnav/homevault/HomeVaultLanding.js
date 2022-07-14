@@ -52,6 +52,8 @@ const HomeVaultLanding = ({ navigation }) => {
 
   const [gotInitialVaultData, setGotInitialVaultData] = useState(false);
 
+  const [gotNotifications, setGotNotifications] = useState(false);
+
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const currentuser = useSelector((state) => state.profilemain.currentuser);
@@ -120,8 +122,9 @@ const HomeVaultLanding = ({ navigation }) => {
     });
     DelayCheckPosts({ dispatch, localLibrary, currentuser });
     setInitialLoad(true);
-  } else if (unreadCutoffDate != null) {
+  } else if (unreadCutoffDate != null && gotNotifications === false) {
     GetNotificationsCloud({ currentuser, unreadCutoffDate, dispatch });
+    setGotNotifications(true);
   }
 
   async function HideSplash() {
