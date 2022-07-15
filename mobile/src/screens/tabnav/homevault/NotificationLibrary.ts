@@ -25,6 +25,7 @@ import { DispatchType } from "../../../redux/store";
 import { CurrentUserType } from "../../../resources/CommonTypes";
 import Code3001 from "./NotificationActions/Code3001";
 import Code3002 from "./NotificationActions/Code3002";
+import Code3003 from "./NotificationActions/Code3003";
 
 export interface NotificationDataItem {
   notificationID: string;
@@ -49,8 +50,9 @@ export interface NotificationDataItem {
 2000 series: Vault notifications
 
 3000 series: Social notifications
-    * 3001: Someone added the current user. Ask the current user if they would like to view the other user's profile and add them back.
-    * 3002: One or more people have commented on a post made by the current user. Ask the user if they would like to view the post.
+    * 3001: (SINGLE RECIPIENT) Someone added the current user. Ask the current user if they would like to view the other user's profile and add them back.
+    * 3002: (SINGLE RECIPIENT) One or more people have commented on a post made by the current user. Ask the user if they would like to view the post.
+    * 3003: (MULTI RECIPIENT) Someone else has commented on a post (that isn't mine) that I've already commented on. 
 */
 
 export interface Code3001PayloadType {
@@ -60,7 +62,9 @@ export interface Code3001PayloadType {
 
 export type Code3002PayloadType = null;
 
-// 🌳 CORY - my dude... find this comment later. For recurring notifications on a single post, update the createdAt field on UserNotifications
+export type Code3003PayloadType = null;
+
+// next steps for 3003: Set up create notification and get notification flows
 
 export interface NotificationLibraryPropTypes {
   code: number;
@@ -96,6 +100,15 @@ const NotificationLibrary = ({
     });
   } else if (code === 3002) {
     Code3002({
+      code,
+      payload,
+      createdAt,
+      notificationID,
+      postsID,
+      dispatch,
+    });
+  } else if (code === 3003) {
+    Code3003({
       code,
       payload,
       createdAt,

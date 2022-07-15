@@ -17,11 +17,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import NotificationItem from "./NotificationItem";
 import { RootStateType } from "../../../redux/store";
-import GetUniversalPostData from "./GetUniversalPostData";
-import { clearUniversalPostData } from "../../../redux/general/universalpost";
-import CreateCode3002Notification from "./NotificationActions/CreateCode3002Notification";
-import { clearNotificationData } from "../../../redux/system/notifications";
 import LSClearNotificationStore from "./LSClearNotificationStore";
+import GetCode3003Notifications from "./NotificationActions/GetCode3003Notifications";
 
 const NotificationsTitleBox = () => {
   return (
@@ -77,6 +74,13 @@ const NotificationsMain = ({ navigation }) => {
         title={"ClearNotificationStore"}
         color={"moccasin"}
         onPress={() => LSClearNotificationStore()}
+      />
+      <Button
+        title={"GetCode3003Notifications"}
+        color={"coral"}
+        onPress={() =>
+          GetCode3003Notifications({ currentuserID: currentuser.id })
+        }
       />
       <HintMessage message={"Tap for options"} />
       <FlatList

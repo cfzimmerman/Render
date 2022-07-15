@@ -108,6 +108,7 @@ const NotificationItem = ({
   };
 
   const NotificationBackRightAction = () => {
+    FlipCard();
     NotificationActionRouter({
       notificationDataItem: item,
       currentuser,
@@ -150,6 +151,7 @@ const styles = StyleSheet.create({
   cardFlipContainer: {
     height: Environment.CubeSize + Environment.StandardPadding * 4,
     width: Environment.FullBar,
+    marginTop: Environment.StandardPadding,
   },
   frontContainer: {
     width: Environment.FullBar,

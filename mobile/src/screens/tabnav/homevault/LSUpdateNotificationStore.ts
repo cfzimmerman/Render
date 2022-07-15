@@ -16,7 +16,6 @@ async function LSUpdateNotificationStore({
   newNotificationData,
 }: LSUpdateNotificationStorePropTypes) {
   const readNotificationData = [];
-  console.log("updateNotificationStore");
   try {
     const storeExists = await FileSystem.getInfoAsync(notificationStoreAddress);
     if (storeExists.exists === false) {
@@ -25,7 +24,7 @@ async function LSUpdateNotificationStore({
       // Mark each item as read
       newNotificationData.forEach((item: NotificationDataItem) => {
         const readNotificationItem = { ...item, unread: false };
-        readNotificationData.push(readNotificationItem);
+        readNotificationData.unshift(readNotificationItem);
       });
       // Then read the current store and parse it into an object
       const notificationStoreString = await FileSystem.readAsStringAsync(
@@ -47,6 +46,7 @@ async function LSUpdateNotificationStore({
       };
 
       const updatedStoreString = JSON.stringify(updatedStore);
+      console.log(updatedStoreString);
 
       await FileSystem.writeAsStringAsync(
         notificationStoreAddress,
