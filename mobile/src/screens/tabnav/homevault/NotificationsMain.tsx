@@ -17,6 +17,11 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import NotificationItem from "./NotificationItem";
 import { RootStateType } from "../../../redux/store";
+import GetUniversalPostData from "./GetUniversalPostData";
+import { clearUniversalPostData } from "../../../redux/general/universalpost";
+import CreateCode3002Notification from "./NotificationActions/CreateCode3002Notification";
+import { clearNotificationData } from "../../../redux/system/notifications";
+import LSClearNotificationStore from "./LSClearNotificationStore";
 
 const NotificationsTitleBox = () => {
   return (
@@ -68,6 +73,11 @@ const NotificationsMain = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <NotificationsTitleBox />
       <PrimaryDivider />
+      <Button
+        title={"ClearNotificationStore"}
+        color={"moccasin"}
+        onPress={() => LSClearNotificationStore()}
+      />
       <HintMessage message={"Tap for options"} />
       <FlatList
         data={notificationData}

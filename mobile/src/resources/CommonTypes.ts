@@ -29,6 +29,8 @@ export interface PostType {
   contentdate?: string;
   contentkey?: string | null;
   contenttype?: string;
+  cognitosub?: string;
+  displayname?: string;
   header?: boolean;
   posttext?: string | null;
   publicpost?: boolean | null;
@@ -37,6 +39,8 @@ export interface PostType {
   thumbnailkey?: string;
   thumbnailurl?: string | null;
   userid?: string | null;
+  userpfp?: string;
+  userpfpurl?: string;
 }
 
 interface PostSubHeader {

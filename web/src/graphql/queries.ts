@@ -34,14 +34,12 @@ export const getPostViewTracker = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
-        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
-        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -105,281 +103,6 @@ export const postViewByPostID = /* GraphQL */ `
     }
   }
 `;
-export const getNotifications = /* GraphQL */ `
-  query GetNotifications($id: ID!) {
-    getNotifications(id: $id) {
-      id
-      createdAt
-      code
-      payload
-      postsID
-      Posts {
-        id
-        aspectratio
-        cognitosub
-        contentdate
-        contentkey
-        contentlastupdated
-        contenttype
-        createdAt
-        deleteddate
-        posttext
-        publicpost
-        publicpostdate
-        sizeinbytes
-        thumbnailkey
-        type
-        usersID
-        updatedAt
-      }
-      UserNotifications {
-        nextToken
-      }
-      updatedAt
-    }
-  }
-`;
-export const listNotifications = /* GraphQL */ `
-  query ListNotifications(
-    $filter: ModelNotificationsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listNotifications(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        createdAt
-        code
-        payload
-        postsID
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getUserNotifications = /* GraphQL */ `
-  query GetUserNotifications($id: ID!) {
-    getUserNotifications(id: $id) {
-      id
-      createdAt
-      notificationsID
-      usersID
-      Notifications {
-        id
-        createdAt
-        code
-        payload
-        postsID
-        updatedAt
-      }
-      Users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        disablednotifications
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        lastopened
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
-      updatedAt
-    }
-  }
-`;
-export const listUserNotifications = /* GraphQL */ `
-  query ListUserNotifications(
-    $filter: ModelUserNotificationsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listUserNotifications(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        createdAt
-        notificationsID
-        usersID
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const userNotificationsByNotifications = /* GraphQL */ `
-  query UserNotificationsByNotifications(
-    $notificationsID: ID!
-    $createdAt: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserNotificationsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    userNotificationsByNotifications(
-      notificationsID: $notificationsID
-      createdAt: $createdAt
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        createdAt
-        notificationsID
-        usersID
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const userNotificationsByUsers = /* GraphQL */ `
-  query UserNotificationsByUsers(
-    $usersID: ID!
-    $createdAt: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserNotificationsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    userNotificationsByUsers(
-      usersID: $usersID
-      createdAt: $createdAt
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        createdAt
-        notificationsID
-        usersID
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getComments = /* GraphQL */ `
-  query GetComments($id: ID!) {
-    getComments(id: $id) {
-      id
-      commenttext
-      postsID
-      Posts {
-        id
-        aspectratio
-        cognitosub
-        contentdate
-        contentkey
-        contentlastupdated
-        contenttype
-        createdAt
-        deleteddate
-        posttext
-        publicpost
-        publicpostdate
-        sizeinbytes
-        thumbnailkey
-        type
-        usersID
-        updatedAt
-      }
-      usersID
-      Users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        disablednotifications
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        lastopened
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listComments = /* GraphQL */ `
-  query ListComments(
-    $filter: ModelCommentsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        commenttext
-        postsID
-        usersID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const commentsByCreatedDate = /* GraphQL */ `
-  query CommentsByCreatedDate(
-    $postsID: ID!
-    $createdAt: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelCommentsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    commentsByCreatedDate(
-      postsID: $postsID
-      createdAt: $createdAt
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        commenttext
-        postsID
-        usersID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getUserRelationships = /* GraphQL */ `
   query GetUserRelationships($id: ID!) {
     getUserRelationships(id: $id) {
@@ -393,14 +116,12 @@ export const getUserRelationships = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
-        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
-        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -417,14 +138,12 @@ export const getUserRelationships = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
-        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
-        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -569,6 +288,106 @@ export const receiverRelationshipsByDate = /* GraphQL */ `
     }
   }
 `;
+export const getComments = /* GraphQL */ `
+  query GetComments($id: ID!) {
+    getComments(id: $id) {
+      id
+      commenttext
+      postsID
+      Posts {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contentlastupdated
+        contenttype
+        createdAt
+        deleteddate
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        updatedAt
+      }
+      usersID
+      Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listComments = /* GraphQL */ `
+  query ListComments(
+    $filter: ModelCommentsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        commenttext
+        postsID
+        usersID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const commentsByCreatedDate = /* GraphQL */ `
+  query CommentsByCreatedDate(
+    $postsID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelCommentsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    commentsByCreatedDate(
+      postsID: $postsID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        commenttext
+        postsID
+        usersID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getPosts = /* GraphQL */ `
   query GetPosts($id: ID!) {
     getPosts(id: $id) {
@@ -595,14 +414,12 @@ export const getPosts = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
-        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
-        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -612,9 +429,6 @@ export const getPosts = /* GraphQL */ `
         updatedAt
       }
       Comments {
-        nextToken
-      }
-      Notifications {
         nextToken
       }
       PostViewTrackers {
@@ -956,23 +770,18 @@ export const getUsers = /* GraphQL */ `
       addedmecount
       birthday
       cognitosub
-      disablednotifications
       displayname
       email
       emailconfirmed
       firstvaultupload
       fullyauthenticated
       gamertag
-      lastopened
       mostrecentpublicpost
       pfp
       setpassword
       storagesizeinbytes
       type
       Comments {
-        nextToken
-      }
-      UserNotifications {
         nextToken
       }
       Posts {
@@ -1006,14 +815,12 @@ export const listUsers = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
-        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
-        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -1048,14 +855,12 @@ export const userByCognitosub = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
-        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
-        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -1090,14 +895,12 @@ export const userByEmail = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
-        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
-        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -1132,14 +935,12 @@ export const userByGamertag = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
-        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
-        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -1176,14 +977,12 @@ export const searchByGamertag = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
-        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
-        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -1220,14 +1019,12 @@ export const searchUsers = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
-        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
-        lastopened
         mostrecentpublicpost
         pfp
         setpassword

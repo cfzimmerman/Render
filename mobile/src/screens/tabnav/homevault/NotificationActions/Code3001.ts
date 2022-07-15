@@ -12,7 +12,6 @@ import {
   addToNotificationData,
 } from "../../../../redux/system/notifications";
 import { batch } from "react-redux";
-import LSUpdateNotificationStore from "../LSUpdateNotificationStore";
 
 interface Code3001PropTypes {
   code: number;
@@ -56,7 +55,7 @@ async function Code3001({
       payload,
       postsID,
       front: {
-        title: "🎉 New follower",
+        title: "🎉 You've been added",
         message: `${user.displayname} added you. Would you like to add back?`,
       },
       back: {
@@ -69,7 +68,6 @@ async function Code3001({
       dispatch(addToNewNotificationData(notificationObject));
     });
     const readNotificationItem = { ...notificationObject, unread: false };
-    LSUpdateNotificationStore({ newItem: readNotificationItem });
   } catch (error) {
     console.log("error: " + error);
   }

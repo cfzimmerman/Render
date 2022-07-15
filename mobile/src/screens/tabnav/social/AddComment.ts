@@ -9,16 +9,13 @@ import {
   PostHeaderType,
   PostType,
 } from "../../../resources/CommonTypes";
+import { VaultPostFullViewUsecaseTypes } from "../vault/VaultPostFullView";
+import CreateCode3002Notification from "../homevault/NotificationActions/CreateCode3002Notification";
 
 interface AddCommentProps {
   item: PostType;
   dispatch: DispatchType;
-  usecase:
-    | "gallery"
-    | "otherusergallery"
-    | "stories"
-    | "addedfeed"
-    | "publicfeed";
+  usecase: VaultPostFullViewUsecaseTypes;
   index: number;
   commentText: string;
   currentuser: CurrentUserType;
@@ -61,6 +58,12 @@ async function AddComment({
       displayname: data.createComments.Users.displayname,
     };
     dispatch(injectComment(commentObject));
+    CreateCode3002Notification({
+      dispatch,
+      postID: item.id,
+      currentuser,
+      postUserID: item.userid,
+    });
   } catch (error) {
     console.log("Error: " + JSON.stringify(error));
   }

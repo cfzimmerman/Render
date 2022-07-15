@@ -20,71 +20,111 @@ import FullViewContent from "./FullViewContent";
 import GetAddedFeedData from "../home/GetAddedFeedData";
 import GetOtherUserGalleryData from "../explore/GetOtherUserGalleryData";
 import GetPublicFeedData from "../home/GetPublicFeedData";
+import GetGalleryData from "../profile/GetGalleryData";
 import GetVaultData from "./GetVaultData";
 import UpdatePostInteraction from "../../masterstack/contentdisplay/UpdatePostInteraction";
 import UpdateStoriesViewed from "../home/UpdateStoriesViewed";
+import { RootStateType } from "../../../redux/store";
+
+export type VaultPostFullViewUsecaseTypes =
+  | "vault"
+  | "gallery"
+  | "otherusergallery"
+  | "addedfeed"
+  | "publicfeed"
+  | "stories"
+  | "universal";
+
+interface UsecaseObject {
+  usecase: VaultPostFullViewUsecaseTypes;
+}
 
 const VaultPostFullView = ({ navigation, route }) => {
-  const currentuser = useSelector((state) => state.profilemain.currentuser);
+  const currentuser = useSelector(
+    (state: RootStateType) => state.profilemain.currentuser
+  );
 
   const vaultpostdata = useSelector(
-    (state) => state.vaultpostdata.vaultpostdata
+    (state: RootStateType) => state.vaultpostdata.vaultpostdata
   );
-  const vaultnexttoken = useSelector((state) => state.vaultpostdata.nextToken);
+  const vaultnexttoken = useSelector(
+    (state: RootStateType) => state.vaultpostdata.nextToken
+  );
   const fetchingvaultdata = useSelector(
-    (state) => state.vaultpostdata.fetchingdata
+    (state: RootStateType) => state.vaultpostdata.fetchingdata
   );
 
   const storiesfullview = useSelector(
-    (state) => state.homemain.storiesfullview
+    (state: RootStateType) => state.homemain.storiesfullview
   );
-  const feeddata = useSelector((state) => state.vaultpostdata.vaultfeeddata);
-  const gallerydata = useSelector((state) => state.profilemain.gallerydata);
+  const feeddata = useSelector(
+    (state: RootStateType) => state.vaultpostdata.vaultfeeddata
+  );
+  const gallerydata = useSelector(
+    (state: RootStateType) => state.profilemain.gallerydata
+  );
   const gallerynexttoken = useSelector(
-    (state) => state.profilemain.gallerynexttoken
+    (state: RootStateType) => state.profilemain.gallerynexttoken
   );
   const fetchinggallerydata = useSelector(
-    (state) => state.profilemain.fetchinggallerydata
+    (state: RootStateType) => state.profilemain.fetchinggallerydata
   );
 
-  const otheruser = useSelector((state) => state.otheruserprofile.otheruser);
+  const otheruser = useSelector(
+    (state: RootStateType) => state.otheruserprofile.otheruser
+  );
   const otherusergallerydata = useSelector(
-    (state) => state.otheruserprofile.otherusergallerydata
+    (state: RootStateType) => state.otheruserprofile.otherusergallerydata
   );
   const otherusergallerynexttoken = useSelector(
-    (state) => state.otheruserprofile.otherusergallerynexttoken
+    (state: RootStateType) => state.otheruserprofile.otherusergallerynexttoken
   );
   const fetchingotherusergallerydata = useSelector(
-    (state) => state.otheruserprofile.fetchingotherusergallerydata
+    (state: RootStateType) =>
+      state.otheruserprofile.fetchingotherusergallerydata
   );
 
-  const addedfeed = useSelector((state) => state.homemain.addedfeed);
+  const addedfeed = useSelector(
+    (state: RootStateType) => state.homemain.addedfeed
+  );
   const addedfeednexttoken = useSelector(
-    (state) => state.homemain.addedfeednexttoken
+    (state: RootStateType) => state.homemain.addedfeednexttoken
   );
   const addedusersfilter = useSelector(
-    (state) => state.homemain.addedusersfilter
+    (state: RootStateType) => state.homemain.addedusersfilter
   );
   const fetchingaddedfeeddata = useSelector(
-    (state) => state.homemain.fetchingaddedfeeddata
+    (state: RootStateType) => state.homemain.fetchingaddedfeeddata
   );
 
-  const publicfeed = useSelector((state) => state.homemain.publicfeed);
+  const publicfeed = useSelector(
+    (state: RootStateType) => state.homemain.publicfeed
+  );
   const publicfeednexttoken = useSelector(
-    (state) => state.homemain.publicfeednexttoken
+    (state: RootStateType) => state.homemain.publicfeednexttoken
   );
   const fetchingpublicfeeddata = useSelector(
-    (state) => state.homemain.fetchingpublicfeeddata
+    (state: RootStateType) => state.homemain.fetchingpublicfeeddata
   );
 
-  const commentsdata = useSelector((state) => state.socialmain.commentsdata);
+  const universalPostData = useSelector(
+    (state: RootStateType) => state.universalpost.universalPostData
+  );
 
-  const localConfig = useSelector((state) => state.localsync.localConfig);
-  const localLibrary = useSelector((state) => state.localsync.localLibrary);
+  const commentsdata = useSelector(
+    (state: RootStateType) => state.socialmain.commentsdata
+  );
+
+  const localConfig = useSelector(
+    (state: RootStateType) => state.localsync.localConfig
+  );
+  const localLibrary = useSelector(
+    (state: RootStateType) => state.localsync.localLibrary
+  );
 
   const { cognitosub } = currentuser;
 
-  const { usecase } = route.params;
+  const { usecase }: UsecaseObject = route.params;
 
   const CorrectFeedData = () => {
     if (usecase === "vault") {
@@ -105,6 +145,9 @@ const VaultPostFullView = ({ navigation, route }) => {
     if (usecase === "publicfeed") {
       return publicfeed;
     }
+    if (usecase === "universal") {
+      return universalPostData;
+    }
   };
 
   const EndReached = () => {
@@ -119,10 +162,10 @@ const VaultPostFullView = ({ navigation, route }) => {
         dispatch,
         vaultpostdata,
         cognitosub,
-        cognitosub,
         nextToken: vaultnexttoken,
         localLibrary,
         syncPreference: localConfig.syncPreference,
+        limit: undefined,
       });
     } else if (
       usecase === "gallery" &&
@@ -162,7 +205,6 @@ const VaultPostFullView = ({ navigation, route }) => {
       dispatch(setFetchingAddedFeedData(true));
       GetAddedFeedData({
         dispatch,
-        currentuser,
         addedusersfilter,
         addedfeed,
         addedfeednexttoken,
@@ -176,11 +218,9 @@ const VaultPostFullView = ({ navigation, route }) => {
       dispatch(setFetchingPublicFeedData(true));
       GetPublicFeedData({
         dispatch,
-        currentuser,
-        publicfeed,
         publicfeednexttoken,
       });
-    } else if (usecase === "stories") {
+    } else if (usecase === "stories" || usecase === "universal") {
       console.log("EndReached");
     }
   };

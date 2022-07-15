@@ -12,6 +12,7 @@ import localsync from "../system/localsync";
 import notifications from "../system/notifications";
 
 import pageoptions from "../general/pageoptions";
+import universalpost from "../general/universalpost";
 
 import vaultpostdata from "../vault/vaultpostdata";
 
@@ -45,6 +46,7 @@ const reducer = combineReducers({
   socialmain,
   localsync,
   notifications,
+  universalpost,
 });
 
 const store = configureStore({

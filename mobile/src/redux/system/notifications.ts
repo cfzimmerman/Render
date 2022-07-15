@@ -21,7 +21,7 @@ const slice = createSlice({
       state.notificationData.length = 0;
     },
     setNumberUnread: (state, action: PayloadAction<number>) => {
-      state.numberUnread = action.payload;
+      state.numberUnread = action.payload + state.numberUnread;
     },
     setUnreadCutoffDate: (state, action: PayloadAction<string>) => {
       state.unreadCutoffDate = action.payload;

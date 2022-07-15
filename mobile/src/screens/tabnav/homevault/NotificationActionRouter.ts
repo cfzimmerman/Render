@@ -1,6 +1,7 @@
 import { DispatchType } from "../../../redux/store";
 import { CurrentUserType } from "../../../resources/CommonTypes";
 import Code3001Action from "./NotificationActions/Code3001Action";
+import Code3002Action from "./NotificationActions/Code3002Action";
 import {
   Code3001PayloadType,
   NotificationDataItem,
@@ -24,6 +25,12 @@ const NotificationActionRouter = ({
       notificationDataItem.payload
     );
     Code3001Action({ payloadObject, dispatch, navigation, currentuser });
+  } else if (notificationDataItem.code === 3002) {
+    Code3002Action({
+      dispatch,
+      navigation,
+      postID: notificationDataItem.postsID,
+    });
   }
 };
 

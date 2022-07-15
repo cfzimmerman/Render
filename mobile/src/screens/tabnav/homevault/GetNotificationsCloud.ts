@@ -6,6 +6,7 @@ import NotificationLibrary from "./NotificationLibrary";
 import { DispatchType } from "../../../redux/store";
 import LSUpdateNotificationStoreDate from "./LSUpdateNotificationStoreDate";
 import LSGetNotificationStore from "./LSGetNotificationStore";
+import { setNumberUnread } from "../../../redux/system/notifications";
 
 interface GNCPropTypes {
   currentuser: CurrentUserType;
@@ -59,11 +60,13 @@ async function GetNotificationsCloud({
         payload: notificationItem.payload,
         notificationID: notificationItem.id,
         postsID: notificationItem.postsID,
+        createdAt: notificationItem.createdAt,
         dispatch,
       });
     });
 
     LSUpdateNotificationStoreDate({ newUnreadDate: new Date().toISOString() });
+    dispatch(setNumberUnread(newNotificationsArray.length));
   } catch (error) {
     console.log("Error: " + JSON.stringify(error));
   }

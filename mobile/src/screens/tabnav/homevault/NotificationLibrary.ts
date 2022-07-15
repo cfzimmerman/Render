@@ -24,6 +24,7 @@ FRONTEND:
 import { DispatchType } from "../../../redux/store";
 import { CurrentUserType } from "../../../resources/CommonTypes";
 import Code3001 from "./NotificationActions/Code3001";
+import Code3002 from "./NotificationActions/Code3002";
 
 export interface NotificationDataItem {
   notificationID: string;
@@ -49,13 +50,15 @@ export interface NotificationDataItem {
 
 3000 series: Social notifications
     * 3001: Someone added the current user. Ask the current user if they would like to view the other user's profile and add them back.
-    * 3002: One or more people have commented on a post made by the user. Ask the current user if they would like to view the post.
+    * 3002: One or more people have commented on a post made by the current user. Ask the user if they would like to view the post.
 */
 
 export interface Code3001PayloadType {
   ouID: String;
   // ^ otherUserID (shortened). The ID of the user that added the current user
 }
+
+export type Code3002PayloadType = null;
 
 // 🌳 CORY - my dude... find this comment later. For recurring notifications on a single post, update the createdAt field on UserNotifications
 
@@ -65,6 +68,7 @@ export interface NotificationLibraryPropTypes {
   notificationID: string;
   postsID: null | string;
   dispatch: DispatchType;
+  createdAt: string;
 }
 
 export interface NotificationStoreType {
@@ -78,6 +82,7 @@ const NotificationLibrary = ({
   notificationID,
   postsID,
   dispatch,
+  createdAt,
 }: NotificationLibraryPropTypes) => {
   // All Notification Actions generate an object of type NotificationDataItem and add it to the appropriate Redux location
   if (code === 3001) {
@@ -86,7 +91,16 @@ const NotificationLibrary = ({
       payload,
       notificationID,
       postsID,
-      createdAt: new Date().toISOString(),
+      createdAt,
+      dispatch,
+    });
+  } else if (code === 3002) {
+    Code3002({
+      code,
+      payload,
+      createdAt,
+      notificationID,
+      postsID,
       dispatch,
     });
   }

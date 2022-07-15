@@ -49,6 +49,7 @@ async function GetComments({ postItem, dispatch, commentsnexttoken }) {
           postsID: element.postsID,
           usersID: element.usersID,
           createdAt: element.createdAt,
+          // @ts-ignore
           displayname: element.Users.displayname,
         };
         dispatch(addCommentsDataItem(newComment));
