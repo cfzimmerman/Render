@@ -547,6 +547,15 @@ export type ModelNotificationsFilterInput = {
   not?: ModelNotificationsFilterInput | null,
 };
 
+export type ModelIntKeyConditionInput = {
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+};
+
 export type ModelStringKeyConditionInput = {
   eq?: string | null,
   le?: string | null,
@@ -555,15 +564,6 @@ export type ModelStringKeyConditionInput = {
   gt?: string | null,
   between?: Array< string | null > | null,
   beginsWith?: string | null,
-};
-
-export type ModelIntKeyConditionInput = {
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
 };
 
 export type ModelUserNotificationsFilterInput = {
@@ -2280,17 +2280,17 @@ export type ListNotificationsQuery = {
   } | null,
 };
 
-export type NotificationsByPostsIDQueryVariables = {
+export type NotificationsByCodeQueryVariables = {
   postsID: string,
-  createdAt?: ModelStringKeyConditionInput | null,
+  code?: ModelIntKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
   filter?: ModelNotificationsFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type NotificationsByPostsIDQuery = {
-  notificationsByPostsID?:  {
+export type NotificationsByCodeQuery = {
+  notificationsByCode?:  {
     __typename: "ModelNotificationsConnection",
     items:  Array< {
       __typename: "Notifications",
@@ -2305,17 +2305,17 @@ export type NotificationsByPostsIDQuery = {
   } | null,
 };
 
-export type NotificationsByCodeQueryVariables = {
+export type NotificationsByPostsIDQueryVariables = {
   postsID: string,
-  code?: ModelIntKeyConditionInput | null,
+  createdAt?: ModelStringKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
   filter?: ModelNotificationsFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type NotificationsByCodeQuery = {
-  notificationsByCode?:  {
+export type NotificationsByPostsIDQuery = {
+  notificationsByPostsID?:  {
     __typename: "ModelNotificationsConnection",
     items:  Array< {
       __typename: "Notifications",
@@ -2540,6 +2540,31 @@ export type CommentsByCreatedDateQueryVariables = {
 
 export type CommentsByCreatedDateQuery = {
   commentsByCreatedDate?:  {
+    __typename: "ModelCommentsConnection",
+    items:  Array< {
+      __typename: "Comments",
+      id: string,
+      commenttext?: string | null,
+      postsID?: string | null,
+      usersID?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type CommentsByUsersIDQueryVariables = {
+  usersID: string,
+  createdAt?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelCommentsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type CommentsByUsersIDQuery = {
+  commentsByUsersID?:  {
     __typename: "ModelCommentsConnection",
     items:  Array< {
       __typename: "Comments",

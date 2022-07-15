@@ -158,18 +158,18 @@ export const listNotifications = /* GraphQL */ `
     }
   }
 `;
-export const notificationsByPostsID = /* GraphQL */ `
-  query NotificationsByPostsID(
+export const notificationsByCode = /* GraphQL */ `
+  query NotificationsByCode(
     $postsID: ID!
-    $createdAt: ModelStringKeyConditionInput
+    $code: ModelIntKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelNotificationsFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    notificationsByPostsID(
+    notificationsByCode(
       postsID: $postsID
-      createdAt: $createdAt
+      code: $code
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -187,18 +187,18 @@ export const notificationsByPostsID = /* GraphQL */ `
     }
   }
 `;
-export const notificationsByCode = /* GraphQL */ `
-  query NotificationsByCode(
+export const notificationsByPostsID = /* GraphQL */ `
+  query NotificationsByPostsID(
     $postsID: ID!
-    $code: ModelIntKeyConditionInput
+    $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelNotificationsFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    notificationsByCode(
+    notificationsByPostsID(
       postsID: $postsID
-      code: $code
+      createdAt: $createdAt
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -420,6 +420,35 @@ export const commentsByCreatedDate = /* GraphQL */ `
   ) {
     commentsByCreatedDate(
       postsID: $postsID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        commenttext
+        postsID
+        usersID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const commentsByUsersID = /* GraphQL */ `
+  query CommentsByUsersID(
+    $usersID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelCommentsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    commentsByUsersID(
+      usersID: $usersID
       createdAt: $createdAt
       sortDirection: $sortDirection
       filter: $filter

@@ -14,8 +14,14 @@ type Notifications @model @auth(rules: [{ allow: public }]) {
   code: Int
   payload: String
   postsID: ID
-    @index(name: "byPosts", queryField: "notificationsByPostsID", sortKeyFields: ["createdAt"])
-    @index(name: "notificationsByCode", queryField: "notificationsByCode", sortKeyFields: ["code"])
+    @index(name: "byPosts", queryField: "notificationsByCode", sortKeyFields: ["code"])
+    @index(
+      name: "notificationsByPostsID"
+      queryField: "notificationsByPostsID"
+      sortKeyFields: ["createdAt"]
+    )
+  # @index(name: "byPosts", queryField: "notificationsByPostsID", sortKeyFields: ["createdAt"])
+  # @index(name: "notificationsByCode", queryField: "notificationsByCode", sortKeyFields: ["code"])
   Posts: Posts @belongsTo(fields: ["postsID"])
   UserNotifications: [UserNotifications] @hasMany(indexName: "byNotifications", fields: ["id"])
 }
@@ -46,7 +52,7 @@ type Comments @model @auth(rules: [{ allow: public }]) {
       sortKeyFields: ["createdAt"]
     )
   Posts: Posts @belongsTo(fields: ["postsID"])
-  usersID: ID @index(name: "byUsers")
+  usersID: ID @index(name: "byUsers", queryField: "commentsByUsersID", sortKeyFields: ["createdAt"])
   Users: Users @belongsTo(fields: ["usersID"])
   createdAt: String!
 }
