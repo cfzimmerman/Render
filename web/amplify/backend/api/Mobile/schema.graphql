@@ -14,7 +14,12 @@ type Notifications @model @auth(rules: [{ allow: public }]) {
   code: Int
   payload: String
   postsID: ID
-    @index(name: "byPosts", queryField: "notificationsByCode", sortKeyFields: ["code"])
+    @index(
+      name: "byPosts"
+      queryField: "notificationsByCodeDate"
+      sortKeyFields: ["code", "createdAt"]
+    )
+    @index(name: "notificationsByCode", queryField: "notificationsByCode", sortKeyFields: ["code"])
     @index(
       name: "notificationsByPostsID"
       queryField: "notificationsByPostsID"
