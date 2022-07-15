@@ -158,6 +158,35 @@ export const listNotifications = /* GraphQL */ `
     }
   }
 `;
+export const notificationsByCodeDate = /* GraphQL */ `
+  query NotificationsByCodeDate(
+    $postsID: ID!
+    $codeCreatedAt: ModelNotificationsByPostsCompositeKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelNotificationsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    notificationsByCodeDate(
+      postsID: $postsID
+      codeCreatedAt: $codeCreatedAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        code
+        payload
+        postsID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const notificationsByCode = /* GraphQL */ `
   query NotificationsByCode(
     $postsID: ID!

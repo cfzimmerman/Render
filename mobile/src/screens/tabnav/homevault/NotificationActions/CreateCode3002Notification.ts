@@ -25,14 +25,12 @@ import { Code3001PayloadType } from "../NotificationLibrary";
 import { updateUserNotifications } from "../../../../graphql/mutations";
 
 interface CreateCode3002NotificationPropsType {
-  dispatch: DispatchType;
   postID: string;
   currentuser: CurrentUserType;
   postUserID: string;
 }
 
 async function CreateCode3002Notification({
-  dispatch,
   postID,
   currentuser,
   postUserID,

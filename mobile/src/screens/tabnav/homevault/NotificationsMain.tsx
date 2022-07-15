@@ -19,6 +19,13 @@ import NotificationItem from "./NotificationItem";
 import { RootStateType } from "../../../redux/store";
 import LSClearNotificationStore from "./LSClearNotificationStore";
 import GetCode3003Notifications from "./NotificationActions/GetCode3003Notifications";
+import CreateCode3003Notification from "./NotificationActions/CreateCode3003Notification";
+import AddComment from "../social/AddComment";
+import { API, graphqlOperation } from "aws-amplify";
+import { getPosts } from "../../../graphql/queries";
+import { GraphQLResult } from "@aws-amplify/api-graphql";
+import { GetPostsQuery } from "../../../API";
+import { PostType } from "../../../resources/CommonTypes";
 
 const NotificationsTitleBox = () => {
   return (
@@ -76,11 +83,69 @@ const NotificationsMain = ({ navigation }) => {
         onPress={() => LSClearNotificationStore()}
       />
       <Button
-        title={"GetCode3003Notifications"}
+        title={"GetCode3003Notification"}
+        color={"aqua"}
+        onPress={() => {
+          GetCode3003Notifications({
+            currentuserID: currentuser.id,
+            unreadCutoffDate: "2011-10-05T14:48:00.000Z",
+            newUnreadDate: new Date().toISOString(),
+          });
+        }}
+      />
+      <Button
+        title={"CreateGhostNotification"}
         color={"coral"}
-        onPress={() =>
-          GetCode3003Notifications({ currentuserID: currentuser.id })
-        }
+        onPress={() => {
+          async function DoIt() {
+            try {
+              const {
+                data: { getPosts: post },
+              } = (await API.graphql(
+                graphqlOperation(getPosts, {
+                  id: "735aca90-d7c1-403a-9782-fc916d292aad",
+                })
+              )) as GraphQLResult<GetPostsQuery>;
+              const postItem: PostType = {
+                id: post.id,
+                aspectratio: post.aspectratio,
+                contentdate: post.contentdate,
+                contentkey: post.contentkey,
+                contenttype: post.contenttype,
+                cognitosub: post.cognitosub,
+                displayname: "Absolute Unit",
+                header: false,
+                posttext: post.posttext,
+                publicpost: post.publicpost,
+                publicpostdate: post.publicpostdate,
+                signedurl: null,
+                thumbnailkey: post.thumbnailkey,
+                thumbnailurl: null,
+                userid: "67caff7a-841a-45c6-9902-85813297e59b",
+                userpfp: "07f1fa86-2fc3-4b4f-98a8-ea6029354700.jpg",
+                userpfpurl: null,
+              };
+
+              const fauxCurrentUser = {
+                ...currentuser,
+                id: "71bbc458-bd28-4c23-9913-b92c6d5b32dc",
+                displayname: "andrew2",
+              };
+
+              AddComment({
+                item: postItem,
+                dispatch,
+                commentText: "Ghost comment 🦇",
+                currentuser: fauxCurrentUser,
+              });
+            } catch (error) {
+              console.log(JSON.stringify(error));
+            }
+          }
+
+          // DoIt();
+          console.log("turn it on bud");
+        }}
       />
       <HintMessage message={"Tap for options"} />
       <FlatList

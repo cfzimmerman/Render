@@ -105,8 +105,6 @@ const AddCommentModal = ({
                       AddComment({
                         item,
                         dispatch,
-                        usecase,
-                        index,
                         commentText,
                         currentuser,
                       });

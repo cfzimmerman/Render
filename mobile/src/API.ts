@@ -547,6 +547,21 @@ export type ModelNotificationsFilterInput = {
   not?: ModelNotificationsFilterInput | null,
 };
 
+export type ModelNotificationsByPostsCompositeKeyConditionInput = {
+  eq?: ModelNotificationsByPostsCompositeKeyInput | null,
+  le?: ModelNotificationsByPostsCompositeKeyInput | null,
+  lt?: ModelNotificationsByPostsCompositeKeyInput | null,
+  ge?: ModelNotificationsByPostsCompositeKeyInput | null,
+  gt?: ModelNotificationsByPostsCompositeKeyInput | null,
+  between?: Array< ModelNotificationsByPostsCompositeKeyInput | null > | null,
+  beginsWith?: ModelNotificationsByPostsCompositeKeyInput | null,
+};
+
+export type ModelNotificationsByPostsCompositeKeyInput = {
+  code?: number | null,
+  createdAt?: string | null,
+};
+
 export type ModelIntKeyConditionInput = {
   eq?: number | null,
   le?: number | null,
@@ -2266,6 +2281,31 @@ export type ListNotificationsQueryVariables = {
 
 export type ListNotificationsQuery = {
   listNotifications?:  {
+    __typename: "ModelNotificationsConnection",
+    items:  Array< {
+      __typename: "Notifications",
+      id: string,
+      createdAt: string,
+      code?: number | null,
+      payload?: string | null,
+      postsID?: string | null,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type NotificationsByCodeDateQueryVariables = {
+  postsID: string,
+  codeCreatedAt?: ModelNotificationsByPostsCompositeKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelNotificationsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type NotificationsByCodeDateQuery = {
+  notificationsByCodeDate?:  {
     __typename: "ModelNotificationsConnection",
     items:  Array< {
       __typename: "Notifications",

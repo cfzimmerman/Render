@@ -62,7 +62,10 @@ export interface Code3001PayloadType {
 
 export type Code3002PayloadType = null;
 
-export type Code3003PayloadType = null;
+export interface Code3003PayloadType {
+  lCUID: String;
+  // ^ lastCommentID (shortened). The ID of the last user to comment on the post
+}
 
 // next steps for 3003: Set up create notification and get notification flows
 
@@ -73,6 +76,7 @@ export interface NotificationLibraryPropTypes {
   postsID: null | string;
   dispatch: DispatchType;
   createdAt: string;
+  currentuser: CurrentUserType;
 }
 
 export interface NotificationStoreType {
@@ -87,6 +91,7 @@ const NotificationLibrary = ({
   postsID,
   dispatch,
   createdAt,
+  currentuser,
 }: NotificationLibraryPropTypes) => {
   // All Notification Actions generate an object of type NotificationDataItem and add it to the appropriate Redux location
   if (code === 3001) {
@@ -109,6 +114,7 @@ const NotificationLibrary = ({
     });
   } else if (code === 3003) {
     Code3003({
+      currentuser,
       code,
       payload,
       createdAt,

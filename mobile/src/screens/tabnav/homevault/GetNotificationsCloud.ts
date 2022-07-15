@@ -61,11 +61,14 @@ async function GetNotificationsCloud({
         notificationID: notificationItem.id,
         postsID: notificationItem.postsID,
         createdAt: notificationItem.createdAt,
+        currentuser,
         dispatch,
       });
     });
 
-    LSUpdateNotificationStoreDate({ newUnreadDate: new Date().toISOString() });
+    const newUnreadDate = new Date().toISOString();
+
+    LSUpdateNotificationStoreDate({ newUnreadDate });
     dispatch(setNumberUnread(newNotificationsArray.length));
   } catch (error) {
     console.log("Error: " + JSON.stringify(error));
