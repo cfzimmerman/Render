@@ -6,7 +6,8 @@ import NotificationLibrary from "./NotificationLibrary";
 import { DispatchType } from "../../../redux/store";
 import LSUpdateNotificationStoreDate from "./LSUpdateNotificationStoreDate";
 import LSGetNotificationStore from "./LSGetNotificationStore";
-import { setNumberUnread } from "../../../redux/system/notifications";
+import { updateNumberUnread } from "../../../redux/system/notifications";
+import GetCode3003Notifications from "./NotificationActions/GetCode3003Notifications";
 
 interface GNCPropTypes {
   currentuser: CurrentUserType;
@@ -21,6 +22,15 @@ async function GetNotificationsCloud({
 }: GNCPropTypes) {
   const notificationLimit = 100;
   LSGetNotificationStore({ dispatch });
+  const newUnreadDate = new Date().toISOString();
+
+  GetCode3003Notifications({
+    currentuserID: currentuser.id,
+    unreadCutoffDate,
+    dispatch,
+    newUnreadDate,
+  });
+
   try {
     const {
       data: {
@@ -61,15 +71,16 @@ async function GetNotificationsCloud({
         notificationID: notificationItem.id,
         postsID: notificationItem.postsID,
         createdAt: notificationItem.createdAt,
-        currentuser,
+        currentuserID: currentuser.id,
         dispatch,
       });
     });
 
-    const newUnreadDate = new Date().toISOString();
-
     LSUpdateNotificationStoreDate({ newUnreadDate });
-    dispatch(setNumberUnread(newNotificationsArray.length));
+    setTimeout(() => {
+      dispatch(updateNumberUnread(newNotificationsArray.length));
+    }, 1000);
+    // Local cache is updated when (numberUnread === newNotificationData.length). With other GetCodeXXXXNotifications functions, sometimes those overlap before all functions are finished. A delay updating the number of unread notifications gives time for all to catch up.
   } catch (error) {
     console.log("Error: " + JSON.stringify(error));
   }

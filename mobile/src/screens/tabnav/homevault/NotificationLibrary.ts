@@ -76,7 +76,7 @@ export interface NotificationLibraryPropTypes {
   postsID: null | string;
   dispatch: DispatchType;
   createdAt: string;
-  currentuser: CurrentUserType;
+  currentuserID: string;
 }
 
 export interface NotificationStoreType {
@@ -91,7 +91,7 @@ const NotificationLibrary = ({
   postsID,
   dispatch,
   createdAt,
-  currentuser,
+  currentuserID,
 }: NotificationLibraryPropTypes) => {
   // All Notification Actions generate an object of type NotificationDataItem and add it to the appropriate Redux location
   if (code === 3001) {
@@ -114,7 +114,7 @@ const NotificationLibrary = ({
     });
   } else if (code === 3003) {
     Code3003({
-      currentuser,
+      currentuserID,
       code,
       payload,
       createdAt,

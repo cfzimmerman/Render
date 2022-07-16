@@ -17,7 +17,7 @@ interface Code3003PropTypes {
   createdAt: string;
   payload: string | null;
   postsID: string | null;
-  currentuser: CurrentUserType;
+  currentuserID: string;
 }
 
 async function Code3003({
@@ -27,11 +27,11 @@ async function Code3003({
   createdAt,
   payload,
   postsID,
-  currentuser,
+  currentuserID,
 }: Code3003PropTypes) {
   const payloadObject: Code3003PayloadType = JSON.parse(payload);
   // The get action for Code 3003 returns a notification to everyone who has commented on the post (through the super nested query). If the newest comment is from the authenticated user, though, we don't want to register a notification. It's ignored if that's the case.
-  if (currentuser.id != payloadObject.lCUID) {
+  if (currentuserID != payloadObject.lCUID) {
     const notificationObject: NotificationDataItem = {
       notificationID,
       code,

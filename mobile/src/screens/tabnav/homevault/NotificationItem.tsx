@@ -1,5 +1,5 @@
-import { useRef } from "react";
 import { View, TouchableOpacity, StyleSheet, Button, Text } from "react-native";
+import { formatDistanceToNowStrict } from "date-fns";
 import {
   Environment,
   Colors,
@@ -12,7 +12,13 @@ import { NotificationDataItem } from "./NotificationLibrary";
 import { DispatchType } from "../../../redux/store";
 import { CurrentUserType } from "../../../resources/CommonTypes";
 
-const UnreadIndicator = ({ unread }: { unread: boolean }) => {
+const UnreadIndicator = ({
+  unread,
+  createdAt,
+}: {
+  unread: boolean;
+  createdAt: string;
+}) => {
   if (unread === true) {
     return (
       <View
@@ -25,7 +31,13 @@ const UnreadIndicator = ({ unread }: { unread: boolean }) => {
     );
   } else {
     return (
-      <View style={[GlobalStyles.shadow, styles.unreadIndicatorBaseline]} />
+      <View
+        style={[GlobalStyles.shadow, styles.unreadIndicatorTimestampWrapper]}
+      >
+        <Text style={[GlobalStyles.p2text, styles.unreadIndicatorTimestamp]}>
+          {formatDistanceToNowStrict(new Date(createdAt))}
+        </Text>
+      </View>
     );
   }
 };
@@ -92,7 +104,7 @@ const NotificationItem = ({
             >
               {item.front.title}
             </Text>
-            <UnreadIndicator unread={item.unread} />
+            <UnreadIndicator unread={item.unread} createdAt={item.createdAt} />
           </View>
           <View style={styles.frontMessageWrapper}>
             <Text
@@ -149,7 +161,7 @@ const NotificationItem = ({
 
 const styles = StyleSheet.create({
   cardFlipContainer: {
-    height: Environment.CubeSize + Environment.StandardPadding * 4,
+    height: Environment.NotificationItemHeight,
     width: Environment.FullBar,
     marginTop: Environment.StandardPadding,
   },
@@ -157,7 +169,7 @@ const styles = StyleSheet.create({
     width: Environment.FullBar,
     padding: Environment.StandardPadding,
     backgroundColor: Colors.Primary,
-    height: Environment.CubeSize + Environment.StandardPadding * 4,
+    height: Environment.NotificationItemHeight,
     marginTop: Environment.StandardPadding,
   },
   frontTitleWrapper: {
@@ -184,15 +196,22 @@ const styles = StyleSheet.create({
   unreadIndicatorOn: {
     backgroundColor: Colors.WarmAccent,
   },
+  unreadIndicatorTimestamp: {
+    color: Colors.Accent90,
+    textAlign: "right",
+  },
+  unreadIndicatorTimestampWrapper: {
+    justifyContent: "center",
+  },
   backWrapper: {
     width: Environment.FullBar,
-    height: Environment.CubeSize + Environment.StandardPadding * 4,
+    height: Environment.NotificationItemHeight,
     marginTop: Environment.StandardPadding,
     justifyContent: "space-between",
     flexDirection: "row",
   },
   iconTileWrapper: {
-    height: Environment.CubeSize + Environment.StandardPadding * 4,
+    height: Environment.NotificationItemHeight,
     width: (Environment.FullBar - Environment.StandardPadding) / 2,
     borderRadius: Environment.StandardRadius,
     backgroundColor: Colors.AccentOn,

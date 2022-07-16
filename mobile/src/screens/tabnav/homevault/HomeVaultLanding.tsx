@@ -1,7 +1,6 @@
 import react, { useRef, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { SectionGrid } from "react-native-super-grid";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useScrollToTop } from "@react-navigation/native";
 import * as SplashScreen from "expo-splash-screen";
 import { useDispatch, useSelector } from "react-redux";
@@ -255,6 +254,7 @@ const HomeVaultLanding = ({ navigation }) => {
           storiesfullview,
           storiessectionlist,
           currentuser,
+          newNotificationData,
         })}
         ListFooterComponent={SectionGridFooter({
           length: vaultfeeddata.length,

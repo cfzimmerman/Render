@@ -20,7 +20,7 @@ const slice = createSlice({
     clearNotificationData: (state) => {
       state.notificationData.length = 0;
     },
-    setNumberUnread: (state, action: PayloadAction<number>) => {
+    updateNumberUnread: (state, action: PayloadAction<number>) => {
       state.numberUnread = action.payload + state.numberUnread;
     },
     setUnreadCutoffDate: (state, action: PayloadAction<string>) => {
@@ -49,7 +49,7 @@ const slice = createSlice({
 
 export const {
   clearNotificationData,
-  setNumberUnread,
+  updateNumberUnread,
   setUnreadCutoffDate,
   setNotificationData,
   addToNotificationData,

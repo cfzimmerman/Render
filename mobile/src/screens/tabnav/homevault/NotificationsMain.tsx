@@ -83,17 +83,6 @@ const NotificationsMain = ({ navigation }) => {
         onPress={() => LSClearNotificationStore()}
       />
       <Button
-        title={"GetCode3003Notification"}
-        color={"aqua"}
-        onPress={() => {
-          GetCode3003Notifications({
-            currentuserID: currentuser.id,
-            unreadCutoffDate: "2011-10-05T14:48:00.000Z",
-            newUnreadDate: new Date().toISOString(),
-          });
-        }}
-      />
-      <Button
         title={"CreateGhostNotification"}
         color={"coral"}
         onPress={() => {
