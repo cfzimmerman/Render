@@ -36,13 +36,13 @@ const slice = createSlice({
       state,
       action: PayloadAction<NotificationDataItem>
     ) => {
-      state.notificationData.unshift(action.payload);
+      state.notificationData.push(action.payload);
     },
     addToNewNotificationData: (
       state,
       action: PayloadAction<NotificationDataItem>
     ) => {
-      state.newNotificationData.unshift(action.payload);
+      state.newNotificationData.push(action.payload);
     },
   },
 });

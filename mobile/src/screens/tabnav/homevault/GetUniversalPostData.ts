@@ -20,6 +20,7 @@ async function GetUniversalPostData({ postID, dispatch }) {
                 contentdate
                 contentkey
                 contenttype
+                deleteddate
                 posttext
                 publicpost
                 publicpostdate
@@ -35,39 +36,43 @@ async function GetUniversalPostData({ postID, dispatch }) {
         `)
     )) as GraphQLResult<GetPostsQuery>;
 
-    const universalPost: PostType = {
-      id: post.id,
-      contenttype: post.contenttype,
-      aspectratio: post.aspectratio,
-      contentkey: post.contentkey,
-      cognitosub: post.cognitosub,
-      thumbnailkey: post.thumbnailkey,
-      publicpostdate: post.publicpostdate,
-      posttext: post.posttext,
-      signedurl: null,
-      thumbnailurl: null,
-      userid: post.Users.id,
-      displayname: post.Users.displayname,
-      userpfp: post.Users.pfp,
-      userpfpurl: null,
-    };
-
-    // contentURL is either a photo or video. If it's a video, also get the thumbnail. If it's a photo, don't bother (the if-else below)
-    const contentURL = await Storage.get(post.contentkey, { expires: 86400 });
-
-    if (post.contenttype === "image") {
-      const newPost = { ...universalPost, signedurl: contentURL };
-      dispatch(addToUniversalPostData(newPost));
-    } else if (post.contenttype === "video") {
-      const thumbnailURL = await Storage.get(post.thumbnailkey, {
-        expires: 86400,
-      });
-      const newPost = {
-        ...universalPost,
-        signedurl: contentURL,
-        thumbnailurl: thumbnailURL,
+    if (typeof post.deleteddate != "string") {
+      const universalPost: PostType = {
+        id: post.id,
+        contenttype: post.contenttype,
+        aspectratio: post.aspectratio,
+        contentkey: post.contentkey,
+        cognitosub: post.cognitosub,
+        thumbnailkey: post.thumbnailkey,
+        publicpostdate: post.publicpostdate,
+        posttext: post.posttext,
+        signedurl: null,
+        thumbnailurl: null,
+        userid: post.Users.id,
+        displayname: post.Users.displayname,
+        userpfp: post.Users.pfp,
+        userpfpurl: null,
       };
-      dispatch(addToUniversalPostData(newPost));
+
+      // contentURL is either a photo or video. If it's a video, also get the thumbnail. If it's a photo, don't bother (the if-else below)
+      const contentURL = await Storage.get(post.contentkey, { expires: 86400 });
+
+      if (post.contenttype === "image") {
+        const newPost = { ...universalPost, signedurl: contentURL };
+        dispatch(addToUniversalPostData(newPost));
+      } else if (post.contenttype === "video") {
+        const thumbnailURL = await Storage.get(post.thumbnailkey, {
+          expires: 86400,
+        });
+        const newPost = {
+          ...universalPost,
+          signedurl: contentURL,
+          thumbnailurl: thumbnailURL,
+        };
+        dispatch(addToUniversalPostData(newPost));
+      }
+    } else {
+      console.log("Post has been deleted!!");
     }
   } catch (error) {
     console.log("Error: " + JSON.stringify(error));

@@ -32,7 +32,7 @@ async function LSUpdateNotificationStore({
       // Mark items as read
       newNotificationData.forEach((item: NotificationDataItem) => {
         const readNotificationItem = { ...item, unread: false };
-        readNotificationData.unshift(readNotificationItem);
+        readNotificationData.push(readNotificationItem);
       });
 
       // If an update notification is triggered multiple times, clean the store for only one instance (ex. only one item for a new comment on one of my posts)
@@ -63,21 +63,6 @@ async function LSUpdateNotificationStore({
         notificationStoreAddress,
         updatedStoreString
       );
-
-      /*
-      const foundInArray = notificationStoreObject.notificationData.findIndex(
-        (item: NotificationDataItem) =>
-          item.notificationID === newItem.notificationID
-      );
-      if (foundInArray === -1) {
-        notificationStoreObject.notificationData.unshift(newItem);
-        const newStoreString = JSON.stringify(notificationStoreObject);
-        await FileSystem.writeAsStringAsync(
-          notificationStoreAddress,
-          newStoreString
-        );
-      }
-      */
     }
   } catch (error) {
     console.log("Error: " + error);

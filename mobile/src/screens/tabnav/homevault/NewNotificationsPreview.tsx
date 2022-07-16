@@ -1,5 +1,6 @@
+import React, { useState, useRef } from "react";
 import { Text, View, FlatList } from "react-native";
-import { Environment } from "../../../resources/project";
+import { Colors, Environment, GlobalStyles } from "../../../resources/project";
 import NotificationItem from "./NotificationItem";
 
 const NewNotificationsPreview = ({
@@ -8,7 +9,17 @@ const NewNotificationsPreview = ({
   currentuser,
   navigation,
 }) => {
-  const localNotificationArray = newNotificationData;
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const onviewref = useRef(({ viewableItems }) => {
+    const newIndex = viewableItems[0].index;
+    if (newIndex > currentIndex) {
+      setCurrentIndex(newIndex);
+    }
+  });
+  const viewconfigref = useRef({
+    viewAreaCoveragePercentThreshold: 50,
+  });
 
   const renderItem = ({ index, item }) => {
     return (
@@ -30,47 +41,61 @@ const NewNotificationsPreview = ({
   };
 
   // TODO: Label with new notifications and how many total
-  // Try out deleting notifications as we go?
   // Make notificationItem a memoized component
-  // Make this preview a memoized component
+  // Make this preview a memoized component?
+  // Reverse direction of new content
+  // Universal post condtion if post is not found or deleted!!
 
-  return (
-    <FlatList
-      style={{
-        height: Environment.NotificationItemHeight,
-        width: Environment.ScreenWidth,
-        marginTop: Environment.StandardPadding,
-      }}
-      contentContainerStyle={{
-        height: Environment.NotificationItemHeight,
-      }}
-      data={localNotificationArray}
-      keyExtractor={(item) => item.notificationID}
-      renderItem={renderItem}
-      horizontal={true}
-      showsHorizontalScrollIndicator={false}
-      getItemLayout={(data, index) => ({
-        length: Environment.ScreenWidth,
-        index,
-        offset: Environment.ScreenWidth * index,
-      })}
-      snapToInterval={Environment.ScreenWidth}
-      decelerationRate={"fast"}
-    />
-  );
-
-  /*
-      <FlatList
-        data={notificationData}
-        keyExtractor={(item) => item.notificationID}
-        renderItem={renderItem}
-      />
-
-    const renderItem = ({ index, item }) => {
-    return NotificationItem({ item, currentuser, dispatch, navigation });
-  };
-  🌾 Make this little bugger a memoized component!!
-  */
+  if (newNotificationData.length === 0) {
+    return null;
+  } else {
+    return (
+      <View
+        style={{
+          justifyContent: "center",
+          flex: 1,
+        }}
+      >
+        <Text
+          style={[
+            GlobalStyles.h4text,
+            {
+              color: Colors.Accent90,
+              textAlign: "left",
+              paddingHorizontal: Environment.StandardPadding,
+              marginTop: Environment.LargePadding,
+            },
+          ]}
+        >
+          New notifications ({newNotificationData.length - currentIndex - 1})
+        </Text>
+        <FlatList
+          style={{
+            height: Environment.NotificationItemHeight,
+            width: Environment.ScreenWidth,
+            marginTop: Environment.StandardPadding,
+          }}
+          contentContainerStyle={{
+            height: Environment.NotificationItemHeight,
+          }}
+          data={newNotificationData}
+          keyExtractor={(item) => item.notificationID}
+          renderItem={renderItem}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          getItemLayout={(data, index) => ({
+            length: Environment.ScreenWidth,
+            index,
+            offset: Environment.ScreenWidth * index,
+          })}
+          snapToInterval={Environment.ScreenWidth}
+          decelerationRate={"fast"}
+          onViewableItemsChanged={onviewref.current}
+          viewabilityConfig={viewconfigref.current}
+        />
+      </View>
+    );
+  }
 };
 
 export default NewNotificationsPreview;
