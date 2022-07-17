@@ -18,14 +18,6 @@ import { useDispatch, useSelector } from "react-redux";
 import NotificationItem from "./NotificationItem";
 import { RootStateType } from "../../../redux/store";
 import LSClearNotificationStore from "./LSClearNotificationStore";
-import GetCode3003Notifications from "./NotificationActions/GetCode3003Notifications";
-import CreateCode3003Notification from "./NotificationActions/CreateCode3003Notification";
-import AddComment from "../social/AddComment";
-import { API, graphqlOperation } from "aws-amplify";
-import { getPosts } from "../../../graphql/queries";
-import { GraphQLResult } from "@aws-amplify/api-graphql";
-import { GetPostsQuery } from "../../../API";
-import { PostType } from "../../../resources/CommonTypes";
 
 const NotificationsTitleBox = () => {
   return (
@@ -77,11 +69,6 @@ const NotificationsMain = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <NotificationsTitleBox />
       <PrimaryDivider />
-      <Button
-        title={"ClearNotificationStore"}
-        color={"moccasin"}
-        onPress={() => LSClearNotificationStore()}
-      />
       <HintMessage message={"Tap for options"} />
       <FlatList
         data={notificationData}
