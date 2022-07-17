@@ -1,14 +1,38 @@
 import React, { useState, useRef } from "react";
-import { Text, View, FlatList } from "react-native";
+import { Text, View, FlatList, StyleSheet } from "react-native";
+import { DispatchType } from "../../../redux/store";
+import { CurrentUserType } from "../../../resources/CommonTypes";
 import { Colors, Environment, GlobalStyles } from "../../../resources/project";
 import NotificationItem from "./NotificationItem";
+import { NotificationDataItem } from "./NotificationLibrary";
+
+const AreEqual = (
+  previousProps: NewNotificationsPreviewPropsType,
+  nextProps: NewNotificationsPreviewPropsType
+) => {
+  if (
+    previousProps.newNotificationData.length ===
+      nextProps.newNotificationData.length &&
+    previousProps.currentuser === nextProps.currentuser
+  ) {
+    return true;
+  }
+  return false;
+};
+
+interface NewNotificationsPreviewPropsType {
+  newNotificationData: NotificationDataItem[];
+  dispatch: DispatchType;
+  currentuser: CurrentUserType;
+  navigation: any;
+}
 
 const NewNotificationsPreview = ({
   newNotificationData,
   dispatch,
   currentuser,
   navigation,
-}) => {
+}: NewNotificationsPreviewPropsType) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const onviewref = useRef(({ viewableItems }) => {
@@ -23,13 +47,7 @@ const NewNotificationsPreview = ({
 
   const renderItem = ({ index, item }) => {
     return (
-      <View
-        style={{
-          marginTop: -1 * Environment.LargePadding,
-          paddingHorizontal: Environment.SmallPadding,
-          alignItems: "center",
-        }}
-      >
+      <View style={styles.notificationWrapper}>
         <NotificationItem
           item={item}
           navigation={navigation}
@@ -40,44 +58,17 @@ const NewNotificationsPreview = ({
     );
   };
 
-  // TODO: Label with new notifications and how many total
-  // Make notificationItem a memoized component
-  // Make this preview a memoized component?
-  // Reverse direction of new content
-  // Universal post condtion if post is not found or deleted!!
-
   if (newNotificationData.length === 0) {
     return null;
   } else {
     return (
-      <View
-        style={{
-          justifyContent: "center",
-          flex: 1,
-        }}
-      >
-        <Text
-          style={[
-            GlobalStyles.h4text,
-            {
-              color: Colors.Accent90,
-              textAlign: "left",
-              paddingHorizontal: Environment.StandardPadding,
-              marginTop: Environment.LargePadding,
-            },
-          ]}
-        >
+      <View style={styles.displayHolder}>
+        <Text style={[GlobalStyles.h4text, styles.indexLabel]}>
           New notifications ({newNotificationData.length - currentIndex - 1})
         </Text>
         <FlatList
-          style={{
-            height: Environment.NotificationItemHeight,
-            width: Environment.ScreenWidth,
-            marginTop: Environment.StandardPadding,
-          }}
-          contentContainerStyle={{
-            height: Environment.NotificationItemHeight,
-          }}
+          style={styles.flatlistStyle}
+          contentContainerStyle={styles.flatlistContainerStyle}
           data={newNotificationData}
           keyExtractor={(item) => item.notificationID}
           renderItem={renderItem}
@@ -98,4 +89,30 @@ const NewNotificationsPreview = ({
   }
 };
 
-export default NewNotificationsPreview;
+const styles = StyleSheet.create({
+  notificationWrapper: {
+    marginTop: -1 * Environment.LargePadding,
+    paddingHorizontal: Environment.SmallPadding,
+    alignItems: "center",
+  },
+  displayHolder: {
+    justifyContent: "center",
+    flex: 1,
+  },
+  indexLabel: {
+    color: Colors.Accent90,
+    textAlign: "left",
+    paddingHorizontal: Environment.StandardPadding,
+    marginTop: Environment.LargePadding,
+  },
+  flatlistStyle: {
+    height: Environment.NotificationItemHeight,
+    width: Environment.ScreenWidth,
+    marginTop: Environment.StandardPadding,
+  },
+  flatlistContainerStyle: {
+    height: Environment.NotificationItemHeight,
+  },
+});
+
+export default React.memo(NewNotificationsPreview, AreEqual);

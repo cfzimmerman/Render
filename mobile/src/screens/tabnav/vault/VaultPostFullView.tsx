@@ -25,6 +25,7 @@ import GetVaultData from "./GetVaultData";
 import UpdatePostInteraction from "../../masterstack/contentdisplay/UpdatePostInteraction";
 import UpdateStoriesViewed from "../home/UpdateStoriesViewed";
 import { RootStateType } from "../../../redux/store";
+import { SystemmessageModal } from "../../../resources/molecules";
 
 export type VaultPostFullViewUsecaseTypes =
   | "vault"
@@ -306,6 +307,7 @@ const VaultPostFullView = ({ navigation, route }) => {
         onEndReachedThreshold={1.5}
         onEndReached={EndReached}
       />
+      <SystemmessageModal />
     </View>
   );
 };

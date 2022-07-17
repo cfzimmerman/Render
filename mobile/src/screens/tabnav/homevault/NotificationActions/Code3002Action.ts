@@ -18,6 +18,7 @@ async function Code3002Action({
   GetUniversalPostData({
     dispatch,
     postID,
+    navigation,
   });
 
   navigation.navigate("VaultPostFullView", {

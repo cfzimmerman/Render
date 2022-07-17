@@ -1,10 +1,20 @@
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { API, graphqlOperation, Storage } from "aws-amplify";
 import { GetPostsQuery } from "../../../API";
-import { addToUniversalPostData } from "../../../redux/general/universalpost";
+import {
+  addToUniversalPostData,
+  clearUniversalPostData,
+} from "../../../redux/general/universalpost";
+import {
+  ButtonMessagePropTypes,
+  setButtonMessageActive,
+  setButtonMessageInactive,
+  setSystemmessageActive,
+} from "../../../redux/system/messagemodal";
 import { PostType } from "../../../resources/CommonTypes";
+import { UserDialogue } from "../../../resources/project";
 
-async function GetUniversalPostData({ postID, dispatch }) {
+async function GetUniversalPostData({ postID, dispatch, navigation }) {
   try {
     const {
       data: { getPosts: post },
@@ -72,7 +82,12 @@ async function GetUniversalPostData({ postID, dispatch }) {
         dispatch(addToUniversalPostData(newPost));
       }
     } else {
-      console.log("Post has been deleted!!");
+      dispatch(
+        setSystemmessageActive(UserDialogue().systemmessage.postNotFound)
+      );
+      setTimeout(() => {
+        navigation.navigate("HomeVault");
+      }, 2000);
     }
   } catch (error) {
     console.log("Error: " + JSON.stringify(error));

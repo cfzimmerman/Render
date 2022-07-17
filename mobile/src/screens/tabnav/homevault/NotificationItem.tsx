@@ -1,3 +1,4 @@
+import React from "react";
 import { View, TouchableOpacity, StyleSheet, Button, Text } from "react-native";
 import { formatDistanceToNowStrict } from "date-fns";
 import {
@@ -84,7 +85,7 @@ const NotificationItem = ({
   currentuser,
 }: NotificationItemPropsType) => {
   var flipRef;
-  // ^ This admittedly looks hella sus, but useRef in FlatList children is forbidden. If there's a better solution, feel free to implement it.
+  // ^ This admittedly looks hella sus to me, but useRef in FlatList children is forbidden. If there's a better solution, feel free to implement it.
 
   const FlipCard = () => {
     flipRef.flip();

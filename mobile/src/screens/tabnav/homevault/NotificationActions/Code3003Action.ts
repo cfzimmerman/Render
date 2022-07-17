@@ -15,7 +15,7 @@ async function Code3003Action({
 }: Code3003ActionPropsType) {
   dispatch(clearUniversalPostData());
 
-  GetUniversalPostData({ dispatch, postID });
+  GetUniversalPostData({ dispatch, postID, navigation });
 
   navigation.navigate("VaultPostFullView", {
     startindex: 0,
