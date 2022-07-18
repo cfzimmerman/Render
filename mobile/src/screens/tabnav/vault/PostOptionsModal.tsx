@@ -210,7 +210,7 @@ const PostOptionsModal = ({ navigation, dispatch, usecase, item, index }) => {
                 isactive={false}
               />
               <CubeSizeButton
-                Icon={Icons.OriginalSize.Share}
+                Icon={Icons.OriginalSize.Download}
                 Action={() => ActivateShare({ dispatch })}
                 isactive={false}
               />
@@ -284,7 +284,7 @@ const PostOptionsModal = ({ navigation, dispatch, usecase, item, index }) => {
                 isactive={item.publicpost}
               />
               <CubeSizeButton
-                Icon={Icons.OriginalSize.Share}
+                Icon={Icons.OriginalSize.Download}
                 Action={() => ActivateShare({ dispatch })}
                 isactive={false}
               />
@@ -333,7 +333,7 @@ const PostOptionsModal = ({ navigation, dispatch, usecase, item, index }) => {
               isactive={false}
             />
             <CubeSizeButton
-              Icon={Icons.OriginalSize.Share}
+              Icon={Icons.OriginalSize.Download}
               Action={() => ActivateShare({ dispatch })}
               isactive={false}
             />
