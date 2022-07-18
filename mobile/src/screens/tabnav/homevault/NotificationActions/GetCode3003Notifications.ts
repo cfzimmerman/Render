@@ -57,39 +57,41 @@ async function GetCode3003Notifications({
     // Serves as a log of notifications already processed. Used to filter out duplicates.
 
     newNotifications.forEach((parentItem) => {
-      // Filter out duplicate notifications (in case I commented multiple times on a post) and notifications where I made the post (that's a Code 3002 instance)
-      const targetArray = parentItem.Posts.Notifications.items;
-      if (targetArray.length > 0) {
-        const findDuplicate = filteredResults.findIndex(
-          (element) => element.id === targetArray[0].id
-        );
-        if (
-          findDuplicate === -1 &&
-          parentItem.Posts.usersID != currentuserID &&
-          typeof targetArray[0].code != "undefined"
-        ) {
-          filteredResults.unshift(targetArray[0]);
-          const nLProps: NotificationLibraryPropTypes = {
-            code: targetArray[0].code,
-            createdAt: targetArray[0].createdAt,
-            notificationID: targetArray[0].id,
-            payload: targetArray[0].payload,
-            postsID: targetArray[0].postsID,
-            dispatch,
-            currentuserID,
-          };
-          NotificationLibrary(nLProps);
+      if (parentItem.Posts != null) {
+        // Filter out duplicate notifications (in case I commented multiple times on a post) and notifications where I made the post (that's a Code 3002 instance)
+        const targetArray = parentItem.Posts.Notifications.items;
+        if (targetArray.length > 0) {
+          const findDuplicate = filteredResults.findIndex(
+            (element) => element.id === targetArray[0].id
+          );
+          if (
+            findDuplicate === -1 &&
+            parentItem.Posts.usersID != currentuserID &&
+            typeof targetArray[0].code != "undefined"
+          ) {
+            filteredResults.unshift(targetArray[0]);
+            const nLProps: NotificationLibraryPropTypes = {
+              code: targetArray[0].code,
+              createdAt: targetArray[0].createdAt,
+              notificationID: targetArray[0].id,
+              payload: targetArray[0].payload,
+              postsID: targetArray[0].postsID,
+              dispatch,
+              currentuserID,
+            };
+            NotificationLibrary(nLProps);
+          }
         }
+        setTimeout(() => {
+          dispatch(updateNumberUnread(filteredResults.length));
+        }, 1000);
+        // Delay explanation on GetNotificationsCloud.ts
       }
-      setTimeout(() => {
-        dispatch(updateNumberUnread(filteredResults.length));
-      }, 1000);
-      // Delay explanation on GetNotificationsCloud.ts
     });
 
     // Not act on it
   } catch (error) {
-    console.log("Error: " + JSON.stringify(error));
+    console.log("Error: " + error);
   }
 }
 
