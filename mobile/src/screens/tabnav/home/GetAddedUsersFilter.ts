@@ -1,13 +1,16 @@
 import { API, graphqlOperation } from "aws-amplify";
 import AddToAddedUsersFilter from "./AddToAddedUsersFilter";
 import { setGotAddedUsersFilter } from "../../../redux/home/homemain";
+import { GraphQLResult } from "@aws-amplify/api-graphql";
+import { AddedByCurrentUserQuery } from "../../../API";
 
 async function GetAddedUsersFilter({ dispatch, currentuser }) {
+  // Note, lots of @ts-ignore on this page. That's because Amplify's generated models don't include relations. In this case, it doesn't expect ReceiverUser or any of its fields
   const searchLimitBuffer = 2;
 
-  searchlimit = currentuser.addedcount + searchLimitBuffer;
+  const searchlimit = currentuser.addedcount + searchLimitBuffer;
 
-  const userResult = await API.graphql(
+  const userResult = (await API.graphql(
     graphqlOperation(`
         query AddedByCurrentUser {
           addedByCurrentUser (
@@ -15,14 +18,14 @@ async function GetAddedUsersFilter({ dispatch, currentuser }) {
                 limit: ${searchlimit},
             ) {
                 items {
-                    Users {
+                  ReceiverUser {
                         id
                     }
                 }
             }
         }
     `)
-  );
+  )) as GraphQLResult<AddedByCurrentUserQuery>;
 
   const userArray = userResult.data.addedByCurrentUser.items;
 
@@ -30,10 +33,12 @@ async function GetAddedUsersFilter({ dispatch, currentuser }) {
     dispatch(setGotAddedUsersFilter(true));
   } else {
     userArray.forEach((item) => {
-      if (item.Users != null) {
+      // @ts-ignore
+      if (item.ReceiverUser != null) {
         const filterObject = {
           usersID: {
-            eq: item.Users.id,
+            // @ts-ignore
+            eq: item.ReceiverUser.id,
           },
         };
         AddToAddedUsersFilter({ dispatch, filterObject });
@@ -41,8 +46,10 @@ async function GetAddedUsersFilter({ dispatch, currentuser }) {
 
       if (
         typeof userArray[searchlimit - 1 - searchLimitBuffer] === "undefined" ||
-        item.Users.id ===
-          userArray[searchlimit - 1 - searchLimitBuffer].Users.id
+        // @ts-ignore
+        item.ReceiverUser.id ===
+          // @ts-ignore
+          userArray[searchlimit - 1 - searchLimitBuffer].ReceiverUser.id
       ) {
         dispatch(setGotAddedUsersFilter(true));
       }

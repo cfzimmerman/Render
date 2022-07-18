@@ -10,6 +10,10 @@ import {
 } from "../../../graphql/mutations";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { CheckAddedUserQuery, GetUsersQuery } from "../../../API";
+import AddNewNotification, {
+  AddNewNotificationPropTypes,
+} from "../homevault/AddNewNotification";
+import { Code3001PayloadType } from "../homevault/NotificationLibrary";
 
 const UpdateOtherUserProfile = ({ action, dispatch }) => {
   const addeduser = {
@@ -68,6 +72,17 @@ async function AddUser({
     addedmecount: targetuser.addedmecount + 1,
   };
 
+  const notificationPayload: Code3001PayloadType = {
+    ouID: currentuser.id,
+  };
+
+  const newNotification: AddNewNotificationPropTypes = {
+    targetUserID: targetuser.id,
+    code: 3001,
+    payloadString: JSON.stringify(notificationPayload),
+    postsID: null,
+  };
+
   try {
     await Promise.all([
       API.graphql(
@@ -76,6 +91,7 @@ async function AddUser({
       API.graphql(graphqlOperation(updateUsers, { input: newcurrentuser })),
       API.graphql(graphqlOperation(updateUsers, { input: newtargetuser })),
     ]);
+    AddNewNotification(newNotification);
   } catch (error) {
     console.log(`\nError: ${JSON.stringify(error)}`);
   }

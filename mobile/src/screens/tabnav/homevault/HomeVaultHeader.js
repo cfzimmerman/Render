@@ -11,7 +11,9 @@ import {
 import { CollapsingHeaderBox, PrimaryDivider } from "../../../resources/atoms";
 import HomeTopLogo from "../home/HomeTopLogo";
 import SetPasswordBox from "./SetPasswordBox";
+import HeaderButtons from "./HeaderButtons";
 import StoriesBox from "./StoriesBox";
+import NewNotificationsPreview from "./NewNotificationsPreview";
 
 const HomeVaultHeader = ({
   navigation,
@@ -19,6 +21,7 @@ const HomeVaultHeader = ({
   storiesfullview,
   storiessectionlist,
   currentuser,
+  newNotificationData,
 }) => {
   return (
     <SafeAreaView style={styles.container}>
@@ -56,11 +59,20 @@ const HomeVaultHeader = ({
         </TouchableOpacity>
       </View>
 
+      <HeaderButtons navigation={navigation} />
+
       <StoriesBox
         navigation={navigation}
         dispatch={dispatch}
         storiesfullview={storiesfullview}
         storiessectionlist={storiessectionlist}
+      />
+
+      <NewNotificationsPreview
+        newNotificationData={newNotificationData}
+        navigation={navigation}
+        currentuser={currentuser}
+        dispatch={dispatch}
       />
 
       <SetPasswordBox currentuser={currentuser} navigation={navigation} />

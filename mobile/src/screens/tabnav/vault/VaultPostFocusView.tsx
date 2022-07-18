@@ -17,10 +17,11 @@ import { ToPortrait } from "../../../resources/utilities";
 import { Environment, Colors } from "../../../resources/project";
 import ChangeFocusView from "./ChangeFocusView";
 import ChangeLandscape from "./ChangeLandscape";
-
+import { VaultPostFullViewUsecaseTypes } from "./VaultPostFullView";
 import GestureHandler, {
   PinchGestureHandler,
 } from "react-native-gesture-handler";
+import { RootStateType } from "../../../redux/store";
 
 const ExitFocusView = ({ navigation, dispatch, listener }) => {
   ChangeFocusView({ dispatch, set: false });
@@ -30,26 +31,45 @@ const ExitFocusView = ({ navigation, dispatch, listener }) => {
   // ToPortrait();
 };
 
+interface UsecaseObject {
+  usecase: VaultPostFullViewUsecaseTypes;
+}
+
 const VaultPostFocusView = ({ navigation, route }) => {
   const dispatch = useDispatch();
 
   ScreenOrientation.unlockAsync();
 
-  const index = useSelector((state) => state.vaultpostdata.activepost);
-  const orientation = useSelector((state) => state.pageoptions.landscape);
+  const index = useSelector(
+    (state: RootStateType) => state.vaultpostdata.activepost
+  );
+  const orientation = useSelector(
+    (state: RootStateType) => state.pageoptions.landscape
+  );
 
-  const feeddata = useSelector((state) => state.vaultpostdata.vaultfeeddata);
-  const gallerydata = useSelector((state) => state.profilemain.gallerydata);
+  const feeddata = useSelector(
+    (state: RootStateType) => state.vaultpostdata.vaultfeeddata
+  );
+  const gallerydata = useSelector(
+    (state: RootStateType) => state.profilemain.gallerydata
+  );
   const otherusergallerydata = useSelector(
-    (state) => state.otheruserprofile.otherusergallerydata
+    (state: RootStateType) => state.otheruserprofile.otherusergallerydata
   );
   const storiesfullview = useSelector(
-    (state) => state.homemain.storiesfullview
+    (state: RootStateType) => state.homemain.storiesfullview
   );
-  const addedfeed = useSelector((state) => state.homemain.addedfeed);
-  const publicfeed = useSelector((state) => state.homemain.publicfeed);
+  const addedfeed = useSelector(
+    (state: RootStateType) => state.homemain.addedfeed
+  );
+  const publicfeed = useSelector(
+    (state: RootStateType) => state.homemain.publicfeed
+  );
+  const universalPostData = useSelector(
+    (state: RootStateType) => state.universalpost.universalPostData
+  );
 
-  const { usecase } = route.params;
+  const { usecase }: UsecaseObject = route.params;
 
   const listener = ScreenOrientation.addOrientationChangeListener((change) => {
     if (
@@ -124,9 +144,13 @@ const VaultPostFocusView = ({ navigation, route }) => {
     if (usecase === "publicfeed") {
       return publicfeed[index].signedurl;
     }
+    if (usecase === "universal") {
+      return universalPostData[index].signedurl;
+    }
   };
 
   // If the user goes super sayan speed mode through posts, sometimes the index doesn't update fast enough. So, the goBack() checks send the user back to fullview to prevent an "TypeError undefined" error
+  // Coming back to this a few months later, the repeated navigation.goBack() looks wack. If there's time later, optimize this.
   const ActivePostType = () => {
     if (usecase === "vault") {
       if (typeof feeddata[index] != "undefined") {
@@ -161,6 +185,12 @@ const VaultPostFocusView = ({ navigation, route }) => {
     } else if (usecase === "publicfeed") {
       if (typeof publicfeed[index] != "undefined") {
         return publicfeed[index].contenttype;
+      } else {
+        return navigation.goBack();
+      }
+    } else if (usecase === "universal") {
+      if (typeof universalPostData[index] != "undefined") {
+        return universalPostData[index].contenttype;
       } else {
         return navigation.goBack();
       }

@@ -71,6 +71,7 @@ async function UpdateProfile({
   dispatch,
   currentuserid,
   syncPreference,
+  localLibrary,
 }) {
   const updateduser = {
     id: currentuserid,
@@ -80,7 +81,7 @@ async function UpdateProfile({
   try {
     await API.graphql(graphqlOperation(updateUsers, { input: updateduser }));
   } catch (error) {
-    console.log(`error: ${error}`);
+    console.log("error: " + JSON.stringify(error));
   }
 
   if (oldpfpkey != "CompanyStock/defaultpfp.png") {
@@ -94,7 +95,7 @@ async function RemoveOldPfp(oldpfpkey) {
   try {
     await Storage.remove(oldpfpkey);
   } catch (error) {
-    console.log(`error: ${error}`);
+    console.log("error: " + JSON.stringify(error));
   }
 }
 

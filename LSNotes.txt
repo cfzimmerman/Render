@@ -1,4 +1,5 @@
 Local Sync (LS) is a local-only process by which users may choose to save images and/or videos to their local device in order to speed Vault loading.
+Later addition: Local Sync (LS) also now encompasses some non-optional user data storage (ex. Notifications cache). This holds the LS label to clarify all functions that utilize the DocumentDirectory, but it's not affected by LocalSyncSettings or LS opt out
 This is the current structure upon which it functions.
 
 Local Sync Constituents:
@@ -10,6 +11,12 @@ Local Sync Constituents:
     • LSGetConfig.ts
     • LSRemoveItem.ts
     • LSRewriteLocalLibrary.ts
+
+/homevault (not-optional)
+    • LSCreateNotificationStore.ts
+    • LSGetNotificationStore.ts
+    • LSUpdateNotificationStore.ts
+
 
 File path:
 {
@@ -37,6 +44,14 @@ File path:
         /LocalSync: {
             ... (image and video files named as they are in AWS S3 [DynamoDB/Posts/contentkey] - file extension already included)
             contentkey
+        },
+        NotificationStore.txt: {
+            contents: {
+                const notificationStore = {
+                    unreadCutoffDate: 2011-10-05T14:48:00.000Z (ISO 8061 date),
+                    notificationData: [] array of type NotificationDataItem (./src/screens.tabnav/homevault/NotificationLibrary.ts)
+                }
+            }
         }
     }
 }

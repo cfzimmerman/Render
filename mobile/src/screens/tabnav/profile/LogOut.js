@@ -3,6 +3,7 @@ import { Auth } from "aws-amplify";
 import * as Updates from "expo-updates";
 import LSClearStorage from "./LSClearStorage";
 import GetCurrentUser from "./GetCurrentUser";
+import LSClearNotificationStore from "../homevault/LSClearNotificationStore";
 // import { Restart } from 'fiction-expo-restart';
 
 /*
@@ -38,6 +39,7 @@ import { clearVaultPostData } from "../../../redux/vault/vaultpostdata";
 
 async function LogOut({ dispatch, navigation }) {
   LSClearStorage({ dispatch });
+  LSClearNotificationStore();
 
   try {
     await Auth.signOut();
