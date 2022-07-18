@@ -112,8 +112,27 @@ export const getNotifications = /* GraphQL */ `
       createdAt
       code
       payload
-      usersID
-      Users {
+      postsID
+      Posts {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contentlastupdated
+        contenttype
+        createdAt
+        deleteddate
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        updatedAt
+      }
+      UserNotifications {
         nextToken
       }
       updatedAt
@@ -132,24 +151,82 @@ export const listNotifications = /* GraphQL */ `
         createdAt
         code
         payload
-        usersID
+        postsID
         updatedAt
       }
       nextToken
     }
   }
 `;
-export const notificationsByDate = /* GraphQL */ `
-  query NotificationsByDate(
-    $usersID: ID!
+export const notificationsByCodeDate = /* GraphQL */ `
+  query NotificationsByCodeDate(
+    $postsID: ID!
+    $codeCreatedAt: ModelNotificationsByPostsCompositeKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelNotificationsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    notificationsByCodeDate(
+      postsID: $postsID
+      codeCreatedAt: $codeCreatedAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        code
+        payload
+        postsID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const notificationsByCode = /* GraphQL */ `
+  query NotificationsByCode(
+    $postsID: ID!
+    $code: ModelIntKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelNotificationsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    notificationsByCode(
+      postsID: $postsID
+      code: $code
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        code
+        payload
+        postsID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const notificationsByPostsID = /* GraphQL */ `
+  query NotificationsByPostsID(
+    $postsID: ID!
     $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelNotificationsFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    notificationsByDate(
-      usersID: $usersID
+    notificationsByPostsID(
+      postsID: $postsID
       createdAt: $createdAt
       sortDirection: $sortDirection
       filter: $filter
@@ -161,6 +238,126 @@ export const notificationsByDate = /* GraphQL */ `
         createdAt
         code
         payload
+        postsID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getUserNotifications = /* GraphQL */ `
+  query GetUserNotifications($id: ID!) {
+    getUserNotifications(id: $id) {
+      id
+      createdAt
+      notificationsID
+      usersID
+      Notifications {
+        id
+        createdAt
+        code
+        payload
+        postsID
+        updatedAt
+      }
+      Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      updatedAt
+    }
+  }
+`;
+export const listUserNotifications = /* GraphQL */ `
+  query ListUserNotifications(
+    $filter: ModelUserNotificationsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserNotifications(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        notificationsID
+        usersID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const userNotificationsByNotifications = /* GraphQL */ `
+  query UserNotificationsByNotifications(
+    $notificationsID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserNotificationsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    userNotificationsByNotifications(
+      notificationsID: $notificationsID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        notificationsID
+        usersID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const userNotificationsByUsers = /* GraphQL */ `
+  query UserNotificationsByUsers(
+    $usersID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserNotificationsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    userNotificationsByUsers(
+      usersID: $usersID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        notificationsID
         usersID
         updatedAt
       }
@@ -252,6 +449,35 @@ export const commentsByCreatedDate = /* GraphQL */ `
   ) {
     commentsByCreatedDate(
       postsID: $postsID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        commenttext
+        postsID
+        usersID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const commentsByUsersID = /* GraphQL */ `
+  query CommentsByUsersID(
+    $usersID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelCommentsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    commentsByUsersID(
+      usersID: $usersID
       createdAt: $createdAt
       sortDirection: $sortDirection
       filter: $filter
@@ -502,6 +728,9 @@ export const getPosts = /* GraphQL */ `
         updatedAt
       }
       Comments {
+        nextToken
+      }
+      Notifications {
         nextToken
       }
       PostViewTrackers {
@@ -859,6 +1088,9 @@ export const getUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
+      UserNotifications {
+        nextToken
+      }
       Posts {
         nextToken
       }
@@ -869,9 +1101,6 @@ export const getUsers = /* GraphQL */ `
         nextToken
       }
       ReceiverRelationships {
-        nextToken
-      }
-      Notifications {
         nextToken
       }
       createdAt
@@ -1139,70 +1368,6 @@ export const searchUsers = /* GraphQL */ `
           }
         }
       }
-    }
-  }
-`;
-export const getUserNotifications = /* GraphQL */ `
-  query GetUserNotifications($id: ID!) {
-    getUserNotifications(id: $id) {
-      id
-      notificationsID
-      usersID
-      notifications {
-        id
-        createdAt
-        code
-        payload
-        usersID
-        updatedAt
-      }
-      users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        disablednotifications
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        lastopened
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listUserNotifications = /* GraphQL */ `
-  query ListUserNotifications(
-    $filter: ModelUserNotificationsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listUserNotifications(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        notificationsID
-        usersID
-        createdAt
-        updatedAt
-      }
-      nextToken
     }
   }
 `;

@@ -37,12 +37,14 @@ export const createPostViewTracker = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -91,12 +93,14 @@ export const updatePostViewTracker = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -145,12 +149,14 @@ export const deletePostViewTracker = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -164,17 +170,135 @@ export const deletePostViewTracker = /* GraphQL */ `
     }
   }
 `;
-export const createUserRelationships = /* GraphQL */ `
-  mutation CreateUserRelationships(
-    $input: CreateUserRelationshipsInput!
-    $condition: ModelUserRelationshipsConditionInput
+export const createNotifications = /* GraphQL */ `
+  mutation CreateNotifications(
+    $input: CreateNotificationsInput!
+    $condition: ModelNotificationsConditionInput
   ) {
-    createUserRelationships(input: $input, condition: $condition) {
-      receivercognitosub
-      sendercognitosub
+    createNotifications(input: $input, condition: $condition) {
       id
       createdAt
+      code
+      payload
+      postsID
+      Posts {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contentlastupdated
+        contenttype
+        createdAt
+        deleteddate
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        updatedAt
+      }
+      UserNotifications {
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const updateNotifications = /* GraphQL */ `
+  mutation UpdateNotifications(
+    $input: UpdateNotificationsInput!
+    $condition: ModelNotificationsConditionInput
+  ) {
+    updateNotifications(input: $input, condition: $condition) {
+      id
+      createdAt
+      code
+      payload
+      postsID
+      Posts {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contentlastupdated
+        contenttype
+        createdAt
+        deleteddate
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        updatedAt
+      }
+      UserNotifications {
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const deleteNotifications = /* GraphQL */ `
+  mutation DeleteNotifications(
+    $input: DeleteNotificationsInput!
+    $condition: ModelNotificationsConditionInput
+  ) {
+    deleteNotifications(input: $input, condition: $condition) {
+      id
+      createdAt
+      code
+      payload
+      postsID
+      Posts {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contentlastupdated
+        contenttype
+        createdAt
+        deleteddate
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        updatedAt
+      }
+      UserNotifications {
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const createUserNotifications = /* GraphQL */ `
+  mutation CreateUserNotifications(
+    $input: CreateUserNotificationsInput!
+    $condition: ModelUserNotificationsConditionInput
+  ) {
+    createUserNotifications(input: $input, condition: $condition) {
+      id
+      createdAt
+      notificationsID
       usersID
+      Notifications {
+        id
+        createdAt
+        code
+        payload
+        postsID
+        updatedAt
+      }
       Users {
         id
         acceptedtos
@@ -182,56 +306,14 @@ export const createUserRelationships = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
-      senderID
-      SenderUser {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
-      receiverID
-      ReceiverUser {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -244,17 +326,24 @@ export const createUserRelationships = /* GraphQL */ `
     }
   }
 `;
-export const updateUserRelationships = /* GraphQL */ `
-  mutation UpdateUserRelationships(
-    $input: UpdateUserRelationshipsInput!
-    $condition: ModelUserRelationshipsConditionInput
+export const updateUserNotifications = /* GraphQL */ `
+  mutation UpdateUserNotifications(
+    $input: UpdateUserNotificationsInput!
+    $condition: ModelUserNotificationsConditionInput
   ) {
-    updateUserRelationships(input: $input, condition: $condition) {
-      receivercognitosub
-      sendercognitosub
+    updateUserNotifications(input: $input, condition: $condition) {
       id
       createdAt
+      notificationsID
       usersID
+      Notifications {
+        id
+        createdAt
+        code
+        payload
+        postsID
+        updatedAt
+      }
       Users {
         id
         acceptedtos
@@ -262,56 +351,14 @@ export const updateUserRelationships = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
-      senderID
-      SenderUser {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
-      receiverID
-      ReceiverUser {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -324,17 +371,24 @@ export const updateUserRelationships = /* GraphQL */ `
     }
   }
 `;
-export const deleteUserRelationships = /* GraphQL */ `
-  mutation DeleteUserRelationships(
-    $input: DeleteUserRelationshipsInput!
-    $condition: ModelUserRelationshipsConditionInput
+export const deleteUserNotifications = /* GraphQL */ `
+  mutation DeleteUserNotifications(
+    $input: DeleteUserNotificationsInput!
+    $condition: ModelUserNotificationsConditionInput
   ) {
-    deleteUserRelationships(input: $input, condition: $condition) {
-      receivercognitosub
-      sendercognitosub
+    deleteUserNotifications(input: $input, condition: $condition) {
       id
       createdAt
+      notificationsID
       usersID
+      Notifications {
+        id
+        createdAt
+        code
+        payload
+        postsID
+        updatedAt
+      }
       Users {
         id
         acceptedtos
@@ -342,56 +396,14 @@ export const deleteUserRelationships = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
-      senderID
-      SenderUser {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
-      receiverID
-      ReceiverUser {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -440,12 +452,14 @@ export const createComments = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -495,12 +509,14 @@ export const updateComments = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -550,12 +566,14 @@ export const deleteComments = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -565,6 +583,186 @@ export const deleteComments = /* GraphQL */ `
         updatedAt
       }
       createdAt
+      updatedAt
+    }
+  }
+`;
+export const createUserRelationships = /* GraphQL */ `
+  mutation CreateUserRelationships(
+    $input: CreateUserRelationshipsInput!
+    $condition: ModelUserRelationshipsConditionInput
+  ) {
+    createUserRelationships(input: $input, condition: $condition) {
+      id
+      createdAt
+      senderID
+      SenderUser {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      receiverID
+      ReceiverUser {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      updatedAt
+    }
+  }
+`;
+export const updateUserRelationships = /* GraphQL */ `
+  mutation UpdateUserRelationships(
+    $input: UpdateUserRelationshipsInput!
+    $condition: ModelUserRelationshipsConditionInput
+  ) {
+    updateUserRelationships(input: $input, condition: $condition) {
+      id
+      createdAt
+      senderID
+      SenderUser {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      receiverID
+      ReceiverUser {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      updatedAt
+    }
+  }
+`;
+export const deleteUserRelationships = /* GraphQL */ `
+  mutation DeleteUserRelationships(
+    $input: DeleteUserRelationshipsInput!
+    $condition: ModelUserRelationshipsConditionInput
+  ) {
+    deleteUserRelationships(input: $input, condition: $condition) {
+      id
+      createdAt
+      senderID
+      SenderUser {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      receiverID
+      ReceiverUser {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
       updatedAt
     }
   }
@@ -598,12 +796,14 @@ export const createPosts = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -613,6 +813,9 @@ export const createPosts = /* GraphQL */ `
         updatedAt
       }
       Comments {
+        nextToken
+      }
+      Notifications {
         nextToken
       }
       PostViewTrackers {
@@ -651,12 +854,14 @@ export const updatePosts = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -666,6 +871,9 @@ export const updatePosts = /* GraphQL */ `
         updatedAt
       }
       Comments {
+        nextToken
+      }
+      Notifications {
         nextToken
       }
       PostViewTrackers {
@@ -704,12 +912,14 @@ export const deletePosts = /* GraphQL */ `
         addedmecount
         birthday
         cognitosub
+        disablednotifications
         displayname
         email
         emailconfirmed
         firstvaultupload
         fullyauthenticated
         gamertag
+        lastopened
         mostrecentpublicpost
         pfp
         setpassword
@@ -719,6 +929,9 @@ export const deletePosts = /* GraphQL */ `
         updatedAt
       }
       Comments {
+        nextToken
+      }
+      Notifications {
         nextToken
       }
       PostViewTrackers {
@@ -740,12 +953,14 @@ export const createUsers = /* GraphQL */ `
       addedmecount
       birthday
       cognitosub
+      disablednotifications
       displayname
       email
       emailconfirmed
       firstvaultupload
       fullyauthenticated
       gamertag
+      lastopened
       mostrecentpublicpost
       pfp
       setpassword
@@ -754,13 +969,13 @@ export const createUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
+      UserNotifications {
+        nextToken
+      }
       Posts {
         nextToken
       }
       PostViewTrackers {
-        nextToken
-      }
-      UserRelationships {
         nextToken
       }
       SenderRelationships {
@@ -786,12 +1001,14 @@ export const updateUsers = /* GraphQL */ `
       addedmecount
       birthday
       cognitosub
+      disablednotifications
       displayname
       email
       emailconfirmed
       firstvaultupload
       fullyauthenticated
       gamertag
+      lastopened
       mostrecentpublicpost
       pfp
       setpassword
@@ -800,13 +1017,13 @@ export const updateUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
+      UserNotifications {
+        nextToken
+      }
       Posts {
         nextToken
       }
       PostViewTrackers {
-        nextToken
-      }
-      UserRelationships {
         nextToken
       }
       SenderRelationships {
@@ -832,12 +1049,14 @@ export const deleteUsers = /* GraphQL */ `
       addedmecount
       birthday
       cognitosub
+      disablednotifications
       displayname
       email
       emailconfirmed
       firstvaultupload
       fullyauthenticated
       gamertag
+      lastopened
       mostrecentpublicpost
       pfp
       setpassword
@@ -846,13 +1065,13 @@ export const deleteUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
+      UserNotifications {
+        nextToken
+      }
       Posts {
         nextToken
       }
       PostViewTrackers {
-        nextToken
-      }
-      UserRelationships {
         nextToken
       }
       SenderRelationships {
