@@ -35,6 +35,7 @@ import {
   Type,
   FileText,
   MessageSquare,
+  Bell,
 } from "react-native-feather";
 import Environment from "./Environment";
 import Colors from "./Colors";
@@ -79,6 +80,7 @@ const OriginalSizeIcons = {
   Anchor,
   Text: FileText,
   Comment: MessageSquare,
+  Notification: Bell,
 };
 
 const ResizedIcons = {

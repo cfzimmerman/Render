@@ -30,6 +30,7 @@ import GetComments from "./GetComments";
 import DeleteCommentModal from "./DeleteCommentModal";
 import CommentsEmptyComponent from "./CommentsEmptyComponent";
 import AddCommentModal from "./AddCommentModal";
+import { VaultPostFullViewUsecaseTypes } from "../vault/VaultPostFullView";
 
 const GetPost = ({
   usecase,
@@ -38,6 +39,7 @@ const GetPost = ({
   storiesfullview,
   addedfeed,
   publicfeed,
+  universalPostData,
 }) => {
   if (usecase === "gallery") {
     return gallerydata;
@@ -53,6 +55,9 @@ const GetPost = ({
   }
   if (usecase === "publicfeed") {
     return publicfeed;
+  }
+  if (usecase === "universal") {
+    return universalPostData;
   }
 };
 
@@ -79,12 +84,7 @@ const BackgroundImage = ({ postItem }) => {
 const CommentsMain = ({ navigation, route }) => {
   const [gotComments, setGotComments] = useState(false);
 
-  const usecase:
-    | "gallery"
-    | "otherusergallery"
-    | "stories"
-    | "addedfeed"
-    | "publicfeed" = route.params.usecase;
+  const usecase: VaultPostFullViewUsecaseTypes = route.params.usecase;
   const index: number = route.params.index;
 
   const dispatch = useDispatch();
@@ -117,6 +117,9 @@ const CommentsMain = ({ navigation, route }) => {
   const publicfeed = useSelector(
     (state: RootStateType) => state.homemain.publicfeed
   );
+  const universalPostData = useSelector(
+    (state: RootStateType) => state.universalpost.universalPostData
+  );
 
   const currentFeed = GetPost({
     usecase,
@@ -125,6 +128,7 @@ const CommentsMain = ({ navigation, route }) => {
     storiesfullview,
     addedfeed,
     publicfeed,
+    universalPostData,
   });
 
   const postItem: PostType = currentFeed[index];

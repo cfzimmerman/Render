@@ -23,16 +23,12 @@ import {
   PostHeaderType,
   CurrentUserType,
 } from "../../../resources/CommonTypes";
+import { VaultPostFullViewUsecaseTypes } from "../vault/VaultPostFullView";
 
 interface AddCommentModalPropType {
   dispatch: DispatchType;
   item: PostType;
-  usecase:
-    | "gallery"
-    | "otherusergallery"
-    | "stories"
-    | "addedfeed"
-    | "publicfeed";
+  usecase: VaultPostFullViewUsecaseTypes;
   index: number;
   currentuser: CurrentUserType;
 }
@@ -109,8 +105,6 @@ const AddCommentModal = ({
                       AddComment({
                         item,
                         dispatch,
-                        usecase,
-                        index,
                         commentText,
                         currentuser,
                       });
