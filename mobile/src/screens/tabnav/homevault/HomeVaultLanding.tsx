@@ -17,7 +17,6 @@ import {
 } from "../../../resources/project";
 import { SystemmessageModal } from "../../../resources/molecules";
 import GetAddedUsersFilter from "../home/GetAddedUsersFilter";
-import GetCurrentUser from "../profile/GetCurrentUser";
 import GetStoriesData from "../home/GetStoriesData";
 import GetVaultData from "../vault/GetVaultData";
 import HomeVaultHeader from "./HomeVaultHeader";

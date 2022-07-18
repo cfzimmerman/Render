@@ -82,7 +82,7 @@ async function GetNotificationsCloud({
     }, 1000);
     // Local cache is updated when (numberUnread === newNotificationData.length). With other GetCodeXXXXNotifications functions, sometimes those overlap before all functions are finished. A delay updating the number of unread notifications gives time for all to catch up.
   } catch (error) {
-    console.log("Error: " + JSON.stringify(error));
+    console.log("Error: " + error);
   }
 }
 

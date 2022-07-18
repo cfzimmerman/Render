@@ -63,7 +63,8 @@ const PostContent = ({ item, newHeight, navigation, index, selectedfeed }) => {
 const AreEqual = (previousProps, nextProps) => {
   if (
     previousProps.item.contentkey === nextProps.item.contentkey &&
-    previousProps.selectedfeed === nextProps.selectedfeed
+    previousProps.selectedfeed === nextProps.selectedfeed &&
+    previousProps.index === nextProps.index
   ) {
     return true;
   }
