@@ -221,9 +221,12 @@ const VaultPostFullView = ({ navigation, route }) => {
         dispatch,
         publicfeednexttoken,
       });
-    } else if (usecase === "stories" || usecase === "universal") {
+    }
+    /*
+     else if (usecase === "stories" || usecase === "universal") {
       console.log("EndReached");
     }
+    */
   };
 
   const dispatch = useDispatch();
