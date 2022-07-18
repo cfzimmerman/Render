@@ -7,7 +7,11 @@ import {
   FlatList,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { BackArrow, PrimaryDivider } from "../../../resources/atoms";
+import {
+  BackArrow,
+  HalfByFullDisplayBox,
+  PrimaryDivider,
+} from "../../../resources/atoms";
 import {
   Environment,
   Colors,
@@ -35,6 +39,19 @@ const NotificationsTitleBox = () => {
       <View style={styles.titleBoxCounterweight} pointerEvents={"none"}>
         <BackArrow />
       </View>
+    </View>
+  );
+};
+
+const EmptyNotificationsBox = () => {
+  return (
+    <View style={styles.emptyNotificationsWrapper}>
+      <HalfByFullDisplayBox
+        header="🤷‍♂️"
+        title="No notifications"
+        description="Maybe they're hiding"
+        Action={() => null}
+      />
     </View>
   );
 };
@@ -75,6 +92,7 @@ const NotificationsMain = ({ navigation }) => {
         data={notificationData}
         keyExtractor={(item) => item.notificationID}
         renderItem={renderItem}
+        ListEmptyComponent={EmptyNotificationsBox}
       />
     </SafeAreaView>
   );
@@ -108,6 +126,9 @@ const styles = StyleSheet.create({
   hintMessageText: {
     textAlign: "right",
     color: Colors.Accent90,
+  },
+  emptyNotificationsWrapper: {
+    marginVertical: Environment.LargePadding,
   },
 });
 

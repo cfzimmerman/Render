@@ -6,7 +6,7 @@ import { Colors, Environment } from "../../../resources/project";
 import GalleryTile from "./GalleryTile";
 import GalleryFooter from "./GalleryFooter";
 import GetGalleryData from "./GetGalleryData";
-import SelfGalleryHeader from "./SelfGalleryHeader";
+import SelfGalleryHeader from "./SelfGalleryHeader.tsx";
 
 const GalleryMain = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -79,7 +79,7 @@ const GalleryMain = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.Secondary,
+    // backgroundColor: Colors.Secondary,
     alignItems: "center",
   },
   liststyle: {
