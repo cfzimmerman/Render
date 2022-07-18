@@ -8,6 +8,60 @@ type PostViewTracker @model @auth(rules: [{ allow: public }]) {
   Users: Users @belongsTo
 }
 
+type Notifications @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  createdAt: String!
+  code: Int
+  payload: String
+  postsID: ID
+    @index(
+      name: "byPosts"
+      queryField: "notificationsByCodeDate"
+      sortKeyFields: ["code", "createdAt"]
+    )
+    @index(name: "notificationsByCode", queryField: "notificationsByCode", sortKeyFields: ["code"])
+    @index(
+      name: "notificationsByPostsID"
+      queryField: "notificationsByPostsID"
+      sortKeyFields: ["createdAt"]
+    )
+  # @index(name: "byPosts", queryField: "notificationsByPostsID", sortKeyFields: ["createdAt"])
+  # @index(name: "notificationsByCode", queryField: "notificationsByCode", sortKeyFields: ["code"])
+  Posts: Posts @belongsTo(fields: ["postsID"])
+  UserNotifications: [UserNotifications] @hasMany(indexName: "byNotifications", fields: ["id"])
+}
+
+type UserNotifications @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  createdAt: String!
+  notificationsID: ID
+    @index(
+      name: "byNotifications"
+      queryField: "userNotificationsByNotifications"
+      sortKeyFields: ["createdAt"]
+    )
+  usersID: ID
+    @index(name: "byUsers", queryField: "userNotificationsByUsers", sortKeyFields: ["createdAt"])
+  Notifications: Notifications @belongsTo(fields: ["notificationsID"])
+  Users: Users @belongsTo(fields: ["usersID"])
+}
+
+type Comments @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  commenttext: String
+  postsID: ID
+    @index(name: "byPosts")
+    @index(
+      name: "commentsByCreatedDate"
+      queryField: "commentsByCreatedDate"
+      sortKeyFields: ["createdAt"]
+    )
+  Posts: Posts @belongsTo(fields: ["postsID"])
+  usersID: ID @index(name: "byUsers", queryField: "commentsByUsersID", sortKeyFields: ["createdAt"])
+  Users: Users @belongsTo(fields: ["usersID"])
+  createdAt: String!
+}
+
 type UserRelationships @model @auth(rules: [{ allow: public }]) {
   id: ID!
   createdAt: String!
@@ -29,22 +83,6 @@ type UserRelationships @model @auth(rules: [{ allow: public }]) {
       sortKeyFields: ["createdAt"]
     )
   ReceiverUser: Users @belongsTo(fields: ["receiverID"])
-}
-
-type Comments @model @auth(rules: [{ allow: public }]) {
-  id: ID!
-  commenttext: String
-  postsID: ID
-    @index(name: "byPosts")
-    @index(
-      name: "commentsByCreatedDate"
-      queryField: "commentsByCreatedDate"
-      sortKeyFields: ["createdAt"]
-    )
-  Posts: Posts @belongsTo(fields: ["postsID"])
-  usersID: ID @index(name: "byUsers")
-  Users: Users @belongsTo(fields: ["usersID"])
-  createdAt: String!
 }
 
 type Posts @model @searchable @auth(rules: [{ allow: public }]) {
@@ -92,6 +130,7 @@ type Posts @model @searchable @auth(rules: [{ allow: public }]) {
     )
   Users: Users @belongsTo(fields: ["usersID"])
   Comments: [Comments] @hasMany(indexName: "byPosts", fields: ["id"])
+  Notifications: [Notifications] @hasMany(indexName: "byPosts", fields: ["id"])
   PostViewTrackers: [PostViewTracker] @hasMany(indexName: "byPosts", fields: ["id"])
 }
 
@@ -102,12 +141,14 @@ type Users @model @searchable @auth(rules: [{ allow: public }]) {
   addedmecount: Int
   birthday: AWSDate
   cognitosub: String @index(name: "userByCognitosub", queryField: "userByCognitosub")
+  disablednotifications: String
   displayname: String
   email: AWSEmail @index(name: "userByEmail", queryField: "userByEmail")
   emailconfirmed: Boolean
   firstvaultupload: Boolean
   fullyauthenticated: Boolean
   gamertag: String @index(name: "userByGamertag", queryField: "userByGamertag")
+  lastopened: AWSDateTime
   mostrecentpublicpost: AWSDateTime
   pfp: String
   setpassword: Boolean
@@ -115,6 +156,7 @@ type Users @model @searchable @auth(rules: [{ allow: public }]) {
   type: String
     @index(name: "searchByGamertag", sortKeyFields: ["gamertag"], queryField: "searchByGamertag")
   Comments: [Comments] @hasMany(indexName: "byUsers", fields: ["id"])
+  UserNotifications: [UserNotifications] @hasMany(indexName: "byUsers", fields: ["id"])
   Posts: [Posts] @hasMany(indexName: "byUsers", fields: ["id"])
   PostViewTrackers: [PostViewTracker] @hasMany(indexName: "byUsers", fields: ["id"])
   SenderRelationships: [UserRelationships] @hasMany(indexName: "bySender", fields: ["id"])

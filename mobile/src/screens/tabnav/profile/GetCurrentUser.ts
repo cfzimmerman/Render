@@ -22,11 +22,8 @@ async function GetCurrentUser({ dispatch, navigation }) {
     ) {
       await SplashScreen.hideAsync();
       GetOnboardingImageAsets({ dispatch });
-      console.log("\nGCU IF - FIRST");
       navigation.navigate("OnboardingLanding");
     } else {
-      console.log("\nGCU ELSE - SECOND");
-
       const userid: string = userinfo.attributes["custom:userID"];
 
       const result = (await API.graphql(
@@ -78,7 +75,6 @@ async function GetCurrentUser({ dispatch, navigation }) {
         await SplashScreen.hideAsync();
         GetOnboardingImageAsets({ dispatch });
       } else if (typeof navigation != "undefined") {
-        console.log("HVL");
         navigation.navigate("HomeVaultLanding");
       }
 

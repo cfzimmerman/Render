@@ -25,22 +25,37 @@ import {
 } from "../../../resources/project";
 import ChangeFocusView from "./ChangeFocusView";
 import PostShareModal from "./PostShareModal";
+import { RootStateType } from "../../../redux/store";
+import { VaultPostFullViewUsecaseTypes } from "./VaultPostFullView";
 
-const EnterComments = ({ index, usecase, navigation }) => {
+interface EnterCommentsPropTypes {
+  index: number;
+  usecase: VaultPostFullViewUsecaseTypes;
+  navigation: any;
+}
+
+const EnterComments = ({
+  index,
+  usecase,
+  navigation,
+}: EnterCommentsPropTypes) => {
   // Usecases are explicitly checked as opposed to != "vault" to ensure we've correctly configured CommentsMain for every necessary case
   if (
     usecase === "gallery" ||
     usecase === "otherusergallery" ||
     usecase === "stories" ||
     usecase === "addedfeed" ||
-    usecase === "publicfeed"
+    usecase === "publicfeed" ||
+    usecase === "universal"
   ) {
     navigation.navigate("CommentsMain", { usecase, index });
   }
 };
 
 const PostOptionsModal = ({ navigation, dispatch, usecase, item, index }) => {
-  const postoptions = useSelector((state) => state.vaultpostdata.options);
+  const postoptions = useSelector(
+    (state: RootStateType) => state.vaultpostdata.options
+  );
 
   const ActivateShare = ({ dispatch }) => {
     dispatch(setShareActive(true));
@@ -196,7 +211,7 @@ const PostOptionsModal = ({ navigation, dispatch, usecase, item, index }) => {
               />
               <CubeSizeButton
                 Icon={Icons.OriginalSize.Share}
-                Action={() => ActivateShare({ dispatch, item })}
+                Action={() => ActivateShare({ dispatch })}
                 isactive={false}
               />
               <CubeSizeButton
@@ -270,7 +285,7 @@ const PostOptionsModal = ({ navigation, dispatch, usecase, item, index }) => {
               />
               <CubeSizeButton
                 Icon={Icons.OriginalSize.Share}
-                Action={() => ActivateShare({ dispatch, item })}
+                Action={() => ActivateShare({ dispatch })}
                 isactive={false}
               />
               <CubeSizeButton
@@ -319,7 +334,7 @@ const PostOptionsModal = ({ navigation, dispatch, usecase, item, index }) => {
             />
             <CubeSizeButton
               Icon={Icons.OriginalSize.Share}
-              Action={() => ActivateShare({ dispatch, item })}
+              Action={() => ActivateShare({ dispatch })}
               isactive={false}
             />
             <CubeSizeButton

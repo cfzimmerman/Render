@@ -2,7 +2,7 @@ import react, { useState } from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { Environment, Colors, GlobalStyles } from "../project";
 
-// origin: null, "OtherUserProfileLanding", "ProfileLanding"
+// origin: null, "OtherUserProfileLanding", "ProfileLanding", "HeaderButtons"
 const IconHalfbarButton = ({ label, Action, Icon, active, origin }) => {
   const [isDisabled, setIsDisabled] = useState(false);
 

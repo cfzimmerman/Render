@@ -9,8 +9,10 @@ import messagemodal from "../system/messagemodal";
 import loadprogressmessage from "../system/loadprogressmessage";
 import onboarding from "../system/onboarding";
 import localsync from "../system/localsync";
+import notifications from "../system/notifications";
 
 import pageoptions from "../general/pageoptions";
+import universalpost from "../general/universalpost";
 
 import vaultpostdata from "../vault/vaultpostdata";
 
@@ -43,6 +45,8 @@ const reducer = combineReducers({
   onboarding,
   socialmain,
   localsync,
+  notifications,
+  universalpost,
 });
 
 const store = configureStore({

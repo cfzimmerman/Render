@@ -117,6 +117,11 @@ const UserDialogue = (prop?: string) => {
         title: "Incorrect code",
         description: "Please request a new code and try again.",
       },
+      postNotFound: {
+        header: "🥺",
+        title: "Post not found",
+        description: "Its owner sent it to a farm upstate.",
+      },
     },
   };
 

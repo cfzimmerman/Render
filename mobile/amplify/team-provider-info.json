@@ -12,19 +12,5 @@
       "AmplifyAppId": "d88kw0i3xs9f9",
       "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-mobile-production-161112-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     }
-  },
-  "production": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-mobile-production-161112-authRole",
-      "UnauthRoleArn": "arn:aws:iam::280592462047:role/amplify-mobile-production-161112-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::280592462047:role/amplify-mobile-production-161112-authRole",
-      "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-mobile-production-161112-deployment",
-      "UnauthRoleName": "amplify-mobile-production-161112-unauthRole",
-      "StackName": "amplify-mobile-production-161112",
-      "StackId": "arn:aws:cloudformation:us-east-1:280592462047:stack/amplify-mobile-production-161112/bf988910-c280-11ec-bce1-12b8bb993cb5",
-      "AmplifyAppId": "d88kw0i3xs9f9",
-      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-mobile-production-161112-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
-    }
   }
 }

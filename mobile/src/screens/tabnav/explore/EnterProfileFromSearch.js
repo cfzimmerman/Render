@@ -15,7 +15,6 @@ const EnterProfileFromSearch = ({
       cognitosub: item.cognitosub,
       pfpurl: item.pfpurl,
       addedmecount: item.addedmecount,
-      cognitosub: item.cognitosub,
     };
 
     dispatch(setOtherUser(otheruser));

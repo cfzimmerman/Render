@@ -44,7 +44,8 @@ const SwipeUp = ({ index, usecase, navigation }) => {
     usecase === "otherusergallery" ||
     usecase === "stories" ||
     usecase === "addedfeed" ||
-    usecase === "publicfeed"
+    usecase === "publicfeed" ||
+    usecase === "universal"
   ) {
     navigation.navigate("CommentsMain", { usecase, index });
   }

@@ -1,7 +1,6 @@
 import react, { useRef, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { SectionGrid } from "react-native-super-grid";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useScrollToTop } from "@react-navigation/native";
 import * as SplashScreen from "expo-splash-screen";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,6 +29,10 @@ import LSGetConfig from "../profile/LSGetConfig";
 import LSGetLibrary from "../profile/LSGetLibrary";
 import CheckDeletedPosts from "./CheckDeletedPosts";
 import RefreshHomeVault from "./RefreshHomeVault";
+import LSGetNotificationStore from "./LSGetNotificationStore";
+import GetNotificationsCloud from "./GetNotificationsCloud";
+import { RootStateType } from "../../../redux/store";
+import LSUpdateNotificationStore from "./LSUpdateNotificationStore";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -50,41 +53,65 @@ const HomeVaultLanding = ({ navigation }) => {
 
   const [gotInitialVaultData, setGotInitialVaultData] = useState(false);
 
+  const [gotNotifications, setGotNotifications] = useState(false);
+
+  const [updatedNotificationStore, setUpdatedNotificationStore] =
+    useState(false);
+
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const currentuser = useSelector((state) => state.profilemain.currentuser);
+  const currentuser = useSelector(
+    (state: RootStateType) => state.profilemain.currentuser
+  );
   const onboardingstatus = useSelector(
-    (state) => state.homemain.onboardingstatus
+    (state: RootStateType) => state.homemain.onboardingstatus
   );
 
   const vaultpostdata = useSelector(
-    (state) => state.vaultpostdata.vaultpostdata
+    (state: RootStateType) => state.vaultpostdata.vaultpostdata
   );
   const vaultfeeddata = useSelector(
-    (state) => state.vaultpostdata.vaultfeeddata
+    (state: RootStateType) => state.vaultpostdata.vaultfeeddata
   );
-  const nextToken = useSelector((state) => state.vaultpostdata.nextToken);
-  const fetchingdata = useSelector((state) => state.vaultpostdata.fetchingdata);
+  const nextToken = useSelector(
+    (state: RootStateType) => state.vaultpostdata.nextToken
+  );
+  const fetchingdata = useSelector(
+    (state: RootStateType) => state.vaultpostdata.fetchingdata
+  );
 
   const addedusersfilter = useSelector(
-    (state) => state.homemain.addedusersfilter
+    (state: RootStateType) => state.homemain.addedusersfilter
   );
   const gotaddedusersfilter = useSelector(
-    (state) => state.homemain.gotaddedusersfilter
+    (state: RootStateType) => state.homemain.gotaddedusersfilter
   );
 
   const storiessectionlist = useSelector(
-    (state) => state.homemain.storiessectionlist
+    (state: RootStateType) => state.homemain.storiessectionlist
   );
   const storiesfullview = useSelector(
-    (state) => state.homemain.storiesfullview
+    (state: RootStateType) => state.homemain.storiesfullview
   );
   const vaultRefreshDate = useSelector(
-    (state) => state.vaultpostdata.vaultrefreshdate
+    (state: RootStateType) => state.vaultpostdata.vaultrefreshdate
   );
 
-  const localConfig = useSelector((state) => state.localsync.localConfig);
-  const localLibrary = useSelector((state) => state.localsync.localLibrary);
+  const localConfig = useSelector(
+    (state: RootStateType) => state.localsync.localConfig
+  );
+  const localLibrary = useSelector(
+    (state: RootStateType) => state.localsync.localLibrary
+  );
+  const unreadCutoffDate = useSelector(
+    (state: RootStateType) => state.notifications.unreadCutoffDate
+  );
+  const newNotificationData = useSelector(
+    (state: RootStateType) => state.notifications.newNotificationData
+  );
+  const numberUnread = useSelector(
+    (state: RootStateType) => state.notifications.numberUnread
+  );
 
   const dispatch = useDispatch();
 
@@ -100,6 +127,7 @@ const HomeVaultLanding = ({ navigation }) => {
     GetAddedUsersFilter({ dispatch, currentuser });
     LSGetConfig({ dispatch });
     LSGetLibrary({ dispatch });
+    LSGetNotificationStore({ dispatch });
     setGotAddedUsersFilter(true);
   } else if (
     typeof currentuser.cognitosub !== "undefined" &&
@@ -114,8 +142,17 @@ const HomeVaultLanding = ({ navigation }) => {
     });
     DelayCheckPosts({ dispatch, localLibrary, currentuser });
     setInitialLoad(true);
+  } else if (unreadCutoffDate != null && gotNotifications === false) {
+    GetNotificationsCloud({ currentuser, unreadCutoffDate, dispatch });
+    setGotNotifications(true);
+  } else if (
+    updatedNotificationStore === false &&
+    newNotificationData.length > 0 &&
+    numberUnread === newNotificationData.length
+  ) {
+    LSUpdateNotificationStore({ newNotificationData });
+    setUpdatedNotificationStore(true);
   }
-
   async function HideSplash() {
     await SplashScreen.hideAsync();
   }
@@ -133,6 +170,7 @@ const HomeVaultLanding = ({ navigation }) => {
       nextToken,
       syncPreference: localConfig.syncPreference,
       localLibrary,
+      limit: undefined,
     }); // .then((result) => console.log(result))
     HideSplash();
     setGotInitialVaultData(true);
@@ -152,6 +190,7 @@ const HomeVaultLanding = ({ navigation }) => {
         nextToken,
         syncPreference: localConfig.syncPreference,
         localLibrary,
+        limit: undefined,
       });
     }
   };
@@ -195,6 +234,7 @@ const HomeVaultLanding = ({ navigation }) => {
       <SectionGrid
         sections={vaultpostdata}
         style={styles.sectiongridstyle}
+        // @ts-ignore
         key={(item) => item.id}
         itemDimension={Environment.HalfBar}
         ref={ref}
@@ -214,6 +254,7 @@ const HomeVaultLanding = ({ navigation }) => {
           storiesfullview,
           storiessectionlist,
           currentuser,
+          newNotificationData,
         })}
         ListFooterComponent={SectionGridFooter({
           length: vaultfeeddata.length,
