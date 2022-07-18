@@ -23,9 +23,20 @@ import {
   Icons,
 } from "../../../resources/project";
 import { HalfbarButton } from "../../../resources/atoms";
+import { RootStateType } from "../../../redux/store";
 
-async function DownloadPost({ item, dispatch }) {
+async function DownloadPost({ item, dispatch, setUserMessage }) {
   let cacheUri;
+
+  const callback = (downloadProgress) => {
+    const progress = `${Math.round(
+      (downloadProgress.totalBytesWritten /
+        downloadProgress.totalBytesExpectedToWrite) *
+        100
+    )}%`;
+    setUserMessage(progress);
+  };
+
   try {
     // Fetch a new url because only cloud content is supported by Filesystem.downloadAsync()
     const cloudSignedURL = await Storage.get(item.contentkey, {
@@ -35,10 +46,14 @@ async function DownloadPost({ item, dispatch }) {
     const cacheAddress =
       FileSystem.cacheDirectory + "shareable-" + item.contentkey;
 
-    const downloadResult = await FileSystem.downloadAsync(
+    const downloadResumable = FileSystem.createDownloadResumable(
       cloudSignedURL,
-      cacheAddress
+      cacheAddress,
+      {},
+      callback
     );
+
+    const downloadResult = await downloadResumable.downloadAsync();
 
     cacheUri = downloadResult.uri;
     await MediaLibrary.saveToLibraryAsync(downloadResult.uri);
@@ -80,7 +95,9 @@ async function NativeShare({ item, dispatch, setUserMessage }) {
 const PostShareModal = ({ dispatch, item }) => {
   const [userMessage, setUserMessage] = useState("Download content");
 
-  const shareactive = useSelector((state) => state.vaultpostdata.shareactive);
+  const shareactive = useSelector(
+    (state: RootStateType) => state.vaultpostdata.shareactive
+  );
 
   return (
     <Modal
@@ -115,7 +132,8 @@ const PostShareModal = ({ dispatch, item }) => {
               label="Download"
               active={false}
               Action={() => {
-                DownloadPost({ item, dispatch }), setUserMessage("Saving");
+                DownloadPost({ item, dispatch, setUserMessage });
+                //, setUserMessage("Saving");
               }}
             />
             <HalfbarButton
