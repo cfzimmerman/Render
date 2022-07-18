@@ -137,7 +137,7 @@ const PostShareModal = ({ dispatch, item }) => {
               }}
             />
             <HalfbarButton
-              label="More"
+              label="Share"
               active={false}
               Action={() => {
                 NativeShare({ item, dispatch, setUserMessage }),
