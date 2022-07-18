@@ -71,6 +71,7 @@ const NotificationsMain = ({ navigation }) => {
       <PrimaryDivider />
       <HintMessage message={"Tap for options"} />
       <FlatList
+        contentContainerStyle={styles.flatlistContainerStyle}
         data={notificationData}
         keyExtractor={(item) => item.notificationID}
         renderItem={renderItem}
@@ -85,6 +86,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical:
       Platform.OS === "android" ? Environment.StandardPadding : 0,
+  },
+  flatlistContainerStyle: {
+    flex: 1,
   },
   titleBoxWrapper: {
     width: Environment.FullBar,
