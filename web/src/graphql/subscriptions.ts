@@ -168,8 +168,27 @@ export const onCreateNotifications = /* GraphQL */ `
       createdAt
       code
       payload
-      usersID
-      Users {
+      postsID
+      Posts {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contentlastupdated
+        contenttype
+        createdAt
+        deleteddate
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        updatedAt
+      }
+      UserNotifications {
         nextToken
       }
       updatedAt
@@ -183,8 +202,27 @@ export const onUpdateNotifications = /* GraphQL */ `
       createdAt
       code
       payload
-      usersID
-      Users {
+      postsID
+      Posts {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contentlastupdated
+        contenttype
+        createdAt
+        deleteddate
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        updatedAt
+      }
+      UserNotifications {
         nextToken
       }
       updatedAt
@@ -198,9 +236,154 @@ export const onDeleteNotifications = /* GraphQL */ `
       createdAt
       code
       payload
-      usersID
-      Users {
+      postsID
+      Posts {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contentlastupdated
+        contenttype
+        createdAt
+        deleteddate
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        updatedAt
+      }
+      UserNotifications {
         nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const onCreateUserNotifications = /* GraphQL */ `
+  subscription OnCreateUserNotifications {
+    onCreateUserNotifications {
+      id
+      createdAt
+      notificationsID
+      usersID
+      Notifications {
+        id
+        createdAt
+        code
+        payload
+        postsID
+        updatedAt
+      }
+      Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      updatedAt
+    }
+  }
+`;
+export const onUpdateUserNotifications = /* GraphQL */ `
+  subscription OnUpdateUserNotifications {
+    onUpdateUserNotifications {
+      id
+      createdAt
+      notificationsID
+      usersID
+      Notifications {
+        id
+        createdAt
+        code
+        payload
+        postsID
+        updatedAt
+      }
+      Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
+      }
+      updatedAt
+    }
+  }
+`;
+export const onDeleteUserNotifications = /* GraphQL */ `
+  subscription OnDeleteUserNotifications {
+    onDeleteUserNotifications {
+      id
+      createdAt
+      notificationsID
+      usersID
+      Notifications {
+        id
+        createdAt
+        code
+        payload
+        postsID
+        updatedAt
+      }
+      Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        lastopened
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+        updatedAt
       }
       updatedAt
     }
@@ -584,6 +767,9 @@ export const onCreatePosts = /* GraphQL */ `
       Comments {
         nextToken
       }
+      Notifications {
+        nextToken
+      }
       PostViewTrackers {
         nextToken
       }
@@ -634,6 +820,9 @@ export const onUpdatePosts = /* GraphQL */ `
         updatedAt
       }
       Comments {
+        nextToken
+      }
+      Notifications {
         nextToken
       }
       PostViewTrackers {
@@ -688,6 +877,9 @@ export const onDeletePosts = /* GraphQL */ `
       Comments {
         nextToken
       }
+      Notifications {
+        nextToken
+      }
       PostViewTrackers {
         nextToken
       }
@@ -720,6 +912,9 @@ export const onCreateUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
+      UserNotifications {
+        nextToken
+      }
       Posts {
         nextToken
       }
@@ -730,9 +925,6 @@ export const onCreateUsers = /* GraphQL */ `
         nextToken
       }
       ReceiverRelationships {
-        nextToken
-      }
-      Notifications {
         nextToken
       }
       createdAt
@@ -765,6 +957,9 @@ export const onUpdateUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
+      UserNotifications {
+        nextToken
+      }
       Posts {
         nextToken
       }
@@ -775,9 +970,6 @@ export const onUpdateUsers = /* GraphQL */ `
         nextToken
       }
       ReceiverRelationships {
-        nextToken
-      }
-      Notifications {
         nextToken
       }
       createdAt
@@ -810,6 +1002,9 @@ export const onDeleteUsers = /* GraphQL */ `
       Comments {
         nextToken
       }
+      UserNotifications {
+        nextToken
+      }
       Posts {
         nextToken
       }
@@ -821,135 +1016,6 @@ export const onDeleteUsers = /* GraphQL */ `
       }
       ReceiverRelationships {
         nextToken
-      }
-      Notifications {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateUserNotifications = /* GraphQL */ `
-  subscription OnCreateUserNotifications {
-    onCreateUserNotifications {
-      id
-      notificationsID
-      usersID
-      notifications {
-        id
-        createdAt
-        code
-        payload
-        usersID
-        updatedAt
-      }
-      users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        disablednotifications
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        lastopened
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateUserNotifications = /* GraphQL */ `
-  subscription OnUpdateUserNotifications {
-    onUpdateUserNotifications {
-      id
-      notificationsID
-      usersID
-      notifications {
-        id
-        createdAt
-        code
-        payload
-        usersID
-        updatedAt
-      }
-      users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        disablednotifications
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        lastopened
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteUserNotifications = /* GraphQL */ `
-  subscription OnDeleteUserNotifications {
-    onDeleteUserNotifications {
-      id
-      notificationsID
-      usersID
-      notifications {
-        id
-        createdAt
-        code
-        payload
-        usersID
-        updatedAt
-      }
-      users {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        cognitosub
-        disablednotifications
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        lastopened
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-        updatedAt
       }
       createdAt
       updatedAt
