@@ -16,6 +16,7 @@
 .fileContainer {
   display: flex;
   height: 100%;
+  width: 60%;
   flex-direction: column;
   justify-content: center;
   align-items: center;

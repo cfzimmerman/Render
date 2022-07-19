@@ -20,8 +20,11 @@ code {
 
   /* colors */
   --translucent-white: rgba(255, 255, 255, 0.5);
+  --very-translucent-white: rgba(255, 255, 255, 0.25);
   --dark-blue: #111d40;
   --midnight-blue: #000028;
+  --success-green: #00e677b0;
+  --reject-red: #ff1745ad;
 
   /* vars */
   --button-size: 3rem;
