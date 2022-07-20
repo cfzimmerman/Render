@@ -96,25 +96,22 @@ async function GetCurrentUser({ dispatch, navigation }) {
         storagesizeinbytes: user.storagesizeinbytes,
       };
 
-      console.log("updatedAt: " + user.updatedAt);
-
       batch(() => {
         dispatch(setCurrentUser(currentuser));
         dispatch(setUserAuthenticated());
       });
+
       /*
       const userUpdate: UpdateUsersInput = {
         id: user.id,
-        // updatedAt: new Date().toISOString()
-      }
+        updatedAt: new Date().toISOString(),
+      };
 
-      await API.graphql(graphqlOperation(updateUsers, {
-
-      }))
-    */
+      await API.graphql(graphqlOperation(updateUsers, { input: userUpdate }));
+      */
     }
   } catch (error) {
-    console.log("Error: " + error);
+    console.log("Error: " + JSON.stringify(error));
   }
 }
 
