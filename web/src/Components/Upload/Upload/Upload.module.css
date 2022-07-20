@@ -1,5 +1,6 @@
 .uploadButton {
   background-color: inherit;
+  padding: 0 1rem;
 }
 
 .content {
@@ -7,4 +8,23 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.contentBox {
+  height: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-width: 2px;
+  border-radius: 2px;
+  border-color: var(--very-translucent-white);
+  border-style: dashed;
+  color: #bdbdbd;
+  outline: none;
+  transition: border 0.24s ease-in-out;
+}
+
+.content input {
+  display: none;
 }

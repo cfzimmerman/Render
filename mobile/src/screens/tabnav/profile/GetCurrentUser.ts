@@ -8,8 +8,9 @@ import { API, graphqlOperation, Auth } from "aws-amplify";
 
 import GetOnboardingImageAsets from "../../masterstack/auth/GetOnboardingImageAssets";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
-import { GetUsersQuery } from "../../../API";
+import { GetUsersQuery, UpdateUsersInput } from "../../../API";
 import { CurrentUserType } from "../../../resources/CommonTypes";
+import { updateUsers } from "../../../graphql/mutations";
 
 async function GetCurrentUser({ dispatch, navigation }) {
   try {
@@ -47,6 +48,7 @@ async function GetCurrentUser({ dispatch, navigation }) {
                         emailconfirmed
                         acceptedtos
                         setpassword
+                        updatedAt
                     }
                 }
             `)
@@ -98,9 +100,18 @@ async function GetCurrentUser({ dispatch, navigation }) {
         dispatch(setCurrentUser(currentuser));
         dispatch(setUserAuthenticated());
       });
+
+      /*
+      const userUpdate: UpdateUsersInput = {
+        id: user.id,
+        updatedAt: new Date().toISOString(),
+      };
+
+      await API.graphql(graphqlOperation(updateUsers, { input: userUpdate }));
+      */
     }
   } catch (error) {
-    console.log("Error: " + error);
+    console.log("Error: " + JSON.stringify(error));
   }
 }
 

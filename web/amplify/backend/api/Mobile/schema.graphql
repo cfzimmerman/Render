@@ -140,6 +140,7 @@ type Users @model @searchable @auth(rules: [{ allow: public }]) {
   addedcount: Int
   addedmecount: Int
   birthday: AWSDate
+  updatedAt: String
   cognitosub: String @index(name: "userByCognitosub", queryField: "userByCognitosub")
   disablednotifications: String
   displayname: String
@@ -148,7 +149,6 @@ type Users @model @searchable @auth(rules: [{ allow: public }]) {
   firstvaultupload: Boolean
   fullyauthenticated: Boolean
   gamertag: String @index(name: "userByGamertag", queryField: "userByGamertag")
-  lastopened: AWSDateTime
   mostrecentpublicpost: AWSDateTime
   pfp: String
   setpassword: Boolean

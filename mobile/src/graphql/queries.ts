@@ -33,6 +33,7 @@ export const getPostViewTracker = /* GraphQL */ `
         addedcount
         addedmecount
         birthday
+        updatedAt
         cognitosub
         disablednotifications
         displayname
@@ -41,14 +42,12 @@ export const getPostViewTracker = /* GraphQL */ `
         firstvaultupload
         fullyauthenticated
         gamertag
-        lastopened
         mostrecentpublicpost
         pfp
         setpassword
         storagesizeinbytes
         type
         createdAt
-        updatedAt
       }
       createdAt
       updatedAt
@@ -266,6 +265,7 @@ export const getUserNotifications = /* GraphQL */ `
         addedcount
         addedmecount
         birthday
+        updatedAt
         cognitosub
         disablednotifications
         displayname
@@ -274,14 +274,12 @@ export const getUserNotifications = /* GraphQL */ `
         firstvaultupload
         fullyauthenticated
         gamertag
-        lastopened
         mostrecentpublicpost
         pfp
         setpassword
         storagesizeinbytes
         type
         createdAt
-        updatedAt
       }
       updatedAt
     }
@@ -397,6 +395,7 @@ export const getComments = /* GraphQL */ `
         addedcount
         addedmecount
         birthday
+        updatedAt
         cognitosub
         disablednotifications
         displayname
@@ -405,14 +404,12 @@ export const getComments = /* GraphQL */ `
         firstvaultupload
         fullyauthenticated
         gamertag
-        lastopened
         mostrecentpublicpost
         pfp
         setpassword
         storagesizeinbytes
         type
         createdAt
-        updatedAt
       }
       createdAt
       updatedAt
@@ -508,6 +505,7 @@ export const getUserRelationships = /* GraphQL */ `
         addedcount
         addedmecount
         birthday
+        updatedAt
         cognitosub
         disablednotifications
         displayname
@@ -516,14 +514,12 @@ export const getUserRelationships = /* GraphQL */ `
         firstvaultupload
         fullyauthenticated
         gamertag
-        lastopened
         mostrecentpublicpost
         pfp
         setpassword
         storagesizeinbytes
         type
         createdAt
-        updatedAt
       }
       receiverID
       ReceiverUser {
@@ -532,6 +528,7 @@ export const getUserRelationships = /* GraphQL */ `
         addedcount
         addedmecount
         birthday
+        updatedAt
         cognitosub
         disablednotifications
         displayname
@@ -540,14 +537,12 @@ export const getUserRelationships = /* GraphQL */ `
         firstvaultupload
         fullyauthenticated
         gamertag
-        lastopened
         mostrecentpublicpost
         pfp
         setpassword
         storagesizeinbytes
         type
         createdAt
-        updatedAt
       }
       updatedAt
     }
@@ -710,6 +705,7 @@ export const getPosts = /* GraphQL */ `
         addedcount
         addedmecount
         birthday
+        updatedAt
         cognitosub
         disablednotifications
         displayname
@@ -718,14 +714,12 @@ export const getPosts = /* GraphQL */ `
         firstvaultupload
         fullyauthenticated
         gamertag
-        lastopened
         mostrecentpublicpost
         pfp
         setpassword
         storagesizeinbytes
         type
         createdAt
-        updatedAt
       }
       Comments {
         nextToken
@@ -1071,6 +1065,7 @@ export const getUsers = /* GraphQL */ `
       addedcount
       addedmecount
       birthday
+      updatedAt
       cognitosub
       disablednotifications
       displayname
@@ -1079,7 +1074,6 @@ export const getUsers = /* GraphQL */ `
       firstvaultupload
       fullyauthenticated
       gamertag
-      lastopened
       mostrecentpublicpost
       pfp
       setpassword
@@ -1104,7 +1098,6 @@ export const getUsers = /* GraphQL */ `
         nextToken
       }
       createdAt
-      updatedAt
     }
   }
 `;
@@ -1121,6 +1114,7 @@ export const listUsers = /* GraphQL */ `
         addedcount
         addedmecount
         birthday
+        updatedAt
         cognitosub
         disablednotifications
         displayname
@@ -1129,14 +1123,12 @@ export const listUsers = /* GraphQL */ `
         firstvaultupload
         fullyauthenticated
         gamertag
-        lastopened
         mostrecentpublicpost
         pfp
         setpassword
         storagesizeinbytes
         type
         createdAt
-        updatedAt
       }
       nextToken
     }
@@ -1163,6 +1155,7 @@ export const userByCognitosub = /* GraphQL */ `
         addedcount
         addedmecount
         birthday
+        updatedAt
         cognitosub
         disablednotifications
         displayname
@@ -1171,14 +1164,12 @@ export const userByCognitosub = /* GraphQL */ `
         firstvaultupload
         fullyauthenticated
         gamertag
-        lastopened
         mostrecentpublicpost
         pfp
         setpassword
         storagesizeinbytes
         type
         createdAt
-        updatedAt
       }
       nextToken
     }
@@ -1205,6 +1196,7 @@ export const userByEmail = /* GraphQL */ `
         addedcount
         addedmecount
         birthday
+        updatedAt
         cognitosub
         disablednotifications
         displayname
@@ -1213,14 +1205,12 @@ export const userByEmail = /* GraphQL */ `
         firstvaultupload
         fullyauthenticated
         gamertag
-        lastopened
         mostrecentpublicpost
         pfp
         setpassword
         storagesizeinbytes
         type
         createdAt
-        updatedAt
       }
       nextToken
     }
@@ -1247,6 +1237,7 @@ export const userByGamertag = /* GraphQL */ `
         addedcount
         addedmecount
         birthday
+        updatedAt
         cognitosub
         disablednotifications
         displayname
@@ -1255,14 +1246,12 @@ export const userByGamertag = /* GraphQL */ `
         firstvaultupload
         fullyauthenticated
         gamertag
-        lastopened
         mostrecentpublicpost
         pfp
         setpassword
         storagesizeinbytes
         type
         createdAt
-        updatedAt
       }
       nextToken
     }
@@ -1291,6 +1280,7 @@ export const searchByGamertag = /* GraphQL */ `
         addedcount
         addedmecount
         birthday
+        updatedAt
         cognitosub
         disablednotifications
         displayname
@@ -1299,14 +1289,12 @@ export const searchByGamertag = /* GraphQL */ `
         firstvaultupload
         fullyauthenticated
         gamertag
-        lastopened
         mostrecentpublicpost
         pfp
         setpassword
         storagesizeinbytes
         type
         createdAt
-        updatedAt
       }
       nextToken
     }
@@ -1335,6 +1323,7 @@ export const searchUsers = /* GraphQL */ `
         addedcount
         addedmecount
         birthday
+        updatedAt
         cognitosub
         disablednotifications
         displayname
@@ -1343,14 +1332,12 @@ export const searchUsers = /* GraphQL */ `
         firstvaultupload
         fullyauthenticated
         gamertag
-        lastopened
         mostrecentpublicpost
         pfp
         setpassword
         storagesizeinbytes
         type
         createdAt
-        updatedAt
       }
       nextToken
       total
