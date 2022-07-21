@@ -53,6 +53,7 @@ export interface NotificationDataItem {
     * 3001: (SINGLE RECIPIENT) Someone added the current user. Ask the current user if they would like to view the other user's profile and add them back.
     * 3002: (SINGLE RECIPIENT) One or more people have commented on a post made by the current user. Ask the user if they would like to view the post.
     * 3003: (MULTI RECIPIENT) Someone else has commented on a post (that isn't mine) that I've already commented on. 
+    * 3004: (SINGLE RECIPIENT - NOT YET IMPLEMENTED) Someone the current has already added has added the current user back
 */
 
 export interface Code3001PayloadType {
