@@ -6,6 +6,7 @@ import { LSLibraryItemType } from "../../../redux/system/localsync";
 import { PostHeaderType, PostType } from "../../../resources/CommonTypes";
 import { GetDate } from "../../../resources/utilities";
 import ModifyVaultData from "../vault/ModifyVaultData";
+import HomeVaultFullRefresh from "./HomeVaultFullRefresh";
 
 interface RefreshProps {
   cognitosub: string;
@@ -27,6 +28,8 @@ async function RefreshHomeVault({
   vaultfeeddata,
   vaultNextToken,
   userID,
+  syncPreference,
+  localLibrary,
 }: RefreshProps) {
   const postResult = (await API.graphql(
     graphqlOperation(`
@@ -60,7 +63,8 @@ async function RefreshHomeVault({
 
   const postArray = postResult.data.postsByCreatedDate.items;
 
-  postArray.forEach((item) => {
+  if (postArray.length === 1) {
+    const item = postArray[0];
     ModifyVaultData({
       action: "add",
       dispatch,
@@ -70,7 +74,14 @@ async function RefreshHomeVault({
       vaultnexttoken: vaultNextToken,
       newPostID: item.id,
     });
-  });
+  } else if (postArray.length > 1) {
+    HomeVaultFullRefresh({
+      dispatch,
+      cognitosub,
+      syncPreference,
+      localLibrary,
+    });
+  }
 
   const deletedPostResult = (await API.graphql(
     graphqlOperation(`
@@ -104,7 +115,8 @@ async function RefreshHomeVault({
 
   const deletedPostsArray = deletedPostResult.data.postsByDeletedDate.items;
 
-  deletedPostsArray.forEach((item) => {
+  if (deletedPostsArray.length === 1) {
+    const item = deletedPostsArray[0];
     ModifyVaultData({
       action: "remove",
       dispatch,
@@ -114,7 +126,9 @@ async function RefreshHomeVault({
       vaultnexttoken: vaultNextToken,
       newPostID: item.id,
     });
-  });
+  } else {
+    console.log("Bust a HomeVaultFullRefresh");
+  }
 }
 
 export default RefreshHomeVault;

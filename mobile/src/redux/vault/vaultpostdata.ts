@@ -216,6 +216,12 @@ const slice = createSlice({
     setVaultRefreshDate: (state, action: PayloadAction<string>) => {
       state.vaultrefreshdate = action.payload;
     },
+    clearHomeVaultRefresh: (state) => {
+      state.vaultpostdata.length = 0;
+      state.vaultfeeddata.length = 0;
+      state.nextToken = null;
+      state.vaultrefreshdate = new Date().toISOString();
+    },
   },
 });
 
@@ -246,6 +252,7 @@ export const {
   setPostPublicModal,
   updatePostPublic,
   setVaultRefreshDate,
+  clearHomeVaultRefresh,
 } = slice.actions;
 
 export default slice.reducer;
