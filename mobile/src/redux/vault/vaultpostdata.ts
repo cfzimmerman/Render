@@ -217,6 +217,7 @@ const slice = createSlice({
       state.vaultrefreshdate = action.payload;
     },
     clearHomeVaultRefresh: (state) => {
+      state.fetchingdata = true;
       state.vaultpostdata.length = 0;
       state.vaultfeeddata.length = 0;
       state.nextToken = null;
