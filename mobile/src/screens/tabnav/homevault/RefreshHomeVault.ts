@@ -4,7 +4,6 @@ import { PostsByCreatedDateQuery, PostsByDeletedDateQuery } from "../../../API";
 import { DispatchType } from "../../../redux/store";
 import { LSLibraryItemType } from "../../../redux/system/localsync";
 import { PostHeaderType, PostType } from "../../../resources/CommonTypes";
-import { GetDate } from "../../../resources/utilities";
 import ModifyVaultData from "../vault/ModifyVaultData";
 import HomeVaultFullRefresh from "./HomeVaultFullRefresh";
 
@@ -31,57 +30,63 @@ async function RefreshHomeVault({
   syncPreference,
   localLibrary,
 }: RefreshProps) {
-  const postResult = (await API.graphql(
-    graphqlOperation(`
-    query PostsByCreatedDate {
-        postsByCreatedDate (
-            cognitosub: "${cognitosub}",
-            createdAt: {
-                gt: "${refreshDateString}"
-            },
-            sortDirection: DESC,
-        ) {
-            items {
-                id
-                contenttype
-                aspectratio
-                contentkey
-                publicpost
-                cognitosub
-                contentdate
-                thumbnailkey
-                posttext
-                publicpostdate
-                createdAt
-                usersID
-                updatedAt
-            }
-        }
+  try {
+    const postResult = (await API.graphql(
+      graphqlOperation(`
+      query PostsByCreatedDate {
+          postsByCreatedDate (
+              cognitosub: "${cognitosub}",
+              createdAt: {
+                  gt: "${refreshDateString}"
+              },
+              sortDirection: DESC,
+          ) {
+              items {
+                  id
+                  contenttype
+                  aspectratio
+                  contentkey
+                  publicpost
+                  cognitosub
+                  contentdate
+                  thumbnailkey
+                  posttext
+                  publicpostdate
+                  createdAt
+                  usersID
+                  updatedAt
+              }
+          }
+      }
+    `)
+    )) as GraphQLResult<PostsByCreatedDateQuery>;
+
+    const postArray = postResult.data.postsByCreatedDate.items;
+
+    if (postArray.length === 1) {
+      const item = postArray[0];
+      ModifyVaultData({
+        action: "add",
+        dispatch,
+        vaultpostdata,
+        vaultfeeddata,
+        post: item,
+        vaultnexttoken: vaultNextToken,
+        newPostID: item.id,
+      });
+    } else if (postArray.length > 1) {
+      HomeVaultFullRefresh({
+        dispatch,
+        cognitosub,
+        syncPreference,
+        localLibrary,
+      });
     }
-  `)
-  )) as GraphQLResult<PostsByCreatedDateQuery>;
-
-  const postArray = postResult.data.postsByCreatedDate.items;
-
-  if (postArray.length === 1) {
-    const item = postArray[0];
-    ModifyVaultData({
-      action: "add",
-      dispatch,
-      vaultpostdata,
-      vaultfeeddata,
-      post: item,
-      vaultnexttoken: vaultNextToken,
-      newPostID: item.id,
-    });
-  } else if (postArray.length > 1) {
-    HomeVaultFullRefresh({
-      dispatch,
-      cognitosub,
-      syncPreference,
-      localLibrary,
-    });
+  } catch (error) {
+    console.log(error);
   }
+
+  /*
 
   const deletedPostResult = (await API.graphql(
     graphqlOperation(`
@@ -127,8 +132,14 @@ async function RefreshHomeVault({
       newPostID: item.id,
     });
   } else {
-    console.log("Bust a HomeVaultFullRefresh");
+    HomeVaultFullRefresh({
+      dispatch,
+      cognitosub,
+      syncPreference,
+      localLibrary,
+    });
   }
+  */
 }
 
 export default RefreshHomeVault;
