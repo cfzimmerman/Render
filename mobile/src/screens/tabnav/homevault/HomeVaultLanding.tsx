@@ -36,6 +36,8 @@ import LSUpdateNotificationStore from "./LSUpdateNotificationStore";
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function DelayCheckPosts({ dispatch, localLibrary, currentuser }) {
+  // After a brief pause for other items to load, this checks if there are any recently deleted posts that need to be removed from the backend
+  // We could do this in the backend as well, but this structure saves us Lambda time fees.
   if (typeof currentuser.id != "undefined") {
     setTimeout(() => {
       CheckDeletedPosts({ userID: currentuser.id, dispatch, localLibrary });
