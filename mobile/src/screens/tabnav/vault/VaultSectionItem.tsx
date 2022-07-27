@@ -1,9 +1,9 @@
 import React from "react";
 import { Image, TouchableOpacity, StyleSheet, View } from "react-native";
 import {
-  addSelectedPost,
-  removeSelectedPost,
-} from "../../../redux/homevault/homevaultmain";
+  ShortPressAction,
+  LongPressAction,
+} from "../homevault/SectionGridItemActions";
 import { DispatchType } from "../../../redux/store";
 import { PostHeaderType, PostType } from "../../../resources/CommonTypes";
 import {
@@ -13,7 +13,6 @@ import {
   Icons,
 } from "../../../resources/project";
 import ExternalVaultTileInfo from "./ExternalVaultTileInfo";
-import TransitionToFullView from "./TransitionToFullView";
 
 const CorrectURI = ({ item }) => {
   if (item.contenttype === "video") {
@@ -27,7 +26,7 @@ const CorrectURI = ({ item }) => {
 interface VaultSectionItemPropTypes {
   item: PostType;
   navigation: any;
-  vaultfeeddata: PostHeaderType[];
+  vaultfeeddata: PostType[];
   multiSelectActive: boolean;
   selectedPosts: string[];
   dispatch: DispatchType;
@@ -42,7 +41,7 @@ const AreEqual = (
     previousProps.multiSelectActive === false &&
     nextProps.multiSelectActive === false
   ) {
-    // If multi select was and is not active, only rerender the item if the post data changes
+    // If multi select was and is not active, only rerender the item if the post data changes. This covers the vast majority of cases
     if (
       previousProps.item.contentkey === nextProps.item.contentkey &&
       previousProps.item.publicpost === nextProps.item.publicpost &&
@@ -51,8 +50,11 @@ const AreEqual = (
       return true;
     }
     return false;
-  } else {
-    // The top part is separated because it is by-far the most likely to occur. The others only trigger if multi select is involved.
+  } else if (
+    previousProps.multiSelectActive === true &&
+    nextProps.multiSelectActive === true
+  ) {
+    // If multi select was and is active...
     // Multi select should not change any underlying post elements while active. It should only be used to set an array of selected posts which can be acted upon as a group (in an action performed while multi select is turned off again)
     const wasSelected: boolean = previousProps.selectedPosts.includes(
       previousProps.item.id
@@ -61,25 +63,16 @@ const AreEqual = (
       nextProps.item.id
     );
 
-    if (
-      previousProps.multiSelectActive === true &&
-      nextProps.multiSelectActive === false
-    ) {
-      // If multi select has been canceled, rerender the post if it was formerly selected (to remove selected UI elements)
-      if (wasSelected === false) {
-        return true;
-      }
-      return false;
-    } else {
-      // If multi select was and is active...
-      // OR if multi-select has just been activated
-      if (wasSelected === isSelected) {
-        // If the post remains selected or remains unselected, the post should not be rerendered (the same === true)
-        return true;
-      }
-      // If the post was either added or removed from the selected array, rerender
-      return false;
+    if (wasSelected === isSelected) {
+      // If the post remains selected or remains unselected, the post should not be rerendered (the same === true)
+      return true;
     }
+    // If the post was either added or removed from the selected array, rerender
+    return false;
+  } else if (previousProps.multiSelectActive != nextProps.multiSelectActive) {
+    // This could logically be left to just a concluding return, but I'm leaving it as a catch for errors in my logic and for greater clarity
+    // If multi-select changes, the purpose of an onPress event changes. When inactive, enter post fullview. When active, select post. Rerendering passes a new multiSelectActive prop, enabling this
+    return false;
   }
 };
 
@@ -92,33 +85,8 @@ const FindIsSelected = ({ item, multiSelectActive, selectedPosts }) => {
   }
 };
 
-const ShortPressAction = ({
-  multiSelectActive,
-  item,
-  vaultfeeddata,
-  navigation,
-  isSelected,
-  dispatch,
-}) => {
-  if (multiSelectActive === false) {
-    TransitionToFullView({
-      id: item.id,
-      navigation,
-      data: vaultfeeddata,
-      usecase: "vault",
-    });
-  } else {
-    if (isSelected === true) {
-      dispatch(removeSelectedPost(item.id));
-    } else {
-      dispatch(addSelectedPost(item.id));
-    }
-  }
-};
-
-const LongPressAction = () => {
-  console.log("Hey 😉");
-};
+// Do the same for VaultSectionHeader
+// Figure out the floating modal
 
 const VaultSectionItem = ({
   item,
@@ -146,7 +114,7 @@ const VaultSectionItem = ({
           dispatch,
         })
       }
-      // onLongPress={() => (isSelected = true)}
+      onLongPress={() => LongPressAction({ dispatch, multiSelectActive, item })}
     >
       <Image style={styles.previewimage} source={{ uri: contenturl }} />
       <ExternalVaultTileInfo item={item} origin="sectionitem" />

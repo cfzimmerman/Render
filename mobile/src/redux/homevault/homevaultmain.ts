@@ -16,11 +16,13 @@ const slice = createSlice({
     multiSelectActive: false,
   } as HomeVaultMainDefaultSliceType,
   reducers: {
-    clearSelectedPosts: (state) => {
-      state.selectedPosts.length = 0;
+    activateMultiSelect: (state, action: PayloadAction<PostID>) => {
+      state.multiSelectActive = true;
+      state.selectedPosts = [action.payload];
     },
-    setMultiSelectActive: (state, action: PayloadAction<boolean>) => {
-      state.multiSelectActive = action.payload;
+    deactivateMultiSelect: (state) => {
+      state.multiSelectActive = false;
+      state.selectedPosts.length = 0;
     },
     addSelectedPost: (state, action: PayloadAction<PostID>) => {
       state.selectedPosts.push(action.payload);
@@ -37,10 +39,10 @@ const slice = createSlice({
 });
 
 export const {
-  clearSelectedPosts,
-  setMultiSelectActive,
   addSelectedPost,
   removeSelectedPost,
+  activateMultiSelect,
+  deactivateMultiSelect,
 } = slice.actions;
 
 export default slice.reducer;
