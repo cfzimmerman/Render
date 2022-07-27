@@ -113,6 +113,13 @@ const HomeVaultLanding = ({ navigation }) => {
   const numberUnread = useSelector(
     (state: RootStateType) => state.notifications.numberUnread
   );
+  const selectedPosts = useSelector(
+    (state: RootStateType) => state.homevaultmain.selectedPosts
+  );
+
+  const multiSelectActive = useSelector(
+    (state: RootStateType) => state.homevaultmain.multiSelectActive
+  );
 
   const dispatch = useDispatch();
 
@@ -201,6 +208,9 @@ const HomeVaultLanding = ({ navigation }) => {
       item={item}
       navigation={navigation}
       vaultfeeddata={vaultfeeddata}
+      multiSelectActive={multiSelectActive}
+      selectedPosts={selectedPosts}
+      dispatch={dispatch}
     />
   );
 
