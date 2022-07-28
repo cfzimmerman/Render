@@ -1,5 +1,11 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import React from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { CubeSizeButton } from "../../../resources/atoms";
 import { deactivateMultiSelect } from "../../../redux/homevault/homevaultmain";
@@ -19,21 +25,8 @@ const AreEqual = (previousProps, nextProps) => {
 const StringCubesizeButton = ({ title }: { title: string }) => {
   return (
     <TouchableOpacity>
-      <View
-        style={[
-          {
-            height: Environment.CubeSize,
-            width: Environment.CubeSize,
-            borderRadius: Environment.StandardRadius,
-            backgroundColor: Colors.AccentOn,
-            alignItems: "center",
-            justifyContent: "center",
-          },
-        ]}
-      >
-        <Text style={[GlobalStyles.h2text, { color: Colors.Primary }]}>
-          {title}
-        </Text>
+      <View style={[styles.scbWrapper, GlobalStyles.shadow]}>
+        <Text style={[GlobalStyles.h2text, styles.scbTitle]}>{title}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -53,63 +46,69 @@ const HomeVaultOptionsBar = () => {
     return null;
   } else {
     return (
-      <View
-        style={{
-          height: Environment.ScreenHeight,
-          width: Environment.ScreenWidth,
-          alignItems: "flex-end",
-          justifyContent: "center",
-          position: "absolute",
-        }}
-        pointerEvents={"box-none"}
-      >
-        <View style={GlobalStyles.shadow}>
-          {/* @ts-ignore */}
-          <View
-            style={{
-              width: Environment.CubeSize + Environment.LargePadding,
-              alignItems: "center",
-              justifyContent: "center",
-              overflow: "hidden",
-              margin: Environment.SmallPadding,
-            }}
+      <View style={styles.fullScreenContainer} pointerEvents={"box-none"}>
+        <View style={[GlobalStyles.shadow, styles.shadowWrapper]}>
+          <BlurView
+            tint="default"
+            style={styles.blurViewWrapper}
+            intensity={60}
           >
-            <BlurView
-              tint="default"
-              style={[
-                {
-                  padding: Environment.StandardPadding,
-                  borderRadius: Environment.StandardRadius,
-                  overflow: "hidden",
-                },
-              ]}
-            >
-              <StringCubesizeButton title={selectedPosts.length.toString()} />
-              <View
-                style={{
-                  marginTop: Environment.LargePadding,
-                  marginBottom: Environment.StandardPadding,
-                }}
-              >
-                <CubeSizeButton
-                  isactive={false}
-                  Action={() => console.log("Pressed")}
-                  Icon={Icons.OriginalSize.Trash}
-                />
-              </View>
-
+            <StringCubesizeButton title={selectedPosts.length.toString()} />
+            <View style={styles.buttonSpacer}>
               <CubeSizeButton
                 isactive={false}
-                Action={() => dispatch(deactivateMultiSelect())}
-                Icon={Icons.OriginalSize.X}
+                Action={() => console.log("Pressed")}
+                Icon={Icons.OriginalSize.Trash}
               />
-            </BlurView>
-          </View>
+            </View>
+
+            <CubeSizeButton
+              isactive={false}
+              Action={() => dispatch(deactivateMultiSelect())}
+              Icon={Icons.OriginalSize.X}
+            />
+          </BlurView>
         </View>
       </View>
     );
   }
 };
+
+const styles = StyleSheet.create({
+  fullScreenContainer: {
+    height: Environment.ScreenHeight,
+    width: Environment.ScreenWidth,
+    alignItems: "flex-end",
+    justifyContent: "center",
+    position: "absolute",
+  },
+  shadowWrapper: {
+    marginRight: Environment.SmallPadding,
+    borderRadius: Environment.StandardRadius,
+    backgroundColor:
+      Platform.OS === "android" ? Colors.AccentPartial : "transparent",
+  },
+  blurViewWrapper: {
+    padding: Environment.StandardPadding,
+    borderRadius: Environment.StandardRadius,
+    overflow: "hidden",
+  },
+  buttonSpacer: {
+    marginTop: Environment.LargePadding,
+    marginBottom: Environment.StandardPadding,
+  },
+  scbWrapper: {
+    height: Environment.CubeSize,
+    width: Environment.CubeSize,
+    borderRadius: Environment.StandardRadius,
+    backgroundColor: Colors.AccentOn,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  scbTitle: {
+    color: Colors.Primary,
+  },
+});
 
 // export default HomeVaultOptionsBar;
 export default React.memo(HomeVaultOptionsBar, AreEqual);
