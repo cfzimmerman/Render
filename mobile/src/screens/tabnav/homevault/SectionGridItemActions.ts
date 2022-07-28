@@ -17,6 +17,7 @@ interface ShortPressActionPropsType {
   navigation: any;
   isSelected: boolean;
   dispatch: DispatchType;
+  selectedPostsLength: number;
 }
 
 export const ShortPressAction = ({
@@ -26,6 +27,7 @@ export const ShortPressAction = ({
   isSelected,
   postID,
   dispatch,
+  selectedPostsLength,
 }: ShortPressActionPropsType) => {
   if (multiSelectActive === false) {
     TransitionToFullView({
@@ -37,7 +39,7 @@ export const ShortPressAction = ({
   } else {
     if (isSelected === true) {
       dispatch(removeSelectedPost(postID));
-    } else {
+    } else if (isSelected === false && selectedPostsLength <= 20) {
       dispatch(addSelectedPost(postID));
     }
   }

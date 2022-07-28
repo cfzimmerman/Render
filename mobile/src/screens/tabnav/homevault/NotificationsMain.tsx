@@ -52,6 +52,7 @@ const EmptyNotificationsBox = () => {
         title="No notifications"
         description="Maybe they're hiding"
         Action={() => null}
+        disabled={true}
       />
     </View>
   );

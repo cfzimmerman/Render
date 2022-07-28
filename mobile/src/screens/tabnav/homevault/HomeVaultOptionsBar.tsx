@@ -17,6 +17,7 @@ import {
   GlobalStyles,
   Icons,
 } from "../../../resources/project";
+import { useNavigation } from "@react-navigation/native";
 
 const AreEqual = (previousProps, nextProps) => {
   return true;
@@ -40,6 +41,7 @@ const HomeVaultOptionsBar = () => {
     (state: RootStateType) => state.homevaultmain.selectedPosts
   );
 
+  const navigation = useNavigation();
   const dispatch = useDispatch();
 
   if (multiSelectActive === false) {
@@ -57,7 +59,12 @@ const HomeVaultOptionsBar = () => {
             <View style={styles.buttonSpacer}>
               <CubeSizeButton
                 isactive={false}
-                Action={() => console.log("Pressed")}
+                Action={() => {
+                  if (selectedPosts.length > 0) {
+                    // @ts-ignore
+                    navigation.navigate("PostMultiDelete");
+                  }
+                }}
                 Icon={Icons.OriginalSize.Trash}
               />
             </View>

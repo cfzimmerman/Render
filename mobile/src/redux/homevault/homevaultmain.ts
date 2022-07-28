@@ -24,6 +24,9 @@ const slice = createSlice({
       state.multiSelectActive = false;
       state.selectedPosts.length = 0;
     },
+    setMultiSelectActive: (state, action: PayloadAction<boolean>) => {
+      state.multiSelectActive = action.payload;
+    },
     addSelectedPost: (state, action: PayloadAction<PostID>) => {
       state.selectedPosts.push(action.payload);
     },
@@ -43,6 +46,7 @@ export const {
   removeSelectedPost,
   activateMultiSelect,
   deactivateMultiSelect,
+  setMultiSelectActive,
 } = slice.actions;
 
 export default slice.reducer;
