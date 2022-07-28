@@ -32,6 +32,7 @@ import LSGetNotificationStore from "./LSGetNotificationStore";
 import GetNotificationsCloud from "./GetNotificationsCloud";
 import { RootStateType } from "../../../redux/store";
 import LSUpdateNotificationStore from "./LSUpdateNotificationStore";
+import HomeVaultOptionsBar from "./HomeVaultOptionsBar";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -219,6 +220,9 @@ const HomeVaultLanding = ({ navigation }) => {
       section={section}
       navigation={navigation}
       vaultfeeddata={vaultfeeddata}
+      multiSelectActive={multiSelectActive}
+      selectedPosts={selectedPosts}
+      dispatch={dispatch}
     />
   );
 
@@ -277,6 +281,7 @@ const HomeVaultLanding = ({ navigation }) => {
         })}
       />
       <SystemmessageModal />
+      <HomeVaultOptionsBar />
     </View>
   );
 };

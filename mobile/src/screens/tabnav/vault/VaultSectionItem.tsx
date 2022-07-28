@@ -3,6 +3,7 @@ import { Image, TouchableOpacity, StyleSheet, View } from "react-native";
 import {
   ShortPressAction,
   LongPressAction,
+  FindIsSelected,
 } from "../homevault/SectionGridItemActions";
 import { DispatchType } from "../../../redux/store";
 import { PostHeaderType, PostType } from "../../../resources/CommonTypes";
@@ -76,18 +77,6 @@ const AreEqual = (
   }
 };
 
-const FindIsSelected = ({ item, multiSelectActive, selectedPosts }) => {
-  // Only performing the .includes operation if multi select is active cuts out a huge number of unnecessary array operations
-  if (multiSelectActive === false) {
-    return false;
-  } else {
-    return selectedPosts.includes(item.id);
-  }
-};
-
-// Do the same for VaultSectionHeader
-// Figure out the floating modal
-
 const VaultSectionItem = ({
   item,
   navigation,
@@ -99,7 +88,11 @@ const VaultSectionItem = ({
   // SectionItem is getting a version of vaultfeeddata with one fewer items than needed, pushing transitiontofullview to spit out value not found and navigating to the beginning of the array
   const contenturl = CorrectURI({ item });
 
-  const isSelected = FindIsSelected({ item, multiSelectActive, selectedPosts });
+  const isSelected = FindIsSelected({
+    postID: item.id,
+    multiSelectActive,
+    selectedPosts,
+  });
 
   return (
     <TouchableOpacity
@@ -107,14 +100,16 @@ const VaultSectionItem = ({
       onPress={() =>
         ShortPressAction({
           multiSelectActive,
-          item,
+          postID: item.id,
           vaultfeeddata,
           navigation,
           isSelected,
           dispatch,
         })
       }
-      onLongPress={() => LongPressAction({ dispatch, multiSelectActive, item })}
+      onLongPress={() =>
+        LongPressAction({ dispatch, multiSelectActive, postID: item.id })
+      }
     >
       <Image style={styles.previewimage} source={{ uri: contenturl }} />
       <ExternalVaultTileInfo item={item} origin="sectionitem" />
@@ -125,7 +120,7 @@ const VaultSectionItem = ({
         ]}
       >
         <Icons.OriginalSize.Checkmark
-          style={{ opacity: 1 }}
+          style={styles.checkmarkStyle}
           stroke={Colors.Primary}
           height={3 * Environment.IconSize}
           width={3 * Environment.IconSize}
@@ -153,6 +148,9 @@ const styles = StyleSheet.create({
     borderRadius: Environment.StandardRadius,
     alignItems: "center",
     justifyContent: "center",
+  },
+  checkmarkStyle: {
+    opacity: 1,
   },
 });
 

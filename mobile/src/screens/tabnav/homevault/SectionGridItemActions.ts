@@ -8,9 +8,11 @@ import * as Haptics from "expo-haptics";
 import { PostType } from "../../../resources/CommonTypes";
 import { DispatchType } from "../../../redux/store";
 
+// This file contains shared helper functions for VaultSectionHeader.tsx and VaultSectionItem.tsx
+
 interface ShortPressActionPropsType {
   multiSelectActive: boolean;
-  item: PostType;
+  postID: string;
   vaultfeeddata: PostType[];
   navigation: any;
   isSelected: boolean;
@@ -19,24 +21,24 @@ interface ShortPressActionPropsType {
 
 export const ShortPressAction = ({
   multiSelectActive,
-  item,
   vaultfeeddata,
   navigation,
   isSelected,
+  postID,
   dispatch,
 }: ShortPressActionPropsType) => {
   if (multiSelectActive === false) {
     TransitionToFullView({
-      id: item.id,
+      id: postID,
       navigation,
       data: vaultfeeddata,
       usecase: "vault",
     });
   } else {
     if (isSelected === true) {
-      dispatch(removeSelectedPost(item.id));
+      dispatch(removeSelectedPost(postID));
     } else {
-      dispatch(addSelectedPost(item.id));
+      dispatch(addSelectedPost(postID));
     }
   }
 };
@@ -44,16 +46,35 @@ export const ShortPressAction = ({
 interface LongPressActionPropsType {
   dispatch: DispatchType;
   multiSelectActive: boolean;
-  item: PostType;
+  postID: string;
 }
 
 export const LongPressAction = ({
   dispatch,
   multiSelectActive,
-  item,
+  postID,
 }: LongPressActionPropsType) => {
   if (multiSelectActive === false) {
-    dispatch(activateMultiSelect(item.id));
+    dispatch(activateMultiSelect(postID));
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+  }
+};
+
+interface FindIsSelectedPropsType {
+  postID: string;
+  multiSelectActive: boolean;
+  selectedPosts: string[];
+}
+
+export const FindIsSelected = ({
+  postID,
+  multiSelectActive,
+  selectedPosts,
+}: FindIsSelectedPropsType) => {
+  // Only performing the .includes operation if multi select is active cuts out a huge number of unnecessary array operations
+  if (multiSelectActive === false) {
+    return false;
+  } else {
+    return selectedPosts.includes(postID);
   }
 };
