@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,6 +22,7 @@ const GetInitialDescription = ({ selectedPosts }) => {
 
 const PostMultiDelete = ({ navigation }) => {
   const [deletePosts, setDeletePosts] = useState(false);
+  const [initialLength, setInitialLength] = useState(null);
   const [deletionCursor, setDeletionCursor] = useState(null);
   // Deletion cursor is a local datapoint used as a reference against the vaultfeeddata array
   // After we initiate post deletion, there's a brief pause before vaultfeeddata is updated (which must be accurate for local store modifications to complete successfully)
@@ -48,32 +49,35 @@ const PostMultiDelete = ({ navigation }) => {
 
   const dispatch = useDispatch();
 
-  if (deletionCursor === null) {
-    // Triggered on initial load
-    setDeletionCursor(vaultfeeddata.length);
-  }
+  useEffect(() => {
+    if (deletionCursor === null) {
+      // Triggered on initial load
+      setDeletionCursor(vaultfeeddata.length);
+      setInitialLength(selectedPosts.length);
+    }
 
-  if (selectedPosts.length === 0) {
-    navigation.navigate("HomeVault");
-  }
+    if (selectedPosts.length === 0) {
+      navigation.navigate("HomeVault");
+    }
 
-  if (
-    deletePosts === true &&
-    selectedPosts.length > 0 &&
-    deletionCursor === vaultfeeddata.length
-  ) {
-    SentencePost({
-      postid: selectedPosts[0],
-      dispatch,
-      vaultpostdata,
-      vaultfeeddata,
-      vaultnexttoken,
-      currentuser,
-      localLibrary,
-    });
-    dispatch(removeSelectedPost(selectedPosts[0]));
-    setDeletionCursor(deletionCursor - 1);
-  }
+    if (
+      deletePosts === true &&
+      selectedPosts.length > 0 &&
+      deletionCursor === vaultfeeddata.length
+    ) {
+      SentencePost({
+        postid: selectedPosts[0],
+        dispatch,
+        vaultpostdata,
+        vaultfeeddata,
+        vaultnexttoken,
+        currentuser,
+        localLibrary,
+      });
+      dispatch(removeSelectedPost(selectedPosts[0]));
+      setDeletionCursor(deletionCursor - 1);
+    }
+  });
 
   const initialDescription = GetInitialDescription({ selectedPosts });
 
@@ -91,7 +95,11 @@ const PostMultiDelete = ({ navigation }) => {
     >
       <SafeAreaView style={styles.safeAreaWrapper}>
         <HalfByFullDisplayBox
-          header={deletePosts === true ? "" : "🪓"}
+          header={
+            deletePosts === true
+              ? `${initialLength - selectedPosts.length} / ${initialLength}`
+              : "🪓"
+          }
           title={deletePosts === true ? "Deleting" : initialDescription}
           description={deletePosts === true ? "" : "We'll make it painless."}
           Action={() => null}

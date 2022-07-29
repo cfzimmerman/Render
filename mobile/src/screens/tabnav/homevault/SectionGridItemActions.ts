@@ -39,7 +39,7 @@ export const ShortPressAction = ({
   } else {
     if (isSelected === true) {
       dispatch(removeSelectedPost(postID));
-    } else if (isSelected === false && selectedPostsLength <= 20) {
+    } else if (isSelected === false) {
       dispatch(addSelectedPost(postID));
     }
   }
