@@ -6,11 +6,10 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Audio, Video, AVPlaybackStatus } from "expo-av";
+import { Video } from "expo-av";
 import VideoPlayer from "expo-video-player";
 import TouchableScale from "react-native-touchable-scale";
 import GestureRecognizer from "react-native-swipe-gestures";
-import { PinchGestureHandler } from "react-native-gesture-handler";
 
 import { useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
@@ -29,13 +28,12 @@ import AddVideoToGalleryData from "../profile/AddVideoToGalleryData";
 import AddVideoToOtherUserGallery from "../explore/AddVideoToOtherUserGallery";
 import AddVideoToPublicFeed from "../home/AddVideoToPublicFeed";
 import AddVideoToStories from "../home/AddVideoToStories";
-import ChangeFocusView from "./ChangeFocusView";
 import PostOptionsModal from "./PostOptionsModal";
 import PostTextModal from "./PostTextModal";
 import SetOptions from "./SetOptions";
 import VaultPostPublicModal from "../plus/VaultPostPublicModal";
 
-// SetOptions({ postid: xxx, animateactive: true, animateinactive: false, newchangestatus: false, })
+// SetOptions({ postid: abc, animateactive: true, animateinactive: false, newchangestatus: false, })
 
 const SwipeUp = ({ index, usecase, navigation }) => {
   // Usecases are explicitly checked as opposed to != "vault" to ensure we've correctly configured CommentsMain for every necessary case
