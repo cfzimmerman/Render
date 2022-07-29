@@ -32,6 +32,7 @@ const SetPasswordBox = ({
           header={"🔒"}
           title={"Add a password"}
           description={"Required for secure web upload"}
+          disabled={true}
         />
       </View>
     );

@@ -169,7 +169,9 @@ function ExploreLanding({ navigation }) {
       <View>
         <FlatList
           data={searchresult}
-          renderItem={({ item, index }) => CorrectTile({ item, index, dispatch })}
+          renderItem={({ item, index }) =>
+            CorrectTile({ item, index, dispatch })
+          }
           numColumns={2}
           columnWrapperStyle={styles.columnwrapper}
           keyboardDismissMode="on-drag"

@@ -89,9 +89,11 @@ async function AddToDB({
       thumbnailname: thumbnailkey,
     });
   }
+  /*
   console.log(
     `Successfully uploaded post to ${currentuser.displayname}'s Vault`
   );
+  */
 }
 
 export default AddToDB;
