@@ -21,6 +21,7 @@ import EditPost from "./screens/tabnav/plus/EditPost";
 import CommentsMain from "./screens/tabnav/social/CommentsMain";
 import AppStart from "./screens/masterstack/AppStart";
 import ForgotPassword from "./screens/tabnav/profile/ForgotPassword";
+import PostMultiDelete from "./screens/tabnav/homevault/PostMultiDelete";
 import { useNavigation } from "@react-navigation/native";
 
 type RootStackParamList = {
@@ -61,6 +62,7 @@ type RootStackParamList = {
       | "publicfeed";
     index: number;
   };
+  PostMultiDelete: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -123,6 +125,12 @@ const MasterStack = () => {
         name="CommentsMain"
         component={CommentsMain}
         options={{ animation: "fade_from_bottom", gestureEnabled: false }}
+      />
+
+      <Stack.Screen
+        name="PostMultiDelete"
+        component={PostMultiDelete}
+        options={{ animation: "fade_from_bottom" }}
       />
     </Stack.Navigator>
   );
