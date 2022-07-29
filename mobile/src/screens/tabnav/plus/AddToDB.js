@@ -4,6 +4,7 @@ import { createPosts, updateUsers } from "../../../graphql/mutations";
 import CleanupFailedUpload from "./CleanupFailedUpload";
 
 import ModifyVaultData from "../vault/ModifyVaultData";
+import { deactivateMultiSelect } from "../../../redux/homevault/homevaultmain";
 
 const CorrectUserUpdate = ({ currentuser, newSize }) => {
   const updatedUser = {
@@ -28,6 +29,7 @@ async function AddToDB({
   vaultnexttoken,
   gotaddedusersfilter,
   filesize,
+  multiSelectActive,
 }) {
   const newpost = {
     usersID: currentuser.id,
@@ -41,6 +43,10 @@ async function AddToDB({
     type: "post",
     sizeinbytes: filesize,
   };
+
+  if (multiSelectActive === true) {
+    dispatch(deactivateMultiSelect());
+  }
 
   try {
     const createPostResult = await API.graphql(

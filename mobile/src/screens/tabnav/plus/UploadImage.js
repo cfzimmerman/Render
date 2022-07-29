@@ -23,6 +23,7 @@ async function UploadImage({
   vaultfeeddata,
   vaultnexttoken,
   gotaddedusersfilter,
+  multiSelectActive,
 }) {
   const size = await FileSystem.getInfoAsync(uri);
 
@@ -68,6 +69,7 @@ async function UploadImage({
       vaultnexttoken,
       gotaddedusersfilter,
       filesize: size.size,
+      multiSelectActive,
     });
   } catch (error) {
     CleanupFailedUpload({ origin: "UploadImage", imagename });
