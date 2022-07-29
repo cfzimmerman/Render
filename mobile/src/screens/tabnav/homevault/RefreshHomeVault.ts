@@ -1,6 +1,7 @@
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { API, graphqlOperation } from "aws-amplify";
 import { PostsByCreatedDateQuery, PostsByDeletedDateQuery } from "../../../API";
+import { deactivateMultiSelect } from "../../../redux/homevault/homevaultmain";
 import { DispatchType } from "../../../redux/store";
 import { LSLibraryItemType } from "../../../redux/system/localsync";
 import { PostHeaderType, PostType } from "../../../resources/CommonTypes";
@@ -17,6 +18,7 @@ interface RefreshProps {
   localLibrary: Record<string, LSLibraryItemType>;
   vaultNextToken: string | null;
   userID: string;
+  multiSelectActive: boolean;
 }
 
 async function RefreshHomeVault({
@@ -29,7 +31,11 @@ async function RefreshHomeVault({
   userID,
   syncPreference,
   localLibrary,
+  multiSelectActive,
 }: RefreshProps) {
+  if (multiSelectActive === true) {
+    dispatch(deactivateMultiSelect());
+  }
   try {
     const postResult = (await API.graphql(
       graphqlOperation(`

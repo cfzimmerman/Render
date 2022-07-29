@@ -28,6 +28,7 @@ async function UploadVideo({
   vaultfeeddata,
   vaultnexttoken,
   gotaddedusersfilter,
+  multiSelectActive,
 }) {
   const size = await FileSystem.getInfoAsync(uri);
   const aspectratio = TransformDimensions(width / height);
@@ -144,6 +145,7 @@ async function UploadVideo({
     vaultnexttoken,
     gotaddedusersfilter,
     filesize: size.size,
+    multiSelectActive,
   });
 }
 

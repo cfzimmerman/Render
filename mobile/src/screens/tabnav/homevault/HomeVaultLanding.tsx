@@ -238,6 +238,7 @@ const HomeVaultLanding = ({ navigation }) => {
       localLibrary,
       vaultNextToken: nextToken,
       refreshDateString: vaultRefreshDate,
+      multiSelectActive,
     });
     await sleep(2000);
     dispatch(setVaultRefreshDate(new Date().toISOString()));

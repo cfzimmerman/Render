@@ -1,4 +1,4 @@
-import react, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -28,6 +28,8 @@ import {
 import GetContentDate from "./GetContentDate";
 import UploadImage from "./UploadImage";
 import UploadVideo from "./UploadVideo";
+import { RootStateType } from "../../../redux/store";
+import { deactivateMultiSelect } from "../../../redux/homevault/homevaultmain";
 
 const HalfbarIconBox = ({ Icon, header, description, Action }) => {
   return (
@@ -68,23 +70,30 @@ const TodaysDate = () => {
   return isodate;
 };
 
-function PlusLanding({ navigation }) {
-  const currentuser = useSelector((state) => state.profilemain.currentuser);
+const PlusLanding = ({ navigation }) => {
+  const currentuser = useSelector(
+    (state: RootStateType) => state.profilemain.currentuser
+  );
   const gotaddedusersfilter = useSelector(
-    (state) => state.homemain.gotaddedusersfilter
+    (state: RootStateType) => state.homemain.gotaddedusersfilter
   );
 
   const uploadcanceled = useSelector(
-    (state) => state.loadprogressmessage.uploadcanceled
+    (state: RootStateType) => state.loadprogressmessage.uploadcanceled
   );
 
   const vaultpostdata = useSelector(
-    (state) => state.vaultpostdata.vaultpostdata
+    (state: RootStateType) => state.vaultpostdata.vaultpostdata
   );
   const vaultfeeddata = useSelector(
-    (state) => state.vaultpostdata.vaultfeeddata
+    (state: RootStateType) => state.vaultpostdata.vaultfeeddata
   );
-  const vaultnexttoken = useSelector((state) => state.vaultpostdata.nextToken);
+  const vaultnexttoken = useSelector(
+    (state: RootStateType) => state.vaultpostdata.nextToken
+  );
+  const multiSelectActive = useSelector(
+    (state: RootStateType) => state.homevaultmain.multiSelectActive
+  );
 
   const dispatch = useDispatch();
 
@@ -106,13 +115,22 @@ function PlusLanding({ navigation }) {
       </SafeAreaView>
     );
   }
+
+  interface SelectContentResultType {
+    cancelled: boolean;
+    type?: "image" | "video";
+    uri?: string | null;
+    width?: number | null;
+    height?: number | null;
+    duration?: number | null;
+  }
   async function SelectContentFromDevice() {
-    const result = await ImagePicker.launchImageLibraryAsync({
+    const result = (await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       quality: 1,
       exif: true,
       // videoMaxDuration: 120,
-    });
+    })) as SelectContentResultType;
 
     if (
       !result.cancelled &&
@@ -122,9 +140,9 @@ function PlusLanding({ navigation }) {
       const userdialogue = {
         header: "😨",
         title: "Unsupported upload",
-        description: `Video uploads must be 120 seconds or fewer. This is ${parseInt(
+        description: `Video uploads must be 120 seconds or fewer. This is ${Math.round(
           result.duration / 1000
-        )} seconds.`,
+        ).toString()} seconds.`,
       };
 
       dispatch(setSystemmessageActive(userdialogue));
@@ -145,6 +163,7 @@ function PlusLanding({ navigation }) {
         vaultfeeddata,
         vaultnexttoken,
         gotaddedusersfilter,
+        multiSelectActive,
       });
     } else if (!result.cancelled && result.type === "video") {
       const date = TodaysDate();
@@ -161,6 +180,7 @@ function PlusLanding({ navigation }) {
         vaultfeeddata,
         vaultnexttoken,
         gotaddedusersfilter,
+        multiSelectActive,
       });
     }
   }
@@ -229,7 +249,7 @@ function PlusLanding({ navigation }) {
       <LoadProgressModal />
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
