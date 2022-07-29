@@ -14,6 +14,7 @@ import AddNewNotification, {
   AddNewNotificationPropTypes,
 } from "../homevault/AddNewNotification";
 import { Code3001PayloadType } from "../homevault/NotificationLibrary";
+import CreateCode3001Notification from "../homevault/NotificationActions/CreateCode3001Notification";
 
 const UpdateOtherUserProfile = ({ action, dispatch }) => {
   const addeduser = {
@@ -76,13 +77,6 @@ async function AddUser({
     ouID: currentuser.id,
   };
 
-  const newNotification: AddNewNotificationPropTypes = {
-    targetUserID: targetuser.id,
-    code: 3001,
-    payloadString: JSON.stringify(notificationPayload),
-    postsID: null,
-  };
-
   try {
     await Promise.all([
       API.graphql(
@@ -91,7 +85,13 @@ async function AddUser({
       API.graphql(graphqlOperation(updateUsers, { input: newcurrentuser })),
       API.graphql(graphqlOperation(updateUsers, { input: newtargetuser })),
     ]);
-    AddNewNotification(newNotification);
+    CreateCode3001Notification({
+      targetUserID: targetuser.id,
+      code: 3001,
+      payloadString: JSON.stringify(notificationPayload),
+      postsID: null,
+      currentUserID: currentuser.id,
+    });
   } catch (error) {
     console.log(`\nError: ${JSON.stringify(error)}`);
   }

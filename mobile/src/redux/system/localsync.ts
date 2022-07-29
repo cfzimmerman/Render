@@ -16,8 +16,10 @@ export interface AddToLocalLibraryPropsType {
   };
 }
 
+export type SyncPreferenceType = null | "All" | "Partial" | "None";
+
 export interface LocalConfigType {
-  syncPreference: null | "All" | "Partial" | "None";
+  syncPreference: SyncPreferenceType;
 }
 
 const slice = createSlice({

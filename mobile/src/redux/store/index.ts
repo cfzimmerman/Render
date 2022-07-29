@@ -29,6 +29,8 @@ import homemain from "../home/homemain";
 
 import socialmain from "../social/socialmain";
 
+import homevaultmain from "../homevault/homevaultmain";
+
 const reducer = combineReducers({
   errormessage,
   messagemodal,
@@ -47,6 +49,7 @@ const reducer = combineReducers({
   localsync,
   notifications,
   universalpost,
+  homevaultmain,
 });
 
 const store = configureStore({

@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import NotificationItem from "./NotificationItem";
 import { RootStateType } from "../../../redux/store";
 import LSClearNotificationStore from "./LSClearNotificationStore";
+import CreateCode3001Notification from "./NotificationActions/CreateCode3001Notification";
 
 const NotificationsTitleBox = () => {
   return (
@@ -51,6 +52,7 @@ const EmptyNotificationsBox = () => {
         title="No notifications"
         description="Maybe they're hiding"
         Action={() => null}
+        disabled={true}
       />
     </View>
   );

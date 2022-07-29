@@ -32,10 +32,13 @@ import LSGetNotificationStore from "./LSGetNotificationStore";
 import GetNotificationsCloud from "./GetNotificationsCloud";
 import { RootStateType } from "../../../redux/store";
 import LSUpdateNotificationStore from "./LSUpdateNotificationStore";
+import HomeVaultOptionsBar from "./HomeVaultOptionsBar";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function DelayCheckPosts({ dispatch, localLibrary, currentuser }) {
+  // After a brief pause for other items to load, this checks if there are any recently deleted posts that need to be removed from the backend
+  // We could do this in the backend as well, but this structure saves us Lambda time fees.
   if (typeof currentuser.id != "undefined") {
     setTimeout(() => {
       CheckDeletedPosts({ userID: currentuser.id, dispatch, localLibrary });
@@ -110,6 +113,13 @@ const HomeVaultLanding = ({ navigation }) => {
   );
   const numberUnread = useSelector(
     (state: RootStateType) => state.notifications.numberUnread
+  );
+  const selectedPosts = useSelector(
+    (state: RootStateType) => state.homevaultmain.selectedPosts
+  );
+
+  const multiSelectActive = useSelector(
+    (state: RootStateType) => state.homevaultmain.multiSelectActive
   );
 
   const dispatch = useDispatch();
@@ -199,6 +209,9 @@ const HomeVaultLanding = ({ navigation }) => {
       item={item}
       navigation={navigation}
       vaultfeeddata={vaultfeeddata}
+      multiSelectActive={multiSelectActive}
+      selectedPosts={selectedPosts}
+      dispatch={dispatch}
     />
   );
 
@@ -207,6 +220,9 @@ const HomeVaultLanding = ({ navigation }) => {
       section={section}
       navigation={navigation}
       vaultfeeddata={vaultfeeddata}
+      multiSelectActive={multiSelectActive}
+      selectedPosts={selectedPosts}
+      dispatch={dispatch}
     />
   );
 
@@ -222,6 +238,7 @@ const HomeVaultLanding = ({ navigation }) => {
       localLibrary,
       vaultNextToken: nextToken,
       refreshDateString: vaultRefreshDate,
+      multiSelectActive,
     });
     await sleep(2000);
     dispatch(setVaultRefreshDate(new Date().toISOString()));
@@ -265,6 +282,7 @@ const HomeVaultLanding = ({ navigation }) => {
         })}
       />
       <SystemmessageModal />
+      <HomeVaultOptionsBar />
     </View>
   );
 };

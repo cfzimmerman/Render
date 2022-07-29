@@ -6,6 +6,7 @@ interface HalfByFullDisplayBoxPropTypes {
   header: string | null;
   title: string | null;
   description: string | null;
+  disabled: boolean;
 }
 
 const HalfByFullDisplayBox = ({
@@ -13,9 +14,10 @@ const HalfByFullDisplayBox = ({
   header,
   title,
   description,
+  disabled,
 }: HalfByFullDisplayBoxPropTypes) => {
   return (
-    <TouchableOpacity onPress={() => Action()}>
+    <TouchableOpacity onPress={() => Action()} disabled={disabled}>
       <View style={[GlobalStyles.shadow, styles.headerstyle]}>
         <Text
           style={[
