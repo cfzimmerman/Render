@@ -8,6 +8,36 @@ type PostViewTracker @model @auth(rules: [{ allow: public }]) {
   Users: Users @belongsTo
 }
 
+type GlobalData @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  createdAt: String!
+  usecase: String
+  key: String
+  strA: String
+  numA: Float
+}
+
+type Games @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  createdAt: String!
+  igdbID: String
+  title: Int
+  releaseDate: AWSDateTime
+  series: String
+  genre: String
+  theme: String
+  coverKey: String
+  backgroundKey: String
+  steamID: String
+  microsoftID: String
+  xboxMarketplaceID: String
+  gogID: String
+  egsID: String
+  twitchID: String
+  oculusID: String
+  playstationID: String
+}
+
 type Notifications @model @auth(rules: [{ allow: public }]) {
   id: ID!
   createdAt: String!
