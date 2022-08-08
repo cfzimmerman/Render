@@ -15,6 +15,7 @@ type GlobalData @model @auth(rules: [{ allow: public }]) {
   key: String
   strA: String
   numA: Float
+  numB: Float
 }
 
 type Games @model @auth(rules: [{ allow: public }]) {
