@@ -23,6 +23,7 @@ type Games @model @auth(rules: [{ allow: public }]) {
   createdAt: String!
   igdbID: Int
   title: String
+    @index(name: "gamesByTitle", queryField: "gamesByTitle", sortKeyFields: ["releaseDate"])
   releaseDate: AWSDateTime
   series: String
   genre: String
