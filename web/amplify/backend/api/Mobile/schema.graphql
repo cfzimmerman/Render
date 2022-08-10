@@ -37,6 +37,16 @@ type Games @model @auth(rules: [{ allow: public }]) {
   twitchID: String
   oculusID: String
   playstationID: String
+  UserGames: [UserGames] @hasMany(indexName: "byGames", fields: ["id"])
+}
+
+type UserGames @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  createdAt: String!
+  usersID: ID! @index(name: "byUsers", queryField: "userGamesByUsers", sortKeyFields: ["createdAt"])
+  gamesID: ID! @index(name: "byGames", queryField: "userGamesByGames", sortKeyFields: ["createdAt"])
+  Users: Users @belongsTo(fields: ["usersID"])
+  Games: Games @belongsTo(fields: ["gamesID"])
 }
 
 type Notifications @model @auth(rules: [{ allow: public }]) {
@@ -56,8 +66,6 @@ type Notifications @model @auth(rules: [{ allow: public }]) {
       queryField: "notificationsByPostsID"
       sortKeyFields: ["createdAt"]
     )
-  # @index(name: "byPosts", queryField: "notificationsByPostsID", sortKeyFields: ["createdAt"])
-  # @index(name: "notificationsByCode", queryField: "notificationsByCode", sortKeyFields: ["code"])
   Posts: Posts @belongsTo(fields: ["postsID"])
   UserNotifications: [UserNotifications] @hasMany(indexName: "byNotifications", fields: ["id"])
 }
@@ -188,6 +196,7 @@ type Users @model @searchable @auth(rules: [{ allow: public }]) {
     @index(name: "searchByGamertag", sortKeyFields: ["gamertag"], queryField: "searchByGamertag")
   Comments: [Comments] @hasMany(indexName: "byUsers", fields: ["id"])
   UserNotifications: [UserNotifications] @hasMany(indexName: "byUsers", fields: ["id"])
+  UserGames: [UserGames] @hasMany(indexName: "byUsers", fields: ["id"])
   Posts: [Posts] @hasMany(indexName: "byUsers", fields: ["id"])
   PostViewTrackers: [PostViewTracker] @hasMany(indexName: "byUsers", fields: ["id"])
   SenderRelationships: [UserRelationships] @hasMany(indexName: "bySender", fields: ["id"])
