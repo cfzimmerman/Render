@@ -27,8 +27,8 @@ type Games @model @auth(rules: [{ allow: public }]) {
   series: String
   genre: String
   theme: String
-  coverKey: String
-  backgroundKey: String
+  coverID: String
+  backgroundID: String
   steamID: String
   microsoftID: String
   xboxMarketplaceID: String
