@@ -158,6 +158,123 @@ export const onDeletePostViewTracker = /* GraphQL */ `
     }
   }
 `;
+export const onCreateGlobalData = /* GraphQL */ `
+  subscription OnCreateGlobalData {
+    onCreateGlobalData {
+      id
+      createdAt
+      usecase
+      key
+      strA
+      numA
+      numB
+      updatedAt
+    }
+  }
+`;
+export const onUpdateGlobalData = /* GraphQL */ `
+  subscription OnUpdateGlobalData {
+    onUpdateGlobalData {
+      id
+      createdAt
+      usecase
+      key
+      strA
+      numA
+      numB
+      updatedAt
+    }
+  }
+`;
+export const onDeleteGlobalData = /* GraphQL */ `
+  subscription OnDeleteGlobalData {
+    onDeleteGlobalData {
+      id
+      createdAt
+      usecase
+      key
+      strA
+      numA
+      numB
+      updatedAt
+    }
+  }
+`;
+export const onCreateGames = /* GraphQL */ `
+  subscription OnCreateGames {
+    onCreateGames {
+      id
+      createdAt
+      igdbID
+      title
+      releaseDate
+      series
+      genre
+      theme
+      coverID
+      backgroundID
+      steamID
+      microsoftID
+      xboxMarketplaceID
+      gogID
+      egsID
+      twitchID
+      oculusID
+      playstationID
+      updatedAt
+    }
+  }
+`;
+export const onUpdateGames = /* GraphQL */ `
+  subscription OnUpdateGames {
+    onUpdateGames {
+      id
+      createdAt
+      igdbID
+      title
+      releaseDate
+      series
+      genre
+      theme
+      coverID
+      backgroundID
+      steamID
+      microsoftID
+      xboxMarketplaceID
+      gogID
+      egsID
+      twitchID
+      oculusID
+      playstationID
+      updatedAt
+    }
+  }
+`;
+export const onDeleteGames = /* GraphQL */ `
+  subscription OnDeleteGames {
+    onDeleteGames {
+      id
+      createdAt
+      igdbID
+      title
+      releaseDate
+      series
+      genre
+      theme
+      coverID
+      backgroundID
+      steamID
+      microsoftID
+      xboxMarketplaceID
+      gogID
+      egsID
+      twitchID
+      oculusID
+      playstationID
+      updatedAt
+    }
+  }
+`;
 export const onCreateNotifications = /* GraphQL */ `
   subscription OnCreateNotifications {
     onCreateNotifications {

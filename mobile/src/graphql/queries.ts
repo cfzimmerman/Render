@@ -104,6 +104,127 @@ export const postViewByPostID = /* GraphQL */ `
     }
   }
 `;
+export const getGlobalData = /* GraphQL */ `
+  query GetGlobalData($id: ID!) {
+    getGlobalData(id: $id) {
+      id
+      createdAt
+      usecase
+      key
+      strA
+      numA
+      numB
+      updatedAt
+    }
+  }
+`;
+export const listGlobalData = /* GraphQL */ `
+  query ListGlobalData(
+    $filter: ModelGlobalDataFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGlobalData(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        createdAt
+        usecase
+        key
+        strA
+        numA
+        numB
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const gDByUsecase = /* GraphQL */ `
+  query GDByUsecase(
+    $usecase: String!
+    $sortDirection: ModelSortDirection
+    $filter: ModelGlobalDataFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    GDByUsecase(
+      usecase: $usecase
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        usecase
+        key
+        strA
+        numA
+        numB
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getGames = /* GraphQL */ `
+  query GetGames($id: ID!) {
+    getGames(id: $id) {
+      id
+      createdAt
+      igdbID
+      title
+      releaseDate
+      series
+      genre
+      theme
+      coverID
+      backgroundID
+      steamID
+      microsoftID
+      xboxMarketplaceID
+      gogID
+      egsID
+      twitchID
+      oculusID
+      playstationID
+      updatedAt
+    }
+  }
+`;
+export const listGames = /* GraphQL */ `
+  query ListGames(
+    $filter: ModelGamesFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        createdAt
+        igdbID
+        title
+        releaseDate
+        series
+        genre
+        theme
+        coverID
+        backgroundID
+        steamID
+        microsoftID
+        xboxMarketplaceID
+        gogID
+        egsID
+        twitchID
+        oculusID
+        playstationID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getNotifications = /* GraphQL */ `
   query GetNotifications($id: ID!) {
     getNotifications(id: $id) {

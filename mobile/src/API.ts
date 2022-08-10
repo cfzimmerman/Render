@@ -214,22 +214,26 @@ export type DeletePostViewTrackerInput = {
   id: string,
 };
 
-export type CreateNotificationsInput = {
+export type CreateGlobalDataInput = {
   id?: string | null,
   createdAt?: string | null,
-  code?: number | null,
-  payload?: string | null,
-  postsID?: string | null,
+  usecase?: string | null,
+  key?: string | null,
+  strA?: string | null,
+  numA?: number | null,
+  numB?: number | null,
 };
 
-export type ModelNotificationsConditionInput = {
+export type ModelGlobalDataConditionInput = {
   createdAt?: ModelStringInput | null,
-  code?: ModelIntInput | null,
-  payload?: ModelStringInput | null,
-  postsID?: ModelIDInput | null,
-  and?: Array< ModelNotificationsConditionInput | null > | null,
-  or?: Array< ModelNotificationsConditionInput | null > | null,
-  not?: ModelNotificationsConditionInput | null,
+  usecase?: ModelStringInput | null,
+  key?: ModelStringInput | null,
+  strA?: ModelStringInput | null,
+  numA?: ModelFloatInput | null,
+  numB?: ModelFloatInput | null,
+  and?: Array< ModelGlobalDataConditionInput | null > | null,
+  or?: Array< ModelGlobalDataConditionInput | null > | null,
+  not?: ModelGlobalDataConditionInput | null,
 };
 
 export type ModelStringInput = {
@@ -248,6 +252,88 @@ export type ModelStringInput = {
   size?: ModelSizeInput | null,
 };
 
+export type ModelFloatInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type GlobalData = {
+  __typename: "GlobalData",
+  id: string,
+  createdAt: string,
+  usecase?: string | null,
+  key?: string | null,
+  strA?: string | null,
+  numA?: number | null,
+  numB?: number | null,
+  updatedAt: string,
+};
+
+export type UpdateGlobalDataInput = {
+  id: string,
+  createdAt?: string | null,
+  usecase?: string | null,
+  key?: string | null,
+  strA?: string | null,
+  numA?: number | null,
+  numB?: number | null,
+};
+
+export type DeleteGlobalDataInput = {
+  id: string,
+};
+
+export type CreateGamesInput = {
+  id?: string | null,
+  createdAt?: string | null,
+  igdbID?: number | null,
+  title?: string | null,
+  releaseDate?: string | null,
+  series?: string | null,
+  genre?: string | null,
+  theme?: string | null,
+  coverID?: string | null,
+  backgroundID?: string | null,
+  steamID?: string | null,
+  microsoftID?: string | null,
+  xboxMarketplaceID?: string | null,
+  gogID?: string | null,
+  egsID?: string | null,
+  twitchID?: string | null,
+  oculusID?: string | null,
+  playstationID?: string | null,
+};
+
+export type ModelGamesConditionInput = {
+  createdAt?: ModelStringInput | null,
+  igdbID?: ModelIntInput | null,
+  title?: ModelStringInput | null,
+  releaseDate?: ModelStringInput | null,
+  series?: ModelStringInput | null,
+  genre?: ModelStringInput | null,
+  theme?: ModelStringInput | null,
+  coverID?: ModelStringInput | null,
+  backgroundID?: ModelStringInput | null,
+  steamID?: ModelStringInput | null,
+  microsoftID?: ModelStringInput | null,
+  xboxMarketplaceID?: ModelStringInput | null,
+  gogID?: ModelStringInput | null,
+  egsID?: ModelStringInput | null,
+  twitchID?: ModelStringInput | null,
+  oculusID?: ModelStringInput | null,
+  playstationID?: ModelStringInput | null,
+  and?: Array< ModelGamesConditionInput | null > | null,
+  or?: Array< ModelGamesConditionInput | null > | null,
+  not?: ModelGamesConditionInput | null,
+};
+
 export type ModelIntInput = {
   ne?: number | null,
   eq?: number | null,
@@ -258,6 +344,72 @@ export type ModelIntInput = {
   between?: Array< number | null > | null,
   attributeExists?: boolean | null,
   attributeType?: ModelAttributeTypes | null,
+};
+
+export type Games = {
+  __typename: "Games",
+  id: string,
+  createdAt: string,
+  igdbID?: number | null,
+  title?: string | null,
+  releaseDate?: string | null,
+  series?: string | null,
+  genre?: string | null,
+  theme?: string | null,
+  coverID?: string | null,
+  backgroundID?: string | null,
+  steamID?: string | null,
+  microsoftID?: string | null,
+  xboxMarketplaceID?: string | null,
+  gogID?: string | null,
+  egsID?: string | null,
+  twitchID?: string | null,
+  oculusID?: string | null,
+  playstationID?: string | null,
+  updatedAt: string,
+};
+
+export type UpdateGamesInput = {
+  id: string,
+  createdAt?: string | null,
+  igdbID?: number | null,
+  title?: string | null,
+  releaseDate?: string | null,
+  series?: string | null,
+  genre?: string | null,
+  theme?: string | null,
+  coverID?: string | null,
+  backgroundID?: string | null,
+  steamID?: string | null,
+  microsoftID?: string | null,
+  xboxMarketplaceID?: string | null,
+  gogID?: string | null,
+  egsID?: string | null,
+  twitchID?: string | null,
+  oculusID?: string | null,
+  playstationID?: string | null,
+};
+
+export type DeleteGamesInput = {
+  id: string,
+};
+
+export type CreateNotificationsInput = {
+  id?: string | null,
+  createdAt?: string | null,
+  code?: number | null,
+  payload?: string | null,
+  postsID?: string | null,
+};
+
+export type ModelNotificationsConditionInput = {
+  createdAt?: ModelStringInput | null,
+  code?: ModelIntInput | null,
+  payload?: ModelStringInput | null,
+  postsID?: ModelIDInput | null,
+  and?: Array< ModelNotificationsConditionInput | null > | null,
+  or?: Array< ModelNotificationsConditionInput | null > | null,
+  not?: ModelNotificationsConditionInput | null,
 };
 
 export type UpdateNotificationsInput = {
@@ -396,18 +548,6 @@ export type ModelPostsConditionInput = {
   not?: ModelPostsConditionInput | null,
 };
 
-export type ModelFloatInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
 export type ModelBooleanInput = {
   ne?: boolean | null,
   eq?: boolean | null,
@@ -534,6 +674,55 @@ export enum ModelSortDirection {
   DESC = "DESC",
 }
 
+
+export type ModelGlobalDataFilterInput = {
+  id?: ModelIDInput | null,
+  createdAt?: ModelStringInput | null,
+  usecase?: ModelStringInput | null,
+  key?: ModelStringInput | null,
+  strA?: ModelStringInput | null,
+  numA?: ModelFloatInput | null,
+  numB?: ModelFloatInput | null,
+  and?: Array< ModelGlobalDataFilterInput | null > | null,
+  or?: Array< ModelGlobalDataFilterInput | null > | null,
+  not?: ModelGlobalDataFilterInput | null,
+};
+
+export type ModelGlobalDataConnection = {
+  __typename: "ModelGlobalDataConnection",
+  items:  Array<GlobalData | null >,
+  nextToken?: string | null,
+};
+
+export type ModelGamesFilterInput = {
+  id?: ModelIDInput | null,
+  createdAt?: ModelStringInput | null,
+  igdbID?: ModelIntInput | null,
+  title?: ModelStringInput | null,
+  releaseDate?: ModelStringInput | null,
+  series?: ModelStringInput | null,
+  genre?: ModelStringInput | null,
+  theme?: ModelStringInput | null,
+  coverID?: ModelStringInput | null,
+  backgroundID?: ModelStringInput | null,
+  steamID?: ModelStringInput | null,
+  microsoftID?: ModelStringInput | null,
+  xboxMarketplaceID?: ModelStringInput | null,
+  gogID?: ModelStringInput | null,
+  egsID?: ModelStringInput | null,
+  twitchID?: ModelStringInput | null,
+  oculusID?: ModelStringInput | null,
+  playstationID?: ModelStringInput | null,
+  and?: Array< ModelGamesFilterInput | null > | null,
+  or?: Array< ModelGamesFilterInput | null > | null,
+  not?: ModelGamesFilterInput | null,
+};
+
+export type ModelGamesConnection = {
+  __typename: "ModelGamesConnection",
+  items:  Array<Games | null >,
+  nextToken?: string | null,
+};
 
 export type ModelNotificationsFilterInput = {
   id?: ModelIDInput | null,
@@ -1113,6 +1302,153 @@ export type DeletePostViewTrackerMutation = {
       createdAt: string,
     } | null,
     createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateGlobalDataMutationVariables = {
+  input: CreateGlobalDataInput,
+  condition?: ModelGlobalDataConditionInput | null,
+};
+
+export type CreateGlobalDataMutation = {
+  createGlobalData?:  {
+    __typename: "GlobalData",
+    id: string,
+    createdAt: string,
+    usecase?: string | null,
+    key?: string | null,
+    strA?: string | null,
+    numA?: number | null,
+    numB?: number | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateGlobalDataMutationVariables = {
+  input: UpdateGlobalDataInput,
+  condition?: ModelGlobalDataConditionInput | null,
+};
+
+export type UpdateGlobalDataMutation = {
+  updateGlobalData?:  {
+    __typename: "GlobalData",
+    id: string,
+    createdAt: string,
+    usecase?: string | null,
+    key?: string | null,
+    strA?: string | null,
+    numA?: number | null,
+    numB?: number | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteGlobalDataMutationVariables = {
+  input: DeleteGlobalDataInput,
+  condition?: ModelGlobalDataConditionInput | null,
+};
+
+export type DeleteGlobalDataMutation = {
+  deleteGlobalData?:  {
+    __typename: "GlobalData",
+    id: string,
+    createdAt: string,
+    usecase?: string | null,
+    key?: string | null,
+    strA?: string | null,
+    numA?: number | null,
+    numB?: number | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateGamesMutationVariables = {
+  input: CreateGamesInput,
+  condition?: ModelGamesConditionInput | null,
+};
+
+export type CreateGamesMutation = {
+  createGames?:  {
+    __typename: "Games",
+    id: string,
+    createdAt: string,
+    igdbID?: number | null,
+    title?: string | null,
+    releaseDate?: string | null,
+    series?: string | null,
+    genre?: string | null,
+    theme?: string | null,
+    coverID?: string | null,
+    backgroundID?: string | null,
+    steamID?: string | null,
+    microsoftID?: string | null,
+    xboxMarketplaceID?: string | null,
+    gogID?: string | null,
+    egsID?: string | null,
+    twitchID?: string | null,
+    oculusID?: string | null,
+    playstationID?: string | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateGamesMutationVariables = {
+  input: UpdateGamesInput,
+  condition?: ModelGamesConditionInput | null,
+};
+
+export type UpdateGamesMutation = {
+  updateGames?:  {
+    __typename: "Games",
+    id: string,
+    createdAt: string,
+    igdbID?: number | null,
+    title?: string | null,
+    releaseDate?: string | null,
+    series?: string | null,
+    genre?: string | null,
+    theme?: string | null,
+    coverID?: string | null,
+    backgroundID?: string | null,
+    steamID?: string | null,
+    microsoftID?: string | null,
+    xboxMarketplaceID?: string | null,
+    gogID?: string | null,
+    egsID?: string | null,
+    twitchID?: string | null,
+    oculusID?: string | null,
+    playstationID?: string | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteGamesMutationVariables = {
+  input: DeleteGamesInput,
+  condition?: ModelGamesConditionInput | null,
+};
+
+export type DeleteGamesMutation = {
+  deleteGames?:  {
+    __typename: "Games",
+    id: string,
+    createdAt: string,
+    igdbID?: number | null,
+    title?: string | null,
+    releaseDate?: string | null,
+    series?: string | null,
+    genre?: string | null,
+    theme?: string | null,
+    coverID?: string | null,
+    backgroundID?: string | null,
+    steamID?: string | null,
+    microsoftID?: string | null,
+    xboxMarketplaceID?: string | null,
+    gogID?: string | null,
+    egsID?: string | null,
+    twitchID?: string | null,
+    oculusID?: string | null,
+    playstationID?: string | null,
     updatedAt: string,
   } | null,
 };
@@ -2201,6 +2537,138 @@ export type PostViewByPostIDQuery = {
       postsID?: string | null,
       viewerID?: string | null,
       createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetGlobalDataQueryVariables = {
+  id: string,
+};
+
+export type GetGlobalDataQuery = {
+  getGlobalData?:  {
+    __typename: "GlobalData",
+    id: string,
+    createdAt: string,
+    usecase?: string | null,
+    key?: string | null,
+    strA?: string | null,
+    numA?: number | null,
+    numB?: number | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListGlobalDataQueryVariables = {
+  filter?: ModelGlobalDataFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListGlobalDataQuery = {
+  listGlobalData?:  {
+    __typename: "ModelGlobalDataConnection",
+    items:  Array< {
+      __typename: "GlobalData",
+      id: string,
+      createdAt: string,
+      usecase?: string | null,
+      key?: string | null,
+      strA?: string | null,
+      numA?: number | null,
+      numB?: number | null,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GDByUsecaseQueryVariables = {
+  usecase: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelGlobalDataFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type GDByUsecaseQuery = {
+  GDByUsecase?:  {
+    __typename: "ModelGlobalDataConnection",
+    items:  Array< {
+      __typename: "GlobalData",
+      id: string,
+      createdAt: string,
+      usecase?: string | null,
+      key?: string | null,
+      strA?: string | null,
+      numA?: number | null,
+      numB?: number | null,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetGamesQueryVariables = {
+  id: string,
+};
+
+export type GetGamesQuery = {
+  getGames?:  {
+    __typename: "Games",
+    id: string,
+    createdAt: string,
+    igdbID?: number | null,
+    title?: string | null,
+    releaseDate?: string | null,
+    series?: string | null,
+    genre?: string | null,
+    theme?: string | null,
+    coverID?: string | null,
+    backgroundID?: string | null,
+    steamID?: string | null,
+    microsoftID?: string | null,
+    xboxMarketplaceID?: string | null,
+    gogID?: string | null,
+    egsID?: string | null,
+    twitchID?: string | null,
+    oculusID?: string | null,
+    playstationID?: string | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListGamesQueryVariables = {
+  filter?: ModelGamesFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListGamesQuery = {
+  listGames?:  {
+    __typename: "ModelGamesConnection",
+    items:  Array< {
+      __typename: "Games",
+      id: string,
+      createdAt: string,
+      igdbID?: number | null,
+      title?: string | null,
+      releaseDate?: string | null,
+      series?: string | null,
+      genre?: string | null,
+      theme?: string | null,
+      coverID?: string | null,
+      backgroundID?: string | null,
+      steamID?: string | null,
+      microsoftID?: string | null,
+      xboxMarketplaceID?: string | null,
+      gogID?: string | null,
+      egsID?: string | null,
+      twitchID?: string | null,
+      oculusID?: string | null,
+      playstationID?: string | null,
       updatedAt: string,
     } | null >,
     nextToken?: string | null,
@@ -3588,6 +4056,123 @@ export type OnDeletePostViewTrackerSubscription = {
       createdAt: string,
     } | null,
     createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateGlobalDataSubscription = {
+  onCreateGlobalData?:  {
+    __typename: "GlobalData",
+    id: string,
+    createdAt: string,
+    usecase?: string | null,
+    key?: string | null,
+    strA?: string | null,
+    numA?: number | null,
+    numB?: number | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateGlobalDataSubscription = {
+  onUpdateGlobalData?:  {
+    __typename: "GlobalData",
+    id: string,
+    createdAt: string,
+    usecase?: string | null,
+    key?: string | null,
+    strA?: string | null,
+    numA?: number | null,
+    numB?: number | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteGlobalDataSubscription = {
+  onDeleteGlobalData?:  {
+    __typename: "GlobalData",
+    id: string,
+    createdAt: string,
+    usecase?: string | null,
+    key?: string | null,
+    strA?: string | null,
+    numA?: number | null,
+    numB?: number | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateGamesSubscription = {
+  onCreateGames?:  {
+    __typename: "Games",
+    id: string,
+    createdAt: string,
+    igdbID?: number | null,
+    title?: string | null,
+    releaseDate?: string | null,
+    series?: string | null,
+    genre?: string | null,
+    theme?: string | null,
+    coverID?: string | null,
+    backgroundID?: string | null,
+    steamID?: string | null,
+    microsoftID?: string | null,
+    xboxMarketplaceID?: string | null,
+    gogID?: string | null,
+    egsID?: string | null,
+    twitchID?: string | null,
+    oculusID?: string | null,
+    playstationID?: string | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateGamesSubscription = {
+  onUpdateGames?:  {
+    __typename: "Games",
+    id: string,
+    createdAt: string,
+    igdbID?: number | null,
+    title?: string | null,
+    releaseDate?: string | null,
+    series?: string | null,
+    genre?: string | null,
+    theme?: string | null,
+    coverID?: string | null,
+    backgroundID?: string | null,
+    steamID?: string | null,
+    microsoftID?: string | null,
+    xboxMarketplaceID?: string | null,
+    gogID?: string | null,
+    egsID?: string | null,
+    twitchID?: string | null,
+    oculusID?: string | null,
+    playstationID?: string | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteGamesSubscription = {
+  onDeleteGames?:  {
+    __typename: "Games",
+    id: string,
+    createdAt: string,
+    igdbID?: number | null,
+    title?: string | null,
+    releaseDate?: string | null,
+    series?: string | null,
+    genre?: string | null,
+    theme?: string | null,
+    coverID?: string | null,
+    backgroundID?: string | null,
+    steamID?: string | null,
+    microsoftID?: string | null,
+    xboxMarketplaceID?: string | null,
+    gogID?: string | null,
+    egsID?: string | null,
+    twitchID?: string | null,
+    oculusID?: string | null,
+    playstationID?: string | null,
     updatedAt: string,
   } | null,
 };
