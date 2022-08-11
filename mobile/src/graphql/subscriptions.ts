@@ -24,6 +24,7 @@ export const onCreatePostViewTracker = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
         updatedAt
       }
       viewerID
@@ -76,6 +77,7 @@ export const onUpdatePostViewTracker = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
         updatedAt
       }
       viewerID
@@ -128,6 +130,7 @@ export const onDeletePostViewTracker = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
         updatedAt
       }
       viewerID
@@ -221,6 +224,12 @@ export const onCreateGames = /* GraphQL */ `
       twitchID
       oculusID
       playstationID
+      UserGames {
+        nextToken
+      }
+      Posts {
+        nextToken
+      }
       updatedAt
     }
   }
@@ -246,6 +255,12 @@ export const onUpdateGames = /* GraphQL */ `
       twitchID
       oculusID
       playstationID
+      UserGames {
+        nextToken
+      }
+      Posts {
+        nextToken
+      }
       updatedAt
     }
   }
@@ -271,6 +286,174 @@ export const onDeleteGames = /* GraphQL */ `
       twitchID
       oculusID
       playstationID
+      UserGames {
+        nextToken
+      }
+      Posts {
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const onCreateUserGames = /* GraphQL */ `
+  subscription OnCreateUserGames {
+    onCreateUserGames {
+      id
+      createdAt
+      usersID
+      gamesID
+      Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        updatedAt
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+      }
+      Games {
+        id
+        createdAt
+        igdbID
+        title
+        releaseDate
+        series
+        genre
+        theme
+        coverID
+        backgroundID
+        steamID
+        microsoftID
+        xboxMarketplaceID
+        gogID
+        egsID
+        twitchID
+        oculusID
+        playstationID
+        updatedAt
+      }
+      updatedAt
+    }
+  }
+`;
+export const onUpdateUserGames = /* GraphQL */ `
+  subscription OnUpdateUserGames {
+    onUpdateUserGames {
+      id
+      createdAt
+      usersID
+      gamesID
+      Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        updatedAt
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+      }
+      Games {
+        id
+        createdAt
+        igdbID
+        title
+        releaseDate
+        series
+        genre
+        theme
+        coverID
+        backgroundID
+        steamID
+        microsoftID
+        xboxMarketplaceID
+        gogID
+        egsID
+        twitchID
+        oculusID
+        playstationID
+        updatedAt
+      }
+      updatedAt
+    }
+  }
+`;
+export const onDeleteUserGames = /* GraphQL */ `
+  subscription OnDeleteUserGames {
+    onDeleteUserGames {
+      id
+      createdAt
+      usersID
+      gamesID
+      Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        updatedAt
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+      }
+      Games {
+        id
+        createdAt
+        igdbID
+        title
+        releaseDate
+        series
+        genre
+        theme
+        coverID
+        backgroundID
+        steamID
+        microsoftID
+        xboxMarketplaceID
+        gogID
+        egsID
+        twitchID
+        oculusID
+        playstationID
+        updatedAt
+      }
       updatedAt
     }
   }
@@ -300,6 +483,7 @@ export const onCreateNotifications = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
         updatedAt
       }
       UserNotifications {
@@ -334,6 +518,7 @@ export const onUpdateNotifications = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
         updatedAt
       }
       UserNotifications {
@@ -368,6 +553,7 @@ export const onDeleteNotifications = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
         updatedAt
       }
       UserNotifications {
@@ -523,6 +709,7 @@ export const onCreateComments = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
         updatedAt
       }
       usersID
@@ -576,6 +763,7 @@ export const onUpdateComments = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
         updatedAt
       }
       usersID
@@ -629,6 +817,7 @@ export const onDeleteComments = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
         updatedAt
       }
       usersID
@@ -843,6 +1032,7 @@ export const onCreatePosts = /* GraphQL */ `
       thumbnailkey
       type
       usersID
+      gamesID
       Users {
         id
         acceptedtos
@@ -864,6 +1054,27 @@ export const onCreatePosts = /* GraphQL */ `
         storagesizeinbytes
         type
         createdAt
+      }
+      Games {
+        id
+        createdAt
+        igdbID
+        title
+        releaseDate
+        series
+        genre
+        theme
+        coverID
+        backgroundID
+        steamID
+        microsoftID
+        xboxMarketplaceID
+        gogID
+        egsID
+        twitchID
+        oculusID
+        playstationID
+        updatedAt
       }
       Comments {
         nextToken
@@ -897,6 +1108,7 @@ export const onUpdatePosts = /* GraphQL */ `
       thumbnailkey
       type
       usersID
+      gamesID
       Users {
         id
         acceptedtos
@@ -918,6 +1130,27 @@ export const onUpdatePosts = /* GraphQL */ `
         storagesizeinbytes
         type
         createdAt
+      }
+      Games {
+        id
+        createdAt
+        igdbID
+        title
+        releaseDate
+        series
+        genre
+        theme
+        coverID
+        backgroundID
+        steamID
+        microsoftID
+        xboxMarketplaceID
+        gogID
+        egsID
+        twitchID
+        oculusID
+        playstationID
+        updatedAt
       }
       Comments {
         nextToken
@@ -951,6 +1184,7 @@ export const onDeletePosts = /* GraphQL */ `
       thumbnailkey
       type
       usersID
+      gamesID
       Users {
         id
         acceptedtos
@@ -972,6 +1206,27 @@ export const onDeletePosts = /* GraphQL */ `
         storagesizeinbytes
         type
         createdAt
+      }
+      Games {
+        id
+        createdAt
+        igdbID
+        title
+        releaseDate
+        series
+        genre
+        theme
+        coverID
+        backgroundID
+        steamID
+        microsoftID
+        xboxMarketplaceID
+        gogID
+        egsID
+        twitchID
+        oculusID
+        playstationID
+        updatedAt
       }
       Comments {
         nextToken
@@ -1012,6 +1267,9 @@ export const onCreateUsers = /* GraphQL */ `
         nextToken
       }
       UserNotifications {
+        nextToken
+      }
+      UserGames {
         nextToken
       }
       Posts {
@@ -1058,6 +1316,9 @@ export const onUpdateUsers = /* GraphQL */ `
       UserNotifications {
         nextToken
       }
+      UserGames {
+        nextToken
+      }
       Posts {
         nextToken
       }
@@ -1100,6 +1361,9 @@ export const onDeleteUsers = /* GraphQL */ `
         nextToken
       }
       UserNotifications {
+        nextToken
+      }
+      UserGames {
         nextToken
       }
       Posts {

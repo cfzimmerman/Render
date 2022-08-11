@@ -167,6 +167,141 @@ export const deletePostViewTracker = /* GraphQL */ `
     }
   }
 `;
+export const createGlobalData = /* GraphQL */ `
+  mutation CreateGlobalData(
+    $input: CreateGlobalDataInput!
+    $condition: ModelGlobalDataConditionInput
+  ) {
+    createGlobalData(input: $input, condition: $condition) {
+      id
+      createdAt
+      usecase
+      key
+      strA
+      numA
+      numB
+      updatedAt
+    }
+  }
+`;
+export const updateGlobalData = /* GraphQL */ `
+  mutation UpdateGlobalData(
+    $input: UpdateGlobalDataInput!
+    $condition: ModelGlobalDataConditionInput
+  ) {
+    updateGlobalData(input: $input, condition: $condition) {
+      id
+      createdAt
+      usecase
+      key
+      strA
+      numA
+      numB
+      updatedAt
+    }
+  }
+`;
+export const deleteGlobalData = /* GraphQL */ `
+  mutation DeleteGlobalData(
+    $input: DeleteGlobalDataInput!
+    $condition: ModelGlobalDataConditionInput
+  ) {
+    deleteGlobalData(input: $input, condition: $condition) {
+      id
+      createdAt
+      usecase
+      key
+      strA
+      numA
+      numB
+      updatedAt
+    }
+  }
+`;
+export const createGames = /* GraphQL */ `
+  mutation CreateGames(
+    $input: CreateGamesInput!
+    $condition: ModelGamesConditionInput
+  ) {
+    createGames(input: $input, condition: $condition) {
+      id
+      createdAt
+      igdbID
+      title
+      releaseDate
+      series
+      genre
+      theme
+      coverID
+      backgroundID
+      steamID
+      microsoftID
+      xboxMarketplaceID
+      gogID
+      egsID
+      twitchID
+      oculusID
+      playstationID
+      updatedAt
+    }
+  }
+`;
+export const updateGames = /* GraphQL */ `
+  mutation UpdateGames(
+    $input: UpdateGamesInput!
+    $condition: ModelGamesConditionInput
+  ) {
+    updateGames(input: $input, condition: $condition) {
+      id
+      createdAt
+      igdbID
+      title
+      releaseDate
+      series
+      genre
+      theme
+      coverID
+      backgroundID
+      steamID
+      microsoftID
+      xboxMarketplaceID
+      gogID
+      egsID
+      twitchID
+      oculusID
+      playstationID
+      updatedAt
+    }
+  }
+`;
+export const deleteGames = /* GraphQL */ `
+  mutation DeleteGames(
+    $input: DeleteGamesInput!
+    $condition: ModelGamesConditionInput
+  ) {
+    deleteGames(input: $input, condition: $condition) {
+      id
+      createdAt
+      igdbID
+      title
+      releaseDate
+      series
+      genre
+      theme
+      coverID
+      backgroundID
+      steamID
+      microsoftID
+      xboxMarketplaceID
+      gogID
+      egsID
+      twitchID
+      oculusID
+      playstationID
+      updatedAt
+    }
+  }
+`;
 export const createNotifications = /* GraphQL */ `
   mutation CreateNotifications(
     $input: CreateNotificationsInput!

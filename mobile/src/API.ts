@@ -85,7 +85,9 @@ export type Posts = {
   thumbnailkey?: string | null,
   type?: string | null,
   usersID: string,
+  gamesID?: string | null,
   Users?: Users | null,
+  Games?: Games | null,
   Comments?: ModelCommentsConnection | null,
   Notifications?: ModelNotificationsConnection | null,
   PostViewTrackers?: ModelPostViewTrackerConnection | null,
@@ -115,6 +117,7 @@ export type Users = {
   type?: string | null,
   Comments?: ModelCommentsConnection | null,
   UserNotifications?: ModelUserNotificationsConnection | null,
+  UserGames?: ModelUserGamesConnection | null,
   Posts?: ModelPostsConnection | null,
   PostViewTrackers?: ModelPostViewTrackerConnection | null,
   SenderRelationships?: ModelUserRelationshipsConnection | null,
@@ -166,6 +169,48 @@ export type Notifications = {
   postsID?: string | null,
   Posts?: Posts | null,
   UserNotifications?: ModelUserNotificationsConnection | null,
+  updatedAt: string,
+};
+
+export type ModelUserGamesConnection = {
+  __typename: "ModelUserGamesConnection",
+  items:  Array<UserGames | null >,
+  nextToken?: string | null,
+};
+
+export type UserGames = {
+  __typename: "UserGames",
+  id: string,
+  createdAt: string,
+  usersID: string,
+  gamesID: string,
+  Users?: Users | null,
+  Games?: Games | null,
+  updatedAt: string,
+};
+
+export type Games = {
+  __typename: "Games",
+  id: string,
+  createdAt: string,
+  igdbID?: number | null,
+  title?: string | null,
+  releaseDate?: string | null,
+  series?: string | null,
+  genre?: string | null,
+  theme?: string | null,
+  coverID?: string | null,
+  backgroundID?: string | null,
+  steamID?: string | null,
+  microsoftID?: string | null,
+  xboxMarketplaceID?: string | null,
+  gogID?: string | null,
+  egsID?: string | null,
+  twitchID?: string | null,
+  oculusID?: string | null,
+  playstationID?: string | null,
+  UserGames?: ModelUserGamesConnection | null,
+  Posts?: ModelPostsConnection | null,
   updatedAt: string,
 };
 
@@ -346,29 +391,6 @@ export type ModelIntInput = {
   attributeType?: ModelAttributeTypes | null,
 };
 
-export type Games = {
-  __typename: "Games",
-  id: string,
-  createdAt: string,
-  igdbID?: number | null,
-  title?: string | null,
-  releaseDate?: string | null,
-  series?: string | null,
-  genre?: string | null,
-  theme?: string | null,
-  coverID?: string | null,
-  backgroundID?: string | null,
-  steamID?: string | null,
-  microsoftID?: string | null,
-  xboxMarketplaceID?: string | null,
-  gogID?: string | null,
-  egsID?: string | null,
-  twitchID?: string | null,
-  oculusID?: string | null,
-  playstationID?: string | null,
-  updatedAt: string,
-};
-
 export type UpdateGamesInput = {
   id: string,
   createdAt?: string | null,
@@ -391,6 +413,33 @@ export type UpdateGamesInput = {
 };
 
 export type DeleteGamesInput = {
+  id: string,
+};
+
+export type CreateUserGamesInput = {
+  id?: string | null,
+  createdAt?: string | null,
+  usersID: string,
+  gamesID: string,
+};
+
+export type ModelUserGamesConditionInput = {
+  createdAt?: ModelStringInput | null,
+  usersID?: ModelIDInput | null,
+  gamesID?: ModelIDInput | null,
+  and?: Array< ModelUserGamesConditionInput | null > | null,
+  or?: Array< ModelUserGamesConditionInput | null > | null,
+  not?: ModelUserGamesConditionInput | null,
+};
+
+export type UpdateUserGamesInput = {
+  id: string,
+  createdAt?: string | null,
+  usersID?: string | null,
+  gamesID?: string | null,
+};
+
+export type DeleteUserGamesInput = {
   id: string,
 };
 
@@ -525,6 +574,7 @@ export type CreatePostsInput = {
   thumbnailkey?: string | null,
   type?: string | null,
   usersID: string,
+  gamesID?: string | null,
 };
 
 export type ModelPostsConditionInput = {
@@ -543,6 +593,7 @@ export type ModelPostsConditionInput = {
   thumbnailkey?: ModelStringInput | null,
   type?: ModelStringInput | null,
   usersID?: ModelIDInput | null,
+  gamesID?: ModelIDInput | null,
   and?: Array< ModelPostsConditionInput | null > | null,
   or?: Array< ModelPostsConditionInput | null > | null,
   not?: ModelPostsConditionInput | null,
@@ -572,6 +623,7 @@ export type UpdatePostsInput = {
   thumbnailkey?: string | null,
   type?: string | null,
   usersID?: string | null,
+  gamesID?: string | null,
 };
 
 export type DeletePostsInput = {
@@ -724,6 +776,26 @@ export type ModelGamesConnection = {
   nextToken?: string | null,
 };
 
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
+
+export type ModelUserGamesFilterInput = {
+  id?: ModelIDInput | null,
+  createdAt?: ModelStringInput | null,
+  usersID?: ModelIDInput | null,
+  gamesID?: ModelIDInput | null,
+  and?: Array< ModelUserGamesFilterInput | null > | null,
+  or?: Array< ModelUserGamesFilterInput | null > | null,
+  not?: ModelUserGamesFilterInput | null,
+};
+
 export type ModelNotificationsFilterInput = {
   id?: ModelIDInput | null,
   createdAt?: ModelStringInput | null,
@@ -757,16 +829,6 @@ export type ModelIntKeyConditionInput = {
   ge?: number | null,
   gt?: number | null,
   between?: Array< number | null > | null,
-};
-
-export type ModelStringKeyConditionInput = {
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
 };
 
 export type ModelUserNotificationsFilterInput = {
@@ -817,6 +879,7 @@ export type ModelPostsFilterInput = {
   thumbnailkey?: ModelStringInput | null,
   type?: ModelStringInput | null,
   usersID?: ModelIDInput | null,
+  gamesID?: ModelIDInput | null,
   and?: Array< ModelPostsFilterInput | null > | null,
   or?: Array< ModelPostsFilterInput | null > | null,
   not?: ModelPostsFilterInput | null,
@@ -839,6 +902,7 @@ export type SearchablePostsFilterInput = {
   thumbnailkey?: SearchableStringFilterInput | null,
   type?: SearchableStringFilterInput | null,
   usersID?: SearchableIDFilterInput | null,
+  gamesID?: SearchableIDFilterInput | null,
   updatedAt?: SearchableStringFilterInput | null,
   and?: Array< SearchablePostsFilterInput | null > | null,
   or?: Array< SearchablePostsFilterInput | null > | null,
@@ -926,6 +990,7 @@ export enum SearchablePostsSortableFields {
   thumbnailkey = "thumbnailkey",
   type = "type",
   usersID = "usersID",
+  gamesID = "gamesID",
   updatedAt = "updatedAt",
 }
 
@@ -968,6 +1033,7 @@ export enum SearchablePostsAggregateField {
   thumbnailkey = "thumbnailkey",
   type = "type",
   usersID = "usersID",
+  gamesID = "gamesID",
   updatedAt = "updatedAt",
 }
 
@@ -1036,99 +1102,6 @@ export type ModelUsersConnection = {
   nextToken?: string | null,
 };
 
-export type SearchableUsersFilterInput = {
-  id?: SearchableIDFilterInput | null,
-  acceptedtos?: SearchableBooleanFilterInput | null,
-  addedcount?: SearchableIntFilterInput | null,
-  addedmecount?: SearchableIntFilterInput | null,
-  birthday?: SearchableStringFilterInput | null,
-  updatedAt?: SearchableStringFilterInput | null,
-  cognitosub?: SearchableStringFilterInput | null,
-  disablednotifications?: SearchableStringFilterInput | null,
-  displayname?: SearchableStringFilterInput | null,
-  email?: SearchableStringFilterInput | null,
-  emailconfirmed?: SearchableBooleanFilterInput | null,
-  firstvaultupload?: SearchableBooleanFilterInput | null,
-  fullyauthenticated?: SearchableBooleanFilterInput | null,
-  gamertag?: SearchableStringFilterInput | null,
-  mostrecentpublicpost?: SearchableStringFilterInput | null,
-  pfp?: SearchableStringFilterInput | null,
-  setpassword?: SearchableBooleanFilterInput | null,
-  storagesizeinbytes?: SearchableFloatFilterInput | null,
-  type?: SearchableStringFilterInput | null,
-  createdAt?: SearchableStringFilterInput | null,
-  and?: Array< SearchableUsersFilterInput | null > | null,
-  or?: Array< SearchableUsersFilterInput | null > | null,
-  not?: SearchableUsersFilterInput | null,
-};
-
-export type SearchableUsersSortInput = {
-  field?: SearchableUsersSortableFields | null,
-  direction?: SearchableSortDirection | null,
-};
-
-export enum SearchableUsersSortableFields {
-  id = "id",
-  acceptedtos = "acceptedtos",
-  addedcount = "addedcount",
-  addedmecount = "addedmecount",
-  birthday = "birthday",
-  updatedAt = "updatedAt",
-  cognitosub = "cognitosub",
-  disablednotifications = "disablednotifications",
-  displayname = "displayname",
-  email = "email",
-  emailconfirmed = "emailconfirmed",
-  firstvaultupload = "firstvaultupload",
-  fullyauthenticated = "fullyauthenticated",
-  gamertag = "gamertag",
-  mostrecentpublicpost = "mostrecentpublicpost",
-  pfp = "pfp",
-  setpassword = "setpassword",
-  storagesizeinbytes = "storagesizeinbytes",
-  type = "type",
-  createdAt = "createdAt",
-}
-
-
-export type SearchableUsersAggregationInput = {
-  name: string,
-  type: SearchableAggregateType,
-  field: SearchableUsersAggregateField,
-};
-
-export enum SearchableUsersAggregateField {
-  id = "id",
-  acceptedtos = "acceptedtos",
-  addedcount = "addedcount",
-  addedmecount = "addedmecount",
-  birthday = "birthday",
-  updatedAt = "updatedAt",
-  cognitosub = "cognitosub",
-  disablednotifications = "disablednotifications",
-  displayname = "displayname",
-  email = "email",
-  emailconfirmed = "emailconfirmed",
-  firstvaultupload = "firstvaultupload",
-  fullyauthenticated = "fullyauthenticated",
-  gamertag = "gamertag",
-  mostrecentpublicpost = "mostrecentpublicpost",
-  pfp = "pfp",
-  setpassword = "setpassword",
-  storagesizeinbytes = "storagesizeinbytes",
-  type = "type",
-  createdAt = "createdAt",
-}
-
-
-export type SearchableUsersConnection = {
-  __typename: "SearchableUsersConnection",
-  items:  Array<Users | null >,
-  nextToken?: string | null,
-  total?: number | null,
-  aggregateItems:  Array<SearchableAggregateResult | null >,
-};
-
 export type CreatePostViewTrackerMutationVariables = {
   input: CreatePostViewTrackerInput,
   condition?: ModelPostViewTrackerConditionInput | null,
@@ -1157,6 +1130,7 @@ export type CreatePostViewTrackerMutation = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null,
     viewerID?: string | null,
@@ -1216,6 +1190,7 @@ export type UpdatePostViewTrackerMutation = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null,
     viewerID?: string | null,
@@ -1275,6 +1250,7 @@ export type DeletePostViewTrackerMutation = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null,
     viewerID?: string | null,
@@ -1389,6 +1365,14 @@ export type CreateGamesMutation = {
     twitchID?: string | null,
     oculusID?: string | null,
     playstationID?: string | null,
+    UserGames?:  {
+      __typename: "ModelUserGamesConnection",
+      nextToken?: string | null,
+    } | null,
+    Posts?:  {
+      __typename: "ModelPostsConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
   } | null,
 };
@@ -1419,6 +1403,14 @@ export type UpdateGamesMutation = {
     twitchID?: string | null,
     oculusID?: string | null,
     playstationID?: string | null,
+    UserGames?:  {
+      __typename: "ModelUserGamesConnection",
+      nextToken?: string | null,
+    } | null,
+    Posts?:  {
+      __typename: "ModelPostsConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
   } | null,
 };
@@ -1449,6 +1441,197 @@ export type DeleteGamesMutation = {
     twitchID?: string | null,
     oculusID?: string | null,
     playstationID?: string | null,
+    UserGames?:  {
+      __typename: "ModelUserGamesConnection",
+      nextToken?: string | null,
+    } | null,
+    Posts?:  {
+      __typename: "ModelPostsConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateUserGamesMutationVariables = {
+  input: CreateUserGamesInput,
+  condition?: ModelUserGamesConditionInput | null,
+};
+
+export type CreateUserGamesMutation = {
+  createUserGames?:  {
+    __typename: "UserGames",
+    id: string,
+    createdAt: string,
+    usersID: string,
+    gamesID: string,
+    Users?:  {
+      __typename: "Users",
+      id: string,
+      acceptedtos?: boolean | null,
+      addedcount?: number | null,
+      addedmecount?: number | null,
+      birthday?: string | null,
+      updatedAt?: string | null,
+      cognitosub?: string | null,
+      disablednotifications?: string | null,
+      displayname?: string | null,
+      email?: string | null,
+      emailconfirmed?: boolean | null,
+      firstvaultupload?: boolean | null,
+      fullyauthenticated?: boolean | null,
+      gamertag?: string | null,
+      mostrecentpublicpost?: string | null,
+      pfp?: string | null,
+      setpassword?: boolean | null,
+      storagesizeinbytes?: number | null,
+      type?: string | null,
+      createdAt: string,
+    } | null,
+    Games?:  {
+      __typename: "Games",
+      id: string,
+      createdAt: string,
+      igdbID?: number | null,
+      title?: string | null,
+      releaseDate?: string | null,
+      series?: string | null,
+      genre?: string | null,
+      theme?: string | null,
+      coverID?: string | null,
+      backgroundID?: string | null,
+      steamID?: string | null,
+      microsoftID?: string | null,
+      xboxMarketplaceID?: string | null,
+      gogID?: string | null,
+      egsID?: string | null,
+      twitchID?: string | null,
+      oculusID?: string | null,
+      playstationID?: string | null,
+      updatedAt: string,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateUserGamesMutationVariables = {
+  input: UpdateUserGamesInput,
+  condition?: ModelUserGamesConditionInput | null,
+};
+
+export type UpdateUserGamesMutation = {
+  updateUserGames?:  {
+    __typename: "UserGames",
+    id: string,
+    createdAt: string,
+    usersID: string,
+    gamesID: string,
+    Users?:  {
+      __typename: "Users",
+      id: string,
+      acceptedtos?: boolean | null,
+      addedcount?: number | null,
+      addedmecount?: number | null,
+      birthday?: string | null,
+      updatedAt?: string | null,
+      cognitosub?: string | null,
+      disablednotifications?: string | null,
+      displayname?: string | null,
+      email?: string | null,
+      emailconfirmed?: boolean | null,
+      firstvaultupload?: boolean | null,
+      fullyauthenticated?: boolean | null,
+      gamertag?: string | null,
+      mostrecentpublicpost?: string | null,
+      pfp?: string | null,
+      setpassword?: boolean | null,
+      storagesizeinbytes?: number | null,
+      type?: string | null,
+      createdAt: string,
+    } | null,
+    Games?:  {
+      __typename: "Games",
+      id: string,
+      createdAt: string,
+      igdbID?: number | null,
+      title?: string | null,
+      releaseDate?: string | null,
+      series?: string | null,
+      genre?: string | null,
+      theme?: string | null,
+      coverID?: string | null,
+      backgroundID?: string | null,
+      steamID?: string | null,
+      microsoftID?: string | null,
+      xboxMarketplaceID?: string | null,
+      gogID?: string | null,
+      egsID?: string | null,
+      twitchID?: string | null,
+      oculusID?: string | null,
+      playstationID?: string | null,
+      updatedAt: string,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteUserGamesMutationVariables = {
+  input: DeleteUserGamesInput,
+  condition?: ModelUserGamesConditionInput | null,
+};
+
+export type DeleteUserGamesMutation = {
+  deleteUserGames?:  {
+    __typename: "UserGames",
+    id: string,
+    createdAt: string,
+    usersID: string,
+    gamesID: string,
+    Users?:  {
+      __typename: "Users",
+      id: string,
+      acceptedtos?: boolean | null,
+      addedcount?: number | null,
+      addedmecount?: number | null,
+      birthday?: string | null,
+      updatedAt?: string | null,
+      cognitosub?: string | null,
+      disablednotifications?: string | null,
+      displayname?: string | null,
+      email?: string | null,
+      emailconfirmed?: boolean | null,
+      firstvaultupload?: boolean | null,
+      fullyauthenticated?: boolean | null,
+      gamertag?: string | null,
+      mostrecentpublicpost?: string | null,
+      pfp?: string | null,
+      setpassword?: boolean | null,
+      storagesizeinbytes?: number | null,
+      type?: string | null,
+      createdAt: string,
+    } | null,
+    Games?:  {
+      __typename: "Games",
+      id: string,
+      createdAt: string,
+      igdbID?: number | null,
+      title?: string | null,
+      releaseDate?: string | null,
+      series?: string | null,
+      genre?: string | null,
+      theme?: string | null,
+      coverID?: string | null,
+      backgroundID?: string | null,
+      steamID?: string | null,
+      microsoftID?: string | null,
+      xboxMarketplaceID?: string | null,
+      gogID?: string | null,
+      egsID?: string | null,
+      twitchID?: string | null,
+      oculusID?: string | null,
+      playstationID?: string | null,
+      updatedAt: string,
+    } | null,
     updatedAt: string,
   } | null,
 };
@@ -1484,6 +1667,7 @@ export type CreateNotificationsMutation = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null,
     UserNotifications?:  {
@@ -1525,6 +1709,7 @@ export type UpdateNotificationsMutation = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null,
     UserNotifications?:  {
@@ -1566,6 +1751,7 @@ export type DeleteNotificationsMutation = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null,
     UserNotifications?:  {
@@ -1749,6 +1935,7 @@ export type CreateCommentsMutation = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null,
     usersID?: string | null,
@@ -1809,6 +1996,7 @@ export type UpdateCommentsMutation = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null,
     usersID?: string | null,
@@ -1869,6 +2057,7 @@ export type DeleteCommentsMutation = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null,
     usersID?: string | null,
@@ -2110,6 +2299,7 @@ export type CreatePostsMutation = {
     thumbnailkey?: string | null,
     type?: string | null,
     usersID: string,
+    gamesID?: string | null,
     Users?:  {
       __typename: "Users",
       id: string,
@@ -2132,6 +2322,28 @@ export type CreatePostsMutation = {
       storagesizeinbytes?: number | null,
       type?: string | null,
       createdAt: string,
+    } | null,
+    Games?:  {
+      __typename: "Games",
+      id: string,
+      createdAt: string,
+      igdbID?: number | null,
+      title?: string | null,
+      releaseDate?: string | null,
+      series?: string | null,
+      genre?: string | null,
+      theme?: string | null,
+      coverID?: string | null,
+      backgroundID?: string | null,
+      steamID?: string | null,
+      microsoftID?: string | null,
+      xboxMarketplaceID?: string | null,
+      gogID?: string | null,
+      egsID?: string | null,
+      twitchID?: string | null,
+      oculusID?: string | null,
+      playstationID?: string | null,
+      updatedAt: string,
     } | null,
     Comments?:  {
       __typename: "ModelCommentsConnection",
@@ -2173,6 +2385,7 @@ export type UpdatePostsMutation = {
     thumbnailkey?: string | null,
     type?: string | null,
     usersID: string,
+    gamesID?: string | null,
     Users?:  {
       __typename: "Users",
       id: string,
@@ -2195,6 +2408,28 @@ export type UpdatePostsMutation = {
       storagesizeinbytes?: number | null,
       type?: string | null,
       createdAt: string,
+    } | null,
+    Games?:  {
+      __typename: "Games",
+      id: string,
+      createdAt: string,
+      igdbID?: number | null,
+      title?: string | null,
+      releaseDate?: string | null,
+      series?: string | null,
+      genre?: string | null,
+      theme?: string | null,
+      coverID?: string | null,
+      backgroundID?: string | null,
+      steamID?: string | null,
+      microsoftID?: string | null,
+      xboxMarketplaceID?: string | null,
+      gogID?: string | null,
+      egsID?: string | null,
+      twitchID?: string | null,
+      oculusID?: string | null,
+      playstationID?: string | null,
+      updatedAt: string,
     } | null,
     Comments?:  {
       __typename: "ModelCommentsConnection",
@@ -2236,6 +2471,7 @@ export type DeletePostsMutation = {
     thumbnailkey?: string | null,
     type?: string | null,
     usersID: string,
+    gamesID?: string | null,
     Users?:  {
       __typename: "Users",
       id: string,
@@ -2258,6 +2494,28 @@ export type DeletePostsMutation = {
       storagesizeinbytes?: number | null,
       type?: string | null,
       createdAt: string,
+    } | null,
+    Games?:  {
+      __typename: "Games",
+      id: string,
+      createdAt: string,
+      igdbID?: number | null,
+      title?: string | null,
+      releaseDate?: string | null,
+      series?: string | null,
+      genre?: string | null,
+      theme?: string | null,
+      coverID?: string | null,
+      backgroundID?: string | null,
+      steamID?: string | null,
+      microsoftID?: string | null,
+      xboxMarketplaceID?: string | null,
+      gogID?: string | null,
+      egsID?: string | null,
+      twitchID?: string | null,
+      oculusID?: string | null,
+      playstationID?: string | null,
+      updatedAt: string,
     } | null,
     Comments?:  {
       __typename: "ModelCommentsConnection",
@@ -2308,6 +2566,10 @@ export type CreateUsersMutation = {
     } | null,
     UserNotifications?:  {
       __typename: "ModelUserNotificationsConnection",
+      nextToken?: string | null,
+    } | null,
+    UserGames?:  {
+      __typename: "ModelUserGamesConnection",
       nextToken?: string | null,
     } | null,
     Posts?:  {
@@ -2365,6 +2627,10 @@ export type UpdateUsersMutation = {
       __typename: "ModelUserNotificationsConnection",
       nextToken?: string | null,
     } | null,
+    UserGames?:  {
+      __typename: "ModelUserGamesConnection",
+      nextToken?: string | null,
+    } | null,
     Posts?:  {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
@@ -2420,6 +2686,10 @@ export type DeleteUsersMutation = {
       __typename: "ModelUserNotificationsConnection",
       nextToken?: string | null,
     } | null,
+    UserGames?:  {
+      __typename: "ModelUserGamesConnection",
+      nextToken?: string | null,
+    } | null,
     Posts?:  {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
@@ -2467,6 +2737,7 @@ export type GetPostViewTrackerQuery = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null,
     viewerID?: string | null,
@@ -2636,6 +2907,14 @@ export type GetGamesQuery = {
     twitchID?: string | null,
     oculusID?: string | null,
     playstationID?: string | null,
+    UserGames?:  {
+      __typename: "ModelUserGamesConnection",
+      nextToken?: string | null,
+    } | null,
+    Posts?:  {
+      __typename: "ModelPostsConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
   } | null,
 };
@@ -2675,6 +2954,173 @@ export type ListGamesQuery = {
   } | null,
 };
 
+export type GamesByTitleQueryVariables = {
+  title: string,
+  releaseDate?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelGamesFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type GamesByTitleQuery = {
+  gamesByTitle?:  {
+    __typename: "ModelGamesConnection",
+    items:  Array< {
+      __typename: "Games",
+      id: string,
+      createdAt: string,
+      igdbID?: number | null,
+      title?: string | null,
+      releaseDate?: string | null,
+      series?: string | null,
+      genre?: string | null,
+      theme?: string | null,
+      coverID?: string | null,
+      backgroundID?: string | null,
+      steamID?: string | null,
+      microsoftID?: string | null,
+      xboxMarketplaceID?: string | null,
+      gogID?: string | null,
+      egsID?: string | null,
+      twitchID?: string | null,
+      oculusID?: string | null,
+      playstationID?: string | null,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetUserGamesQueryVariables = {
+  id: string,
+};
+
+export type GetUserGamesQuery = {
+  getUserGames?:  {
+    __typename: "UserGames",
+    id: string,
+    createdAt: string,
+    usersID: string,
+    gamesID: string,
+    Users?:  {
+      __typename: "Users",
+      id: string,
+      acceptedtos?: boolean | null,
+      addedcount?: number | null,
+      addedmecount?: number | null,
+      birthday?: string | null,
+      updatedAt?: string | null,
+      cognitosub?: string | null,
+      disablednotifications?: string | null,
+      displayname?: string | null,
+      email?: string | null,
+      emailconfirmed?: boolean | null,
+      firstvaultupload?: boolean | null,
+      fullyauthenticated?: boolean | null,
+      gamertag?: string | null,
+      mostrecentpublicpost?: string | null,
+      pfp?: string | null,
+      setpassword?: boolean | null,
+      storagesizeinbytes?: number | null,
+      type?: string | null,
+      createdAt: string,
+    } | null,
+    Games?:  {
+      __typename: "Games",
+      id: string,
+      createdAt: string,
+      igdbID?: number | null,
+      title?: string | null,
+      releaseDate?: string | null,
+      series?: string | null,
+      genre?: string | null,
+      theme?: string | null,
+      coverID?: string | null,
+      backgroundID?: string | null,
+      steamID?: string | null,
+      microsoftID?: string | null,
+      xboxMarketplaceID?: string | null,
+      gogID?: string | null,
+      egsID?: string | null,
+      twitchID?: string | null,
+      oculusID?: string | null,
+      playstationID?: string | null,
+      updatedAt: string,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListUserGamesQueryVariables = {
+  filter?: ModelUserGamesFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListUserGamesQuery = {
+  listUserGames?:  {
+    __typename: "ModelUserGamesConnection",
+    items:  Array< {
+      __typename: "UserGames",
+      id: string,
+      createdAt: string,
+      usersID: string,
+      gamesID: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type UserGamesByUsersQueryVariables = {
+  usersID: string,
+  createdAt?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelUserGamesFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type UserGamesByUsersQuery = {
+  userGamesByUsers?:  {
+    __typename: "ModelUserGamesConnection",
+    items:  Array< {
+      __typename: "UserGames",
+      id: string,
+      createdAt: string,
+      usersID: string,
+      gamesID: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type UserGamesByGamesQueryVariables = {
+  gamesID: string,
+  createdAt?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelUserGamesFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type UserGamesByGamesQuery = {
+  userGamesByGames?:  {
+    __typename: "ModelUserGamesConnection",
+    items:  Array< {
+      __typename: "UserGames",
+      id: string,
+      createdAt: string,
+      usersID: string,
+      gamesID: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type GetNotificationsQueryVariables = {
   id: string,
 };
@@ -2705,6 +3151,7 @@ export type GetNotificationsQuery = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null,
     UserNotifications?:  {
@@ -2956,6 +3403,7 @@ export type GetCommentsQuery = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null,
     usersID?: string | null,
@@ -3259,6 +3707,7 @@ export type GetPostsQuery = {
     thumbnailkey?: string | null,
     type?: string | null,
     usersID: string,
+    gamesID?: string | null,
     Users?:  {
       __typename: "Users",
       id: string,
@@ -3281,6 +3730,28 @@ export type GetPostsQuery = {
       storagesizeinbytes?: number | null,
       type?: string | null,
       createdAt: string,
+    } | null,
+    Games?:  {
+      __typename: "Games",
+      id: string,
+      createdAt: string,
+      igdbID?: number | null,
+      title?: string | null,
+      releaseDate?: string | null,
+      series?: string | null,
+      genre?: string | null,
+      theme?: string | null,
+      coverID?: string | null,
+      backgroundID?: string | null,
+      steamID?: string | null,
+      microsoftID?: string | null,
+      xboxMarketplaceID?: string | null,
+      gogID?: string | null,
+      egsID?: string | null,
+      twitchID?: string | null,
+      oculusID?: string | null,
+      playstationID?: string | null,
+      updatedAt: string,
     } | null,
     Comments?:  {
       __typename: "ModelCommentsConnection",
@@ -3325,6 +3796,7 @@ export type ListPostsQuery = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null >,
     nextToken?: string | null,
@@ -3361,6 +3833,7 @@ export type PostsByCreatedDateQuery = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null >,
     nextToken?: string | null,
@@ -3397,6 +3870,7 @@ export type PostsByPostedDateQuery = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null >,
     nextToken?: string | null,
@@ -3433,6 +3907,7 @@ export type PostsByContentDateQuery = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null >,
     nextToken?: string | null,
@@ -3468,6 +3943,7 @@ export type PostsByContentKeyQuery = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null >,
     nextToken?: string | null,
@@ -3504,6 +3980,7 @@ export type PostsByPublicDateQuery = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null >,
     nextToken?: string | null,
@@ -3540,6 +4017,44 @@ export type PostsByDeletedDateQuery = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type PostsByGamesQueryVariables = {
+  gamesID: string,
+  createdAt?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelPostsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type PostsByGamesQuery = {
+  postsByGames?:  {
+    __typename: "ModelPostsConnection",
+    items:  Array< {
+      __typename: "Posts",
+      id: string,
+      aspectratio?: number | null,
+      cognitosub: string,
+      contentdate?: string | null,
+      contentkey?: string | null,
+      contentlastupdated?: string | null,
+      contenttype?: string | null,
+      createdAt: string,
+      deleteddate?: string | null,
+      posttext?: string | null,
+      publicpost?: boolean | null,
+      publicpostdate?: string | null,
+      sizeinbytes?: number | null,
+      thumbnailkey?: string | null,
+      type?: string | null,
+      usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null >,
     nextToken?: string | null,
@@ -3576,6 +4091,7 @@ export type SearchPostsQuery = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null >,
     nextToken?: string | null,
@@ -3631,6 +4147,10 @@ export type GetUsersQuery = {
     } | null,
     UserNotifications?:  {
       __typename: "ModelUserNotificationsConnection",
+      nextToken?: string | null,
+    } | null,
+    UserGames?:  {
+      __typename: "ModelUserGamesConnection",
       nextToken?: string | null,
     } | null,
     Posts?:  {
@@ -3842,62 +4362,6 @@ export type SearchByGamertagQuery = {
   } | null,
 };
 
-export type SearchUsersQueryVariables = {
-  filter?: SearchableUsersFilterInput | null,
-  sort?: Array< SearchableUsersSortInput | null > | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  from?: number | null,
-  aggregates?: Array< SearchableUsersAggregationInput | null > | null,
-};
-
-export type SearchUsersQuery = {
-  searchUsers?:  {
-    __typename: "SearchableUsersConnection",
-    items:  Array< {
-      __typename: "Users",
-      id: string,
-      acceptedtos?: boolean | null,
-      addedcount?: number | null,
-      addedmecount?: number | null,
-      birthday?: string | null,
-      updatedAt?: string | null,
-      cognitosub?: string | null,
-      disablednotifications?: string | null,
-      displayname?: string | null,
-      email?: string | null,
-      emailconfirmed?: boolean | null,
-      firstvaultupload?: boolean | null,
-      fullyauthenticated?: boolean | null,
-      gamertag?: string | null,
-      mostrecentpublicpost?: string | null,
-      pfp?: string | null,
-      setpassword?: boolean | null,
-      storagesizeinbytes?: number | null,
-      type?: string | null,
-      createdAt: string,
-    } | null >,
-    nextToken?: string | null,
-    total?: number | null,
-    aggregateItems:  Array< {
-      __typename: "SearchableAggregateResult",
-      name: string,
-      result: ( {
-          __typename: "SearchableAggregateScalarResult",
-          value: number,
-        } | {
-          __typename: "SearchableAggregateBucketResult",
-          buckets?:  Array< {
-            __typename: string,
-            key: string,
-            doc_count: number,
-          } | null > | null,
-        }
-      ) | null,
-    } | null >,
-  } | null,
-};
-
 export type OnCreatePostViewTrackerSubscription = {
   onCreatePostViewTracker?:  {
     __typename: "PostViewTracker",
@@ -3921,6 +4385,7 @@ export type OnCreatePostViewTrackerSubscription = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null,
     viewerID?: string | null,
@@ -3975,6 +4440,7 @@ export type OnUpdatePostViewTrackerSubscription = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null,
     viewerID?: string | null,
@@ -4029,6 +4495,7 @@ export type OnDeletePostViewTrackerSubscription = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null,
     viewerID?: string | null,
@@ -4123,6 +4590,14 @@ export type OnCreateGamesSubscription = {
     twitchID?: string | null,
     oculusID?: string | null,
     playstationID?: string | null,
+    UserGames?:  {
+      __typename: "ModelUserGamesConnection",
+      nextToken?: string | null,
+    } | null,
+    Posts?:  {
+      __typename: "ModelPostsConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
   } | null,
 };
@@ -4148,6 +4623,14 @@ export type OnUpdateGamesSubscription = {
     twitchID?: string | null,
     oculusID?: string | null,
     playstationID?: string | null,
+    UserGames?:  {
+      __typename: "ModelUserGamesConnection",
+      nextToken?: string | null,
+    } | null,
+    Posts?:  {
+      __typename: "ModelPostsConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
   } | null,
 };
@@ -4173,6 +4656,182 @@ export type OnDeleteGamesSubscription = {
     twitchID?: string | null,
     oculusID?: string | null,
     playstationID?: string | null,
+    UserGames?:  {
+      __typename: "ModelUserGamesConnection",
+      nextToken?: string | null,
+    } | null,
+    Posts?:  {
+      __typename: "ModelPostsConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateUserGamesSubscription = {
+  onCreateUserGames?:  {
+    __typename: "UserGames",
+    id: string,
+    createdAt: string,
+    usersID: string,
+    gamesID: string,
+    Users?:  {
+      __typename: "Users",
+      id: string,
+      acceptedtos?: boolean | null,
+      addedcount?: number | null,
+      addedmecount?: number | null,
+      birthday?: string | null,
+      updatedAt?: string | null,
+      cognitosub?: string | null,
+      disablednotifications?: string | null,
+      displayname?: string | null,
+      email?: string | null,
+      emailconfirmed?: boolean | null,
+      firstvaultupload?: boolean | null,
+      fullyauthenticated?: boolean | null,
+      gamertag?: string | null,
+      mostrecentpublicpost?: string | null,
+      pfp?: string | null,
+      setpassword?: boolean | null,
+      storagesizeinbytes?: number | null,
+      type?: string | null,
+      createdAt: string,
+    } | null,
+    Games?:  {
+      __typename: "Games",
+      id: string,
+      createdAt: string,
+      igdbID?: number | null,
+      title?: string | null,
+      releaseDate?: string | null,
+      series?: string | null,
+      genre?: string | null,
+      theme?: string | null,
+      coverID?: string | null,
+      backgroundID?: string | null,
+      steamID?: string | null,
+      microsoftID?: string | null,
+      xboxMarketplaceID?: string | null,
+      gogID?: string | null,
+      egsID?: string | null,
+      twitchID?: string | null,
+      oculusID?: string | null,
+      playstationID?: string | null,
+      updatedAt: string,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateUserGamesSubscription = {
+  onUpdateUserGames?:  {
+    __typename: "UserGames",
+    id: string,
+    createdAt: string,
+    usersID: string,
+    gamesID: string,
+    Users?:  {
+      __typename: "Users",
+      id: string,
+      acceptedtos?: boolean | null,
+      addedcount?: number | null,
+      addedmecount?: number | null,
+      birthday?: string | null,
+      updatedAt?: string | null,
+      cognitosub?: string | null,
+      disablednotifications?: string | null,
+      displayname?: string | null,
+      email?: string | null,
+      emailconfirmed?: boolean | null,
+      firstvaultupload?: boolean | null,
+      fullyauthenticated?: boolean | null,
+      gamertag?: string | null,
+      mostrecentpublicpost?: string | null,
+      pfp?: string | null,
+      setpassword?: boolean | null,
+      storagesizeinbytes?: number | null,
+      type?: string | null,
+      createdAt: string,
+    } | null,
+    Games?:  {
+      __typename: "Games",
+      id: string,
+      createdAt: string,
+      igdbID?: number | null,
+      title?: string | null,
+      releaseDate?: string | null,
+      series?: string | null,
+      genre?: string | null,
+      theme?: string | null,
+      coverID?: string | null,
+      backgroundID?: string | null,
+      steamID?: string | null,
+      microsoftID?: string | null,
+      xboxMarketplaceID?: string | null,
+      gogID?: string | null,
+      egsID?: string | null,
+      twitchID?: string | null,
+      oculusID?: string | null,
+      playstationID?: string | null,
+      updatedAt: string,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteUserGamesSubscription = {
+  onDeleteUserGames?:  {
+    __typename: "UserGames",
+    id: string,
+    createdAt: string,
+    usersID: string,
+    gamesID: string,
+    Users?:  {
+      __typename: "Users",
+      id: string,
+      acceptedtos?: boolean | null,
+      addedcount?: number | null,
+      addedmecount?: number | null,
+      birthday?: string | null,
+      updatedAt?: string | null,
+      cognitosub?: string | null,
+      disablednotifications?: string | null,
+      displayname?: string | null,
+      email?: string | null,
+      emailconfirmed?: boolean | null,
+      firstvaultupload?: boolean | null,
+      fullyauthenticated?: boolean | null,
+      gamertag?: string | null,
+      mostrecentpublicpost?: string | null,
+      pfp?: string | null,
+      setpassword?: boolean | null,
+      storagesizeinbytes?: number | null,
+      type?: string | null,
+      createdAt: string,
+    } | null,
+    Games?:  {
+      __typename: "Games",
+      id: string,
+      createdAt: string,
+      igdbID?: number | null,
+      title?: string | null,
+      releaseDate?: string | null,
+      series?: string | null,
+      genre?: string | null,
+      theme?: string | null,
+      coverID?: string | null,
+      backgroundID?: string | null,
+      steamID?: string | null,
+      microsoftID?: string | null,
+      xboxMarketplaceID?: string | null,
+      gogID?: string | null,
+      egsID?: string | null,
+      twitchID?: string | null,
+      oculusID?: string | null,
+      playstationID?: string | null,
+      updatedAt: string,
+    } | null,
     updatedAt: string,
   } | null,
 };
@@ -4203,6 +4862,7 @@ export type OnCreateNotificationsSubscription = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null,
     UserNotifications?:  {
@@ -4239,6 +4899,7 @@ export type OnUpdateNotificationsSubscription = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null,
     UserNotifications?:  {
@@ -4275,6 +4936,7 @@ export type OnDeleteNotificationsSubscription = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null,
     UserNotifications?:  {
@@ -4438,6 +5100,7 @@ export type OnCreateCommentsSubscription = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null,
     usersID?: string | null,
@@ -4493,6 +5156,7 @@ export type OnUpdateCommentsSubscription = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null,
     usersID?: string | null,
@@ -4548,6 +5212,7 @@ export type OnDeleteCommentsSubscription = {
       thumbnailkey?: string | null,
       type?: string | null,
       usersID: string,
+      gamesID?: string | null,
       updatedAt: string,
     } | null,
     usersID?: string | null,
@@ -4769,6 +5434,7 @@ export type OnCreatePostsSubscription = {
     thumbnailkey?: string | null,
     type?: string | null,
     usersID: string,
+    gamesID?: string | null,
     Users?:  {
       __typename: "Users",
       id: string,
@@ -4791,6 +5457,28 @@ export type OnCreatePostsSubscription = {
       storagesizeinbytes?: number | null,
       type?: string | null,
       createdAt: string,
+    } | null,
+    Games?:  {
+      __typename: "Games",
+      id: string,
+      createdAt: string,
+      igdbID?: number | null,
+      title?: string | null,
+      releaseDate?: string | null,
+      series?: string | null,
+      genre?: string | null,
+      theme?: string | null,
+      coverID?: string | null,
+      backgroundID?: string | null,
+      steamID?: string | null,
+      microsoftID?: string | null,
+      xboxMarketplaceID?: string | null,
+      gogID?: string | null,
+      egsID?: string | null,
+      twitchID?: string | null,
+      oculusID?: string | null,
+      playstationID?: string | null,
+      updatedAt: string,
     } | null,
     Comments?:  {
       __typename: "ModelCommentsConnection",
@@ -4827,6 +5515,7 @@ export type OnUpdatePostsSubscription = {
     thumbnailkey?: string | null,
     type?: string | null,
     usersID: string,
+    gamesID?: string | null,
     Users?:  {
       __typename: "Users",
       id: string,
@@ -4849,6 +5538,28 @@ export type OnUpdatePostsSubscription = {
       storagesizeinbytes?: number | null,
       type?: string | null,
       createdAt: string,
+    } | null,
+    Games?:  {
+      __typename: "Games",
+      id: string,
+      createdAt: string,
+      igdbID?: number | null,
+      title?: string | null,
+      releaseDate?: string | null,
+      series?: string | null,
+      genre?: string | null,
+      theme?: string | null,
+      coverID?: string | null,
+      backgroundID?: string | null,
+      steamID?: string | null,
+      microsoftID?: string | null,
+      xboxMarketplaceID?: string | null,
+      gogID?: string | null,
+      egsID?: string | null,
+      twitchID?: string | null,
+      oculusID?: string | null,
+      playstationID?: string | null,
+      updatedAt: string,
     } | null,
     Comments?:  {
       __typename: "ModelCommentsConnection",
@@ -4885,6 +5596,7 @@ export type OnDeletePostsSubscription = {
     thumbnailkey?: string | null,
     type?: string | null,
     usersID: string,
+    gamesID?: string | null,
     Users?:  {
       __typename: "Users",
       id: string,
@@ -4907,6 +5619,28 @@ export type OnDeletePostsSubscription = {
       storagesizeinbytes?: number | null,
       type?: string | null,
       createdAt: string,
+    } | null,
+    Games?:  {
+      __typename: "Games",
+      id: string,
+      createdAt: string,
+      igdbID?: number | null,
+      title?: string | null,
+      releaseDate?: string | null,
+      series?: string | null,
+      genre?: string | null,
+      theme?: string | null,
+      coverID?: string | null,
+      backgroundID?: string | null,
+      steamID?: string | null,
+      microsoftID?: string | null,
+      xboxMarketplaceID?: string | null,
+      gogID?: string | null,
+      egsID?: string | null,
+      twitchID?: string | null,
+      oculusID?: string | null,
+      playstationID?: string | null,
+      updatedAt: string,
     } | null,
     Comments?:  {
       __typename: "ModelCommentsConnection",
@@ -4952,6 +5686,10 @@ export type OnCreateUsersSubscription = {
     } | null,
     UserNotifications?:  {
       __typename: "ModelUserNotificationsConnection",
+      nextToken?: string | null,
+    } | null,
+    UserGames?:  {
+      __typename: "ModelUserGamesConnection",
       nextToken?: string | null,
     } | null,
     Posts?:  {
@@ -5004,6 +5742,10 @@ export type OnUpdateUsersSubscription = {
       __typename: "ModelUserNotificationsConnection",
       nextToken?: string | null,
     } | null,
+    UserGames?:  {
+      __typename: "ModelUserGamesConnection",
+      nextToken?: string | null,
+    } | null,
     Posts?:  {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
@@ -5052,6 +5794,10 @@ export type OnDeleteUsersSubscription = {
     } | null,
     UserNotifications?:  {
       __typename: "ModelUserNotificationsConnection",
+      nextToken?: string | null,
+    } | null,
+    UserGames?:  {
+      __typename: "ModelUserGamesConnection",
       nextToken?: string | null,
     } | null,
     Posts?:  {
