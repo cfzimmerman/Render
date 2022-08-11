@@ -22,7 +22,7 @@ import CommentsMain from "./screens/tabnav/social/CommentsMain";
 import AppStart from "./screens/masterstack/AppStart";
 import ForgotPassword from "./screens/tabnav/profile/ForgotPassword";
 import PostMultiDelete from "./screens/tabnav/homevault/PostMultiDelete";
-import SelectGame from "./screens/tabnav/homevault/GameTagging/SelectGame";
+import SelectGame from "./screens/tabnav/homevault/GameTags/SelectGame";
 import { useNavigation } from "@react-navigation/native";
 
 type RootStackParamList = {
