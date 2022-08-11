@@ -193,6 +193,11 @@ const PlusLanding = ({ navigation }) => {
         bounces={false}
         showsVerticalScrollIndicator={false}
       >
+        <Button
+          color={"moccasin"}
+          title="SelectGame"
+          onPress={() => navigation.navigate("SelectGame")}
+        />
         <View style={styles.sectionwrapper}>
           <Text
             style={[

@@ -22,6 +22,7 @@ import CommentsMain from "./screens/tabnav/social/CommentsMain";
 import AppStart from "./screens/masterstack/AppStart";
 import ForgotPassword from "./screens/tabnav/profile/ForgotPassword";
 import PostMultiDelete from "./screens/tabnav/homevault/PostMultiDelete";
+import SelectGame from "./screens/tabnav/homevault/GameTagging/SelectGame";
 import { useNavigation } from "@react-navigation/native";
 
 type RootStackParamList = {
@@ -63,6 +64,7 @@ type RootStackParamList = {
     index: number;
   };
   PostMultiDelete: undefined;
+  SelectGame: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -131,6 +133,11 @@ const MasterStack = () => {
         name="PostMultiDelete"
         component={PostMultiDelete}
         options={{ animation: "fade_from_bottom" }}
+      />
+      <Stack.Screen
+        name="SelectGame"
+        component={SelectGame}
+        options={{ animation: "fade" }}
       />
     </Stack.Navigator>
   );

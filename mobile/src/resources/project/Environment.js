@@ -71,6 +71,8 @@ const DeletedBufferInDays = 10;
 
 const NotificationItemHeight = CubeSize + StandardPadding * 4;
 
+const GameCoverWidth = HalfBar - 2 * StandardPadding;
+
 const Environment = {
   Region: "us-east-1",
   ScreenWidth,
@@ -95,6 +97,7 @@ const Environment = {
   GetVaultDataLimit,
   DeletedBufferInDays,
   NotificationItemHeight,
+  GameCoverWidth,
 };
 
 export default Environment;
