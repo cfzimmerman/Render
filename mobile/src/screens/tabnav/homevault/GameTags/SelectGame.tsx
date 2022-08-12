@@ -16,8 +16,9 @@ import {
   Button,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GetGamesQuery } from "../../../../API";
+import { RootStateType } from "../../../../redux/store";
 import { BackArrow, HalfbarButton } from "../../../../resources/atoms";
 import {
   Colors,
@@ -28,6 +29,7 @@ import {
 import GameCoverTile, { GameCoverTileType } from "./GameCoverTile";
 import GetGameCoverURL from "./GetGameCoverURL";
 import SearchGameTitle from "./SearchGameTitle";
+import SelectGameListFooter from "./SelectGameListFooter";
 
 const opacity = new Animated.Value(0);
 
@@ -72,51 +74,24 @@ const bar = opacity.interpolate({
 });
 
 const SelectGame = () => {
-  const [gotSampleGame, setGotSampleGame] = useState(false);
-  const [sampleGame, setSampleGame] = useState(null);
-
   type SearchModeType = "library" | "all";
   const [searchMode, setSearchMode] = useState<SearchModeType>("all");
   const [searchInput, setSearchInput] = useState("");
+  const [gotEmptyAllGames, setGotEmptyAllGames] = useState(false);
 
-  /*
-  async function GetSampleGame() {
-    try {
-      const {
-        data: { getGames: gameResult },
-      } = (await API.graphql(
-        graphqlOperation(`
-            query GetGames {
-                getGames (
-                    id: "73473ab0-e84f-40e3-929b-e543cc631c76"
-                ) {
-                    id
-                    backgroundID
-                    coverID
-                    title
-                }
-            }
-        `)
-      )) as GraphQLResult<GetGamesQuery>;
+  const allGamesArray = useSelector(
+    (state: RootStateType) => state.gametags.allGamesArray
+  );
+  const allGamesNextToken = useSelector(
+    (state: RootStateType) => state.gametags.allGamesNextToken
+  );
 
-      const sampleGame: GameCoverTileType = {
-        id: gameResult.id,
-        title: gameResult.title,
-        coverID: gameResult.coverID,
-        backgroundID: gameResult.backgroundID,
-      };
-
-      setSampleGame(sampleGame);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  */
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (gotSampleGame === false && sampleGame === null) {
-      // GetSampleGame();
-      setGotSampleGame(true);
+    if (gotEmptyAllGames === false && allGamesArray.length === 0) {
+      SearchGameTitle({ title: "", dispatch });
+      setGotEmptyAllGames(true);
     }
   });
 
@@ -138,13 +113,17 @@ const SelectGame = () => {
     GlobalStyles.shadow,
   ];
 
-  const sampleData = [sampleGame];
-
   const renderItem = ({ item, index }) => <GameCoverTile item={item} />;
 
   const ChangeInput = (input: string) => {
     setSearchInput(input);
-    SearchGameTitle({ title: input });
+    SearchGameTitle({ title: input, dispatch });
+  };
+
+  const CorrectData = () => {
+    if (searchMode === "all") {
+      return allGamesArray;
+    }
   };
 
   return (
@@ -199,13 +178,24 @@ const SelectGame = () => {
 
       <View style={{ flex: 1 }}>
         <FlatList
-          data={sampleData}
+          data={CorrectData()}
           style={styles.flatlistWrapper}
           contentContainerStyle={styles.flatlistContentContainer}
           columnWrapperStyle={styles.flatlistColumnWrapper}
           numColumns={2}
           renderItem={renderItem}
           keyboardDismissMode="on-drag"
+          ListFooterComponent={() => (
+            <SelectGameListFooter
+              nextToken={
+                searchMode === "all" ? allGamesNextToken : "changeThis!!"
+              }
+              listData={CorrectData()}
+              searchMode={searchMode}
+              title={searchInput}
+              dispatch={dispatch}
+            />
+          )}
         />
       </View>
     </SafeAreaView>

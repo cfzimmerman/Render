@@ -2,15 +2,18 @@ import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { API, graphqlOperation } from "aws-amplify";
 import { SearchableGamesFilterInput, SearchGamesQuery } from "../../../../API";
 import {
+  addNextAllGamesArray,
+  AddNextAllGamesArrayPT,
   setNewAllGamesArray,
   SetNewAllGamesArrayPT,
 } from "../../../../redux/homevault/gametags";
 import { DispatchType } from "../../../../redux/store";
 import { GameCoverTileType } from "./GameCoverTile";
 
-interface SearchGameTitlePT {
+interface SearchNextGameTitlePT {
   title: string;
   dispatch: DispatchType;
+  nextToken: string;
 }
 
 const GetNextToken = ({ nextToken, items, resultsLimit }) => {
@@ -21,8 +24,12 @@ const GetNextToken = ({ nextToken, items, resultsLimit }) => {
   return nextToken;
 };
 
-async function SearchGameTitle({ title, dispatch }: SearchGameTitlePT) {
-  const resultsLimit = 10;
+async function SearchNextGameTitle({
+  title,
+  dispatch,
+  nextToken,
+}: SearchNextGameTitlePT) {
+  const resultsLimit = 20;
   try {
     const {
       data: { searchGames },
@@ -32,6 +39,7 @@ async function SearchGameTitle({ title, dispatch }: SearchGameTitlePT) {
             searchGames (
                 limit: ${resultsLimit},
                 sort: { direction: desc, field: releaseDate },
+                nextToken: "${nextToken}",
                 filter: {
                   title: {
                     wildcard: "*${title}*"
@@ -68,19 +76,19 @@ async function SearchGameTitle({ title, dispatch }: SearchGameTitlePT) {
       });
     }
 
-    const newAllGamesArray: SetNewAllGamesArrayPT = {
-      newAllGamesArray: resultsArray,
-      newAllGamesNextToken: GetNextToken({
+    const nextAllGamesArray: AddNextAllGamesArrayPT = {
+      nextAllGamesArray: resultsArray,
+      nextAllGamesNextToken: GetNextToken({
         nextToken: newNextToken,
         items: gameResults,
         resultsLimit,
       }),
     };
 
-    dispatch(setNewAllGamesArray(newAllGamesArray));
+    dispatch(addNextAllGamesArray(nextAllGamesArray));
   } catch (error) {
     console.log(error);
   }
 }
 
-export default SearchGameTitle;
+export default SearchNextGameTitle;

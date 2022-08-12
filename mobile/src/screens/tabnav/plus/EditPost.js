@@ -15,7 +15,7 @@ import AddVideoToFeedData from "../vault/AddVideoToFeedData";
 import EditOptionsModal from "./EditOptionsModal";
 import EditTextModal from "./EditTextModal";
 
-function EditPost({ route, navigation }) {
+const EditPost = ({ route, navigation }) => {
   const [newPostDateActive, setNewPostDateActive] = useState(false);
 
   const currentuser = useSelector((state) => state.profilemain.currentuser);
@@ -192,7 +192,7 @@ function EditPost({ route, navigation }) {
       </GestureRecognizer>
     );
   }
-}
+};
 
 const styles = StyleSheet.create({
   gesturewrapper: {
