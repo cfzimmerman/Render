@@ -12,8 +12,11 @@ import {
   TextInput,
   TouchableOpacity,
   Keyboard,
+  Platform,
+  Button,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
 import { GetGamesQuery } from "../../../../API";
 import { BackArrow, HalfbarButton } from "../../../../resources/atoms";
 import {
@@ -24,13 +27,59 @@ import {
 } from "../../../../resources/project";
 import GameCoverTile, { GameCoverTileType } from "./GameCoverTile";
 import GetGameCoverURL from "./GetGameCoverURL";
+import SearchGameTitle from "./SearchGameTitle";
+
+const opacity = new Animated.Value(0);
+
+const AnimateIn = (easing) => {
+  opacity.setValue(0);
+  Animated.timing(opacity, {
+    toValue: 1,
+    duration: 200,
+    useNativeDriver: false,
+    easing,
+  }).start(({ finished }) => {
+    if (!finished) {
+      setTimeout(() => {
+        AnimateIn(Easing.ease);
+      }, 2000);
+    }
+  });
+};
+
+const AnimateOut = (easing) => {
+  opacity.setValue(1);
+  Animated.timing(opacity, {
+    toValue: 0,
+    duration: 200,
+    useNativeDriver: false,
+    easing,
+  }).start();
+};
+
+// Calculates button transforming from size zero to a standard button size and back
+const size = opacity.interpolate({
+  inputRange: [0, 1],
+  outputRange: [0, Environment.CubeSize],
+});
+
+const bar = opacity.interpolate({
+  inputRange: [0, 1],
+  outputRange: [
+    Environment.FullBar - Environment.CubeSize,
+    Environment.TextBarOption - Environment.CubeSize,
+  ],
+});
 
 const SelectGame = () => {
   const [gotSampleGame, setGotSampleGame] = useState(false);
   const [sampleGame, setSampleGame] = useState(null);
 
+  type SearchModeType = "library" | "all";
+  const [searchMode, setSearchMode] = useState<SearchModeType>("all");
   const [searchInput, setSearchInput] = useState("");
 
+  /*
   async function GetSampleGame() {
     try {
       const {
@@ -62,51 +111,13 @@ const SelectGame = () => {
       console.log(error);
     }
   }
+  */
 
   useEffect(() => {
     if (gotSampleGame === false && sampleGame === null) {
-      GetSampleGame();
+      // GetSampleGame();
       setGotSampleGame(true);
     }
-
-    if (sampleGame != null) {
-      console.log(sampleGame);
-    }
-  });
-
-  const opacity = new Animated.Value(0);
-
-  const animatein = (easing) => {
-    opacity.setValue(0);
-    Animated.timing(opacity, {
-      toValue: 1,
-      duration: 200,
-      useNativeDriver: false,
-      easing,
-    }).start(({ finished }) => {
-      if (!finished) {
-        setTimeout(() => {
-          animatein(Easing.ease);
-        }, 2000);
-      }
-    });
-  };
-
-  // Obscures button to confirm email
-  const animateout = (easing) => {
-    opacity.setValue(1);
-    Animated.timing(opacity, {
-      toValue: 0,
-      duration: 200,
-      useNativeDriver: false,
-      easing,
-    }).start();
-  };
-
-  // Calculates button transforming from size zero to a standard button size and back
-  const size = opacity.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, Environment.CubeSize],
   });
 
   const animatedStyles = [
@@ -119,14 +130,6 @@ const SelectGame = () => {
     GlobalStyles.shadow,
   ];
 
-  const bar = opacity.interpolate({
-    inputRange: [0, 1],
-    outputRange: [
-      Environment.FullBar - Environment.CubeSize,
-      Environment.TextBarOption - Environment.CubeSize,
-    ],
-  });
-
   const barStyles = [
     styles.searchBar,
     {
@@ -138,6 +141,11 @@ const SelectGame = () => {
   const sampleData = [sampleGame];
 
   const renderItem = ({ item, index }) => <GameCoverTile item={item} />;
+
+  const ChangeInput = (input: string) => {
+    setSearchInput(input);
+    SearchGameTitle({ title: input });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -154,15 +162,15 @@ const SelectGame = () => {
               autoCorrect={false}
               placeholderTextColor={Colors.AccentPartial}
               style={[styles.inputBox, GlobalStyles.h3text, styles.inputText]}
-              onChangeText={setSearchInput}
+              onChangeText={ChangeInput}
               value={searchInput}
-              onFocus={() => animatein(Easing.ease)}
+              onFocus={() => AnimateIn(Easing.ease)}
               keyboardType="default"
             />
           </Animated.View>
           <TouchableOpacity
             onPress={() => {
-              animateout(Easing.ease), Keyboard.dismiss();
+              AnimateOut(Easing.ease), Keyboard.dismiss();
             }}
           >
             {/* @ts-ignore */}
@@ -178,16 +186,17 @@ const SelectGame = () => {
         <View style={styles.buttonHolder}>
           <HalfbarButton
             label="Your library"
-            active={false}
+            active={searchMode === "library" ? true : false}
             Action={() => console.log("Your games")}
           />
           <HalfbarButton
             label="All games"
-            active={false}
+            active={searchMode === "all" ? true : false}
             Action={() => console.log("All games")}
           />
         </View>
       </View>
+
       <View style={{ flex: 1 }}>
         <FlatList
           data={sampleData}
@@ -221,8 +230,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   container: {
-    paddingTop: Environment.StandardPadding,
     flex: 1,
+    paddingTop: Platform.OS === "android" ? Environment.StandardPadding : 0,
     alignItems: "center",
   },
   headerWrapper: {

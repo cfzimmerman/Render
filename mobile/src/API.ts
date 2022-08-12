@@ -786,6 +786,180 @@ export type ModelStringKeyConditionInput = {
   beginsWith?: string | null,
 };
 
+export type SearchableGamesFilterInput = {
+  id?: SearchableIDFilterInput | null,
+  createdAt?: SearchableStringFilterInput | null,
+  igdbID?: SearchableIntFilterInput | null,
+  title?: SearchableStringFilterInput | null,
+  releaseDate?: SearchableStringFilterInput | null,
+  series?: SearchableStringFilterInput | null,
+  genre?: SearchableStringFilterInput | null,
+  theme?: SearchableStringFilterInput | null,
+  coverID?: SearchableStringFilterInput | null,
+  backgroundID?: SearchableStringFilterInput | null,
+  steamID?: SearchableStringFilterInput | null,
+  microsoftID?: SearchableStringFilterInput | null,
+  xboxMarketplaceID?: SearchableStringFilterInput | null,
+  gogID?: SearchableStringFilterInput | null,
+  egsID?: SearchableStringFilterInput | null,
+  twitchID?: SearchableStringFilterInput | null,
+  oculusID?: SearchableStringFilterInput | null,
+  playstationID?: SearchableStringFilterInput | null,
+  updatedAt?: SearchableStringFilterInput | null,
+  and?: Array< SearchableGamesFilterInput | null > | null,
+  or?: Array< SearchableGamesFilterInput | null > | null,
+  not?: SearchableGamesFilterInput | null,
+};
+
+export type SearchableIDFilterInput = {
+  ne?: string | null,
+  gt?: string | null,
+  lt?: string | null,
+  gte?: string | null,
+  lte?: string | null,
+  eq?: string | null,
+  match?: string | null,
+  matchPhrase?: string | null,
+  matchPhrasePrefix?: string | null,
+  multiMatch?: string | null,
+  exists?: boolean | null,
+  wildcard?: string | null,
+  regexp?: string | null,
+  range?: Array< string | null > | null,
+};
+
+export type SearchableStringFilterInput = {
+  ne?: string | null,
+  gt?: string | null,
+  lt?: string | null,
+  gte?: string | null,
+  lte?: string | null,
+  eq?: string | null,
+  match?: string | null,
+  matchPhrase?: string | null,
+  matchPhrasePrefix?: string | null,
+  multiMatch?: string | null,
+  exists?: boolean | null,
+  wildcard?: string | null,
+  regexp?: string | null,
+  range?: Array< string | null > | null,
+};
+
+export type SearchableIntFilterInput = {
+  ne?: number | null,
+  gt?: number | null,
+  lt?: number | null,
+  gte?: number | null,
+  lte?: number | null,
+  eq?: number | null,
+  range?: Array< number | null > | null,
+};
+
+export type SearchableGamesSortInput = {
+  field?: SearchableGamesSortableFields | null,
+  direction?: SearchableSortDirection | null,
+};
+
+export enum SearchableGamesSortableFields {
+  id = "id",
+  createdAt = "createdAt",
+  igdbID = "igdbID",
+  title = "title",
+  releaseDate = "releaseDate",
+  series = "series",
+  genre = "genre",
+  theme = "theme",
+  coverID = "coverID",
+  backgroundID = "backgroundID",
+  steamID = "steamID",
+  microsoftID = "microsoftID",
+  xboxMarketplaceID = "xboxMarketplaceID",
+  gogID = "gogID",
+  egsID = "egsID",
+  twitchID = "twitchID",
+  oculusID = "oculusID",
+  playstationID = "playstationID",
+  updatedAt = "updatedAt",
+}
+
+
+export enum SearchableSortDirection {
+  asc = "asc",
+  desc = "desc",
+}
+
+
+export type SearchableGamesAggregationInput = {
+  name: string,
+  type: SearchableAggregateType,
+  field: SearchableGamesAggregateField,
+};
+
+export enum SearchableAggregateType {
+  terms = "terms",
+  avg = "avg",
+  min = "min",
+  max = "max",
+  sum = "sum",
+}
+
+
+export enum SearchableGamesAggregateField {
+  id = "id",
+  createdAt = "createdAt",
+  igdbID = "igdbID",
+  title = "title",
+  releaseDate = "releaseDate",
+  series = "series",
+  genre = "genre",
+  theme = "theme",
+  coverID = "coverID",
+  backgroundID = "backgroundID",
+  steamID = "steamID",
+  microsoftID = "microsoftID",
+  xboxMarketplaceID = "xboxMarketplaceID",
+  gogID = "gogID",
+  egsID = "egsID",
+  twitchID = "twitchID",
+  oculusID = "oculusID",
+  playstationID = "playstationID",
+  updatedAt = "updatedAt",
+}
+
+
+export type SearchableGamesConnection = {
+  __typename: "SearchableGamesConnection",
+  items:  Array<Games | null >,
+  nextToken?: string | null,
+  total?: number | null,
+  aggregateItems:  Array<SearchableAggregateResult | null >,
+};
+
+export type SearchableAggregateResult = {
+  __typename: "SearchableAggregateResult",
+  name: string,
+  result?: SearchableAggregateGenericResult | null,
+};
+
+export type SearchableAggregateGenericResult = SearchableAggregateScalarResult | SearchableAggregateBucketResult
+
+
+export type SearchableAggregateScalarResult = {
+  __typename: "SearchableAggregateScalarResult",
+  value: number,
+};
+
+export type SearchableAggregateBucketResult = {
+  __typename: "SearchableAggregateBucketResult",
+  buckets?:  Array<SearchableAggregateBucketResultItem | null > | null,
+};
+
+export type SearchableAggregateBucketResultItem = {
+  __typename: "SearchableAggregateBucketResultItem",
+  key: string,
+  doc_count: number,
+};
+
 export type ModelUserGamesFilterInput = {
   id?: ModelIDInput | null,
   createdAt?: ModelStringInput | null,
@@ -909,23 +1083,6 @@ export type SearchablePostsFilterInput = {
   not?: SearchablePostsFilterInput | null,
 };
 
-export type SearchableIDFilterInput = {
-  ne?: string | null,
-  gt?: string | null,
-  lt?: string | null,
-  gte?: string | null,
-  lte?: string | null,
-  eq?: string | null,
-  match?: string | null,
-  matchPhrase?: string | null,
-  matchPhrasePrefix?: string | null,
-  multiMatch?: string | null,
-  exists?: boolean | null,
-  wildcard?: string | null,
-  regexp?: string | null,
-  range?: Array< string | null > | null,
-};
-
 export type SearchableFloatFilterInput = {
   ne?: number | null,
   gt?: number | null,
@@ -936,36 +1093,9 @@ export type SearchableFloatFilterInput = {
   range?: Array< number | null > | null,
 };
 
-export type SearchableStringFilterInput = {
-  ne?: string | null,
-  gt?: string | null,
-  lt?: string | null,
-  gte?: string | null,
-  lte?: string | null,
-  eq?: string | null,
-  match?: string | null,
-  matchPhrase?: string | null,
-  matchPhrasePrefix?: string | null,
-  multiMatch?: string | null,
-  exists?: boolean | null,
-  wildcard?: string | null,
-  regexp?: string | null,
-  range?: Array< string | null > | null,
-};
-
 export type SearchableBooleanFilterInput = {
   eq?: boolean | null,
   ne?: boolean | null,
-};
-
-export type SearchableIntFilterInput = {
-  ne?: number | null,
-  gt?: number | null,
-  lt?: number | null,
-  gte?: number | null,
-  lte?: number | null,
-  eq?: number | null,
-  range?: Array< number | null > | null,
 };
 
 export type SearchablePostsSortInput = {
@@ -995,26 +1125,11 @@ export enum SearchablePostsSortableFields {
 }
 
 
-export enum SearchableSortDirection {
-  asc = "asc",
-  desc = "desc",
-}
-
-
 export type SearchablePostsAggregationInput = {
   name: string,
   type: SearchableAggregateType,
   field: SearchablePostsAggregateField,
 };
-
-export enum SearchableAggregateType {
-  terms = "terms",
-  avg = "avg",
-  min = "min",
-  max = "max",
-  sum = "sum",
-}
-
 
 export enum SearchablePostsAggregateField {
   id = "id",
@@ -1044,31 +1159,6 @@ export type SearchablePostsConnection = {
   nextToken?: string | null,
   total?: number | null,
   aggregateItems:  Array<SearchableAggregateResult | null >,
-};
-
-export type SearchableAggregateResult = {
-  __typename: "SearchableAggregateResult",
-  name: string,
-  result?: SearchableAggregateGenericResult | null,
-};
-
-export type SearchableAggregateGenericResult = SearchableAggregateScalarResult | SearchableAggregateBucketResult
-
-
-export type SearchableAggregateScalarResult = {
-  __typename: "SearchableAggregateScalarResult",
-  value: number,
-};
-
-export type SearchableAggregateBucketResult = {
-  __typename: "SearchableAggregateBucketResult",
-  buckets?:  Array<SearchableAggregateBucketResultItem | null > | null,
-};
-
-export type SearchableAggregateBucketResultItem = {
-  __typename: "SearchableAggregateBucketResultItem",
-  key: string,
-  doc_count: number,
 };
 
 export type ModelUsersFilterInput = {
@@ -2989,6 +3079,61 @@ export type GamesByTitleQuery = {
       updatedAt: string,
     } | null >,
     nextToken?: string | null,
+  } | null,
+};
+
+export type SearchGamesQueryVariables = {
+  filter?: SearchableGamesFilterInput | null,
+  sort?: Array< SearchableGamesSortInput | null > | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  from?: number | null,
+  aggregates?: Array< SearchableGamesAggregationInput | null > | null,
+};
+
+export type SearchGamesQuery = {
+  searchGames?:  {
+    __typename: "SearchableGamesConnection",
+    items:  Array< {
+      __typename: "Games",
+      id: string,
+      createdAt: string,
+      igdbID?: number | null,
+      title?: string | null,
+      releaseDate?: string | null,
+      series?: string | null,
+      genre?: string | null,
+      theme?: string | null,
+      coverID?: string | null,
+      backgroundID?: string | null,
+      steamID?: string | null,
+      microsoftID?: string | null,
+      xboxMarketplaceID?: string | null,
+      gogID?: string | null,
+      egsID?: string | null,
+      twitchID?: string | null,
+      oculusID?: string | null,
+      playstationID?: string | null,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+    total?: number | null,
+    aggregateItems:  Array< {
+      __typename: "SearchableAggregateResult",
+      name: string,
+      result: ( {
+          __typename: "SearchableAggregateScalarResult",
+          value: number,
+        } | {
+          __typename: "SearchableAggregateBucketResult",
+          buckets?:  Array< {
+            __typename: string,
+            key: string,
+            doc_count: number,
+          } | null > | null,
+        }
+      ) | null,
+    } | null >,
   } | null,
 };
 

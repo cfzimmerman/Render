@@ -274,6 +274,63 @@ export const gamesByTitle = /* GraphQL */ `
     }
   }
 `;
+export const searchGames = /* GraphQL */ `
+  query SearchGames(
+    $filter: SearchableGamesFilterInput
+    $sort: [SearchableGamesSortInput]
+    $limit: Int
+    $nextToken: String
+    $from: Int
+    $aggregates: [SearchableGamesAggregationInput]
+  ) {
+    searchGames(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+      from: $from
+      aggregates: $aggregates
+    ) {
+      items {
+        id
+        createdAt
+        igdbID
+        title
+        releaseDate
+        series
+        genre
+        theme
+        coverID
+        backgroundID
+        steamID
+        microsoftID
+        xboxMarketplaceID
+        gogID
+        egsID
+        twitchID
+        oculusID
+        playstationID
+        updatedAt
+      }
+      nextToken
+      total
+      aggregateItems {
+        name
+        result {
+          ... on SearchableAggregateScalarResult {
+            value
+          }
+          ... on SearchableAggregateBucketResult {
+            buckets {
+              key
+              doc_count
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 export const getUserGames = /* GraphQL */ `
   query GetUserGames($id: ID!) {
     getUserGames(id: $id) {

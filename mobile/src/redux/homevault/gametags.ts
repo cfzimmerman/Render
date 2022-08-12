@@ -2,13 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { GameCoverTileType } from "../../screens/tabnav/homevault/GameTags/GameCoverTile";
 
 interface DefaultSliceType {
-  gameArray: GameCoverTileType[];
+  gameArray: GameCoverTileType[] | null;
 }
 
 const slice = createSlice({
   name: "gametags",
   initialState: {
-    gameArray: [],
+    gameArray: null,
+    searchInProgress: false,
   } as DefaultSliceType,
   reducers: {
     clearGameArray: (state) => {
