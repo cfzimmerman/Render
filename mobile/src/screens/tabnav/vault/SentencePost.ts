@@ -51,6 +51,28 @@ async function SentencePost({
     )) as GraphQLResult<UpdatePostsMutation>;
     const deletedPost = updatePostResult.data.updatePosts;
 
+    const deletedPostItem: PostType = {
+      id: deletedPost.id,
+      aspectratio: deletedPost.aspectratio,
+      contentdate: deletedPost.contentdate,
+      contentkey: deletedPost.contentkey,
+      contenttype: deletedPost.contenttype,
+      cognitosub: deletedPost.cognitosub,
+      displayname: deletedPost.Users.displayname,
+      header: false,
+      posttext: deletedPost.posttext,
+      publicpost: deletedPost.publicpost,
+      publicpostdate: deletedPost.publicpostdate,
+      signedurl: null,
+      thumbnailkey: deletedPost.thumbnailkey,
+      thumbnailurl: null,
+      userid: deletedPost.usersID,
+      userpfp: deletedPost.Users.pfp,
+      userpfpurl: null,
+      gamesID: deletedPost.Games === null ? null : deletedPost.Games.id,
+      coverID: deletedPost.Games === null ? null : deletedPost.Games.coverID,
+    };
+
     const currentUserResult = (await API.graphql(
       graphqlOperation(getUsers, { id: currentuser.id })
     )) as GraphQLResult<GetUsersQuery>;
@@ -71,7 +93,7 @@ async function SentencePost({
       dispatch,
       vaultfeeddata,
       vaultpostdata,
-      post: deletedPost,
+      post: deletedPostItem,
       vaultnexttoken,
       newPostID: null,
     });

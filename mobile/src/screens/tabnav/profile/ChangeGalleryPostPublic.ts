@@ -46,6 +46,8 @@ const ChangeGalleryPostPublic = ({
         header: null,
         signedurl: item.signedurl,
         thumbnailurl: item.thumbnailurl,
+        gamesID: item.gamesID,
+        coverID: item.coverID,
       };
 
       const update = {

@@ -37,6 +37,7 @@ import {
   MessageSquare,
   Bell,
   DownloadCloud,
+  Tag,
 } from "react-native-feather";
 import Environment from "./Environment";
 import Colors from "./Colors";
@@ -83,6 +84,7 @@ const OriginalSizeIcons = {
   Comment: MessageSquare,
   Notification: Bell,
   Download: DownloadCloud,
+  Tag,
 };
 
 const ResizedIcons = {

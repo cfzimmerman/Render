@@ -28,6 +28,7 @@ import {
   PostHeaderType,
 } from "../../../resources/CommonTypes";
 import { DispatchType } from "../../../redux/store";
+import GameCoverCubesizeButton from "../homevault/GameTags/GameCoverCubesizeButton";
 
 const ShouldHighlight = ({ item }) => {
   if (
@@ -269,6 +270,10 @@ const EditOptionsModal = ({
           </View>
           <View style={styles.bottomtabcontainer}>
             <Animated.View style={primaryAnimatedStyles}>
+              <GameCoverCubesizeButton
+                Action={() => console.log("Pressed")}
+                imageURL="https://upload.wikimedia.org/wikipedia/en/6/67/No_Man%27s_Sky.jpg"
+              />
               <CubeSizeButton
                 Icon={Icons.OriginalSize.Clock}
                 Action={() => setNewPostDateActive(true)}
