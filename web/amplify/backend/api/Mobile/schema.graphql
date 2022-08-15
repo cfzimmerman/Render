@@ -45,8 +45,8 @@ type Games @model @searchable @auth(rules: [{ allow: public }]) {
 type UserGames @model @auth(rules: [{ allow: public }]) {
   id: ID!
   createdAt: String!
-  usersID: ID! @index(name: "byUsers", queryField: "userGamesByUsers", sortKeyFields: ["createdAt"])
-  gamesID: ID! @index(name: "byGames", queryField: "userGamesByGames", sortKeyFields: ["createdAt"])
+  usersID: ID! @index(name: "byUsers", queryField: "userGamesByUsers", sortKeyFields: ["gamesID"])
+  gamesID: ID! @index(name: "byGames", queryField: "userGamesByGames", sortKeyFields: ["usersID"])
   Users: Users @belongsTo(fields: ["usersID"])
   Games: Games @belongsTo(fields: ["gamesID"])
 }
