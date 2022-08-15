@@ -1,4 +1,5 @@
 import { addToLastVaultPostDataArray } from "../../../redux/vault/vaultpostdata";
+import { PostType } from "../../../resources/CommonTypes";
 import { AddToCurrentMonthPropsType } from "./GetVaultData";
 
 const AddToCurrentMonth = ({
@@ -7,7 +8,7 @@ const AddToCurrentMonth = ({
   signedurl,
   thumbnailurl,
 }: AddToCurrentMonthPropsType) => {
-  const Post = {
+  const Post: PostType = {
     id: item.id,
     contenttype: item.contenttype,
     contentkey: item.contentkey,
@@ -19,6 +20,8 @@ const AddToCurrentMonth = ({
     posttext: item.posttext,
     userid: null,
     thumbnailurl: thumbnailurl,
+    gamesID: item.Games === null ? null : item.Games.id,
+    coverID: item.Games === null ? null : item.Games.coverID,
   };
 
   dispatch(addToLastVaultPostDataArray(Post));

@@ -41,6 +41,10 @@ interface GetPostsReturnType {
   createdAt: string | null;
   usersID: string | null;
   updatedAt: string | null;
+  Games?: null | {
+    id: string;
+    coverID?: string;
+  };
 }
 
 export interface CreateNewMonthPropsType {

@@ -13,6 +13,7 @@
 10: TOS.JS - Add (acceptedtos = true) to DataStore failed
 11: ForgotPassword.TSX - Auth.forgotPassword(username) failed - username is the user's email
 12: ForgotPassword.TSX - Auth.forgotPasswordSubmit(username, code, new_password) failed OR API.graphql(graphqlOperation(updateUsers, { input: { id, setpassword: true } })) failed
+13: GameCoverTile.TSX - Add game id to post failed either in a GraphQL operation or a Redux update
 */
 
 // Add Sign up welcome!

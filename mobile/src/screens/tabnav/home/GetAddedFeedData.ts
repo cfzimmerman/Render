@@ -6,6 +6,8 @@ import {
   setAddedFeedNextToken,
   setFetchingAddedFeedData,
 } from "../../../redux/home/homemain";
+import { GraphQLResult } from "@aws-amplify/api-graphql";
+import { SearchPostsQuery } from "../../../API";
 
 async function GetAddedFeedData({
   dispatch,
@@ -28,14 +30,14 @@ async function GetAddedFeedData({
 
   const feedFetchLimit = 5;
 
-  const postResult = await API.graphql(
+  const postResult = (await API.graphql(
     graphqlOperation(filteredSearchPosts, {
       filter: searchFilter,
       sort: searchSort,
       limit: feedFetchLimit,
       nextToken: addedfeednexttoken,
     })
-  );
+  )) as GraphQLResult<SearchPostsQuery>;
 
   const postArray = postResult.data.searchPosts.items;
   const newNextToken = postResult.data.searchPosts.nextToken;

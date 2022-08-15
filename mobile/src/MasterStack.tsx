@@ -64,7 +64,10 @@ type RootStackParamList = {
     index: number;
   };
   PostMultiDelete: undefined;
-  SelectGame: undefined;
+  SelectGame: {
+    selection: "single" | "multi";
+    origin: "vaultPostEdit" | "vaultMultiSelect";
+  };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

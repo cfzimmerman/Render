@@ -196,7 +196,12 @@ const PlusLanding = ({ navigation }) => {
         <Button
           color={"moccasin"}
           title="SelectGame"
-          onPress={() => navigation.navigate("SelectGame")}
+          onPress={() =>
+            navigation.navigate("SelectGame", {
+              selection: "single",
+              origin: "vaultPostEdit",
+            })
+          }
         />
         <View style={styles.sectionwrapper}>
           <Text

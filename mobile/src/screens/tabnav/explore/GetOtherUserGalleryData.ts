@@ -2,6 +2,8 @@ import { API, Storage, graphqlOperation } from "aws-amplify";
 import AddToOtherUserGallery from "./AddToOtherUserGallery";
 import { setFetchingOtherUserGalleryData } from "../../../redux/explore/otheruserprofile";
 import UpdateOtherUserGalleryNextToken from "./UpdateOtherUserGalleryNextToken";
+import { GraphQLResult } from "@aws-amplify/api-graphql";
+import { PostsByPostedDateQuery } from "../../../API";
 
 async function GetOtherUserGalleryData({
   dispatch,
@@ -13,7 +15,7 @@ async function GetOtherUserGalleryData({
   } else {
     const fetchlimit = 10;
 
-    const result = await API.graphql(
+    const result = (await API.graphql(
       graphqlOperation(`
             query GetGalleryData {
                 postsByPostedDate (
@@ -41,12 +43,16 @@ async function GetOtherUserGalleryData({
                           id
                           displayname
                         }
+                        Games {
+                          id
+                          coverID
+                        }
                     }
                     nextToken
                 }
             }
         `)
-    );
+    )) as GraphQLResult<PostsByPostedDateQuery>;
 
     const userposts = result.data.postsByPostedDate.items;
     const newnexttoken = result.data.postsByPostedDate.nextToken;

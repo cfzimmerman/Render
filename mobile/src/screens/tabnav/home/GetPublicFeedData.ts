@@ -5,6 +5,8 @@ import {
   setFetchingPublicFeedData,
 } from "../../../redux/home/homemain";
 import { filteredPostsByPublicDate } from "../../../graphql/customqueries";
+import { GraphQLResult } from "@aws-amplify/api-graphql";
+import { PostsByPublicDateQuery } from "../../../API";
 
 async function GetPublicFeedData({ dispatch, publicfeednexttoken }) {
   const fetchLimit = 5;
@@ -22,7 +24,7 @@ async function GetPublicFeedData({ dispatch, publicfeednexttoken }) {
   const nextToken = publicfeednexttoken;
   const limit = fetchLimit;
 
-  const postResult = await API.graphql(
+  const postResult = (await API.graphql(
     graphqlOperation(filteredPostsByPublicDate, {
       type,
       sortDirection,
@@ -31,7 +33,7 @@ async function GetPublicFeedData({ dispatch, publicfeednexttoken }) {
       nextToken,
       limit,
     })
-  );
+  )) as GraphQLResult<PostsByPublicDateQuery>;
 
   const postArray = postResult.data.postsByPublicDate.items;
   const newNextToken = postResult.data.postsByPublicDate.nextToken;

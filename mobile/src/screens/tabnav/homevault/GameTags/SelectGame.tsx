@@ -73,7 +73,7 @@ const bar = opacity.interpolate({
   ],
 });
 
-const SelectGame = () => {
+const SelectGame = ({ navigation, route }) => {
   type SearchModeType = "library" | "all";
   const [searchMode, setSearchMode] = useState<SearchModeType>("all");
   const [searchInput, setSearchInput] = useState("");
@@ -85,8 +85,17 @@ const SelectGame = () => {
   const allGamesNextToken = useSelector(
     (state: RootStateType) => state.gametags.allGamesNextToken
   );
+  const selectedPosts = useSelector(
+    (state: RootStateType) => state.homevaultmain.selectedPosts
+  );
+  const currentUserID = useSelector(
+    (state: RootStateType) => state.profilemain.currentuser.id
+  );
 
   const dispatch = useDispatch();
+
+  const selection = route.params.selection;
+  const origin = route.params.origin;
 
   useEffect(() => {
     if (gotEmptyAllGames === false && allGamesArray.length === 0) {
@@ -113,7 +122,18 @@ const SelectGame = () => {
     GlobalStyles.shadow,
   ];
 
-  const renderItem = ({ item, index }) => <GameCoverTile item={item} />;
+  const renderItem = ({ item, index }) => (
+    <GameCoverTile
+      item={item}
+      searchMode={searchMode}
+      dispatch={dispatch}
+      navigation={navigation}
+      selection={selection}
+      selectedPosts={selectedPosts}
+      currentUserID={currentUserID}
+      origin={origin}
+    />
+  );
 
   const ChangeInput = (input: string) => {
     setSearchInput(input);
