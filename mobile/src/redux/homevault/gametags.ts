@@ -1,9 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { GameCoverTileType } from "../../screens/tabnav/homevault/GameTags/GameCoverTile";
+import { SetNewLibraryGamesArrayInput } from "../../screens/tabnav/homevault/GameTags/GetCurrentUserGameLibrary";
+import { SetNextLibraryGamesArrayInput } from "../../screens/tabnav/homevault/GameTags/GetNextCurrentUserGameLibrary";
+import { AddNextAllGamesArrayPT } from "../../screens/tabnav/homevault/GameTags/SearchNextGameTitle";
 
 interface DefaultSliceType {
   allGamesArray: GameCoverTileType[] | null;
-  allGamesNextToken: null | string;
+  allGamesNextToken: string | null;
+  libraryGamesArray: GameCoverTileType[] | null;
+  libraryGamesNextToken: string | null;
 }
 
 export interface SetNewAllGamesArrayPT {
@@ -11,16 +16,13 @@ export interface SetNewAllGamesArrayPT {
   newAllGamesNextToken: null | string;
 }
 
-export interface AddNextAllGamesArrayPT {
-  nextAllGamesArray: GameCoverTileType[];
-  nextAllGamesNextToken: null | string;
-}
-
 const slice = createSlice({
   name: "gametags",
   initialState: {
     allGamesArray: [],
     allGamesNextToken: null,
+    libraryGamesArray: null,
+    libraryGamesNextToken: null,
   } as DefaultSliceType,
   reducers: {
     clearAllGamesArray: (state) => {
@@ -42,10 +44,31 @@ const slice = createSlice({
       );
       state.allGamesNextToken = action.payload.nextAllGamesNextToken;
     },
+    setNewLibraryGamesArray: (
+      state,
+      action: PayloadAction<SetNewLibraryGamesArrayInput>
+    ) => {
+      state.libraryGamesArray = action.payload.newLibraryGamesArray;
+      state.libraryGamesNextToken = action.payload.newLibraryGamesNextToken;
+    },
+    addNextLibraryGamesArray: (
+      state,
+      action: PayloadAction<SetNextLibraryGamesArrayInput>
+    ) => {
+      state.libraryGamesArray = state.libraryGamesArray.concat(
+        action.payload.nextLibraryGamesArray
+      );
+      state.libraryGamesNextToken = action.payload.nextLibraryGamesNextToken;
+    },
   },
 });
 
-export const { clearAllGamesArray, setNewAllGamesArray, addNextAllGamesArray } =
-  slice.actions;
+export const {
+  clearAllGamesArray,
+  setNewAllGamesArray,
+  addNextAllGamesArray,
+  setNewLibraryGamesArray,
+  addNextLibraryGamesArray,
+} = slice.actions;
 
 export default slice.reducer;

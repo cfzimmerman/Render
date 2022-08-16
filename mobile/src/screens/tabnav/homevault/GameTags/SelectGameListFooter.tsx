@@ -3,6 +3,7 @@ import { DispatchType } from "../../../../redux/store";
 import { Colors, GlobalStyles } from "../../../../resources/project";
 import { Environment } from "../../../../resources/project";
 import { GameCoverTileType } from "./GameCoverTile";
+import GetNextCurrentUserGameLibrary from "./GetNextCurrentUserGameLibrary";
 import SearchNextGameTitle from "./SearchNextGameTitle";
 
 interface TextButtonPT {
@@ -40,11 +41,14 @@ interface ListFooterPT {
   searchMode: "library" | "all";
   title: string;
   dispatch: DispatchType;
+  currentUserID: string;
 }
 
-const GetMore = ({ searchMode, title, dispatch, nextToken }) => {
+const GetMore = ({ searchMode, title, dispatch, nextToken, currentUserID }) => {
   if (searchMode === "all") {
     SearchNextGameTitle({ title, dispatch, nextToken });
+  } else if (searchMode === "library") {
+    GetNextCurrentUserGameLibrary({ dispatch, nextToken, currentUserID });
   }
 };
 
@@ -54,8 +58,9 @@ const SelectGameListFooter = ({
   searchMode,
   title,
   dispatch,
+  currentUserID,
 }: ListFooterPT) => {
-  if (listData.length === 0) {
+  if (listData === null || listData.length === 0) {
     return null;
   } else if (nextToken === null) {
     return (
@@ -70,7 +75,9 @@ const SelectGameListFooter = ({
       <TextButton
         title={"Get more results"}
         disabled={false}
-        Action={() => GetMore({ searchMode, title, dispatch, nextToken })}
+        Action={() =>
+          GetMore({ searchMode, title, dispatch, nextToken, currentUserID })
+        }
       />
     );
   }

@@ -3,7 +3,6 @@ import { API, graphqlOperation } from "aws-amplify";
 import { SearchableGamesFilterInput, SearchGamesQuery } from "../../../../API";
 import {
   addNextAllGamesArray,
-  AddNextAllGamesArrayPT,
   setNewAllGamesArray,
   SetNewAllGamesArrayPT,
 } from "../../../../redux/homevault/gametags";
@@ -14,6 +13,11 @@ interface SearchNextGameTitlePT {
   title: string;
   dispatch: DispatchType;
   nextToken: string;
+}
+
+export interface AddNextAllGamesArrayPT {
+  nextAllGamesArray: GameCoverTileType[];
+  nextAllGamesNextToken: null | string;
 }
 
 const GetNextToken = ({ nextToken, items, resultsLimit }) => {

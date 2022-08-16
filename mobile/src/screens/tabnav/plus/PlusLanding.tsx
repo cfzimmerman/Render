@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Button,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -32,6 +33,7 @@ import {
   addSelectedPost,
   deactivateMultiSelect,
 } from "../../../redux/homevault/homevaultmain";
+import GetCurrentUserGameLibrary from "../homevault/GameTags/GetCurrentUserGameLibrary";
 
 const HalfbarIconBox = ({ Icon, header, description, Action }) => {
   return (
@@ -195,6 +197,16 @@ const PlusLanding = ({ navigation }) => {
         bounces={false}
         showsVerticalScrollIndicator={false}
       >
+        <Button
+          title="GetCurrentUserGameLibrary"
+          color={"moccasin"}
+          onPress={() =>
+            GetCurrentUserGameLibrary({
+              currentUserID: currentuser.id,
+              dispatch,
+            })
+          }
+        />
         <View style={styles.sectionwrapper}>
           <Text
             style={[

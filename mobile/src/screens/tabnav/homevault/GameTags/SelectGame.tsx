@@ -28,6 +28,7 @@ import {
   Icons,
 } from "../../../../resources/project";
 import GameCoverTile, { GameCoverTileType } from "./GameCoverTile";
+import GetCurrentUserGameLibrary from "./GetCurrentUserGameLibrary";
 import GetGameCoverURL from "./GetGameCoverURL";
 import SearchGameTitle from "./SearchGameTitle";
 import SelectGameListFooter from "./SelectGameListFooter";
@@ -76,9 +77,10 @@ const bar = opacity.interpolate({
 
 const SelectGame = ({ navigation, route }) => {
   type SearchModeType = "library" | "all";
-  const [searchMode, setSearchMode] = useState<SearchModeType>("all");
+  const [searchMode, setSearchMode] = useState<SearchModeType>("library");
   const [searchInput, setSearchInput] = useState("");
   const [gotEmptyAllGames, setGotEmptyAllGames] = useState(false);
+  const [gotEmptyLibraryGames, setGotEmptyLibraryGames] = useState(false);
 
   const allGamesArray = useSelector(
     (state: RootStateType) => state.gametags.allGamesArray
@@ -107,14 +109,31 @@ const SelectGame = ({ navigation, route }) => {
   const localLibrary = useSelector(
     (state: RootStateType) => state.localsync.localLibrary
   );
-
+  const libraryGamesArray = useSelector(
+    (state: RootStateType) => state.gametags.libraryGamesArray
+  );
+  const libraryGamesNextToken = useSelector(
+    (state: RootStateType) => state.gametags.libraryGamesNextToken
+  );
   const dispatch = useDispatch();
 
   const selection = route.params.selection;
   const origin = route.params.origin;
 
   useEffect(() => {
-    if (gotEmptyAllGames === false && allGamesArray.length === 0) {
+    if (
+      gotEmptyLibraryGames === false &&
+      searchMode === "library" &&
+      libraryGamesArray === null
+    ) {
+      GetCurrentUserGameLibrary({ currentUserID, dispatch });
+      setGotEmptyLibraryGames(true);
+    }
+    if (
+      searchMode === "all" &&
+      gotEmptyAllGames === false &&
+      allGamesArray.length === 0
+    ) {
       SearchGameTitle({ title: "", dispatch });
       setGotEmptyAllGames(true);
     }
@@ -167,6 +186,8 @@ const SelectGame = ({ navigation, route }) => {
   const CorrectData = () => {
     if (searchMode === "all") {
       return allGamesArray;
+    } else if (searchMode === "library") {
+      return libraryGamesArray;
     }
   };
 
@@ -210,12 +231,12 @@ const SelectGame = ({ navigation, route }) => {
           <HalfbarButton
             label="Your library"
             active={searchMode === "library" ? true : false}
-            Action={() => console.log("Your games")}
+            Action={() => setSearchMode("library")}
           />
           <HalfbarButton
             label="All games"
             active={searchMode === "all" ? true : false}
-            Action={() => console.log("All games")}
+            Action={() => setSearchMode("all")}
           />
         </View>
       </View>
@@ -232,12 +253,13 @@ const SelectGame = ({ navigation, route }) => {
           ListFooterComponent={() => (
             <SelectGameListFooter
               nextToken={
-                searchMode === "all" ? allGamesNextToken : "changeThis!!"
+                searchMode === "all" ? allGamesNextToken : libraryGamesNextToken
               }
               listData={CorrectData()}
               searchMode={searchMode}
               title={searchInput}
               dispatch={dispatch}
+              currentUserID={currentUserID}
             />
           )}
         />
