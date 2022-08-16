@@ -3220,7 +3220,7 @@ export type ListUserGamesQuery = {
 
 export type UserGamesByUsersQueryVariables = {
   usersID: string,
-  createdAt?: ModelStringKeyConditionInput | null,
+  gamesID?: ModelIDKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
   filter?: ModelUserGamesFilterInput | null,
   limit?: number | null,
@@ -3244,7 +3244,7 @@ export type UserGamesByUsersQuery = {
 
 export type UserGamesByGamesQueryVariables = {
   gamesID: string,
-  createdAt?: ModelStringKeyConditionInput | null,
+  usersID?: ModelIDKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
   filter?: ModelUserGamesFilterInput | null,
   limit?: number | null,

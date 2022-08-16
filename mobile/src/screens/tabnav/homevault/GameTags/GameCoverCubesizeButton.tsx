@@ -49,9 +49,8 @@ const styles = StyleSheet.create({
     borderRadius: Environment.StandardRadius,
     justifyContent: "center",
     alignItems: "center",
-    // marginHorizontal: Environment.StandardPadding,
+    backgroundColor: Colors.Primary,
   },
-  thumbnail: {},
 });
 
 export default GameCoverCubesizeButton;

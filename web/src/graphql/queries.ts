@@ -406,7 +406,7 @@ export const listUserGames = /* GraphQL */ `
 export const userGamesByUsers = /* GraphQL */ `
   query UserGamesByUsers(
     $usersID: ID!
-    $createdAt: ModelStringKeyConditionInput
+    $gamesID: ModelIDKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelUserGamesFilterInput
     $limit: Int
@@ -414,7 +414,7 @@ export const userGamesByUsers = /* GraphQL */ `
   ) {
     userGamesByUsers(
       usersID: $usersID
-      createdAt: $createdAt
+      gamesID: $gamesID
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -434,7 +434,7 @@ export const userGamesByUsers = /* GraphQL */ `
 export const userGamesByGames = /* GraphQL */ `
   query UserGamesByGames(
     $gamesID: ID!
-    $createdAt: ModelStringKeyConditionInput
+    $usersID: ModelIDKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelUserGamesFilterInput
     $limit: Int
@@ -442,7 +442,7 @@ export const userGamesByGames = /* GraphQL */ `
   ) {
     userGamesByGames(
       gamesID: $gamesID
-      createdAt: $createdAt
+      usersID: $usersID
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit

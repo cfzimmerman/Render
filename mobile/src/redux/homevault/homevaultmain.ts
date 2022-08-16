@@ -30,6 +30,9 @@ const slice = createSlice({
     addSelectedPost: (state, action: PayloadAction<PostID>) => {
       state.selectedPosts.push(action.payload);
     },
+    resetWithNewSelectedPost: (state, action: PayloadAction<PostID[]>) => {
+      state.selectedPosts = action.payload;
+    },
     removeSelectedPost: (state, action: PayloadAction<PostID>) => {
       const targetIndex = state.selectedPosts.findIndex(
         (item: PostID) => item === action.payload
@@ -47,6 +50,7 @@ export const {
   activateMultiSelect,
   deactivateMultiSelect,
   setMultiSelectActive,
+  resetWithNewSelectedPost,
 } = slice.actions;
 
 export default slice.reducer;

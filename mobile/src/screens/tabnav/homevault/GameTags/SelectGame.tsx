@@ -91,6 +91,12 @@ const SelectGame = ({ navigation, route }) => {
   const currentUserID = useSelector(
     (state: RootStateType) => state.profilemain.currentuser.id
   );
+  const vaultPostData = useSelector(
+    (state: RootStateType) => state.vaultpostdata.vaultpostdata
+  );
+  const vaultFeedData = useSelector(
+    (state: RootStateType) => state.vaultpostdata.vaultfeeddata
+  );
 
   const dispatch = useDispatch();
 
@@ -101,6 +107,9 @@ const SelectGame = ({ navigation, route }) => {
     if (gotEmptyAllGames === false && allGamesArray.length === 0) {
       SearchGameTitle({ title: "", dispatch });
       setGotEmptyAllGames(true);
+    }
+    if (selectedPosts.length === 0) {
+      console.log("Development warning only: selectedPosts.length === 0");
     }
   });
 
@@ -132,6 +141,8 @@ const SelectGame = ({ navigation, route }) => {
       selectedPosts={selectedPosts}
       currentUserID={currentUserID}
       origin={origin}
+      vaultPostData={vaultPostData}
+      vaultFeedData={vaultFeedData}
     />
   );
 

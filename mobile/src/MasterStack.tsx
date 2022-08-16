@@ -52,7 +52,7 @@ type RootStackParamList = {
   };
   EditPost: {
     index: number;
-    origin: string;
+    origin: "plus" | "homevault";
   };
   CommentsMain: {
     usecase:

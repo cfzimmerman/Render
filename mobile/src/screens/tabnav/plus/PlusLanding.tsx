@@ -29,7 +29,10 @@ import GetContentDate from "./GetContentDate";
 import UploadImage from "./UploadImage";
 import UploadVideo from "./UploadVideo";
 import { RootStateType } from "../../../redux/store";
-import { deactivateMultiSelect } from "../../../redux/homevault/homevaultmain";
+import {
+  addSelectedPost,
+  deactivateMultiSelect,
+} from "../../../redux/homevault/homevaultmain";
 
 const HalfbarIconBox = ({ Icon, header, description, Action }) => {
   return (
@@ -196,12 +199,13 @@ const PlusLanding = ({ navigation }) => {
         <Button
           color={"moccasin"}
           title="SelectGame"
-          onPress={() =>
+          onPress={() => {
+            dispatch(addSelectedPost("91c5590e-f454-4d56-9801-57ba2c73c480"));
             navigation.navigate("SelectGame", {
               selection: "single",
               origin: "vaultPostEdit",
-            })
-          }
+            });
+          }}
         />
         <View style={styles.sectionwrapper}>
           <Text

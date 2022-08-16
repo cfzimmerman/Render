@@ -29,6 +29,11 @@ import {
 } from "../../../resources/CommonTypes";
 import { DispatchType } from "../../../redux/store";
 import GameCoverCubesizeButton from "../homevault/GameTags/GameCoverCubesizeButton";
+import GetGameCoverThumbnailURL from "../homevault/GameTags/GetGameCoverThumbnailURL";
+import {
+  addSelectedPost,
+  resetWithNewSelectedPost,
+} from "../../../redux/homevault/homevaultmain";
 
 const ShouldHighlight = ({ item }) => {
   if (
@@ -106,6 +111,14 @@ interface EditOptionsModalPropsType {
   vaultpostdata: PostHeaderType[];
   vaultnexttoken: string | null;
   gallerydata: PostType[];
+}
+
+interface EditOptionsModal {
+  navigation: any;
+  dispatch: DispatchType;
+  item: PostType;
+  currentuser: CurrentUserType;
+  origin: "homevault" | "plus";
 }
 
 const EditOptionsModal = ({
@@ -271,8 +284,18 @@ const EditOptionsModal = ({
           <View style={styles.bottomtabcontainer}>
             <Animated.View style={primaryAnimatedStyles}>
               <GameCoverCubesizeButton
-                Action={() => console.log("Pressed")}
-                imageURL="https://upload.wikimedia.org/wikipedia/en/6/67/No_Man%27s_Sky.jpg"
+                Action={() => {
+                  dispatch(resetWithNewSelectedPost([item.id]));
+                  navigation.navigate("SelectGame", {
+                    selection: "single",
+                    origin: "vaultPostEdit",
+                  });
+                }}
+                imageURL={
+                  item.coverID === null
+                    ? null
+                    : GetGameCoverThumbnailURL({ coverID: item.coverID })
+                }
               />
               <CubeSizeButton
                 Icon={Icons.OriginalSize.Clock}

@@ -15,6 +15,7 @@ import AddVideoToFeedData from "../vault/AddVideoToFeedData";
 import EditOptionsModal from "./EditOptionsModal";
 import EditTextModal from "./EditTextModal";
 import { RootStateType } from "../../../redux/store";
+import { PostType } from "../../../resources/CommonTypes";
 
 const EditPost = ({ route, navigation }) => {
   const [newPostDateActive, setNewPostDateActive] = useState(false);
@@ -50,7 +51,7 @@ const EditPost = ({ route, navigation }) => {
   const { index } = route.params;
   const { origin } = route.params;
 
-  const item = vaultfeeddata[index];
+  const item: PostType = vaultfeeddata[index];
 
   if (typeof item === "undefined" || typeof item.aspectratio === "undefined") {
     return null;

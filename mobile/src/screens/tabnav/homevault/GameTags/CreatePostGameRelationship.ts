@@ -1,6 +1,11 @@
+import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { API, graphqlOperation } from "aws-amplify";
-import { UpdatePostsInput } from "../../../../API";
-import { updatePosts } from "../../../../graphql/mutations";
+import {
+  CreateUserGamesInput,
+  UpdatePostsInput,
+  UserGamesByUsersQuery,
+} from "../../../../API";
+import { createUserGames, updatePosts } from "../../../../graphql/mutations";
 import { DispatchType } from "../../../../redux/store";
 
 interface InputTypes {
@@ -23,11 +28,42 @@ async function CreatePostGameRelationship({
       id: postID,
       gamesID: gameID,
     };
-    await API.graphql(
-      graphqlOperation(updatePosts, { input: updatePostsInput })
-    );
-    // Check if user/game relationship exists
-    // Add gameID to post object
+
+    const [postResult, relationshipResult] = await Promise.all([
+      API.graphql(graphqlOperation(updatePosts, { input: updatePostsInput })),
+      API.graphql(
+        graphqlOperation(`
+          query UserGamesByUsers {
+            userGamesByUsers (
+              usersID: "${userID}",
+              limit: 1,
+              gamesID: {
+                eq: "${gameID}"
+              }
+            ) {
+              items {
+                id
+              }
+            }
+          }
+        `)
+      ) as GraphQLResult<UserGamesByUsersQuery>,
+    ]);
+
+    if (
+      relationshipResult.data.userGamesByUsers.items.length === 0 &&
+      typeof userID === "string" &&
+      typeof gameID === "string"
+    ) {
+      const newUserGames: CreateUserGamesInput = {
+        usersID: userID,
+        gamesID: gameID,
+      };
+
+      await API.graphql(
+        graphqlOperation(createUserGames, { input: newUserGames })
+      );
+    }
   } catch (error) {
     console.log(error);
     throw "CreatePostGameRelationship error: " + JSON.stringify(error);

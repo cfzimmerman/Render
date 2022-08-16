@@ -1,6 +1,7 @@
 import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { DispatchType } from "../../../../redux/store";
 import { setErrormessageActive } from "../../../../redux/system/errormessage";
+import { PostHeaderType, PostType } from "../../../../resources/CommonTypes";
 import {
   GlobalStyles,
   Colors,
@@ -9,6 +10,7 @@ import {
 } from "../../../../resources/project";
 import CreatePostGameRelationship from "./CreatePostGameRelationship";
 import GetGameCoverURL from "./GetGameCoverURL";
+import ModifyPostGame from "./ModifyPostGame";
 import SelectGame from "./SelectGame";
 
 export interface GameCoverTileType {
@@ -27,6 +29,8 @@ interface GameCoverTilePT {
   selection: "single" | "multi";
   selectedPosts: string[];
   currentUserID: string;
+  vaultPostData: PostHeaderType[];
+  vaultFeedData: PostType[];
 }
 
 async function CoverTileAction({
@@ -38,9 +42,11 @@ async function CoverTileAction({
   selection,
   selectedPosts,
   currentUserID,
+  vaultPostData,
+  vaultFeedData,
 }: GameCoverTilePT) {
   try {
-    if (selection === "single" && selectedPosts.length === 1) {
+    if (selection === "single" && selectedPosts.length === 1 && item != null) {
       CreatePostGameRelationship({
         gameID: item.id,
         postID: selectedPosts[0],
@@ -48,7 +54,13 @@ async function CoverTileAction({
         dispatch,
         searchMode,
       });
-      // Add backend relationship
+      ModifyPostGame({
+        item,
+        vaultPostData,
+        vaultFeedData,
+        dispatch,
+        postID: selectedPosts[0],
+      });
       // Update front end data
     } else if (selection === "multi" && selectedPosts.length > 1) {
       console.log("Multi");
@@ -73,6 +85,8 @@ const GameCoverTile = ({
   selectedPosts,
   currentUserID,
   origin,
+  vaultPostData,
+  vaultFeedData,
 }: GameCoverTilePT) => {
   return (
     <TouchableOpacity
@@ -87,6 +101,8 @@ const GameCoverTile = ({
           selection,
           selectedPosts,
           currentUserID,
+          vaultPostData,
+          vaultFeedData,
         })
       }
     >
