@@ -248,10 +248,10 @@ const HomeVaultLanding = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <SectionGrid
+        // @ts-ignore
         sections={vaultpostdata}
         style={styles.sectiongridstyle}
-        // @ts-ignore
-        key={(item) => item.id}
+        keyExtractor={(item) => item.id}
         itemDimension={Environment.HalfBar}
         ref={ref}
         fixed

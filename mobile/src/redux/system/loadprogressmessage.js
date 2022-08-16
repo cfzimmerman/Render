@@ -27,7 +27,7 @@ const slice = createSlice({
       state.general.description = action.payload.description;
       state.uploadcanceled = false;
     },
-    setLoadProgressInactive: (state, action) => {
+    setLoadProgressInactive: (state) => {
       state.general.isactive = false;
     },
     setPercentComplete: (state, action) => {

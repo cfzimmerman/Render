@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GetGamesQuery } from "../../../../API";
 import { RootStateType } from "../../../../redux/store";
 import { BackArrow, HalfbarButton } from "../../../../resources/atoms";
+import { LoadProgressModal } from "../../../../resources/molecules";
 import {
   Colors,
   Environment,
@@ -91,11 +92,20 @@ const SelectGame = ({ navigation, route }) => {
   const currentUserID = useSelector(
     (state: RootStateType) => state.profilemain.currentuser.id
   );
+  const currentUserCognitoSub = useSelector(
+    (state: RootStateType) => state.profilemain.currentuser.cognitosub
+  );
   const vaultPostData = useSelector(
     (state: RootStateType) => state.vaultpostdata.vaultpostdata
   );
   const vaultFeedData = useSelector(
     (state: RootStateType) => state.vaultpostdata.vaultfeeddata
+  );
+  const syncPreference = useSelector(
+    (state: RootStateType) => state.localsync.localConfig.syncPreference
+  );
+  const localLibrary = useSelector(
+    (state: RootStateType) => state.localsync.localLibrary
   );
 
   const dispatch = useDispatch();
@@ -137,12 +147,15 @@ const SelectGame = ({ navigation, route }) => {
       searchMode={searchMode}
       dispatch={dispatch}
       navigation={navigation}
-      selection={selection}
+      // selection={selection}
       selectedPosts={selectedPosts}
       currentUserID={currentUserID}
-      origin={origin}
+      // origin={origin}
       vaultPostData={vaultPostData}
       vaultFeedData={vaultFeedData}
+      currentUserCognitoSub={currentUserCognitoSub}
+      localLibrary={localLibrary}
+      syncPreference={syncPreference}
     />
   );
 
@@ -229,6 +242,7 @@ const SelectGame = ({ navigation, route }) => {
           )}
         />
       </View>
+      <LoadProgressModal />
     </SafeAreaView>
   );
 };

@@ -71,16 +71,23 @@ const HomeVaultOptionsBar = () => {
             </View>
 
             <View style={styles.bottomMargin}>
-              <CubeSizeButton
-                isactive={false}
-                Action={() => dispatch(deactivateMultiSelect())}
-                Icon={Icons.OriginalSize.X}
+              <GameCoverCubesizeButton
+                imageURL={null}
+                Action={() => {
+                  if (selectedPosts.length > 0) {
+                    // @ts-ignore
+                    navigation.navigate("SelectGame", {
+                      selection: "multi",
+                      origin: "vaultMultiSelect",
+                    });
+                  }
+                }}
               />
             </View>
-
-            <GameCoverCubesizeButton
-              imageURL={null}
-              Action={() => console.log("Hello bruv")}
+            <CubeSizeButton
+              isactive={false}
+              Action={() => dispatch(deactivateMultiSelect())}
+              Icon={Icons.OriginalSize.X}
             />
           </BlurView>
         </View>

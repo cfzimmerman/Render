@@ -14,6 +14,7 @@ interface InputTypes {
   userID: string;
   searchMode: "library" | "all" | "unknown";
   dispatch: DispatchType;
+  selectedPostsIndex: number;
 }
 
 async function CreatePostGameRelationship({
@@ -22,6 +23,7 @@ async function CreatePostGameRelationship({
   userID,
   searchMode,
   dispatch,
+  selectedPostsIndex,
 }: InputTypes) {
   try {
     const updatePostsInput: UpdatePostsInput = {
@@ -29,9 +31,12 @@ async function CreatePostGameRelationship({
       gamesID: gameID,
     };
 
-    const [postResult, relationshipResult] = await Promise.all([
-      API.graphql(graphqlOperation(updatePosts, { input: updatePostsInput })),
-      API.graphql(
+    await API.graphql(
+      graphqlOperation(updatePosts, { input: updatePostsInput })
+    );
+
+    if (selectedPostsIndex === 0) {
+      const relationshipResult = (await API.graphql(
         graphqlOperation(`
           query UserGamesByUsers {
             userGamesByUsers (
@@ -47,23 +52,24 @@ async function CreatePostGameRelationship({
             }
           }
         `)
-      ) as GraphQLResult<UserGamesByUsersQuery>,
-    ]);
+      )) as GraphQLResult<UserGamesByUsersQuery>;
 
-    if (
-      relationshipResult.data.userGamesByUsers.items.length === 0 &&
-      typeof userID === "string" &&
-      typeof gameID === "string"
-    ) {
-      const newUserGames: CreateUserGamesInput = {
-        usersID: userID,
-        gamesID: gameID,
-      };
+      if (
+        relationshipResult.data.userGamesByUsers.items.length === 0 &&
+        typeof userID === "string" &&
+        typeof gameID === "string"
+      ) {
+        const newUserGames: CreateUserGamesInput = {
+          usersID: userID,
+          gamesID: gameID,
+        };
 
-      await API.graphql(
-        graphqlOperation(createUserGames, { input: newUserGames })
-      );
+        await API.graphql(
+          graphqlOperation(createUserGames, { input: newUserGames })
+        );
+      }
     }
+    return "success";
   } catch (error) {
     console.log(error);
     throw "CreatePostGameRelationship error: " + JSON.stringify(error);

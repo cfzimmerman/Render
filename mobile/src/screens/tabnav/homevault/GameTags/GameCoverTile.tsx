@@ -1,6 +1,14 @@
 import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { deactivateMultiSelect } from "../../../../redux/homevault/homevaultmain";
 import { DispatchType } from "../../../../redux/store";
 import { setErrormessageActive } from "../../../../redux/system/errormessage";
+import {
+  setLoadProgressActive,
+  setLoadProgressInactive,
+  setPercentComplete,
+} from "../../../../redux/system/loadprogressmessage";
+import { LSLibraryItemType } from "../../../../redux/system/localsync";
+import { setSystemmessageActive } from "../../../../redux/system/messagemodal";
 import { PostHeaderType, PostType } from "../../../../resources/CommonTypes";
 import {
   GlobalStyles,
@@ -8,6 +16,7 @@ import {
   Environment,
   UserDialogue,
 } from "../../../../resources/project";
+import CoverTileAction from "./CoverTileAction";
 import CreatePostGameRelationship from "./CreatePostGameRelationship";
 import GetGameCoverURL from "./GetGameCoverURL";
 import ModifyPostGame from "./ModifyPostGame";
@@ -20,60 +29,20 @@ export interface GameCoverTileType {
   backgroundID: string;
 }
 
-interface GameCoverTilePT {
+export interface GameCoverTileInput {
   item: null | GameCoverTileType;
   searchMode: "library" | "all";
-  origin: "vaultPostEdit" | "vaultMultiSelect";
+  // origin: "vaultPostEdit" | "vaultMultiSelect";
   dispatch: DispatchType;
   navigation: any;
-  selection: "single" | "multi";
+  // selection: "single" | "multi";
   selectedPosts: string[];
   currentUserID: string;
   vaultPostData: PostHeaderType[];
   vaultFeedData: PostType[];
-}
-
-async function CoverTileAction({
-  item,
-  searchMode,
-  origin,
-  dispatch,
-  navigation,
-  selection,
-  selectedPosts,
-  currentUserID,
-  vaultPostData,
-  vaultFeedData,
-}: GameCoverTilePT) {
-  try {
-    if (selection === "single" && selectedPosts.length === 1 && item != null) {
-      CreatePostGameRelationship({
-        gameID: item.id,
-        postID: selectedPosts[0],
-        userID: currentUserID,
-        dispatch,
-        searchMode,
-      });
-      ModifyPostGame({
-        item,
-        vaultPostData,
-        vaultFeedData,
-        dispatch,
-        postID: selectedPosts[0],
-      });
-      // Update front end data
-    } else if (selection === "multi" && selectedPosts.length > 1) {
-      console.log("Multi");
-      // Add backend relationship
-      // Update front end data
-    }
-    navigation.goBack();
-  } catch (error) {
-    console.log(error);
-    dispatch(
-      setErrormessageActive(UserDialogue("13").errormessage.systemerror)
-    );
-  }
+  currentUserCognitoSub: string;
+  syncPreference: null | "All" | "Partial" | "None";
+  localLibrary: Record<string, LSLibraryItemType>;
 }
 
 const GameCoverTile = ({
@@ -81,13 +50,14 @@ const GameCoverTile = ({
   searchMode,
   dispatch,
   navigation,
-  selection,
   selectedPosts,
   currentUserID,
-  origin,
   vaultPostData,
   vaultFeedData,
-}: GameCoverTilePT) => {
+  currentUserCognitoSub,
+  syncPreference,
+  localLibrary,
+}: GameCoverTileInput) => {
   return (
     <TouchableOpacity
       style={[GlobalStyles.shadow, styles.tileWrapper]}
@@ -95,14 +65,15 @@ const GameCoverTile = ({
         CoverTileAction({
           item,
           searchMode,
-          origin,
           dispatch,
           navigation,
-          selection,
           selectedPosts,
           currentUserID,
           vaultPostData,
           vaultFeedData,
+          currentUserCognitoSub,
+          syncPreference,
+          localLibrary,
         })
       }
     >
