@@ -32,6 +32,7 @@ import PostOptionsModal from "./PostOptionsModal";
 import PostTextModal from "./PostTextModal";
 import SetOptions from "./SetOptions";
 import VaultPostPublicModal from "../plus/VaultPostPublicModal";
+import { RootStateType } from "../../../redux/store";
 
 // SetOptions({ postid: abc, animateactive: true, animateinactive: false, newchangestatus: false, })
 
@@ -85,7 +86,7 @@ const PostModalFilter = ({
   }
   return (
     <View>
-      <PostTextModal dispatch={dispatch} item={item} index={index} />
+      <PostTextModal dispatch={dispatch} item={item} />
       <VaultPostPublicModal
         dispatch={dispatch}
         item={item}
@@ -98,11 +99,21 @@ const PostModalFilter = ({
 
 const FullViewContent = ({ item, index, dispatch, navigation, usecase }) => {
   const dimensions = GetPostDimensions(item.aspectratio);
-  const optionstatus = useSelector((state) => state.vaultpostdata.options);
-  const textactive = useSelector((state) => state.vaultpostdata.textactive);
-  const postindex = useSelector((state) => state.vaultpostdata.activepost);
-  const localLibrary = useSelector((state) => state.localsync.localLibrary);
-  const localConfig = useSelector((state) => state.localsync.localConfig);
+  const optionstatus = useSelector(
+    (state: RootStateType) => state.vaultpostdata.options
+  );
+  const textactive = useSelector(
+    (state: RootStateType) => state.vaultpostdata.textactive
+  );
+  const postindex = useSelector(
+    (state: RootStateType) => state.vaultpostdata.activepost
+  );
+  const localLibrary = useSelector(
+    (state: RootStateType) => state.localsync.localLibrary
+  );
+  const localConfig = useSelector(
+    (state: RootStateType) => state.localsync.localConfig
+  );
 
   if (item.contenttype === "video") {
     if (item.signedurl === null) {
@@ -145,8 +156,12 @@ const FullViewContent = ({ item, index, dispatch, navigation, usecase }) => {
       }
     }
 
-    const activepost = useSelector((state) => state.vaultpostdata.activepost);
-    const focusview = useSelector((state) => state.vaultpostdata.focusview);
+    const activepost = useSelector(
+      (state: RootStateType) => state.vaultpostdata.activepost
+    );
+    const focusview = useSelector(
+      (state: RootStateType) => state.vaultpostdata.focusview
+    );
 
     const PlayVideo = () => {
       const isfocused = useIsFocused();
@@ -213,6 +228,7 @@ const FullViewContent = ({ item, index, dispatch, navigation, usecase }) => {
                     style={{
                       height: dimensions.height,
                       width: dimensions.width,
+                      // @ts-ignore
                       borderRadius: Environment.StandardRadius,
                       controlsBackgroundColor: Colors.AccentOn,
                     }}
@@ -242,6 +258,7 @@ const FullViewContent = ({ item, index, dispatch, navigation, usecase }) => {
                 dispatch={dispatch}
                 item={item}
                 dimensions={dimensions}
+                index={index}
               />
             </SafeAreaView>
           </View>
@@ -354,6 +371,7 @@ const FullViewContent = ({ item, index, dispatch, navigation, usecase }) => {
               dispatch={dispatch}
               item={item}
               dimensions={dimensions}
+              index={index}
             />
           </SafeAreaView>
         </View>

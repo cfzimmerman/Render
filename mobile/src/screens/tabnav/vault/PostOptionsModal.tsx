@@ -25,8 +25,12 @@ import {
 } from "../../../resources/project";
 import ChangeFocusView from "./ChangeFocusView";
 import PostShareModal from "./PostShareModal";
-import { RootStateType } from "../../../redux/store";
+import { DispatchType, RootStateType } from "../../../redux/store";
 import { VaultPostFullViewUsecaseTypes } from "./VaultPostFullView";
+import GameCoverCubesizeButton from "../homevault/GameTags/GameCoverCubesizeButton";
+import { PostType } from "../../../resources/CommonTypes";
+
+import GetGameCoverThumbnailURL from "../homevault/GameTags/GetGameCoverThumbnailURL";
 
 interface EnterCommentsPropTypes {
   index: number;
@@ -52,7 +56,21 @@ const EnterComments = ({
   }
 };
 
-const PostOptionsModal = ({ navigation, dispatch, usecase, item, index }) => {
+interface PostOptionsModalInput {
+  navigation: any;
+  dispatch: DispatchType;
+  usecase: VaultPostFullViewUsecaseTypes;
+  item: PostType;
+  index: number;
+}
+
+const PostOptionsModal = ({
+  navigation,
+  dispatch,
+  usecase,
+  item,
+  index,
+}: PostOptionsModalInput) => {
   const postoptions = useSelector(
     (state: RootStateType) => state.vaultpostdata.options
   );
@@ -327,6 +345,14 @@ const PostOptionsModal = ({ navigation, dispatch, usecase, item, index }) => {
 
         <Animated.View style={animatedStylesFooter}>
           <Animated.View style={animatedStylesFooterMain}>
+            <GameCoverCubesizeButton
+              imageURL={
+                item.coverID === null
+                  ? null
+                  : GetGameCoverThumbnailURL({ coverID: item.coverID })
+              }
+              Action={() => console.log("Display game info")}
+            />
             <CubeSizeButton
               Icon={Icons.OriginalSize.Comment}
               Action={() => EnterComments({ index, navigation, usecase })}
