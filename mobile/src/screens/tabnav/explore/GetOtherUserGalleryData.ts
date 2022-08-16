@@ -46,6 +46,7 @@ async function GetOtherUserGalleryData({
                         Games {
                           id
                           coverID
+                          title
                         }
                     }
                     nextToken

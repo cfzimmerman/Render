@@ -24,6 +24,7 @@ const AddToStoriesData = ({
     displayname,
     gamesID: postItem.Games === null ? null : postItem.Games.id,
     coverID: postItem.Games === null ? null : postItem.Games.coverID,
+    title: postItem.Games === null ? null : postItem.Games.title,
   };
 
   const newsection = {

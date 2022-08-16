@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PostType } from "../../resources/CommonTypes";
+import { SetGameInfoModalInputs } from "../../screens/tabnav/homevault/GameTags/GameInfoModal";
 
 type PostID = string;
 // Just using this for semantic clarity
@@ -7,6 +8,7 @@ type PostID = string;
 interface HomeVaultMainDefaultSliceType {
   selectedPosts: PostID[];
   multiSelectActive: boolean;
+  gameInfoModal: SetGameInfoModalInputs;
 }
 
 const slice = createSlice({
@@ -14,6 +16,12 @@ const slice = createSlice({
   initialState: {
     selectedPosts: [],
     multiSelectActive: false,
+    gameInfoModal: {
+      active: false,
+      gameID: null,
+      coverID: null,
+      title: null,
+    },
   } as HomeVaultMainDefaultSliceType,
   reducers: {
     activateMultiSelect: (state, action: PayloadAction<PostID>) => {
@@ -41,6 +49,12 @@ const slice = createSlice({
         state.selectedPosts.splice(targetIndex, 1);
       }
     },
+    setGameInfoModal: (
+      state,
+      action: PayloadAction<SetGameInfoModalInputs>
+    ) => {
+      state.gameInfoModal = action.payload;
+    },
   },
 });
 
@@ -51,6 +65,7 @@ export const {
   deactivateMultiSelect,
   setMultiSelectActive,
   resetWithNewSelectedPost,
+  setGameInfoModal,
 } = slice.actions;
 
 export default slice.reducer;

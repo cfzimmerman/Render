@@ -22,6 +22,7 @@ import {
   Colors,
   GlobalStyles,
   Icons,
+  UserDialogue,
 } from "../../../resources/project";
 import ChangeFocusView from "./ChangeFocusView";
 import PostShareModal from "./PostShareModal";
@@ -31,6 +32,8 @@ import GameCoverCubesizeButton from "../homevault/GameTags/GameCoverCubesizeButt
 import { PostType } from "../../../resources/CommonTypes";
 
 import GetGameCoverThumbnailURL from "../homevault/GameTags/GetGameCoverThumbnailURL";
+import { setGameInfoModal } from "../../../redux/homevault/homevaultmain";
+import { setSystemmessageActive } from "../../../redux/system/messagemodal";
 
 interface EnterCommentsPropTypes {
   index: number;
@@ -351,7 +354,27 @@ const PostOptionsModal = ({
                   ? null
                   : GetGameCoverThumbnailURL({ coverID: item.coverID })
               }
-              Action={() => console.log("Display game info")}
+              Action={() => {
+                if (
+                  typeof item.coverID === "string" &&
+                  typeof item.title === "string"
+                ) {
+                  dispatch(
+                    setGameInfoModal({
+                      active: true,
+                      gameID: item.gamesID,
+                      title: item.title,
+                      coverID: item.coverID,
+                    })
+                  );
+                } else {
+                  dispatch(
+                    setSystemmessageActive(
+                      UserDialogue().systemmessage.noGameTagged
+                    )
+                  );
+                }
+              }}
             />
             <CubeSizeButton
               Icon={Icons.OriginalSize.Comment}

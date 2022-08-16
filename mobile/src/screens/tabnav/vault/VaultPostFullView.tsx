@@ -26,6 +26,7 @@ import UpdatePostInteraction from "../../masterstack/contentdisplay/UpdatePostIn
 import UpdateStoriesViewed from "../home/UpdateStoriesViewed";
 import { RootStateType } from "../../../redux/store";
 import { SystemmessageModal } from "../../../resources/molecules";
+import GameInfoModal from "../homevault/GameTags/GameInfoModal";
 
 export type VaultPostFullViewUsecaseTypes =
   | "vault"
@@ -54,7 +55,6 @@ const VaultPostFullView = ({ navigation, route }) => {
   const fetchingvaultdata = useSelector(
     (state: RootStateType) => state.vaultpostdata.fetchingdata
   );
-
   const storiesfullview = useSelector(
     (state: RootStateType) => state.homemain.storiesfullview
   );
@@ -311,6 +311,7 @@ const VaultPostFullView = ({ navigation, route }) => {
         onEndReached={EndReached}
       />
       <SystemmessageModal />
+      <GameInfoModal />
     </View>
   );
 };

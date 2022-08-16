@@ -44,6 +44,7 @@ interface GetPostsReturnType {
   Games?: null | {
     id: string;
     coverID?: string;
+    title?: string;
   };
 }
 

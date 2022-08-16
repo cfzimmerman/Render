@@ -123,6 +123,11 @@ const UserDialogue = (prop?: string) => {
         title: "Post not found",
         description: "Its owner sent it to a farm upstate.",
       },
+      noGameTagged: {
+        header: "🏷",
+        title: "No game tag",
+        description: "Tbh it's probably Minecraft.",
+      },
     },
   };
 

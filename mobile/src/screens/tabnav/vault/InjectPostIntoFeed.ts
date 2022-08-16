@@ -74,6 +74,7 @@ async function InjectPostIntoFeed({
       thumbnailurl: thumbnailurl,
       gamesID: post.gamesID,
       coverID: post.coverID,
+      title: post.title,
     };
 
     const newSection: PostHeaderType = {

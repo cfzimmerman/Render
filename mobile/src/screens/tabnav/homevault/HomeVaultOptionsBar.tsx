@@ -18,6 +18,7 @@ import {
   Icons,
 } from "../../../resources/project";
 import { useNavigation } from "@react-navigation/native";
+import GameCoverCubesizeButton from "./GameTags/GameCoverCubesizeButton";
 
 const AreEqual = (previousProps, nextProps) => {
   return true;
@@ -69,10 +70,17 @@ const HomeVaultOptionsBar = () => {
               />
             </View>
 
-            <CubeSizeButton
-              isactive={false}
-              Action={() => dispatch(deactivateMultiSelect())}
-              Icon={Icons.OriginalSize.X}
+            <View style={styles.bottomMargin}>
+              <CubeSizeButton
+                isactive={false}
+                Action={() => dispatch(deactivateMultiSelect())}
+                Icon={Icons.OriginalSize.X}
+              />
+            </View>
+
+            <GameCoverCubesizeButton
+              imageURL={null}
+              Action={() => console.log("Hello bruv")}
             />
           </BlurView>
         </View>
@@ -102,6 +110,9 @@ const styles = StyleSheet.create({
   },
   buttonSpacer: {
     marginTop: Environment.LargePadding,
+    marginBottom: Environment.StandardPadding,
+  },
+  bottomMargin: {
     marginBottom: Environment.StandardPadding,
   },
   scbWrapper: {

@@ -71,6 +71,7 @@ async function SentencePost({
       userpfpurl: null,
       gamesID: deletedPost.Games === null ? null : deletedPost.Games.id,
       coverID: deletedPost.Games === null ? null : deletedPost.Games.coverID,
+      title: deletedPost.Games === null ? null : deletedPost.Games.title,
     };
 
     const currentUserResult = (await API.graphql(

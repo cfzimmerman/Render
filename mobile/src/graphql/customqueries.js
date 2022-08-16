@@ -84,6 +84,7 @@ export const filteredPostsByContentDate = /* GraphQL */ `
         Games {
           id
           coverID
+          title
         }
       }
       nextToken
@@ -272,6 +273,7 @@ export const filteredSearchPosts = /* GraphQL */ `
         Games {
           id
           coverID
+          title
         }
       }
       nextToken
@@ -317,6 +319,7 @@ export const filteredPostsByPublicDate = /* GraphQL */ `
         Games {
           id
           coverID
+          title
         }
       }
       nextToken

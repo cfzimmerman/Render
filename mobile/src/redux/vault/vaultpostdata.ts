@@ -253,6 +253,8 @@ const slice = createSlice({
         action.payload.gamesID;
       state.vaultfeeddata[action.payload.feedIndex].coverID =
         action.payload.coverID;
+      state.vaultfeeddata[action.payload.feedIndex].title =
+        action.payload.title;
 
       state.vaultpostdata[action.payload.sectionIndex].data[
         action.payload.sectionDataIndex
@@ -260,17 +262,24 @@ const slice = createSlice({
       state.vaultpostdata[action.payload.sectionIndex].data[
         action.payload.sectionDataIndex
       ].coverID = action.payload.coverID;
+      state.vaultpostdata[action.payload.sectionIndex].data[
+        action.payload.sectionDataIndex
+      ].title = action.payload.title;
     },
     updateHeaderGame: (state, action: PayloadAction<UpdateHeaderGameInput>) => {
       state.vaultfeeddata[action.payload.feedIndex].gamesID =
         action.payload.gamesID;
       state.vaultfeeddata[action.payload.feedIndex].coverID =
         action.payload.coverID;
+      state.vaultfeeddata[action.payload.feedIndex].title =
+        action.payload.title;
 
       state.vaultpostdata[action.payload.sectionIndex].header.post.gamesID =
         action.payload.gamesID;
       state.vaultpostdata[action.payload.sectionIndex].header.post.coverID =
         action.payload.coverID;
+      state.vaultpostdata[action.payload.sectionIndex].header.post.title =
+        action.payload.title;
     },
   },
 });

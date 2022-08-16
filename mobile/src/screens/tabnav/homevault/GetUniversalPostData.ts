@@ -43,6 +43,7 @@ async function GetUniversalPostData({ postID, dispatch, navigation }) {
                 Games {
                   id
                   coverID
+                  title
                 }
 
             }
@@ -68,6 +69,7 @@ async function GetUniversalPostData({ postID, dispatch, navigation }) {
         userpfpurl: null,
         gamesID: post.Games === null ? null : post.Games.id,
         coverID: post.Games === null ? null : post.Games.coverID,
+        title: post.Games === null ? null : post.Games.title,
       };
 
       // contentURL is either a photo or video. If it's a video, also get the thumbnail. If it's a photo, don't bother (the if-else below)

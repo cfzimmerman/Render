@@ -47,6 +47,7 @@ async function GetGalleryData({
                         Games {
                           id
                           coverID
+                          title
                         }
                     }
                     nextToken

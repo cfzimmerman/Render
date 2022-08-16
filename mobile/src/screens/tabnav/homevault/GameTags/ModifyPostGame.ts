@@ -21,6 +21,7 @@ export interface UpdateNonHeaderGameInput {
   sectionDataIndex: number;
   gamesID: string;
   coverID: string;
+  title: string;
 }
 
 export interface UpdateHeaderGameInput {
@@ -28,6 +29,7 @@ export interface UpdateHeaderGameInput {
   sectionIndex: number;
   gamesID: string;
   coverID: string;
+  title: string;
 }
 
 async function ModifyPostGame({
@@ -58,6 +60,7 @@ async function ModifyPostGame({
         sectionDataIndex,
         gamesID: item.id,
         coverID: item.coverID,
+        title: item.title,
       };
 
       dispatch(updateNonHeaderGame(updateNonHG));
@@ -67,6 +70,7 @@ async function ModifyPostGame({
         sectionIndex,
         gamesID: item.id,
         coverID: item.coverID,
+        title: item.title,
       };
       dispatch(updateHeaderGame(updateHG));
     }
