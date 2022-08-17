@@ -60,7 +60,7 @@ const SelectGameListFooter = ({
   dispatch,
   currentUserID,
 }: ListFooterPT) => {
-  if (listData === null || listData.length === 0) {
+  if (listData === null || listData.length === 0 || searchMode === "library") {
     return null;
   } else if (nextToken === null) {
     return (

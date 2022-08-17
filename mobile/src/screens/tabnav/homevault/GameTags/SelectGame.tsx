@@ -31,6 +31,7 @@ import GameCoverTile, { GameCoverTileType } from "./GameCoverTile";
 import GetCurrentUserGameLibrary from "./GetCurrentUserGameLibrary";
 import GetGameCoverURL from "./GetGameCoverURL";
 import SearchGameTitle from "./SearchGameTitle";
+import SearchLibraryGameTitle from "./SearchLibraryGameTitle";
 import SelectGameListFooter from "./SelectGameListFooter";
 
 const opacity = new Animated.Value(0);
@@ -115,6 +116,9 @@ const SelectGame = ({ navigation, route }) => {
   const libraryGamesNextToken = useSelector(
     (state: RootStateType) => state.gametags.libraryGamesNextToken
   );
+  const libraryGamesSearchResults = useSelector(
+    (state: RootStateType) => state.gametags.libraryGamesSearchResults
+  );
   const dispatch = useDispatch();
 
   const selection = route.params.selection;
@@ -180,14 +184,26 @@ const SelectGame = ({ navigation, route }) => {
 
   const ChangeInput = (input: string) => {
     setSearchInput(input);
-    SearchGameTitle({ title: input, dispatch });
+    if (searchMode === "library" && input.length > 0) {
+      SearchLibraryGameTitle({
+        title: input,
+        libraryGamesArray,
+        libraryGamesNextToken,
+        currentUserID,
+        dispatch,
+      });
+    } else if (searchMode === "all") {
+      SearchGameTitle({ title: input, dispatch });
+    }
   };
 
   const CorrectData = () => {
     if (searchMode === "all") {
       return allGamesArray;
-    } else if (searchMode === "library") {
+    } else if (searchMode === "library" && searchInput.length === 0) {
       return libraryGamesArray;
+    } else if (searchMode === "library" && searchInput.length > 0) {
+      return libraryGamesSearchResults;
     }
   };
 

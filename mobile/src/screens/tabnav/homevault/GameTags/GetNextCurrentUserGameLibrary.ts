@@ -25,7 +25,7 @@ async function GetNextCurrentUserGameLibrary({
   nextToken,
 }: InputTypes) {
   try {
-    const queryLimit = 100;
+    const queryLimit = 1000;
     const result = (await API.graphql(
       graphqlOperation(`
         query UserGamesByUsers {
@@ -66,12 +66,12 @@ async function GetNextCurrentUserGameLibrary({
       }
     });
 
-    const newLibraryGamesArray: SetNextLibraryGamesArrayInput = {
+    const nextLibraryGamesArray: SetNextLibraryGamesArrayInput = {
       nextLibraryGamesArray: gameLibrary,
       nextLibraryGamesNextToken: result.data.userGamesByUsers.nextToken,
     };
 
-    dispatch(addNextLibraryGamesArray(newLibraryGamesArray));
+    dispatch(addNextLibraryGamesArray(nextLibraryGamesArray));
   } catch (error) {
     console.log(error);
   }

@@ -9,6 +9,7 @@ interface DefaultSliceType {
   allGamesNextToken: string | null;
   libraryGamesArray: GameCoverTileType[] | null;
   libraryGamesNextToken: string | null;
+  libraryGamesSearchResults: GameCoverTileType[];
 }
 
 export interface SetNewAllGamesArrayPT {
@@ -23,6 +24,7 @@ const slice = createSlice({
     allGamesNextToken: null,
     libraryGamesArray: null,
     libraryGamesNextToken: null,
+    libraryGamesSearchResults: [],
   } as DefaultSliceType,
   reducers: {
     clearAllGamesArray: (state) => {
@@ -60,6 +62,12 @@ const slice = createSlice({
       );
       state.libraryGamesNextToken = action.payload.nextLibraryGamesNextToken;
     },
+    setLibraryGamesSearchResults: (
+      state,
+      action: PayloadAction<GameCoverTileType[]>
+    ) => {
+      state.libraryGamesSearchResults = action.payload;
+    },
   },
 });
 
@@ -69,6 +77,7 @@ export const {
   addNextAllGamesArray,
   setNewLibraryGamesArray,
   addNextLibraryGamesArray,
+  setLibraryGamesSearchResults,
 } = slice.actions;
 
 export default slice.reducer;

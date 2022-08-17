@@ -4,6 +4,7 @@ import { UserGamesByUsersQuery } from "../../../../API";
 import { setNewLibraryGamesArray } from "../../../../redux/homevault/gametags";
 import { DispatchType } from "../../../../redux/store";
 import { GameCoverTileType } from "./GameCoverTile";
+import GetNextCurrentUserGameLibrary from "./GetNextCurrentUserGameLibrary";
 
 interface InputTypes {
   currentUserID: string;
@@ -20,7 +21,7 @@ async function GetCurrentUserGameLibrary({
   dispatch,
 }: InputTypes) {
   try {
-    const queryLimit = 100;
+    const queryLimit = 1000;
     const result = (await API.graphql(
       graphqlOperation(`
         query UserGamesByUsers {
@@ -43,6 +44,7 @@ async function GetCurrentUserGameLibrary({
     `)
     )) as GraphQLResult<UserGamesByUsersQuery>;
 
+    const nextToken = result.data.userGamesByUsers.nextToken;
     const gameLibrary = [];
 
     result.data.userGamesByUsers.items.forEach((item) => {
@@ -62,10 +64,14 @@ async function GetCurrentUserGameLibrary({
 
     const newLibraryGamesArray: SetNewLibraryGamesArrayInput = {
       newLibraryGamesArray: gameLibrary,
-      newLibraryGamesNextToken: result.data.userGamesByUsers.nextToken,
+      newLibraryGamesNextToken: nextToken,
     };
 
     dispatch(setNewLibraryGamesArray(newLibraryGamesArray));
+
+    if (nextToken != null) {
+      GetNextCurrentUserGameLibrary({ currentUserID, dispatch, nextToken });
+    }
   } catch (error) {
     console.log(error);
   }
