@@ -169,6 +169,7 @@ type Posts @model @searchable @auth(rules: [{ allow: public }]) {
       queryField: "postsByDeletedDate"
       sortKeyFields: ["deleteddate"]
     )
+    @index(name: "postsByUserGames", queryField: "postsByUserGames", sortKeyFields: ["gamesID"])
   gamesID: ID @index(name: "postsByGames", queryField: "postsByGames", sortKeyFields: ["createdAt"])
   Users: Users @belongsTo(fields: ["usersID"])
   Games: Games @belongsTo(fields: ["gamesID"])
