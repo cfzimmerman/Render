@@ -10,6 +10,7 @@ import HomeVaultFullRefresh from "../HomeVaultFullRefresh";
 import CreatePostGameRelationship from "./CreatePostGameRelationship";
 import { GameCoverTileInput } from "./GameCoverTile";
 import ModifyPostGame from "./ModifyPostGame";
+import RemovePostGameRelationship from "./RemovePostGameRelationship";
 
 async function CoverTileAction({
   item,
@@ -37,7 +38,11 @@ async function CoverTileAction({
           selectedPostsIndex: 0,
         });
       } else if (deleteTag === true) {
-        console.log("Delete tag");
+        RemovePostGameRelationship({
+          postID: selectedPosts[0],
+          currentUserID,
+          dispatch,
+        });
       }
       ModifyPostGame({
         item,

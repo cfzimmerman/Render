@@ -263,17 +263,6 @@ const PlusLanding = ({ navigation }) => {
         bounces={false}
         showsVerticalScrollIndicator={false}
       >
-        <Button
-          color={"moccasin"}
-          title={"RemovePostGameRelationship"}
-          onPress={() =>
-            RemovePostGameRelationship({
-              dispatch,
-              currentUserID: currentuser.id,
-              postID: "91c5590e-f454-4d56-9801-57ba2c73c480",
-            })
-          }
-        />
         <View style={styles.sectionwrapper}>
           <Text
             style={[

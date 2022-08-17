@@ -165,25 +165,6 @@ const SelectGame = ({ navigation, route }) => {
     GlobalStyles.shadow,
   ];
 
-  const renderItem = ({ item, index }) => (
-    <GameCoverTile
-      item={item}
-      searchMode={searchMode}
-      dispatch={dispatch}
-      navigation={navigation}
-      // selection={selection}
-      selectedPosts={selectedPosts}
-      currentUserID={currentUserID}
-      // origin={origin}
-      vaultPostData={vaultPostData}
-      vaultFeedData={vaultFeedData}
-      currentUserCognitoSub={currentUserCognitoSub}
-      localLibrary={localLibrary}
-      syncPreference={syncPreference}
-      deleteTag={false}
-    />
-  );
-
   const ChangeInput = (input: string) => {
     setSearchInput(input);
     if (searchMode === "library" && input.length > 0) {
@@ -230,6 +211,25 @@ const SelectGame = ({ navigation, route }) => {
       deleteTag: true,
     });
   };
+
+  const renderItem = ({ item, index }) => (
+    <GameCoverTile
+      item={item}
+      searchMode={searchMode}
+      dispatch={dispatch}
+      navigation={navigation}
+      // selection={selection}
+      selectedPosts={selectedPosts}
+      currentUserID={currentUserID}
+      // origin={origin}
+      vaultPostData={vaultPostData}
+      vaultFeedData={vaultFeedData}
+      currentUserCognitoSub={currentUserCognitoSub}
+      localLibrary={localLibrary}
+      syncPreference={syncPreference}
+      deleteTag={false}
+    />
+  );
 
   const ListFooter = () => {
     return (
