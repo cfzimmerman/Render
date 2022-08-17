@@ -23,17 +23,22 @@ async function CoverTileAction({
   currentUserCognitoSub,
   syncPreference,
   localLibrary,
+  deleteTag,
 }: GameCoverTileInput) {
   try {
     if (selectedPosts.length === 1 && item != null) {
-      CreatePostGameRelationship({
-        gameID: item.id,
-        postID: selectedPosts[0],
-        userID: currentUserID,
-        dispatch,
-        searchMode,
-        selectedPostsIndex: 0,
-      });
+      if (deleteTag === false) {
+        CreatePostGameRelationship({
+          gameID: item.id,
+          postID: selectedPosts[0],
+          userID: currentUserID,
+          dispatch,
+          searchMode,
+          selectedPostsIndex: 0,
+        });
+      } else if (deleteTag === true) {
+        console.log("Delete tag");
+      }
       ModifyPostGame({
         item,
         vaultPostData,
@@ -45,7 +50,7 @@ async function CoverTileAction({
     } else if (selectedPosts.length > 1 && item != null) {
       dispatch(
         setLoadProgressActive({
-          title: `Tagging uploads`,
+          title: deleteTag === true ? "Deleting tags" : "Adding tags",
           description: ``,
         })
       );

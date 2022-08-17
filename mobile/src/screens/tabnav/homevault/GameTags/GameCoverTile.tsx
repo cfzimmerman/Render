@@ -43,6 +43,7 @@ export interface GameCoverTileInput {
   currentUserCognitoSub: string;
   syncPreference: null | "All" | "Partial" | "None";
   localLibrary: Record<string, LSLibraryItemType>;
+  deleteTag: boolean;
 }
 
 const GameCoverTile = ({
@@ -57,6 +58,7 @@ const GameCoverTile = ({
   currentUserCognitoSub,
   syncPreference,
   localLibrary,
+  deleteTag,
 }: GameCoverTileInput) => {
   return (
     <TouchableOpacity
@@ -74,6 +76,7 @@ const GameCoverTile = ({
           currentUserCognitoSub,
           syncPreference,
           localLibrary,
+          deleteTag,
         })
       }
     >

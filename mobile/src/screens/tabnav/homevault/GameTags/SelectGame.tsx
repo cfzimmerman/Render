@@ -32,6 +32,7 @@ import GetCurrentUserGameLibrary from "./GetCurrentUserGameLibrary";
 import GetGameCoverURL from "./GetGameCoverURL";
 import SearchGameTitle from "./SearchGameTitle";
 import SearchLibraryGameTitle from "./SearchLibraryGameTitle";
+import SelectGameListHeader from "./SelectGameListHeader";
 import SelectGameListFooter from "./SelectGameListFooter";
 
 const opacity = new Animated.Value(0);
@@ -179,6 +180,7 @@ const SelectGame = ({ navigation, route }) => {
       currentUserCognitoSub={currentUserCognitoSub}
       localLibrary={localLibrary}
       syncPreference={syncPreference}
+      deleteTag={false}
     />
   );
 
@@ -205,6 +207,43 @@ const SelectGame = ({ navigation, route }) => {
     } else if (searchMode === "library" && searchInput.length > 0) {
       return libraryGamesSearchResults;
     }
+  };
+
+  const ListHeader = () => {
+    return SelectGameListHeader({
+      item: {
+        id: null,
+        title: null,
+        coverID: null,
+        backgroundID: null,
+      },
+      searchMode,
+      dispatch,
+      navigation,
+      selectedPosts,
+      currentUserID,
+      vaultPostData,
+      vaultFeedData,
+      currentUserCognitoSub,
+      syncPreference,
+      localLibrary,
+      deleteTag: true,
+    });
+  };
+
+  const ListFooter = () => {
+    return (
+      <SelectGameListFooter
+        nextToken={
+          searchMode === "all" ? allGamesNextToken : libraryGamesNextToken
+        }
+        listData={CorrectData()}
+        searchMode={searchMode}
+        title={searchInput}
+        dispatch={dispatch}
+        currentUserID={currentUserID}
+      />
+    );
   };
 
   return (
@@ -266,18 +305,8 @@ const SelectGame = ({ navigation, route }) => {
           numColumns={2}
           renderItem={renderItem}
           keyboardDismissMode="on-drag"
-          ListFooterComponent={() => (
-            <SelectGameListFooter
-              nextToken={
-                searchMode === "all" ? allGamesNextToken : libraryGamesNextToken
-              }
-              listData={CorrectData()}
-              searchMode={searchMode}
-              title={searchInput}
-              dispatch={dispatch}
-              currentUserID={currentUserID}
-            />
-          )}
+          ListHeaderComponent={ListHeader}
+          ListFooterComponent={ListFooter}
         />
       </View>
       <LoadProgressModal />

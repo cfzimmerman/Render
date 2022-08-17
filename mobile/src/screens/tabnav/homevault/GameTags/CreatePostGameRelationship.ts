@@ -35,7 +35,7 @@ async function CreatePostGameRelationship({
       graphqlOperation(updatePosts, { input: updatePostsInput })
     );
 
-    if (selectedPostsIndex === 0) {
+    if (selectedPostsIndex === 0 && gameID != null) {
       const relationshipResult = (await API.graphql(
         graphqlOperation(`
           query UserGamesByUsers {
