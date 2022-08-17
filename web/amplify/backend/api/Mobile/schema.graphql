@@ -170,7 +170,10 @@ type Posts @model @searchable @auth(rules: [{ allow: public }]) {
       sortKeyFields: ["deleteddate"]
     )
     @index(name: "postsByUserGames", queryField: "postsByUserGames", sortKeyFields: ["gamesID"])
-  gamesID: ID @index(name: "postsByGames", queryField: "postsByGames", sortKeyFields: ["createdAt"])
+  gamesID: ID
+    @index(name: "postsByGames", queryField: "postsByGames", sortKeyFields: ["createdAt"])
+    @auth(rules: [{ allow: public, operations: [delete] }])
+  # Auth permission allows us to nullify gamesID if a user un-tags a post
   Users: Users @belongsTo(fields: ["usersID"])
   Games: Games @belongsTo(fields: ["gamesID"])
   Comments: [Comments] @hasMany(indexName: "byPosts", fields: ["id"])
