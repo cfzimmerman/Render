@@ -29,7 +29,7 @@ async function CoverTileAction({
   try {
     if (selectedPosts.length === 1 && item != null) {
       if (deleteTag === false) {
-        CreatePostGameRelationship({
+        await CreatePostGameRelationship({
           gameID: item.id,
           postID: selectedPosts[0],
           userID: currentUserID,
@@ -38,7 +38,7 @@ async function CoverTileAction({
           selectedPostsIndex: 0,
         });
       } else if (deleteTag === true) {
-        RemovePostGameRelationship({
+        await RemovePostGameRelationship({
           postID: selectedPosts[0],
           currentUserID,
           dispatch,
@@ -60,25 +60,35 @@ async function CoverTileAction({
         })
       );
       dispatch(setPercentComplete(`0 / ${selectedPosts.length}`));
-      // Add backend relationship
+
       for await (const [index, postID] of selectedPosts.entries()) {
-        const result = await CreatePostGameRelationship({
-          gameID: item.id,
-          postID,
-          searchMode,
-          dispatch,
-          userID: currentUserID,
-          selectedPostsIndex: index,
-        });
+        if (deleteTag === false) {
+          const result = await CreatePostGameRelationship({
+            gameID: item.id,
+            postID,
+            searchMode,
+            dispatch,
+            userID: currentUserID,
+            selectedPostsIndex: index,
+          });
+        } else if (deleteTag === true) {
+          // Ik this if-elif stuff in Typescript looks weird, but I'm scared of passing a string or int or something in accidentally and introducing a bug
+          const result = await RemovePostGameRelationship({
+            postID,
+            currentUserID,
+            dispatch,
+          });
+        }
         dispatch(setPercentComplete(`${index} / ${selectedPosts.length}`));
       }
+      HomeVaultFullRefresh({
+        dispatch,
+        cognitosub: currentUserCognitoSub,
+        syncPreference,
+        localLibrary,
+      });
     }
-    HomeVaultFullRefresh({
-      dispatch,
-      cognitosub: currentUserCognitoSub,
-      syncPreference,
-      localLibrary,
-    });
+
     dispatch(setLoadProgressInactive());
     dispatch(deactivateMultiSelect());
     navigation.goBack();

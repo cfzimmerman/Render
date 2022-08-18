@@ -1,6 +1,4 @@
-import { GraphQLResult } from "@aws-amplify/api-graphql";
-import { API, graphqlOperation } from "aws-amplify";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   View,
   Image,
@@ -15,6 +13,8 @@ import {
   Platform,
   Button,
 } from "react-native";
+import { GraphQLResult } from "@aws-amplify/api-graphql";
+import { API, graphqlOperation } from "aws-amplify";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import { GetGamesQuery } from "../../../../API";
@@ -121,6 +121,8 @@ const SelectGame = ({ navigation, route }) => {
     (state: RootStateType) => state.gametags.libraryGamesSearchResults
   );
   const dispatch = useDispatch();
+
+  const flatlistRef = useRef(null);
 
   const selection = route.params.selection;
   const origin = route.params.origin;
@@ -246,6 +248,28 @@ const SelectGame = ({ navigation, route }) => {
     );
   };
 
+  const LibraryButton = () => {
+    if (searchMode === "all") {
+      setSearchMode("library");
+    } else if (searchMode === "library") {
+      flatlistRef.current.scrollToIndex({
+        animated: true,
+        index: 0,
+      });
+    }
+  };
+
+  const AllButton = () => {
+    if (searchMode === "library") {
+      setSearchMode("all");
+    } else if (searchMode === "all") {
+      flatlistRef.current.scrollToIndex({
+        animated: true,
+        index: 0,
+      });
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={[styles.headerWrapper]}>
@@ -286,12 +310,12 @@ const SelectGame = ({ navigation, route }) => {
           <HalfbarButton
             label="Your library"
             active={searchMode === "library" ? true : false}
-            Action={() => setSearchMode("library")}
+            Action={LibraryButton}
           />
           <HalfbarButton
             label="All games"
             active={searchMode === "all" ? true : false}
-            Action={() => setSearchMode("all")}
+            Action={AllButton}
           />
         </View>
       </View>
@@ -299,6 +323,7 @@ const SelectGame = ({ navigation, route }) => {
       <View style={{ flex: 1 }}>
         <FlatList
           data={CorrectData()}
+          ref={flatlistRef}
           style={styles.flatlistWrapper}
           contentContainerStyle={styles.flatlistContentContainer}
           columnWrapperStyle={styles.flatlistColumnWrapper}

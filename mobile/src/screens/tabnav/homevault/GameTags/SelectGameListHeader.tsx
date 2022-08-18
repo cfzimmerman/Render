@@ -1,4 +1,4 @@
-import { TouchableOpacity, Text } from "react-native";
+import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import {
   Environment,
   Colors,
@@ -24,19 +24,7 @@ const SelectGameListHeader = ({
 }: GameCoverTileInput) => {
   return (
     <TouchableOpacity
-      style={[
-        GlobalStyles.shadow,
-        {
-          height: Environment.CubeSize,
-          width: Environment.FullBar,
-          borderRadius: Environment.StandardRadius,
-          backgroundColor: Colors.Primary,
-          marginVertical: Environment.StandardPadding,
-          alignItems: "center",
-          justifyContent: "center",
-          flexDirection: "row",
-        },
-      ]}
+      style={[GlobalStyles.shadow, styles.headerWrapper]}
       onPress={() =>
         CoverTileAction({
           item,
@@ -58,13 +46,13 @@ const SelectGameListHeader = ({
         stroke={Colors.AccentOn}
         height={Environment.IconSize}
         width={Environment.IconSize}
-        style={{ marginHorizontal: Environment.StandardPadding }}
+        style={styles.xButton}
       />
       <Text
         style={[
           GlobalStyles.irregularshadow,
           GlobalStyles.h3text,
-          { textAlign: "center", color: Colors.AccentOn },
+          styles.headerText,
         ]}
       >
         No tag
@@ -72,5 +60,25 @@ const SelectGameListHeader = ({
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  headerWrapper: {
+    height: Environment.CubeSize,
+    width: Environment.FullBar,
+    borderRadius: Environment.StandardRadius,
+    backgroundColor: Colors.Primary,
+    marginVertical: Environment.StandardPadding,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+  },
+  headerText: {
+    textAlign: "center",
+    color: Colors.AccentOn,
+  },
+  xButton: {
+    marginHorizontal: Environment.StandardPadding,
+  },
+});
 
 export default SelectGameListHeader;

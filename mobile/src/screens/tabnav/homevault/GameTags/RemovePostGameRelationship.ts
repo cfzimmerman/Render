@@ -5,8 +5,9 @@ import {
   PostsByUserGamesQuery,
   UpdatePostsInput,
   UserGamesByUsersQuery,
+  DeleteUserGamesInput,
 } from "../../../../API";
-import { deleteUserGames } from "../../../../graphql/mutations";
+import { deleteUserGames, updatePosts } from "../../../../graphql/mutations";
 import { DispatchType } from "../../../../redux/store";
 
 interface InputTypes {
@@ -86,9 +87,12 @@ async function RemovePostGameRelationship({
         )) as GraphQLResult<UserGamesByUsersQuery>;
 
         if (userGamesResult.length > 0) {
-          const deleteID = userGamesResult[0].id;
+          const deleteID: DeleteUserGamesInput = {
+            id: userGamesResult[0].id,
+          };
+
           await API.graphql(
-            graphqlOperation(deleteUserGames, { id: deleteID })
+            graphqlOperation(deleteUserGames, { input: deleteID })
           );
         }
       }
@@ -100,15 +104,13 @@ async function RemovePostGameRelationship({
 
       // Finally, release the post/game relationship back to null
       await API.graphql(
-        graphqlOperation(updatePostsInput, { input: updatePostsInput })
+        graphqlOperation(updatePosts, { input: updatePostsInput })
       );
     }
     return "success";
   } catch (error) {
     console.log(error);
-    throw new Error(
-      "RemovePostGameRelationship Error: " + JSON.stringify(error)
-    );
+    throw new Error("RemovePostGameRelationship Error: " + error);
   }
 }
 
