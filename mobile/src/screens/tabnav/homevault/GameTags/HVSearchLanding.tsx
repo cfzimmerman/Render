@@ -70,7 +70,7 @@ const bar = opacity.interpolate({
   ],
 });
 
-const HVSearchLanding = () => {
+const HVSearchLanding = ({ navigation }) => {
   const [searchInput, setSearchInput] = useState("");
   const [gotEmptyLibraryGames, setGotEmptyLibraryGames] = useState(false);
 
@@ -136,11 +136,13 @@ const HVSearchLanding = () => {
   };
 
   const renderItem = ({ item, index }) => {
-    return <HVSearchGameTile item={item} index={index} />;
+    return (
+      <HVSearchGameTile item={item} index={index} navigation={navigation} />
+    );
   };
 
   const ListHeader = () => {
-    return <HVSearchHeader />;
+    return <HVSearchHeader navigation={navigation} />;
   };
 
   const ListFooter = () => {

@@ -10,21 +10,23 @@ import { GetDate } from "../../../../resources/utilities";
 
 interface InputTypes {
   gameObject: null | GameCoverTileType;
-  navigation: any;
   resultsLength: number;
   firstDate: string;
   lastDate: string | null;
+  hvGameSearchActive: boolean;
 }
 
 const HVGameDisplayHeader = ({
   gameObject,
-  navigation,
   resultsLength,
   firstDate,
   lastDate,
+  hvGameSearchActive,
 }: InputTypes) => {
-  if (gameObject === null) {
+  if (gameObject === null || gameObject.id === null) {
     return null;
+  } else if (hvGameSearchActive === true) {
+    return <View style={styles.loadingPlaceholder} />;
   }
   return (
     <View style={[GlobalStyles.shadow, styles.headerContainer]}>
@@ -95,6 +97,10 @@ const styles = StyleSheet.create({
   },
   bulletPoints: {
     color: Colors.AccentPartial,
+  },
+  loadingPlaceholder: {
+    height: Environment.GameCoverWidth * (4 / 3) + Environment.LargePadding,
+    width: Environment.FullBar,
   },
 });
 

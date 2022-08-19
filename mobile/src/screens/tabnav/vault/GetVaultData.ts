@@ -125,6 +125,7 @@ async function GetVaultData({
 
       // This if - else chain actually started pretty small (def isn't anymore).
       // However, refactoring so that the "video" | "image" if-else condition sits on top only brought the total number of lines down by 28 (183 to 155 for that specific section). It also introduced a bug, so I'll keep this structure until we can optimize vault fetch more completely.
+      // UPDATE: When this is fixed, the best alternative seems to be the structure used in '../homevault/GameTags/HVGetGamePosts.ts
 
       if (
         activemonth[0] === "empty" ||

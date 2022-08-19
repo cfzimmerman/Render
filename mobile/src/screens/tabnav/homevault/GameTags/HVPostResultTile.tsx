@@ -6,11 +6,22 @@ import ExternalVaultTileInfo from "../../vault/ExternalVaultTileInfo";
 interface InputTypes {
   item: PostType;
   index: number;
+  navigation: any;
 }
 
-const HVPostResultTile = ({ item, index }: InputTypes) => {
+//   navigation.navigate("VaultPostFullView", { startindex, usecase });
+
+const HVPostResultTile = ({ item, index, navigation }: InputTypes) => {
   return (
-    <TouchableOpacity style={[GlobalStyles.shadow, styles.imageWrapper]}>
+    <TouchableOpacity
+      style={[GlobalStyles.shadow, styles.imageWrapper]}
+      onPress={() =>
+        navigation.navigate("VaultPostFullView", {
+          startindex: index,
+          usecase: "HVGameSearch",
+        })
+      }
+    >
       <Image
         source={{
           uri:

@@ -286,7 +286,7 @@ const PostOptionsModal = ({
       </SafeAreaView>
     );
   }
-  if (usecase === "gallery") {
+  if (usecase === "gallery" || usecase === "HVGameSearch") {
     return (
       <SafeAreaView style={styles.container} pointerEvents="box-none">
         <Animated.View style={animatedStyles} pointerEvents="box-none">
@@ -319,7 +319,7 @@ const PostOptionsModal = ({
                 Action={() => {
                   ChangeFocusView({ dispatch, set: true }),
                     navigation.navigate("VaultPostFocusView", {
-                      usecase: "gallery",
+                      usecase: usecase,
                     });
                 }}
                 isactive={false}

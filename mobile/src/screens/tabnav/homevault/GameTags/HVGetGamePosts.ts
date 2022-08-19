@@ -1,5 +1,6 @@
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { API, graphqlOperation, Storage } from "aws-amplify";
+import * as FileSystem from "expo-file-system";
 import { PostsByUserGamesQuery } from "../../../../API";
 import {
   addToHVGameSearchResults,
@@ -53,14 +54,14 @@ async function HVGetGamePosts({
             postsByUserGames (
               limit: ${postLimit},
               usersID: "${currentUserID}",
-              nextToken: ${hvGameSearchNextToken},
               gamesID: {
                 eq: "${gameID}"
               },
+              nextToken: ${hvGameSearchNextToken},
               filter: {
                 cognitosub: {
                     ne: "deleted"
-                }
+                },
               }
             ) {
               items {
@@ -74,6 +75,7 @@ async function HVGetGamePosts({
                 publicpost
                 publicpostdate
                 thumbnailkey
+                gamesID
               }
               nextToken
             }
@@ -104,18 +106,45 @@ async function HVGetGamePosts({
         signedurl: null,
         thumbnailurl: null,
       };
+      /*
+
+                if (item.contenttype === "video") {
+            const thumbnailAddress =
+              FileSystem.documentDirectory + "LocalSync/" + item.thumbnailkey;
+            const contentExists = await FileSystem.getInfoAsync(
+              thumbnailAddress
+            );
+            if (contentExists.exists === true) {
+              const signedurl = null;
+              const thumbnailurl = thumbnailAddress;
+
+      */
 
       if (item.contenttype === "image") {
-        newPost.signedurl = await Storage.get(item.contentkey, {
-          expires: 86400,
-        });
+        const imageAddress =
+          FileSystem.documentDirectory + "LocalSync/" + item.contentkey;
+        const { exists } = await FileSystem.getInfoAsync(imageAddress);
+        if (exists === true) {
+          newPost.signedurl = imageAddress;
+        } else {
+          newPost.signedurl = await Storage.get(item.contentkey, {
+            expires: 86400,
+          });
+        }
       } else if (item.contenttype === "video") {
-        newPost.thumbnailurl = await Storage.get(item.thumbnailkey, {
-          expires: 86400,
-        });
+        const thumbnailAddress =
+          FileSystem.documentDirectory + "LocalSync/" + item.thumbnailkey;
+        const { exists } = await FileSystem.getInfoAsync(thumbnailAddress);
+        if (exists === true) {
+          newPost.thumbnailurl = thumbnailAddress;
+        } else {
+          newPost.thumbnailurl = await Storage.get(item.thumbnailkey, {
+            expires: 86400,
+          });
+        }
       }
+
       dispatch(addToHVGameSearchResults(newPost));
-      console.log(newPost);
     }
     dispatch(setHVGameSearchNextToken(nextToken));
     dispatch(setHVGameSearchActive(false));

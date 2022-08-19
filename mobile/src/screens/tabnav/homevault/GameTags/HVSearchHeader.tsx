@@ -7,11 +7,11 @@ import {
   Icons,
 } from "../../../../resources/project";
 
-const HVSearchHeader = () => {
+const HVSearchHeader = ({ navigation }) => {
   return (
     <View>
       <TouchableOpacity
-        onPress={() => console.log("NoTag")}
+        onPress={() => navigation.navigate("HVGameDisplay", { gameID: null })}
         style={[GlobalStyles.shadow, styles.buttonWrapper]}
       >
         <Icons.OriginalSize.Tag

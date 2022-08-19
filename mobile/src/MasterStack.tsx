@@ -14,7 +14,9 @@ import {
 } from "./screens/masterstack/auth";
 import { ObservePostDB } from "./resources/utilities";
 
-import VaultPostFullView from "./screens/tabnav/vault/VaultPostFullView";
+import VaultPostFullView, {
+  VaultPostFullViewUsecaseTypes,
+} from "./screens/tabnav/vault/VaultPostFullView";
 import VaultPostFocusView from "./screens/tabnav/vault/VaultPostFocusView";
 import DeletePost from "./screens/tabnav/vault/DeletePost";
 import EditPost from "./screens/tabnav/plus/EditPost";
@@ -44,7 +46,7 @@ type RootStackParamList = {
   ForgotPassword: undefined;
   VaultPostFullView: {
     startindex: number;
-    usecase: string;
+    usecase: VaultPostFullViewUsecaseTypes;
   };
   VaultPostFocusView: {
     usecase: string;

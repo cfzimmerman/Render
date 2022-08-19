@@ -11,11 +11,21 @@ import GetGameCoverURL from "./GetGameCoverURL";
 interface InputTypes {
   item: GameCoverTileType;
   index: number;
+  navigation: any;
 }
+/*
+onPress={() =>
+  navigation.navigate("HVGameDisplay", {
+    gameID: "bdfc3138-2f58-41a0-bcd0-5ffc1a600bee",
+  })
+  */
 
-const HVSearchGameTile = ({ item, index }: InputTypes) => {
+const HVSearchGameTile = ({ item, index, navigation }: InputTypes) => {
   return (
-    <View style={styles.tileWrapper}>
+    <TouchableOpacity
+      style={styles.tileWrapper}
+      onPress={() => navigation.navigate("HVGameDisplay", { gameID: item.id })}
+    >
       <View style={[GlobalStyles.shadow, styles.imageShadow]}>
         <Image
           source={{
@@ -37,7 +47,7 @@ const HVSearchGameTile = ({ item, index }: InputTypes) => {
           {item.title}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

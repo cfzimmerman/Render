@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PostType } from "../../resources/CommonTypes";
+import { AddVideoToHVGameSearchResultsInputTypes } from "../../screens/tabnav/homevault/GameTags/AddVideoToHVGameSearchResults";
 import { GameCoverTileType } from "../../screens/tabnav/homevault/GameTags/GameCoverTile";
 import { SetNewLibraryGamesArrayInput } from "../../screens/tabnav/homevault/GameTags/GetCurrentUserGameLibrary";
 import { SetNextLibraryGamesArrayInput } from "../../screens/tabnav/homevault/GameTags/GetNextCurrentUserGameLibrary";
@@ -88,6 +89,13 @@ const slice = createSlice({
     setHVGameSearchActive: (state, action: PayloadAction<boolean>) => {
       state.hvGameSearchActive = action.payload;
     },
+    addVideoToHVGameSearchResults: (
+      state,
+      action: PayloadAction<AddVideoToHVGameSearchResultsInputTypes>
+    ) => {
+      state.hvGameSearchResults[action.payload.index].signedurl =
+        action.payload.signedurl;
+    },
   },
 });
 
@@ -102,6 +110,7 @@ export const {
   addToHVGameSearchResults,
   setHVGameSearchNextToken,
   setHVGameSearchActive,
+  addVideoToHVGameSearchResults,
 } = slice.actions;
 
 export default slice.reducer;

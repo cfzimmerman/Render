@@ -25,9 +25,28 @@ import HVGameDisplayHeader from "./HVGameDisplayHeader";
 import HVGetGamePosts from "./HVGetGamePosts";
 import HVPostResultTile from "./HVPostResultTile";
 
+const noTag: GameCoverTileType = {
+  id: null,
+  title: null,
+  coverID: null,
+  backgroundID: null,
+};
+
+type LocalGameObject = GameCoverTileType | null;
+
+const GetBarLabel = (gameObject: LocalGameObject) => {
+  if (gameObject === null) {
+    return "";
+  } else if (gameObject.id === null) {
+    return "No tag";
+  } else {
+    return gameObject.title;
+  }
+};
+
 const HVGameDisplay = ({ navigation, route }) => {
   const [gotGame, setGotGame] = useState<boolean>(false);
-  const [gameObject, setGameObject] = useState<GameCoverTileType | null>(null);
+  const [gameObject, setGameObject] = useState<LocalGameObject>(null);
 
   const [gotPosts, setGotPosts] = useState<boolean>(false);
 
@@ -65,12 +84,16 @@ const HVGameDisplay = ({ navigation, route }) => {
       const gameIndex = libraryGamesArray.findIndex(
         (item: GameCoverTileType) => item.id === gameID
       );
-      setGameObject(libraryGamesArray[gameIndex]);
+      if (gameIndex > -1) {
+        setGameObject(libraryGamesArray[gameIndex]);
+      } else {
+        setGameObject(noTag);
+      }
       setGotGame(true);
     }
     if (
       gameObject != null &&
-      typeof gameObject.id === "string" &&
+      // typeof gameObject.id === "string" &&
       gotPosts === false &&
       hvGameSearchActive === false
     ) {
@@ -85,7 +108,22 @@ const HVGameDisplay = ({ navigation, route }) => {
       });
       dispatch(setHVGameSearchActive(true));
       setGotPosts(true);
+    } /* else if (
+      gameObject != null &&
+      gotPosts === false &&
+      hvGameSearchActive === false &&
+      typeof gameObject.id === null
+    ) {
+      console.log(
+        "Set up a parallel HVGetGamePosts function that queries for posts by this user without a games attribute existing"
+      );
+      filter: {
+        gamesID: {
+          attributeExists: false
+        }
+      }
     }
+    */
   });
 
   const ListHeader = () => {
@@ -93,7 +131,6 @@ const HVGameDisplay = ({ navigation, route }) => {
     return (
       <HVGameDisplayHeader
         gameObject={gameObject}
-        navigation={navigation}
         resultsLength={resultsLength}
         firstDate={
           resultsLength > 0
@@ -101,12 +138,15 @@ const HVGameDisplay = ({ navigation, route }) => {
             : null
         }
         lastDate={resultsLength > 0 ? hvGameSearchResults[0].contentdate : null}
+        hvGameSearchActive={hvGameSearchActive}
       />
     );
   };
 
   const renderItem = ({ item, index }) => {
-    return <HVPostResultTile item={item} index={index} />;
+    return (
+      <HVPostResultTile item={item} index={index} navigation={navigation} />
+    );
   };
 
   const ListFooter = () => {
@@ -130,7 +170,7 @@ const HVGameDisplay = ({ navigation, route }) => {
               styles.searchBarText,
             ]}
           >
-            {gameObject === null ? "" : gameObject.title}
+            {GetBarLabel(gameObject)}
           </Text>
         </TouchableOpacity>
       </View>

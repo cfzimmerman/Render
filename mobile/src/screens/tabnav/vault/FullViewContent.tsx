@@ -32,19 +32,25 @@ import PostOptionsModal from "./PostOptionsModal";
 import PostTextModal from "./PostTextModal";
 import SetOptions from "./SetOptions";
 import VaultPostPublicModal from "../plus/VaultPostPublicModal";
-import { RootStateType } from "../../../redux/store";
+import { DispatchType, RootStateType } from "../../../redux/store";
+import { PostType } from "../../../resources/CommonTypes";
+import { VaultPostFullViewUsecaseTypes } from "./VaultPostFullView";
+import AddVideoToHVGameSearchResults from "../homevault/GameTags/AddVideoToHVGameSearchResults";
 
 // SetOptions({ postid: abc, animateactive: true, animateinactive: false, newchangestatus: false, })
 
 const SwipeUp = ({ index, usecase, navigation }) => {
   // Usecases are explicitly checked as opposed to != "vault" to ensure we've correctly configured CommentsMain for every necessary case
+  // Reconsider this, I just enabled "vault" support as well
   if (
     usecase === "gallery" ||
     usecase === "otherusergallery" ||
     usecase === "stories" ||
     usecase === "addedfeed" ||
     usecase === "publicfeed" ||
-    usecase === "universal"
+    usecase === "universal" ||
+    usecase === "HVGameSearch" ||
+    usecase === "vault"
   ) {
     navigation.navigate("CommentsMain", { usecase, index });
   }
@@ -97,7 +103,21 @@ const PostModalFilter = ({
   );
 };
 
-const FullViewContent = ({ item, index, dispatch, navigation, usecase }) => {
+interface InputTypes {
+  item: PostType;
+  index: number;
+  dispatch: DispatchType;
+  navigation: any;
+  usecase: VaultPostFullViewUsecaseTypes;
+}
+
+const FullViewContent = ({
+  item,
+  index,
+  dispatch,
+  navigation,
+  usecase,
+}: InputTypes) => {
   const dimensions = GetPostDimensions(item.aspectratio);
   const optionstatus = useSelector(
     (state: RootStateType) => state.vaultpostdata.options
@@ -153,7 +173,16 @@ const FullViewContent = ({ item, index, dispatch, navigation, usecase }) => {
         });
       } else if (usecase === "publicfeed") {
         AddVideoToPublicFeed({ dispatch, index, contentkey: item.contentkey });
+      } else if (usecase === "HVGameSearch") {
+        AddVideoToHVGameSearchResults({
+          dispatch,
+          index,
+          contentkey: item.contentkey,
+          syncPreference: localConfig.syncPreference,
+          localLibrary,
+        });
       }
+      // HVGameSearchResults
     }
 
     const activepost = useSelector(

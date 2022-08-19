@@ -27,6 +27,8 @@ import UpdateStoriesViewed from "../home/UpdateStoriesViewed";
 import { RootStateType } from "../../../redux/store";
 import { SystemmessageModal } from "../../../resources/molecules";
 import GameInfoModal from "../homevault/GameTags/GameInfoModal";
+import { setHVGameSearchActive } from "../../../redux/homevault/gametags";
+import HVGetGamePosts from "../homevault/GameTags/HVGetGamePosts";
 
 export type VaultPostFullViewUsecaseTypes =
   | "vault"
@@ -35,7 +37,8 @@ export type VaultPostFullViewUsecaseTypes =
   | "addedfeed"
   | "publicfeed"
   | "stories"
-  | "universal";
+  | "universal"
+  | "HVGameSearch";
 
 interface UsecaseObject {
   usecase: VaultPostFullViewUsecaseTypes;
@@ -58,7 +61,7 @@ const VaultPostFullView = ({ navigation, route }) => {
   const storiesfullview = useSelector(
     (state: RootStateType) => state.homemain.storiesfullview
   );
-  const feeddata = useSelector(
+  const vaultfeeddata = useSelector(
     (state: RootStateType) => state.vaultpostdata.vaultfeeddata
   );
   const gallerydata = useSelector(
@@ -112,6 +115,16 @@ const VaultPostFullView = ({ navigation, route }) => {
     (state: RootStateType) => state.universalpost.universalPostData
   );
 
+  const hvGameSearchResults = useSelector(
+    (state: RootStateType) => state.gametags.hvGameSearchResults
+  );
+  const hvGameSearchNextToken = useSelector(
+    (state: RootStateType) => state.gametags.hvGameSearchNextToken
+  );
+  const hvGameSearchActive = useSelector(
+    (state: RootStateType) => state.gametags.hvGameSearchActive
+  );
+
   const commentsdata = useSelector(
     (state: RootStateType) => state.socialmain.commentsdata
   );
@@ -129,7 +142,7 @@ const VaultPostFullView = ({ navigation, route }) => {
 
   const CorrectFeedData = () => {
     if (usecase === "vault") {
-      return feeddata;
+      return vaultfeeddata;
     }
     if (usecase === "gallery") {
       return gallerydata;
@@ -148,6 +161,9 @@ const VaultPostFullView = ({ navigation, route }) => {
     }
     if (usecase === "universal") {
       return universalPostData;
+    }
+    if (usecase === "HVGameSearch") {
+      return hvGameSearchResults;
     }
   };
 
@@ -220,6 +236,22 @@ const VaultPostFullView = ({ navigation, route }) => {
       GetPublicFeedData({
         dispatch,
         publicfeednexttoken,
+      });
+    } else if (
+      usecase === "HVGameSearch" &&
+      hvGameSearchResults.length > 0 &&
+      hvGameSearchNextToken != null &&
+      hvGameSearchActive === false
+    ) {
+      dispatch(setHVGameSearchActive(true));
+      HVGetGamePosts({
+        gameID: hvGameSearchResults[0].gamesID,
+        currentUserID: currentuser.id,
+        dispatch,
+        coverID: hvGameSearchResults[0].coverID,
+        title: hvGameSearchResults[0].title,
+        vaultfeeddata,
+        hvGameSearchNextToken,
       });
     }
     /*
