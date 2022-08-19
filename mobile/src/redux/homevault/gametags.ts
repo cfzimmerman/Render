@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PostType } from "../../resources/CommonTypes";
 import { GameCoverTileType } from "../../screens/tabnav/homevault/GameTags/GameCoverTile";
 import { SetNewLibraryGamesArrayInput } from "../../screens/tabnav/homevault/GameTags/GetCurrentUserGameLibrary";
 import { SetNextLibraryGamesArrayInput } from "../../screens/tabnav/homevault/GameTags/GetNextCurrentUserGameLibrary";
@@ -10,6 +11,9 @@ interface DefaultSliceType {
   libraryGamesArray: GameCoverTileType[] | null;
   libraryGamesNextToken: string | null;
   libraryGamesSearchResults: GameCoverTileType[];
+  hvGameSearchResults: PostType[];
+  hvGameSearchNextToken: string | null;
+  hvGameSearchActive: boolean;
 }
 
 export interface SetNewAllGamesArrayPT {
@@ -25,6 +29,9 @@ const slice = createSlice({
     libraryGamesArray: null,
     libraryGamesNextToken: null,
     libraryGamesSearchResults: [],
+    hvGameSearchResults: [],
+    hvGameSearchNextToken: null,
+    hvGameSearchActive: false,
   } as DefaultSliceType,
   reducers: {
     clearAllGamesArray: (state) => {
@@ -68,6 +75,19 @@ const slice = createSlice({
     ) => {
       state.libraryGamesSearchResults = action.payload;
     },
+    clearHVGameSearchResults: (state) => {
+      state.hvGameSearchResults.length = 0;
+      state.hvGameSearchNextToken = null;
+    },
+    addToHVGameSearchResults: (state, action: PayloadAction<PostType>) => {
+      state.hvGameSearchResults.push(action.payload);
+    },
+    setHVGameSearchNextToken: (state, action: PayloadAction<string | null>) => {
+      state.hvGameSearchNextToken = action.payload;
+    },
+    setHVGameSearchActive: (state, action: PayloadAction<boolean>) => {
+      state.hvGameSearchActive = action.payload;
+    },
   },
 });
 
@@ -78,6 +98,10 @@ export const {
   setNewLibraryGamesArray,
   addNextLibraryGamesArray,
   setLibraryGamesSearchResults,
+  clearHVGameSearchResults,
+  addToHVGameSearchResults,
+  setHVGameSearchNextToken,
+  setHVGameSearchActive,
 } = slice.actions;
 
 export default slice.reducer;

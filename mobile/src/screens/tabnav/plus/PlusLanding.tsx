@@ -263,6 +263,15 @@ const PlusLanding = ({ navigation }) => {
         bounces={false}
         showsVerticalScrollIndicator={false}
       >
+        <Button
+          title="HVGameDisplay"
+          color={"moccasin"}
+          onPress={() =>
+            navigation.navigate("HVGameDisplay", {
+              gameID: "bdfc3138-2f58-41a0-bcd0-5ffc1a600bee",
+            })
+          }
+        />
         <View style={styles.sectionwrapper}>
           <Text
             style={[

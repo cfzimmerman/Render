@@ -1,39 +1,32 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
-  Image,
   Text,
-  FlatList,
   StyleSheet,
+  Platform,
   Animated,
   Easing,
   TextInput,
   TouchableOpacity,
   Keyboard,
-  Platform,
-  Button,
+  Image,
+  FlatList,
 } from "react-native";
-import { GraphQLResult } from "@aws-amplify/api-graphql";
-import { API, graphqlOperation } from "aws-amplify";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
-import { GetGamesQuery } from "../../../../API";
+import GetCurrentUserGameLibrary from "./GetCurrentUserGameLibrary";
 import { RootStateType } from "../../../../redux/store";
-import { BackArrow, HalfbarButton } from "../../../../resources/atoms";
-import { LoadProgressModal } from "../../../../resources/molecules";
+import { BackArrow, FlatListFooterSpacer } from "../../../../resources/atoms";
 import {
   Colors,
   Environment,
   GlobalStyles,
   Icons,
 } from "../../../../resources/project";
-import GameCoverTile, { GameCoverTileType } from "./GameCoverTile";
-import GetCurrentUserGameLibrary from "./GetCurrentUserGameLibrary";
 import GetGameCoverURL from "./GetGameCoverURL";
-import SearchGameTitle from "./SearchGameTitle";
+import HVSearchGameTile from "./HVSearchGameTile";
+import HVSearchHeader from "./HVSearchHeader";
 import SearchLibraryGameTitle from "./SearchLibraryGameTitle";
-import SelectGameListHeader from "./SelectGameListHeader";
-import SelectGameListFooter from "./SelectGameListFooter";
 
 const opacity = new Animated.Value(0);
 
@@ -77,75 +70,29 @@ const bar = opacity.interpolate({
   ],
 });
 
-const SelectGame = ({ navigation, route }) => {
-  type SearchModeType = "library" | "all";
-  const [searchMode, setSearchMode] = useState<SearchModeType>("library");
+const HVSearchLanding = () => {
   const [searchInput, setSearchInput] = useState("");
-  const [gotEmptyAllGames, setGotEmptyAllGames] = useState(false);
   const [gotEmptyLibraryGames, setGotEmptyLibraryGames] = useState(false);
 
-  const allGamesArray = useSelector(
-    (state: RootStateType) => state.gametags.allGamesArray
-  );
-  const allGamesNextToken = useSelector(
-    (state: RootStateType) => state.gametags.allGamesNextToken
-  );
-  const selectedPosts = useSelector(
-    (state: RootStateType) => state.homevaultmain.selectedPosts
-  );
-  const currentUserID = useSelector(
-    (state: RootStateType) => state.profilemain.currentuser.id
-  );
-  const currentUserCognitoSub = useSelector(
-    (state: RootStateType) => state.profilemain.currentuser.cognitosub
-  );
-  const vaultPostData = useSelector(
-    (state: RootStateType) => state.vaultpostdata.vaultpostdata
-  );
-  const vaultFeedData = useSelector(
-    (state: RootStateType) => state.vaultpostdata.vaultfeeddata
-  );
-  const syncPreference = useSelector(
-    (state: RootStateType) => state.localsync.localConfig.syncPreference
-  );
-  const localLibrary = useSelector(
-    (state: RootStateType) => state.localsync.localLibrary
-  );
   const libraryGamesArray = useSelector(
     (state: RootStateType) => state.gametags.libraryGamesArray
   );
   const libraryGamesNextToken = useSelector(
     (state: RootStateType) => state.gametags.libraryGamesNextToken
   );
+  const { id: currentUserID, cognitosub: currentUserCognitoSub } = useSelector(
+    (state: RootStateType) => state.profilemain.currentuser
+  );
   const libraryGamesSearchResults = useSelector(
     (state: RootStateType) => state.gametags.libraryGamesSearchResults
   );
+
   const dispatch = useDispatch();
 
-  const flatlistRef = useRef(null);
-
-  const selection = route.params.selection;
-  const origin = route.params.origin;
-
   useEffect(() => {
-    if (
-      gotEmptyLibraryGames === false &&
-      searchMode === "library" &&
-      libraryGamesArray === null
-    ) {
+    if (libraryGamesArray === null && gotEmptyLibraryGames === false) {
       GetCurrentUserGameLibrary({ currentUserID, dispatch });
       setGotEmptyLibraryGames(true);
-    }
-    if (
-      searchMode === "all" &&
-      gotEmptyAllGames === false &&
-      allGamesArray.length === 0
-    ) {
-      SearchGameTitle({ title: "", dispatch });
-      setGotEmptyAllGames(true);
-    }
-    if (selectedPosts.length === 0) {
-      console.log("Development warning only: selectedPosts.length === 0");
     }
   });
 
@@ -169,7 +116,7 @@ const SelectGame = ({ navigation, route }) => {
 
   const ChangeInput = (input: string) => {
     setSearchInput(input);
-    if (searchMode === "library" && input.length > 0) {
+    if (input.length > 0) {
       SearchLibraryGameTitle({
         title: input,
         libraryGamesArray,
@@ -177,97 +124,28 @@ const SelectGame = ({ navigation, route }) => {
         currentUserID,
         dispatch,
       });
-    } else if (searchMode === "all") {
-      SearchGameTitle({ title: input, dispatch });
     }
   };
 
   const CorrectData = () => {
-    if (searchMode === "all") {
-      return allGamesArray;
-    } else if (searchMode === "library" && searchInput.length === 0) {
+    if (searchInput.length === 0) {
       return libraryGamesArray;
-    } else if (searchMode === "library" && searchInput.length > 0) {
+    } else if (searchInput.length > 0) {
       return libraryGamesSearchResults;
     }
   };
 
-  const ListHeader = () => {
-    return SelectGameListHeader({
-      item: {
-        id: null,
-        title: null,
-        coverID: null,
-        backgroundID: null,
-      },
-      searchMode,
-      dispatch,
-      navigation,
-      selectedPosts,
-      currentUserID,
-      vaultPostData,
-      vaultFeedData,
-      currentUserCognitoSub,
-      syncPreference,
-      localLibrary,
-      deleteTag: true,
-    });
+  const renderItem = ({ item, index }) => {
+    return <HVSearchGameTile item={item} index={index} />;
   };
 
-  const renderItem = ({ item, index }) => (
-    <GameCoverTile
-      item={item}
-      searchMode={searchMode}
-      dispatch={dispatch}
-      navigation={navigation}
-      // selection={selection}
-      selectedPosts={selectedPosts}
-      currentUserID={currentUserID}
-      // origin={origin}
-      vaultPostData={vaultPostData}
-      vaultFeedData={vaultFeedData}
-      currentUserCognitoSub={currentUserCognitoSub}
-      localLibrary={localLibrary}
-      syncPreference={syncPreference}
-      deleteTag={false}
-    />
-  );
+  const ListHeader = () => {
+    return <HVSearchHeader />;
+  };
 
   const ListFooter = () => {
-    return (
-      <SelectGameListFooter
-        nextToken={
-          searchMode === "all" ? allGamesNextToken : libraryGamesNextToken
-        }
-        listData={CorrectData()}
-        searchMode={searchMode}
-        title={searchInput}
-        dispatch={dispatch}
-        currentUserID={currentUserID}
-      />
-    );
-  };
-
-  const LibraryButton = () => {
-    if (searchMode === "all") {
-      setSearchMode("library");
-    } else if (searchMode === "library") {
-      flatlistRef.current.scrollToIndex({
-        animated: true,
-        index: 0,
-      });
-    }
-  };
-
-  const AllButton = () => {
-    if (searchMode === "library") {
-      setSearchMode("all");
-    } else if (searchMode === "all") {
-      flatlistRef.current.scrollToIndex({
-        animated: true,
-        index: 0,
-      });
-    }
+    // return null;
+    return <FlatListFooterSpacer />;
   };
 
   return (
@@ -279,7 +157,7 @@ const SelectGame = ({ navigation, route }) => {
           </View>
           <Animated.View style={barStyles}>
             <TextInput
-              placeholder="Search titles"
+              placeholder="Search your titles"
               textAlign="left"
               autoCapitalize="none"
               autoCorrect={false}
@@ -306,24 +184,11 @@ const SelectGame = ({ navigation, route }) => {
             </Animated.View>
           </TouchableOpacity>
         </View>
-        <View style={styles.buttonHolder}>
-          <HalfbarButton
-            label="Your library"
-            active={searchMode === "library" ? true : false}
-            Action={LibraryButton}
-          />
-          <HalfbarButton
-            label="All games"
-            active={searchMode === "all" ? true : false}
-            Action={AllButton}
-          />
-        </View>
       </View>
-
       <View>
         <FlatList
           data={CorrectData()}
-          ref={flatlistRef}
+          // ref={flatlistRef}
           style={styles.flatlistWrapper}
           contentContainerStyle={styles.flatlistContentContainer}
           columnWrapperStyle={styles.flatlistColumnWrapper}
@@ -334,7 +199,6 @@ const SelectGame = ({ navigation, route }) => {
           ListFooterComponent={ListFooter}
         />
       </View>
-      <LoadProgressModal />
     </SafeAreaView>
   );
 };
@@ -347,12 +211,12 @@ const styles = StyleSheet.create({
   },
   headerWrapper: {
     width: Environment.FullBar,
+    marginVertical: Environment.StandardPadding,
   },
   topHeaderContent: {
     flexDirection: "row",
     justifyContent: "space-between",
     width: Environment.FullBar,
-    marginVertical: Environment.SmallPadding,
   },
   backArrowWrapper: {
     height: Environment.CubeSize,
@@ -380,6 +244,9 @@ const styles = StyleSheet.create({
   inputText: {
     color: Colors.AccentOn,
   },
+  flatlistHolder: {
+    flex: 1,
+  },
   flatlistWrapper: {
     flex: 1,
   },
@@ -391,16 +258,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginBottom: Environment.StandardPadding,
   },
-  buttonHolder: {
-    width: Environment.FullBar,
-    marginTop: Environment.SmallPadding,
-    marginBottom: Environment.StandardPadding,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  flatlistHolder: {
-    flex: 1,
-  },
 });
 
-export default SelectGame;
+export default HVSearchLanding;

@@ -23,6 +23,8 @@ import AppStart from "./screens/masterstack/AppStart";
 import ForgotPassword from "./screens/tabnav/profile/ForgotPassword";
 import PostMultiDelete from "./screens/tabnav/homevault/PostMultiDelete";
 import SelectGame from "./screens/tabnav/homevault/GameTags/SelectGame";
+import HVSearchLanding from "./screens/tabnav/homevault/GameTags/HVSearchLanding";
+import HVGameDisplay from "./screens/tabnav/homevault/GameTags/HVGameDisplay";
 import { useNavigation } from "@react-navigation/native";
 
 type RootStackParamList = {
@@ -67,6 +69,10 @@ type RootStackParamList = {
   SelectGame: {
     selection: "single" | "multi";
     origin: "vaultPostEdit" | "vaultMultiSelect";
+  };
+  HVSearchLanding: undefined;
+  HVGameDisplay: {
+    gameID: string;
   };
 };
 
@@ -141,6 +147,16 @@ const MasterStack = () => {
         name="SelectGame"
         component={SelectGame}
         options={{ animation: "fade" }}
+      />
+      <Stack.Screen
+        name="HVSearchLanding"
+        component={HVSearchLanding}
+        options={{ animation: "fade" }}
+      />
+      <Stack.Screen
+        name="HVGameDisplay"
+        component={HVGameDisplay}
+        options={{ animation: "flip" }}
       />
     </Stack.Navigator>
   );

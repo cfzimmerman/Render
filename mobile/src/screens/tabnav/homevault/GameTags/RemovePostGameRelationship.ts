@@ -53,7 +53,12 @@ async function RemovePostGameRelationship({
               usersID: "${currentUserID}",
               gamesID: {
                 eq: "${gameResult.gamesID}"
-              }
+              },
+              filter: {
+                cognitosub: {
+                    ne: "deleted"
+                }
+              },
             ) {
               items {
                 id

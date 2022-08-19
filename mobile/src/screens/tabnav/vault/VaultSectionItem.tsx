@@ -37,7 +37,7 @@ const AreEqual = (
   previousProps: VaultSectionItemPropTypes,
   nextProps: VaultSectionItemPropTypes
 ) => {
-  // This might be confusing. Be sure to note that returning false rerenders the post.
+  // This might be confusing 🙂. Be sure to note that returning false rerenders the post.
   if (
     previousProps.multiSelectActive === false &&
     nextProps.multiSelectActive === false
