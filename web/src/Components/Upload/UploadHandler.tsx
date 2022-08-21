@@ -2,15 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { generateVideoThumbnail } from '../../Utils/Content';
 import { upload } from '../../Utils/Storage';
 import { getUserSub } from '../../Utils/Users';
+import { useAuth } from '../Auth/AuthHandlers/RequireAuth';
 import { Button } from '../Common/Button/Button';
 import { RoundedImage } from '../Common/RoundedImage/RoundedImage';
 import { TopBar } from './TopBar/TopBar';
 import { Upload } from './Upload/Upload';
 import styles from './UploadHandler.module.css';
-
-interface Props {
-  signOut: () => void;
-}
 
 interface UploadState {
   uploadNext: boolean;
@@ -21,8 +18,8 @@ interface UploadState {
 
 const getAspectRatio = (height: number, width: number) => parseFloat((width / height).toFixed(3));
 
-export const UploadHandler: React.FC<Props> = (props) => {
-  const { signOut } = props;
+export const UploadHandler: React.FC<{}> = () => {
+  const { signOut } = useAuth();
 
   const [files, setFiles] = useState<File[]>();
   const [thumbnail, setThumbnail] = useState<string>('');

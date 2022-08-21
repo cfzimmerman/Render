@@ -1,5 +1,6 @@
 import { Auth, CognitoUser } from '@aws-amplify/auth';
 import React, { SetStateAction, useContext, useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import RenderIcon from '../../assets/render_icon_white.png';
 import { UserContext } from '../../Context/UserContext';
 import { AbsoluteButton } from '../Auth/BackButton/AbsoluteButton';
@@ -9,6 +10,12 @@ import styles from './SignIn.module.css';
 
 export const SignIn: React.FC<{}> = () => {
   const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Location state
+  const locationState = location.state as { from: Location };
+  const previousPage = locationState ? locationState.from.pathname : '/';
 
   const titleRef = useRef<HTMLHeadingElement>(null);
 
@@ -33,6 +40,7 @@ export const SignIn: React.FC<{}> = () => {
       setIsSigningIn(true);
       const cognitoUser: CognitoUser = await Auth.signIn({ username: email, password });
       setUser(cognitoUser);
+      navigate(previousPage, { replace: true });
     } catch (err) {
       setIsSigningIn(false);
       console.log(err);
