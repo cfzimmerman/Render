@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Amplify } from '@aws-amplify/core';
-import { CognitoUser } from '@aws-amplify/auth';
+import { Route, Routes } from 'react-router-dom';
 import styles from './App.module.css';
 
 import awsconfig from './aws-exports';
-import { SignIn } from './Components/SignIn/SignIn';
-import { UserContext } from './Context/UserContext';
 import { UploadHandler } from './Components/Upload/UploadHandler';
+import { SignIn } from './Components/SignIn/SignIn';
+import { RequireAuth } from './Components/Auth/AuthHandlers/RequireAuth';
+import { AuthProvider } from './Components/Auth/AuthHandlers/AuthProvider';
 
 Amplify.configure(awsconfig);
 
@@ -16,19 +17,17 @@ Amplify.configure(awsconfig);
 // Storage.addPluggable(storagePlugin);
 // storagePlugin.configure(awsconfig);
 
-const App: React.FC<{}> = () => {
-  const [user, setUser] = useState<CognitoUser | null>(null);
-  // eslint-disable-next-line react/jsx-no-constructed-context-values
-  const userContext = { user, setUser }; // TODO: investigate eslint rule //
-
-  return (
+const App: React.FC<{}> = () => (
+  <AuthProvider>
     <div className={styles.App}>
-      <UserContext.Provider value={userContext}>
-        {!user && <SignIn />}
-        {!!user && <UploadHandler signOut={() => setUser(null)} />}
-      </UserContext.Provider>
+      <Routes>
+        <Route element={<RequireAuth />}>
+          <Route path="/" element={<UploadHandler />} />
+        </Route>
+        <Route path="/login" element={<SignIn />} />
+      </Routes>
     </div>
-  );
-};
+  </AuthProvider>
+);
 
 export default App;
