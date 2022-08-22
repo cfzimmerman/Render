@@ -93,7 +93,7 @@ const HVGameDisplay = ({ navigation, route }) => {
     }
     if (
       gameObject != null &&
-      // typeof gameObject.id === "string" &&
+      typeof gameObject.id === "string" &&
       gotPosts === false &&
       hvGameSearchActive === false
     ) {
