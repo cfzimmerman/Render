@@ -1,8 +1,16 @@
 import { API, graphqlOperation } from "aws-amplify";
-import AddToAddedUsersFilter from "./AddToAddedUsersFilter";
-import { setGotAddedUsersFilter } from "../../../redux/home/homemain";
+import {
+  addToAddedUsersFilter,
+  setGotAddedUsersFilter,
+} from "../../../redux/home/homemain";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { AddedByCurrentUserQuery } from "../../../API";
+
+export interface AddedUsersFilterItem {
+  usersID: {
+    eq: string;
+  };
+}
 
 async function GetAddedUsersFilter({ dispatch, currentuser }) {
   // Note, lots of @ts-ignore on this page. That's because Amplify's generated models don't include relations. In this case, it doesn't expect ReceiverUser or any of its fields
@@ -35,13 +43,13 @@ async function GetAddedUsersFilter({ dispatch, currentuser }) {
     userArray.forEach((item) => {
       // @ts-ignore
       if (item.ReceiverUser != null) {
-        const filterObject = {
+        const filterObject: AddedUsersFilterItem = {
           usersID: {
             // @ts-ignore
             eq: item.ReceiverUser.id,
           },
         };
-        AddToAddedUsersFilter({ dispatch, filterObject });
+        dispatch(addToAddedUsersFilter(filterObject));
       }
 
       if (

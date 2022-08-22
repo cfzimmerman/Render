@@ -65,9 +65,6 @@ const HomeVaultLanding = ({ navigation }) => {
   const currentuser = useSelector(
     (state: RootStateType) => state.profilemain.currentuser
   );
-  const onboardingstatus = useSelector(
-    (state: RootStateType) => state.homemain.onboardingstatus
-  );
 
   const vaultpostdata = useSelector(
     (state: RootStateType) => state.vaultpostdata.vaultpostdata

@@ -1,12 +1,13 @@
-import { API, graphqlOperation } from "aws-amplify";
-import AddPost from "./AddPost";
+import { API, graphqlOperation, Storage } from "aws-amplify";
 import {
   setPublicFeedNextToken,
   setFetchingPublicFeedData,
+  addToPublicFeed,
 } from "../../../redux/home/homemain";
 import { filteredPostsByPublicDate } from "../../../graphql/customqueries";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { PostsByPublicDateQuery } from "../../../API";
+import { PostType } from "../../../resources/CommonTypes";
 
 async function GetPublicFeedData({ dispatch, publicfeednexttoken }) {
   const fetchLimit = 5;
@@ -38,19 +39,38 @@ async function GetPublicFeedData({ dispatch, publicfeednexttoken }) {
   const postArray = postResult.data.postsByPublicDate.items;
   const newNextToken = postResult.data.postsByPublicDate.nextToken;
 
-  if (postArray.length > 0) {
-    const lastPostID = postArray[postArray.length - 1].id;
-
-    postArray.forEach((item) => {
-      AddPost({ item, dispatch, usecase: "publicfeed" });
-      if (item.id === lastPostID) {
-        dispatch(setPublicFeedNextToken(newNextToken));
-        dispatch(setFetchingPublicFeedData(false));
-      }
-    });
-  } else {
-    dispatch(setFetchingPublicFeedData(false));
+  for await (const item of postArray) {
+    const newPost: PostType = {
+      id: item.id,
+      aspectratio: item.aspectratio,
+      cognitosub: item.cognitosub,
+      contentkey: item.contentkey,
+      contentdate: item.contentdate,
+      contenttype: item.contenttype,
+      displayname: item.Users === null ? null : item.Users.displayname,
+      posttext: item.posttext,
+      publicpost: item.publicpost,
+      publicpostdate: item.publicpostdate,
+      thumbnailkey: item.thumbnailkey,
+      header: false,
+      userid: item.Users.id,
+      gamesID: item.Games === null ? null : item.Games.id,
+      coverID: item.Games === null ? null : item.Games.coverID,
+      title: item.Games === null ? null : item.Games.title,
+      signedurl:
+        item.contenttype === "image"
+          ? await Storage.get(item.contentkey, { expires: 86400 })
+          : null,
+      thumbnailurl:
+        item.contenttype === "video"
+          ? await Storage.get(item.thumbnailkey, { expires: 86400 })
+          : null,
+    };
+    dispatch(addToPublicFeed(newPost));
   }
+
+  dispatch(setPublicFeedNextToken(newNextToken));
+  dispatch(setFetchingPublicFeedData(false));
 }
 
 export default GetPublicFeedData;

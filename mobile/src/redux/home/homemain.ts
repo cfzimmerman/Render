@@ -1,10 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PostType } from "../../resources/CommonTypes";
+import { AddedUsersFilterItem } from "../../screens/tabnav/home/GetAddedUsersFilter";
 
 const slice = createSlice({
   name: "homemain",
   initialState: {
-    onboardingstatus: null,
-    vaultheader: null,
     addedusersfilter: [],
     storiessectionlist: [],
     storiesfullview: [],
@@ -19,8 +19,6 @@ const slice = createSlice({
   },
   reducers: {
     clearHome: (state) => {
-      state.onboardingstatus = null;
-      state.vaultheader = null;
       state.addedusersfilter.length = 0;
       state.storiessectionlist.length = 0;
       state.storiesfullview.length = 0;
@@ -30,12 +28,6 @@ const slice = createSlice({
       state.publicfeednexttoken = null;
       state.gotaddedusersfilter = false;
       state.selectedfeed = "addedfeed";
-    },
-    setOnboardingStatus: (state, action) => {
-      state.onboardingstatus = action.payload;
-    },
-    setVaultHeader: (state, action) => {
-      state.vaultheader = action.payload;
     },
     addStoriesSectionListObject: (state, action) => {
       // state.storiessectionlist.push(action.payload)
@@ -59,7 +51,10 @@ const slice = createSlice({
         state.storiessectionlist[index].viewed = true;
       }
     },
-    addToAddedUsersFilter: (state, action) => {
+    addToAddedUsersFilter: (
+      state,
+      action: PayloadAction<AddedUsersFilterItem>
+    ) => {
       state.addedusersfilter.push(action.payload);
     },
     setGotAddedUsersFilter: (state, action) => {
@@ -111,8 +106,6 @@ const slice = createSlice({
 });
 
 export const {
-  setOnboardingStatus,
-  setVaultHeader,
   addStoriesSectionListObject,
   addVideoToStories,
   setStoryViewed,
