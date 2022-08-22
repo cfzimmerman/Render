@@ -96,6 +96,14 @@ const slice = createSlice({
       state.hvGameSearchResults[action.payload.index].signedurl =
         action.payload.signedurl;
     },
+    addNextHVGameSearchResultsArray: (
+      state,
+      action: PayloadAction<PostType[]>
+    ) => {
+      state.hvGameSearchResults = state.hvGameSearchResults.concat(
+        action.payload
+      );
+    },
   },
 });
 
@@ -111,6 +119,7 @@ export const {
   setHVGameSearchNextToken,
   setHVGameSearchActive,
   addVideoToHVGameSearchResults,
+  addNextHVGameSearchResultsArray,
 } = slice.actions;
 
 export default slice.reducer;

@@ -23,6 +23,7 @@ import {
 import { GameCoverTileType } from "./GameCoverTile";
 import HVGameDisplayHeader from "./HVGameDisplayHeader";
 import HVGetGamePosts from "./HVGetGamePosts";
+import HVGetNoGamePosts from "./HVGetNoGamePosts";
 import HVPostResultTile from "./HVPostResultTile";
 
 const noTag: GameCoverTileType = {
@@ -108,22 +109,21 @@ const HVGameDisplay = ({ navigation, route }) => {
       });
       dispatch(setHVGameSearchActive(true));
       setGotPosts(true);
-    } /* else if (
+    } else if (
       gameObject != null &&
       gotPosts === false &&
       hvGameSearchActive === false &&
-      typeof gameObject.id === null
+      gameObject.id === null
     ) {
-      console.log(
-        "Set up a parallel HVGetGamePosts function that queries for posts by this user without a games attribute existing"
-      );
-      filter: {
-        gamesID: {
-          attributeExists: false
-        }
-      }
+      HVGetNoGamePosts({
+        currentUserID,
+        dispatch,
+        vaultfeeddata,
+        hvGameSearchNextToken,
+      });
+      dispatch(setHVGameSearchActive(true));
+      setGotPosts(true);
     }
-    */
   });
 
   const ListHeader = () => {
@@ -151,6 +151,36 @@ const HVGameDisplay = ({ navigation, route }) => {
 
   const ListFooter = () => {
     return <FlatListFooterSpacer />;
+  };
+
+  const EndReached = () => {
+    if (
+      gotPosts === true &&
+      hvGameSearchNextToken != null &&
+      hvGameSearchActive === false &&
+      gameObject != null
+    ) {
+      if (typeof gameObject.id === "string") {
+        dispatch(setHVGameSearchActive(true));
+        HVGetGamePosts({
+          currentUserID,
+          gameID,
+          dispatch,
+          coverID: gameObject.coverID,
+          title: gameObject.title,
+          vaultfeeddata,
+          hvGameSearchNextToken,
+        });
+      } else if (gameObject.id === null) {
+        dispatch(setHVGameSearchActive(true));
+        HVGetNoGamePosts({
+          currentUserID,
+          dispatch,
+          vaultfeeddata,
+          hvGameSearchNextToken,
+        });
+      }
+    }
   };
 
   return (
@@ -184,6 +214,8 @@ const HVGameDisplay = ({ navigation, route }) => {
           style={styles.flatlistWrapper}
           contentContainerStyle={styles.flatlistContentContainer}
           columnWrapperStyle={styles.flatlistColumnWrapper}
+          onEndReachedThreshold={1}
+          onEndReached={EndReached}
         />
       </View>
     </SafeAreaView>

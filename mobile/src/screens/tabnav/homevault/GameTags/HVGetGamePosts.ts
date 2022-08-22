@@ -9,6 +9,8 @@ import {
 } from "../../../../redux/homevault/gametags";
 import { DispatchType } from "../../../../redux/store";
 import { PostType } from "../../../../resources/CommonTypes";
+import LSGetImage from "../LSGetImage";
+import FindIsHeader from "./FindIsHeader";
 
 interface InputTypes {
   gameID: string;
@@ -19,22 +21,6 @@ interface InputTypes {
   vaultfeeddata: PostType[];
   hvGameSearchNextToken: string | null;
 }
-
-const FindIsHeader = ({
-  vaultfeeddata,
-  postID,
-}: {
-  vaultfeeddata: PostType[];
-  postID: string;
-}): boolean => {
-  const postIndex = vaultfeeddata.findIndex(
-    (item: PostType) => item.id === postID
-  );
-  if (postIndex === -1 || typeof vaultfeeddata[postIndex].header != "boolean") {
-    return false;
-  }
-  return vaultfeeddata[postIndex].header;
-};
 
 async function HVGetGamePosts({
   gameID,
@@ -106,42 +92,11 @@ async function HVGetGamePosts({
         signedurl: null,
         thumbnailurl: null,
       };
-      /*
-
-                if (item.contenttype === "video") {
-            const thumbnailAddress =
-              FileSystem.documentDirectory + "LocalSync/" + item.thumbnailkey;
-            const contentExists = await FileSystem.getInfoAsync(
-              thumbnailAddress
-            );
-            if (contentExists.exists === true) {
-              const signedurl = null;
-              const thumbnailurl = thumbnailAddress;
-
-      */
 
       if (item.contenttype === "image") {
-        const imageAddress =
-          FileSystem.documentDirectory + "LocalSync/" + item.contentkey;
-        const { exists } = await FileSystem.getInfoAsync(imageAddress);
-        if (exists === true) {
-          newPost.signedurl = imageAddress;
-        } else {
-          newPost.signedurl = await Storage.get(item.contentkey, {
-            expires: 86400,
-          });
-        }
+        newPost.signedurl = await LSGetImage({ key: item.contentkey });
       } else if (item.contenttype === "video") {
-        const thumbnailAddress =
-          FileSystem.documentDirectory + "LocalSync/" + item.thumbnailkey;
-        const { exists } = await FileSystem.getInfoAsync(thumbnailAddress);
-        if (exists === true) {
-          newPost.thumbnailurl = thumbnailAddress;
-        } else {
-          newPost.thumbnailurl = await Storage.get(item.thumbnailkey, {
-            expires: 86400,
-          });
-        }
+        newPost.thumbnailurl = await LSGetImage({ key: item.thumbnailkey });
       }
 
       dispatch(addToHVGameSearchResults(newPost));

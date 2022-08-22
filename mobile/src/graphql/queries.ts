@@ -2813,6 +2813,99 @@ export const postsByPublicDate = /* GraphQL */ `
     }
   }
 `;
+export const postsByUsers = /* GraphQL */ `
+  query PostsByUsers(
+    $usersID: ID!
+    $contentdate: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    postsByUsers(
+      usersID: $usersID
+      contentdate: $contentdate
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contentlastupdated
+        contenttype
+        createdAt
+        deleteddate
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        gamesID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
+        Games {
+          id
+          createdAt
+          igdbID
+          title
+          releaseDate
+          series
+          genre
+          theme
+          coverID
+          backgroundID
+          steamID
+          microsoftID
+          xboxMarketplaceID
+          gogID
+          egsID
+          twitchID
+          oculusID
+          playstationID
+          updatedAt
+        }
+        Comments {
+          nextToken
+        }
+        Notifications {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const postsByDeletedDate = /* GraphQL */ `
   query PostsByDeletedDate(
     $usersID: ID!
