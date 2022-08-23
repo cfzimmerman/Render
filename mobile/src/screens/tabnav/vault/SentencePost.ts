@@ -15,6 +15,7 @@ import {
   PostHeaderType,
   PostType,
 } from "../../../resources/CommonTypes";
+import RemovePostGameRelationship from "../homevault/GameTags/RemovePostGameRelationship";
 import LSRemoveItem from "../profile/LSRemoveItem";
 import ModifyVaultData from "./ModifyVaultData";
 
@@ -46,6 +47,11 @@ async function SentencePost({
       publicpost: false,
       publicpostdate: null,
     };
+    await RemovePostGameRelationship({
+      postID: postid,
+      currentUserID: currentuser.id,
+      dispatch,
+    });
     const updatePostResult = (await API.graphql(
       graphqlOperation(updatePosts, { input: postUpdate })
     )) as GraphQLResult<UpdatePostsMutation>;
