@@ -20,6 +20,7 @@ interface InputTypes {
   title: string;
   vaultfeeddata: PostType[];
   hvGameSearchNextToken: string | null;
+  initialQuery: boolean;
 }
 
 async function HVGetGamePosts({
@@ -30,6 +31,7 @@ async function HVGetGamePosts({
   title,
   vaultfeeddata,
   hvGameSearchNextToken,
+  initialQuery,
 }: InputTypes) {
   try {
     const postLimit = 100;

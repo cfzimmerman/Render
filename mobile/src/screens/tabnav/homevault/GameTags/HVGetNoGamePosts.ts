@@ -3,6 +3,7 @@ import { API, graphqlOperation } from "aws-amplify";
 import { PostsByUsersQuery } from "../../../../API";
 import {
   addNextHVGameSearchResultsArray,
+  addToHVGameSearchResults,
   setHVGameSearchActive,
   setHVGameSearchNextToken,
 } from "../../../../redux/homevault/gametags";
@@ -16,22 +17,25 @@ interface InputTypes {
   dispatch: DispatchType;
   vaultfeeddata: PostType[];
   hvGameSearchNextToken: string | null;
+  initialQuery: boolean;
 }
 
 const resultsSize = 50;
 const newPosts: PostType[] = [];
-var activeNextToken;
+var activeNextToken: string | null;
 
 async function FetchPosts({
   queryLimit,
   usersID,
   nextToken,
   vaultfeeddata,
+  dispatch,
 }: {
   queryLimit: number;
   usersID: string;
   nextToken: string | null;
   vaultfeeddata: PostType[];
+  dispatch: DispatchType;
 }) {
   try {
     // We're doing this structure because Amplify "filter" applies to results after fetched. If it fetches 10 posts and all 10 posts heve either been deleted or already tagged to a game, we have 0 actual results to add. This structure keeps querying until we have enough to fill the screen or until we've reached the end.
@@ -86,6 +90,7 @@ async function FetchPosts({
         usersID,
         nextToken: nextNextToken,
         vaultfeeddata,
+        dispatch,
       });
     } else if (postsArray.length > 0 && newPosts.length < resultsSize) {
       for await (const item of postsArray) {
@@ -115,6 +120,7 @@ async function FetchPosts({
               : null,
         };
         newPosts.push(newPost);
+        dispatch(addToHVGameSearchResults(newPost));
       }
 
       if (nextNextToken != null && newPosts.length < resultsSize) {
@@ -123,9 +129,11 @@ async function FetchPosts({
           usersID,
           nextToken: nextNextToken,
           vaultfeeddata,
+          dispatch,
         });
       }
     }
+    // console.log(newPosts);
   } catch (error) {
     console.log(error);
   }
@@ -136,6 +144,7 @@ async function HVGetNoGamePosts({
   dispatch,
   vaultfeeddata,
   hvGameSearchNextToken,
+  initialQuery,
 }: InputTypes) {
   try {
     const queryLimit = resultsSize;
@@ -147,10 +156,9 @@ async function HVGetNoGamePosts({
       nextToken: hvGameSearchNextToken,
       queryLimit,
       vaultfeeddata,
+      dispatch,
     });
-    if (newPosts.length > 0) {
-      dispatch(addNextHVGameSearchResultsArray(newPosts));
-    }
+
     dispatch(setHVGameSearchNextToken(activeNextToken));
     dispatch(setHVGameSearchActive(false));
   } catch (error) {

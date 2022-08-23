@@ -13,6 +13,10 @@ import {
   clearHVGameSearchResults,
   setHVGameSearchActive,
 } from "../../../../redux/homevault/gametags";
+import {
+  deactivateMultiSelect,
+  setMultiSelectActive,
+} from "../../../../redux/homevault/homevaultmain";
 import { RootStateType } from "../../../../redux/store";
 import { BackArrow, FlatListFooterSpacer } from "../../../../resources/atoms";
 import {
@@ -20,6 +24,7 @@ import {
   Environment,
   GlobalStyles,
 } from "../../../../resources/project";
+import HomeVaultOptionsBar from "../HomeVaultOptionsBar";
 import { GameCoverTileType } from "./GameCoverTile";
 import HVGameDisplayHeader from "./HVGameDisplayHeader";
 import HVGetGamePosts from "./HVGetGamePosts";
@@ -71,6 +76,12 @@ const HVGameDisplay = ({ navigation, route }) => {
   const vaultfeeddata = useSelector(
     (state: RootStateType) => state.vaultpostdata.vaultfeeddata
   );
+  const selectedPosts = useSelector(
+    (state: RootStateType) => state.homevaultmain.selectedPosts
+  );
+  const multiSelectActive = useSelector(
+    (state: RootStateType) => state.homevaultmain.multiSelectActive
+  );
 
   const gameID = route.params.gameID;
 
@@ -96,7 +107,8 @@ const HVGameDisplay = ({ navigation, route }) => {
       gameObject != null &&
       typeof gameObject.id === "string" &&
       gotPosts === false &&
-      hvGameSearchActive === false
+      hvGameSearchActive === false &&
+      hvGameSearchResults.length === 0
     ) {
       HVGetGamePosts({
         currentUserID,
@@ -106,6 +118,7 @@ const HVGameDisplay = ({ navigation, route }) => {
         title: gameObject.title,
         vaultfeeddata,
         hvGameSearchNextToken,
+        initialQuery: true,
       });
       dispatch(setHVGameSearchActive(true));
       setGotPosts(true);
@@ -113,13 +126,15 @@ const HVGameDisplay = ({ navigation, route }) => {
       gameObject != null &&
       gotPosts === false &&
       hvGameSearchActive === false &&
-      gameObject.id === null
+      gameObject.id === null &&
+      hvGameSearchResults.length === 0
     ) {
       HVGetNoGamePosts({
         currentUserID,
         dispatch,
         vaultfeeddata,
         hvGameSearchNextToken,
+        initialQuery: true,
       });
       dispatch(setHVGameSearchActive(true));
       setGotPosts(true);
@@ -145,7 +160,14 @@ const HVGameDisplay = ({ navigation, route }) => {
 
   const renderItem = ({ item, index }) => {
     return (
-      <HVPostResultTile item={item} index={index} navigation={navigation} />
+      <HVPostResultTile
+        item={item}
+        index={index}
+        navigation={navigation}
+        selectedPosts={selectedPosts}
+        multiSelectActive={multiSelectActive}
+        dispatch={dispatch}
+      />
     );
   };
 
@@ -170,6 +192,7 @@ const HVGameDisplay = ({ navigation, route }) => {
           title: gameObject.title,
           vaultfeeddata,
           hvGameSearchNextToken,
+          initialQuery: false,
         });
       } else if (gameObject.id === null) {
         dispatch(setHVGameSearchActive(true));
@@ -178,19 +201,26 @@ const HVGameDisplay = ({ navigation, route }) => {
           dispatch,
           vaultfeeddata,
           hvGameSearchNextToken,
+          initialQuery: false,
         });
       }
     }
+  };
+
+  const CustomButtonAction = () => {
+    dispatch(deactivateMultiSelect());
+    dispatch(clearHVGameSearchResults());
+    navigation.goBack();
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.backArrowWrapper}>
-          <BackArrow />
+          <BackArrow CustomAction={CustomButtonAction} />
         </View>
         <TouchableOpacity
-          onPress={() => navigation.goBack()}
+          onPress={CustomButtonAction}
           style={[GlobalStyles.shadow, styles.searchBar]}
         >
           <Text
@@ -218,6 +248,7 @@ const HVGameDisplay = ({ navigation, route }) => {
           onEndReached={EndReached}
         />
       </View>
+      <HomeVaultOptionsBar />
     </SafeAreaView>
   );
 };

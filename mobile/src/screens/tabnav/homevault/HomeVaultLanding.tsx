@@ -1,4 +1,4 @@
-import react, { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { SectionGrid } from "react-native-super-grid";
 import { useScrollToTop } from "@react-navigation/native";

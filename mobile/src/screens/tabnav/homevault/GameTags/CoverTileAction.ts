@@ -91,7 +91,7 @@ async function CoverTileAction({
 
     dispatch(setLoadProgressInactive());
     dispatch(deactivateMultiSelect());
-    navigation.goBack();
+    navigation.navigate("HomeVault");
   } catch (error) {
     console.log(error);
     dispatch(

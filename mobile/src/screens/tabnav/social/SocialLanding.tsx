@@ -98,7 +98,6 @@ const SocialLanding = ({ navigation }) => {
   };
 
   const EndReached = () => {
-    console.log("End Reached");
     if (
       selectedfeed === "addedfeed" &&
       addedfeed.length > 0 &&

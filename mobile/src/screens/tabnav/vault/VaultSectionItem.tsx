@@ -106,6 +106,8 @@ const VaultSectionItem = ({
           isSelected,
           dispatch,
           selectedPostsLength: selectedPosts.length,
+          origin: "vault",
+          index: null,
         })
       }
       onLongPress={() =>
