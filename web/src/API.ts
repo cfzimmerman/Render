@@ -4132,6 +4132,43 @@ export type PostsByPublicDateQuery = {
   } | null,
 };
 
+export type PostsByUsersQueryVariables = {
+  usersID: string,
+  contentdate?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelPostsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type PostsByUsersQuery = {
+  postsByUsers?:  {
+    __typename: "ModelPostsConnection",
+    items:  Array< {
+      __typename: "Posts",
+      id: string,
+      aspectratio?: number | null,
+      cognitosub: string,
+      contentdate?: string | null,
+      contentkey?: string | null,
+      contentlastupdated?: string | null,
+      contenttype?: string | null,
+      createdAt: string,
+      deleteddate?: string | null,
+      posttext?: string | null,
+      publicpost?: boolean | null,
+      publicpostdate?: string | null,
+      sizeinbytes?: number | null,
+      thumbnailkey?: string | null,
+      type?: string | null,
+      usersID: string,
+      gamesID?: string | null,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type PostsByDeletedDateQueryVariables = {
   usersID: string,
   deleteddate?: ModelStringKeyConditionInput | null,

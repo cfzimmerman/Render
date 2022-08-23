@@ -1347,6 +1347,47 @@ export const postsByPublicDate = /* GraphQL */ `
     }
   }
 `;
+export const postsByUsers = /* GraphQL */ `
+  query PostsByUsers(
+    $usersID: ID!
+    $contentdate: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    postsByUsers(
+      usersID: $usersID
+      contentdate: $contentdate
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contentlastupdated
+        contenttype
+        createdAt
+        deleteddate
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        gamesID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const postsByDeletedDate = /* GraphQL */ `
   query PostsByDeletedDate(
     $usersID: ID!
