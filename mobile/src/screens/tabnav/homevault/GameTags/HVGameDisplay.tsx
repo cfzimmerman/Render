@@ -176,6 +176,7 @@ const HVGameDisplay = ({ navigation, route }) => {
   };
 
   const EndReached = () => {
+    console.log("end reached");
     if (
       gotPosts === true &&
       hvGameSearchNextToken != null &&
