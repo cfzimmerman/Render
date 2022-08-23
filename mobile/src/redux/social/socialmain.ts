@@ -1,10 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import {
-  CurrentUserType,
-  PostType,
-  CommentType,
-} from "../../resources/CommonTypes";
+import { CommentType } from "../../resources/CommonTypes";
 
 interface SetDeleteCommentPropsType {
   active: boolean;

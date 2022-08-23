@@ -10,6 +10,28 @@ import {
 import { ExciseGeneralPropsType } from "../../screens/tabnav/vault/ModifyVaultData";
 import { TextUpdateType } from "../../screens/tabnav/plus/ChangePostText";
 import { PostPublicUpdatePropsType } from "../../screens/tabnav/plus/ChangePostPublic";
+import {
+  UpdateHeaderGameInput,
+  UpdateNonHeaderGameInput,
+} from "../../screens/tabnav/homevault/GameTags/ModifyPostGame";
+
+interface InitialSliceType {
+  vaultpostdata: PostHeaderType[];
+  vaultfeeddata: PostType[];
+  activepost: number | null;
+  nextToken: string | null;
+  focusview: boolean;
+  fetchingdata: boolean;
+  shareactive: boolean;
+  textactive: boolean;
+  postpublicmodal: boolean;
+  options: {
+    active: boolean;
+    changestatus: boolean;
+    postid: string | null;
+  };
+  vaultrefreshdate: string;
+}
 
 const slice = createSlice({
   name: "vaultpostdata",
@@ -29,7 +51,7 @@ const slice = createSlice({
       postid: null,
     },
     vaultrefreshdate: new Date().toISOString(),
-  },
+  } as InitialSliceType,
   reducers: {
     clearVaultPostData: (state) => {
       state.vaultpostdata.length = 0;
@@ -223,6 +245,42 @@ const slice = createSlice({
       state.nextToken = null;
       state.vaultrefreshdate = new Date().toISOString();
     },
+    updateNonHeaderGame: (
+      state,
+      action: PayloadAction<UpdateNonHeaderGameInput>
+    ) => {
+      state.vaultfeeddata[action.payload.feedIndex].gamesID =
+        action.payload.gamesID;
+      state.vaultfeeddata[action.payload.feedIndex].coverID =
+        action.payload.coverID;
+      state.vaultfeeddata[action.payload.feedIndex].title =
+        action.payload.title;
+
+      state.vaultpostdata[action.payload.sectionIndex].data[
+        action.payload.sectionDataIndex
+      ].gamesID = action.payload.gamesID;
+      state.vaultpostdata[action.payload.sectionIndex].data[
+        action.payload.sectionDataIndex
+      ].coverID = action.payload.coverID;
+      state.vaultpostdata[action.payload.sectionIndex].data[
+        action.payload.sectionDataIndex
+      ].title = action.payload.title;
+    },
+    updateHeaderGame: (state, action: PayloadAction<UpdateHeaderGameInput>) => {
+      state.vaultfeeddata[action.payload.feedIndex].gamesID =
+        action.payload.gamesID;
+      state.vaultfeeddata[action.payload.feedIndex].coverID =
+        action.payload.coverID;
+      state.vaultfeeddata[action.payload.feedIndex].title =
+        action.payload.title;
+
+      state.vaultpostdata[action.payload.sectionIndex].header.post.gamesID =
+        action.payload.gamesID;
+      state.vaultpostdata[action.payload.sectionIndex].header.post.coverID =
+        action.payload.coverID;
+      state.vaultpostdata[action.payload.sectionIndex].header.post.title =
+        action.payload.title;
+    },
   },
 });
 
@@ -254,6 +312,8 @@ export const {
   updatePostPublic,
   setVaultRefreshDate,
   clearHomeVaultRefresh,
+  updateHeaderGame,
+  updateNonHeaderGame,
 } = slice.actions;
 
 export default slice.reducer;

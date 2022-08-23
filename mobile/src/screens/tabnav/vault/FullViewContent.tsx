@@ -32,18 +32,25 @@ import PostOptionsModal from "./PostOptionsModal";
 import PostTextModal from "./PostTextModal";
 import SetOptions from "./SetOptions";
 import VaultPostPublicModal from "../plus/VaultPostPublicModal";
+import { DispatchType, RootStateType } from "../../../redux/store";
+import { PostType } from "../../../resources/CommonTypes";
+import { VaultPostFullViewUsecaseTypes } from "./VaultPostFullView";
+import AddVideoToHVGameSearchResults from "../homevault/GameTags/AddVideoToHVGameSearchResults";
 
 // SetOptions({ postid: abc, animateactive: true, animateinactive: false, newchangestatus: false, })
 
 const SwipeUp = ({ index, usecase, navigation }) => {
   // Usecases are explicitly checked as opposed to != "vault" to ensure we've correctly configured CommentsMain for every necessary case
+  // Reconsider this, I just enabled "vault" support as well
   if (
     usecase === "gallery" ||
     usecase === "otherusergallery" ||
     usecase === "stories" ||
     usecase === "addedfeed" ||
     usecase === "publicfeed" ||
-    usecase === "universal"
+    usecase === "universal" ||
+    usecase === "HVGameSearch" ||
+    usecase === "vault"
   ) {
     navigation.navigate("CommentsMain", { usecase, index });
   }
@@ -85,7 +92,7 @@ const PostModalFilter = ({
   }
   return (
     <View>
-      <PostTextModal dispatch={dispatch} item={item} index={index} />
+      <PostTextModal dispatch={dispatch} item={item} />
       <VaultPostPublicModal
         dispatch={dispatch}
         item={item}
@@ -96,13 +103,37 @@ const PostModalFilter = ({
   );
 };
 
-const FullViewContent = ({ item, index, dispatch, navigation, usecase }) => {
+interface InputTypes {
+  item: PostType;
+  index: number;
+  dispatch: DispatchType;
+  navigation: any;
+  usecase: VaultPostFullViewUsecaseTypes;
+}
+
+const FullViewContent = ({
+  item,
+  index,
+  dispatch,
+  navigation,
+  usecase,
+}: InputTypes) => {
   const dimensions = GetPostDimensions(item.aspectratio);
-  const optionstatus = useSelector((state) => state.vaultpostdata.options);
-  const textactive = useSelector((state) => state.vaultpostdata.textactive);
-  const postindex = useSelector((state) => state.vaultpostdata.activepost);
-  const localLibrary = useSelector((state) => state.localsync.localLibrary);
-  const localConfig = useSelector((state) => state.localsync.localConfig);
+  const optionstatus = useSelector(
+    (state: RootStateType) => state.vaultpostdata.options
+  );
+  const textactive = useSelector(
+    (state: RootStateType) => state.vaultpostdata.textactive
+  );
+  const postindex = useSelector(
+    (state: RootStateType) => state.vaultpostdata.activepost
+  );
+  const localLibrary = useSelector(
+    (state: RootStateType) => state.localsync.localLibrary
+  );
+  const localConfig = useSelector(
+    (state: RootStateType) => state.localsync.localConfig
+  );
 
   if (item.contenttype === "video") {
     if (item.signedurl === null) {
@@ -142,11 +173,24 @@ const FullViewContent = ({ item, index, dispatch, navigation, usecase }) => {
         });
       } else if (usecase === "publicfeed") {
         AddVideoToPublicFeed({ dispatch, index, contentkey: item.contentkey });
+      } else if (usecase === "HVGameSearch") {
+        AddVideoToHVGameSearchResults({
+          dispatch,
+          index,
+          contentkey: item.contentkey,
+          syncPreference: localConfig.syncPreference,
+          localLibrary,
+        });
       }
+      // HVGameSearchResults
     }
 
-    const activepost = useSelector((state) => state.vaultpostdata.activepost);
-    const focusview = useSelector((state) => state.vaultpostdata.focusview);
+    const activepost = useSelector(
+      (state: RootStateType) => state.vaultpostdata.activepost
+    );
+    const focusview = useSelector(
+      (state: RootStateType) => state.vaultpostdata.focusview
+    );
 
     const PlayVideo = () => {
       const isfocused = useIsFocused();
@@ -213,6 +257,7 @@ const FullViewContent = ({ item, index, dispatch, navigation, usecase }) => {
                     style={{
                       height: dimensions.height,
                       width: dimensions.width,
+                      // @ts-ignore
                       borderRadius: Environment.StandardRadius,
                       controlsBackgroundColor: Colors.AccentOn,
                     }}
@@ -242,6 +287,7 @@ const FullViewContent = ({ item, index, dispatch, navigation, usecase }) => {
                 dispatch={dispatch}
                 item={item}
                 dimensions={dimensions}
+                index={index}
               />
             </SafeAreaView>
           </View>
@@ -354,6 +400,7 @@ const FullViewContent = ({ item, index, dispatch, navigation, usecase }) => {
               dispatch={dispatch}
               item={item}
               dimensions={dimensions}
+              index={index}
             />
           </SafeAreaView>
         </View>

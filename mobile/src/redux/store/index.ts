@@ -30,6 +30,7 @@ import homemain from "../home/homemain";
 import socialmain from "../social/socialmain";
 
 import homevaultmain from "../homevault/homevaultmain";
+import gametags from "../homevault/gametags";
 
 const reducer = combineReducers({
   errormessage,
@@ -50,6 +51,7 @@ const reducer = combineReducers({
   notifications,
   universalpost,
   homevaultmain,
+  gametags,
 });
 
 const store = configureStore({

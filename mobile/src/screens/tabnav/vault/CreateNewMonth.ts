@@ -1,5 +1,7 @@
 import { format } from "date-fns";
+import { PostHeaderType } from "../../../resources/CommonTypes";
 import { addVaultPostDataObject } from "../../../redux/vault/vaultpostdata";
+
 import { CreateNewMonthPropsType } from "./GetVaultData";
 
 const GetDate = (contentdate: string): string => {
@@ -14,7 +16,7 @@ const CreateNewMonth = ({
   signedurl,
   thumbnailurl,
 }: CreateNewMonthPropsType) => {
-  const NewMonth = {
+  const NewMonth: PostHeaderType = {
     header: {
       title: GetDate(item.contentdate),
       post: {
@@ -29,6 +31,9 @@ const CreateNewMonth = ({
         signedurl: signedurl,
         thumbnailurl: thumbnailurl,
         userid: null,
+        gamesID: item.Games === null ? null : item.Games.id,
+        coverID: item.Games === null ? null : item.Games.coverID,
+        title: item.Games === null ? null : item.Games.title,
       },
     },
     data: [],

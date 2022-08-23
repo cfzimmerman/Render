@@ -1,10 +1,8 @@
 import React, { useState, useRef } from "react";
 import { View, FlatList, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useScrollToTop } from "@react-navigation/native";
-import { Colors, Environment, GlobalStyles } from "../../../resources/project";
-import ChangeSelectedFeed from "../home/ChangeSelectedFeed";
+import { Colors, Environment } from "../../../resources/project";
 import GetAddedFeedData from "../home/GetAddedFeedData";
 import GetAddedUsersFilter from "../home/GetAddedUsersFilter";
 import GetPublicFeedData from "../home/GetPublicFeedData";
@@ -13,6 +11,7 @@ import PostTile from "../home/PostTile";
 import RefreshPublicFeed from "./RefreshPublicFeed";
 import SocialHeader from "./SocialHeader";
 import RefreshAddedFeed from "./RefreshAddedFeed";
+import { RootStateType } from "../../../redux/store";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -33,22 +32,30 @@ const SocialLanding = ({ navigation }) => {
     "1984-01-24T14:23:00.000Z"
   );
 
-  const currentuser = useSelector((state) => state.profilemain.currentuser);
+  const currentuser = useSelector(
+    (state: RootStateType) => state.profilemain.currentuser
+  );
 
-  const selectedfeed = useSelector((state) => state.homemain.selectedfeed);
+  const selectedfeed = useSelector(
+    (state: RootStateType) => state.homemain.selectedfeed
+  );
 
   const addedusersfilter = useSelector(
-    (state) => state.homemain.addedusersfilter
+    (state: RootStateType) => state.homemain.addedusersfilter
   );
 
-  const addedfeed = useSelector((state) => state.homemain.addedfeed);
+  const addedfeed = useSelector(
+    (state: RootStateType) => state.homemain.addedfeed
+  );
   const addedfeednexttoken = useSelector(
-    (state) => state.homemain.addedfeednexttoken
+    (state: RootStateType) => state.homemain.addedfeednexttoken
   );
 
-  const publicfeed = useSelector((state) => state.homemain.publicfeed);
+  const publicfeed = useSelector(
+    (state: RootStateType) => state.homemain.publicfeed
+  );
   const publicfeednexttoken = useSelector(
-    (state) => state.homemain.publicfeednexttoken
+    (state: RootStateType) => state.homemain.publicfeednexttoken
   );
 
   const dispatch = useDispatch();
@@ -75,7 +82,6 @@ const SocialLanding = ({ navigation }) => {
   ) {
     GetPublicFeedData({
       dispatch,
-      publicfeed,
       publicfeednexttoken,
     });
     setPublicRefreshDate(new Date().toISOString());
@@ -100,7 +106,6 @@ const SocialLanding = ({ navigation }) => {
     ) {
       GetAddedFeedData({
         dispatch,
-        currentuser,
         addedusersfilter,
         addedfeed,
         addedfeednexttoken,
@@ -113,8 +118,6 @@ const SocialLanding = ({ navigation }) => {
     ) {
       GetPublicFeedData({
         dispatch,
-        currentuser,
-        publicfeed,
         publicfeednexttoken,
       });
     }

@@ -18,6 +18,7 @@ import {
   Icons,
 } from "../../../resources/project";
 import { useNavigation } from "@react-navigation/native";
+import GameCoverCubesizeButton from "./GameTags/GameCoverCubesizeButton";
 
 const AreEqual = (previousProps, nextProps) => {
   return true;
@@ -69,6 +70,20 @@ const HomeVaultOptionsBar = () => {
               />
             </View>
 
+            <View style={styles.bottomMargin}>
+              <GameCoverCubesizeButton
+                imageURL={null}
+                Action={() => {
+                  if (selectedPosts.length > 0) {
+                    // @ts-ignore
+                    navigation.navigate("SelectGame", {
+                      selection: "multi",
+                      origin: "vaultMultiSelect",
+                    });
+                  }
+                }}
+              />
+            </View>
             <CubeSizeButton
               isactive={false}
               Action={() => dispatch(deactivateMultiSelect())}
@@ -102,6 +117,9 @@ const styles = StyleSheet.create({
   },
   buttonSpacer: {
     marginTop: Environment.LargePadding,
+    marginBottom: Environment.StandardPadding,
+  },
+  bottomMargin: {
     marginBottom: Environment.StandardPadding,
   },
   scbWrapper: {

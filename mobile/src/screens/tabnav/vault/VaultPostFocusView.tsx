@@ -68,6 +68,9 @@ const VaultPostFocusView = ({ navigation, route }) => {
   const universalPostData = useSelector(
     (state: RootStateType) => state.universalpost.universalPostData
   );
+  const hvGameSearchResults = useSelector(
+    (state: RootStateType) => state.gametags.hvGameSearchResults
+  );
 
   const { usecase }: UsecaseObject = route.params;
 
@@ -147,6 +150,9 @@ const VaultPostFocusView = ({ navigation, route }) => {
     if (usecase === "universal") {
       return universalPostData[index].signedurl;
     }
+    if (usecase === "HVGameSearch") {
+      return hvGameSearchResults[index].signedurl;
+    }
   };
 
   // If the user goes super sayan speed mode through posts, sometimes the index doesn't update fast enough. So, the goBack() checks send the user back to fullview to prevent an "TypeError undefined" error
@@ -191,6 +197,12 @@ const VaultPostFocusView = ({ navigation, route }) => {
     } else if (usecase === "universal") {
       if (typeof universalPostData[index] != "undefined") {
         return universalPostData[index].contenttype;
+      } else {
+        return navigation.goBack();
+      }
+    } else if (usecase === "HVGameSearch") {
+      if (typeof hvGameSearchResults[index] != "undefined") {
+        return hvGameSearchResults[index].contenttype;
       } else {
         return navigation.goBack();
       }

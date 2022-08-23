@@ -27,6 +27,7 @@ export const createPostViewTracker = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
         updatedAt
       }
       viewerID
@@ -82,6 +83,7 @@ export const updatePostViewTracker = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
         updatedAt
       }
       viewerID
@@ -137,6 +139,7 @@ export const deletePostViewTracker = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
         updatedAt
       }
       viewerID
@@ -163,6 +166,330 @@ export const deletePostViewTracker = /* GraphQL */ `
         createdAt
       }
       createdAt
+      updatedAt
+    }
+  }
+`;
+export const createGlobalData = /* GraphQL */ `
+  mutation CreateGlobalData(
+    $input: CreateGlobalDataInput!
+    $condition: ModelGlobalDataConditionInput
+  ) {
+    createGlobalData(input: $input, condition: $condition) {
+      id
+      createdAt
+      usecase
+      key
+      strA
+      numA
+      numB
+      updatedAt
+    }
+  }
+`;
+export const updateGlobalData = /* GraphQL */ `
+  mutation UpdateGlobalData(
+    $input: UpdateGlobalDataInput!
+    $condition: ModelGlobalDataConditionInput
+  ) {
+    updateGlobalData(input: $input, condition: $condition) {
+      id
+      createdAt
+      usecase
+      key
+      strA
+      numA
+      numB
+      updatedAt
+    }
+  }
+`;
+export const deleteGlobalData = /* GraphQL */ `
+  mutation DeleteGlobalData(
+    $input: DeleteGlobalDataInput!
+    $condition: ModelGlobalDataConditionInput
+  ) {
+    deleteGlobalData(input: $input, condition: $condition) {
+      id
+      createdAt
+      usecase
+      key
+      strA
+      numA
+      numB
+      updatedAt
+    }
+  }
+`;
+export const createGames = /* GraphQL */ `
+  mutation CreateGames(
+    $input: CreateGamesInput!
+    $condition: ModelGamesConditionInput
+  ) {
+    createGames(input: $input, condition: $condition) {
+      id
+      createdAt
+      igdbID
+      title
+      releaseDate
+      series
+      genre
+      theme
+      coverID
+      backgroundID
+      steamID
+      microsoftID
+      xboxMarketplaceID
+      gogID
+      egsID
+      twitchID
+      oculusID
+      playstationID
+      UserGames {
+        nextToken
+      }
+      Posts {
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const updateGames = /* GraphQL */ `
+  mutation UpdateGames(
+    $input: UpdateGamesInput!
+    $condition: ModelGamesConditionInput
+  ) {
+    updateGames(input: $input, condition: $condition) {
+      id
+      createdAt
+      igdbID
+      title
+      releaseDate
+      series
+      genre
+      theme
+      coverID
+      backgroundID
+      steamID
+      microsoftID
+      xboxMarketplaceID
+      gogID
+      egsID
+      twitchID
+      oculusID
+      playstationID
+      UserGames {
+        nextToken
+      }
+      Posts {
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const deleteGames = /* GraphQL */ `
+  mutation DeleteGames(
+    $input: DeleteGamesInput!
+    $condition: ModelGamesConditionInput
+  ) {
+    deleteGames(input: $input, condition: $condition) {
+      id
+      createdAt
+      igdbID
+      title
+      releaseDate
+      series
+      genre
+      theme
+      coverID
+      backgroundID
+      steamID
+      microsoftID
+      xboxMarketplaceID
+      gogID
+      egsID
+      twitchID
+      oculusID
+      playstationID
+      UserGames {
+        nextToken
+      }
+      Posts {
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const createUserGames = /* GraphQL */ `
+  mutation CreateUserGames(
+    $input: CreateUserGamesInput!
+    $condition: ModelUserGamesConditionInput
+  ) {
+    createUserGames(input: $input, condition: $condition) {
+      id
+      createdAt
+      usersID
+      gamesID
+      Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        updatedAt
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+      }
+      Games {
+        id
+        createdAt
+        igdbID
+        title
+        releaseDate
+        series
+        genre
+        theme
+        coverID
+        backgroundID
+        steamID
+        microsoftID
+        xboxMarketplaceID
+        gogID
+        egsID
+        twitchID
+        oculusID
+        playstationID
+        updatedAt
+      }
+      updatedAt
+    }
+  }
+`;
+export const updateUserGames = /* GraphQL */ `
+  mutation UpdateUserGames(
+    $input: UpdateUserGamesInput!
+    $condition: ModelUserGamesConditionInput
+  ) {
+    updateUserGames(input: $input, condition: $condition) {
+      id
+      createdAt
+      usersID
+      gamesID
+      Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        updatedAt
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+      }
+      Games {
+        id
+        createdAt
+        igdbID
+        title
+        releaseDate
+        series
+        genre
+        theme
+        coverID
+        backgroundID
+        steamID
+        microsoftID
+        xboxMarketplaceID
+        gogID
+        egsID
+        twitchID
+        oculusID
+        playstationID
+        updatedAt
+      }
+      updatedAt
+    }
+  }
+`;
+export const deleteUserGames = /* GraphQL */ `
+  mutation DeleteUserGames(
+    $input: DeleteUserGamesInput!
+    $condition: ModelUserGamesConditionInput
+  ) {
+    deleteUserGames(input: $input, condition: $condition) {
+      id
+      createdAt
+      usersID
+      gamesID
+      Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        updatedAt
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        createdAt
+      }
+      Games {
+        id
+        createdAt
+        igdbID
+        title
+        releaseDate
+        series
+        genre
+        theme
+        coverID
+        backgroundID
+        steamID
+        microsoftID
+        xboxMarketplaceID
+        gogID
+        egsID
+        twitchID
+        oculusID
+        playstationID
+        updatedAt
+      }
       updatedAt
     }
   }
@@ -195,6 +522,7 @@ export const createNotifications = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
         updatedAt
       }
       UserNotifications {
@@ -232,6 +560,7 @@ export const updateNotifications = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
         updatedAt
       }
       UserNotifications {
@@ -269,6 +598,7 @@ export const deleteNotifications = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
         updatedAt
       }
       UserNotifications {
@@ -436,6 +766,7 @@ export const createComments = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
         updatedAt
       }
       usersID
@@ -492,6 +823,7 @@ export const updateComments = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
         updatedAt
       }
       usersID
@@ -548,6 +880,7 @@ export const deleteComments = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
         updatedAt
       }
       usersID
@@ -774,6 +1107,7 @@ export const createPosts = /* GraphQL */ `
       thumbnailkey
       type
       usersID
+      gamesID
       Users {
         id
         acceptedtos
@@ -795,6 +1129,27 @@ export const createPosts = /* GraphQL */ `
         storagesizeinbytes
         type
         createdAt
+      }
+      Games {
+        id
+        createdAt
+        igdbID
+        title
+        releaseDate
+        series
+        genre
+        theme
+        coverID
+        backgroundID
+        steamID
+        microsoftID
+        xboxMarketplaceID
+        gogID
+        egsID
+        twitchID
+        oculusID
+        playstationID
+        updatedAt
       }
       Comments {
         nextToken
@@ -831,6 +1186,7 @@ export const updatePosts = /* GraphQL */ `
       thumbnailkey
       type
       usersID
+      gamesID
       Users {
         id
         acceptedtos
@@ -852,6 +1208,27 @@ export const updatePosts = /* GraphQL */ `
         storagesizeinbytes
         type
         createdAt
+      }
+      Games {
+        id
+        createdAt
+        igdbID
+        title
+        releaseDate
+        series
+        genre
+        theme
+        coverID
+        backgroundID
+        steamID
+        microsoftID
+        xboxMarketplaceID
+        gogID
+        egsID
+        twitchID
+        oculusID
+        playstationID
+        updatedAt
       }
       Comments {
         nextToken
@@ -888,6 +1265,7 @@ export const deletePosts = /* GraphQL */ `
       thumbnailkey
       type
       usersID
+      gamesID
       Users {
         id
         acceptedtos
@@ -909,6 +1287,27 @@ export const deletePosts = /* GraphQL */ `
         storagesizeinbytes
         type
         createdAt
+      }
+      Games {
+        id
+        createdAt
+        igdbID
+        title
+        releaseDate
+        series
+        genre
+        theme
+        coverID
+        backgroundID
+        steamID
+        microsoftID
+        xboxMarketplaceID
+        gogID
+        egsID
+        twitchID
+        oculusID
+        playstationID
+        updatedAt
       }
       Comments {
         nextToken
@@ -952,6 +1351,9 @@ export const createUsers = /* GraphQL */ `
         nextToken
       }
       UserNotifications {
+        nextToken
+      }
+      UserGames {
         nextToken
       }
       Posts {
@@ -1001,6 +1403,9 @@ export const updateUsers = /* GraphQL */ `
       UserNotifications {
         nextToken
       }
+      UserGames {
+        nextToken
+      }
       Posts {
         nextToken
       }
@@ -1046,6 +1451,9 @@ export const deleteUsers = /* GraphQL */ `
         nextToken
       }
       UserNotifications {
+        nextToken
+      }
+      UserGames {
         nextToken
       }
       Posts {

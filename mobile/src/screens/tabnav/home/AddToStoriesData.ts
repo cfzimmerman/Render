@@ -1,4 +1,5 @@
 import { addStoriesSectionListObject } from "../../../redux/home/homemain";
+import { PostType } from "../../../resources/CommonTypes";
 
 const AddToStoriesData = ({
   dispatch,
@@ -9,7 +10,7 @@ const AddToStoriesData = ({
   previewurl,
   userid,
 }) => {
-  const newpost = {
+  const newpost: PostType = {
     id: postItem.id,
     cognitosub: postItem.cognitosub,
     contenttype: postItem.contenttype,
@@ -21,6 +22,9 @@ const AddToStoriesData = ({
     signedurl,
     thumbnailurl,
     displayname,
+    gamesID: postItem.Games === null ? null : postItem.Games.id,
+    coverID: postItem.Games === null ? null : postItem.Games.coverID,
+    title: postItem.Games === null ? null : postItem.Games.title,
   };
 
   const newsection = {

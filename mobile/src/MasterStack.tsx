@@ -14,7 +14,9 @@ import {
 } from "./screens/masterstack/auth";
 import { ObservePostDB } from "./resources/utilities";
 
-import VaultPostFullView from "./screens/tabnav/vault/VaultPostFullView";
+import VaultPostFullView, {
+  VaultPostFullViewUsecaseTypes,
+} from "./screens/tabnav/vault/VaultPostFullView";
 import VaultPostFocusView from "./screens/tabnav/vault/VaultPostFocusView";
 import DeletePost from "./screens/tabnav/vault/DeletePost";
 import EditPost from "./screens/tabnav/plus/EditPost";
@@ -22,6 +24,9 @@ import CommentsMain from "./screens/tabnav/social/CommentsMain";
 import AppStart from "./screens/masterstack/AppStart";
 import ForgotPassword from "./screens/tabnav/profile/ForgotPassword";
 import PostMultiDelete from "./screens/tabnav/homevault/PostMultiDelete";
+import SelectGame from "./screens/tabnav/homevault/GameTags/SelectGame";
+import HVSearchLanding from "./screens/tabnav/homevault/GameTags/HVSearchLanding";
+import HVGameDisplay from "./screens/tabnav/homevault/GameTags/HVGameDisplay";
 import { useNavigation } from "@react-navigation/native";
 
 type RootStackParamList = {
@@ -41,7 +46,7 @@ type RootStackParamList = {
   ForgotPassword: undefined;
   VaultPostFullView: {
     startindex: number;
-    usecase: string;
+    usecase: VaultPostFullViewUsecaseTypes;
   };
   VaultPostFocusView: {
     usecase: string;
@@ -51,7 +56,7 @@ type RootStackParamList = {
   };
   EditPost: {
     index: number;
-    origin: string;
+    origin: "plus" | "homevault";
   };
   CommentsMain: {
     usecase:
@@ -63,6 +68,14 @@ type RootStackParamList = {
     index: number;
   };
   PostMultiDelete: undefined;
+  SelectGame: {
+    selection: "single" | "multi";
+    origin: "vaultPostEdit" | "vaultMultiSelect";
+  };
+  HVSearchLanding: undefined;
+  HVGameDisplay: {
+    gameID: string;
+  };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -131,6 +144,21 @@ const MasterStack = () => {
         name="PostMultiDelete"
         component={PostMultiDelete}
         options={{ animation: "fade_from_bottom" }}
+      />
+      <Stack.Screen
+        name="SelectGame"
+        component={SelectGame}
+        options={{ animation: "fade" }}
+      />
+      <Stack.Screen
+        name="HVSearchLanding"
+        component={HVSearchLanding}
+        options={{ animation: "fade" }}
+      />
+      <Stack.Screen
+        name="HVGameDisplay"
+        component={HVGameDisplay}
+        options={{ animation: "flip" }}
       />
     </Stack.Navigator>
   );

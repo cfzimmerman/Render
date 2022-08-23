@@ -28,6 +28,8 @@ const PostMultiDelete = ({ navigation }) => {
   // After we initiate post deletion, there's a brief pause before vaultfeeddata is updated (which must be accurate for local store modifications to complete successfully)
   // When the length of vaultfeeddata is equal to deletionCursor (which measures the length vaultfeeddata will be at after a successful deletion), we're able to safely begin the next deletion
 
+  // Lol coming back to this after a few weeks. This could be radically simplified with a (for await (const item in array) {}) loop.
+
   const selectedPosts = useSelector(
     (state: RootStateType) => state.homevaultmain.selectedPosts
   );

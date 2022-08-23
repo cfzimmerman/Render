@@ -1,0 +1,22 @@
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import { Environment } from "../project";
+
+const AreEqual = (previousProps, nextProps) => {
+  return true;
+};
+
+const FlatListFooterSpacer = () => {
+  return <View style={styles.footer} />;
+};
+
+const styles = StyleSheet.create({
+  footer: {
+    width: Environment.FullBar,
+    height: Environment.CubeSize * 2,
+  },
+});
+
+// export default FlatListFooterSpacer;
+
+export default React.memo(FlatListFooterSpacer, AreEqual);

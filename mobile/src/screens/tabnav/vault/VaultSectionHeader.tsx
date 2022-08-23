@@ -132,6 +132,8 @@ const VaultSectionHeader = ({
               postID: section.header.post.id,
               dispatch,
               selectedPostsLength: selectedPosts.length,
+              origin: "vault",
+              index: null,
             })
           }
           onLongPress={() => {
