@@ -144,9 +144,11 @@ const SelectGame = ({ navigation, route }) => {
       SearchGameTitle({ title: "", dispatch });
       setGotEmptyAllGames(true);
     }
+    /*
     if (selectedPosts.length === 0) {
       console.log("Development warning only: selectedPosts.length === 0");
     }
+    */
   });
 
   const animatedStyles = [
