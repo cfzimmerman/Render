@@ -61,7 +61,7 @@ const SelectGameListFooter = ({
   currentUserID,
 }: ListFooterPT) => {
   if (listData === null || listData.length === 0 || searchMode === "library") {
-    return null;
+    return <TextButton title={""} disabled={true} Action={() => null} />;
   } else if (nextToken === null) {
     return (
       <TextButton
@@ -87,9 +87,9 @@ const styles = StyleSheet.create({
   textButtonHolder: {
     width: Environment.FullBar,
     alignItems: "center",
-    justifyContent: "center",
-    marginBottom: Environment.CubeSize,
-    marginTop: Environment.LargePadding,
+    justifyContent: "flex-start",
+    height: Environment.HalfBar,
+    margin: Environment.StandardPadding,
   },
   textButtonTitle: {
     color: Colors.AccentOn,

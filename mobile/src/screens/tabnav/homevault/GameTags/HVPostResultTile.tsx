@@ -23,8 +23,6 @@ interface InputTypes {
   dispatch: DispatchType;
 }
 
-// navigation.navigate("VaultPostFullView", { startindex, usecase });
-
 const HVPostResultTile = ({
   item,
   index,
@@ -89,7 +87,7 @@ const styles = StyleSheet.create({
     height: Environment.HalfBar,
     width: Environment.HalfBar,
     borderRadius: Environment.StandardRadius,
-    marginBottom: 12,
+    marginBottom: Environment.StandardPadding,
     alignItems: "flex-end",
     justifyContent: "flex-end",
   },

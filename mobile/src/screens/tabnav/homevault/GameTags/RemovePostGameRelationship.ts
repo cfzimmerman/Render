@@ -8,7 +8,9 @@ import {
   DeleteUserGamesInput,
 } from "../../../../API";
 import { deleteUserGames, updatePosts } from "../../../../graphql/mutations";
+import { removeLibraryGame } from "../../../../redux/homevault/gametags";
 import { DispatchType } from "../../../../redux/store";
+import { GameCoverTileType } from "./GameCoverTile";
 
 interface InputTypes {
   postID: string;
@@ -99,6 +101,7 @@ async function RemovePostGameRelationship({
           await API.graphql(
             graphqlOperation(deleteUserGames, { input: deleteID })
           );
+          dispatch(removeLibraryGame(gameResult.gamesID));
         }
       }
 

@@ -52,6 +52,7 @@ async function CoverTileAction({
         postID: selectedPosts[0],
       });
       // Update front end data
+      navigation.navigate("HomeVault");
     } else if (selectedPosts.length > 1 && item != null) {
       dispatch(
         setLoadProgressActive({
@@ -87,11 +88,11 @@ async function CoverTileAction({
         syncPreference,
         localLibrary,
       });
+      navigation.navigate("HomeVault");
     }
 
     dispatch(setLoadProgressInactive());
     dispatch(deactivateMultiSelect());
-    navigation.navigate("HomeVault");
   } catch (error) {
     console.log(error);
     dispatch(

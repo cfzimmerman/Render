@@ -2,11 +2,14 @@ import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { API, graphqlOperation } from "aws-amplify";
 import {
   CreateUserGamesInput,
+  CreateUserGamesMutation,
   UpdatePostsInput,
   UserGamesByUsersQuery,
 } from "../../../../API";
 import { createUserGames, updatePosts } from "../../../../graphql/mutations";
+import { addNewLibraryGame } from "../../../../redux/homevault/gametags";
 import { DispatchType } from "../../../../redux/store";
+import { GameCoverTileType } from "./GameCoverTile";
 
 interface InputTypes {
   gameID: string;
@@ -64,9 +67,19 @@ async function CreatePostGameRelationship({
           gamesID: gameID,
         };
 
-        await API.graphql(
+        const {
+          data: { createUserGames: newRelation },
+        } = (await API.graphql(
           graphqlOperation(createUserGames, { input: newUserGames })
-        );
+        )) as GraphQLResult<CreateUserGamesMutation>;
+
+        const newLibraryGame: GameCoverTileType = {
+          id: gameID,
+          title: newRelation.Games.title,
+          coverID: newRelation.Games.coverID,
+          backgroundID: newRelation.Games.backgroundID,
+        };
+        dispatch(addNewLibraryGame(newLibraryGame));
       }
     }
     return "success";

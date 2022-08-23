@@ -104,6 +104,18 @@ const slice = createSlice({
         action.payload
       );
     },
+    removeLibraryGame: (state, action: PayloadAction<string>) => {
+      // payload is gamesID
+      const targetIndex = state.libraryGamesArray.findIndex(
+        (item) => item.id === action.payload
+      );
+      if (targetIndex > -1) {
+        state.libraryGamesArray.splice(targetIndex, 1);
+      }
+    },
+    addNewLibraryGame: (state, action: PayloadAction<GameCoverTileType>) => {
+      state.libraryGamesArray.unshift(action.payload);
+    },
   },
 });
 
@@ -120,6 +132,8 @@ export const {
   setHVGameSearchActive,
   addVideoToHVGameSearchResults,
   addNextHVGameSearchResultsArray,
+  removeLibraryGame,
+  addNewLibraryGame,
 } = slice.actions;
 
 export default slice.reducer;
