@@ -37,13 +37,7 @@ const HomeVaultHeader = ({
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() =>
-            dispatch(
-              setSystemmessageActive(
-                UserDialogue().systemmessage.searchconstruction
-              )
-            )
-          }
+          onPress={() => navigation.navigate("HVSearchLanding")}
         >
           <View style={[GlobalStyles.shadow, styles.searchbarwrapper]}>
             <Text

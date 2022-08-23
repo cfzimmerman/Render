@@ -1,4 +1,6 @@
+import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { Storage, API, graphqlOperation } from "aws-amplify";
+import { SearchByGamertagQuery } from "../../../API";
 import AddUserSearchResult from "./AddUserSearchResult";
 
 const IsUser = ({ cognitosub, targetcognitosub }) => {
@@ -28,7 +30,7 @@ async function GetSearchResults({
       }
     };
 
-    const result = await API.graphql(
+    const result = (await API.graphql(
       graphqlOperation(`
             query SearchByGamertag {
                 searchByGamertag (
@@ -47,7 +49,7 @@ async function GetSearchResults({
                 }
             }
         `)
-    );
+    )) as GraphQLResult<SearchByGamertagQuery>;
 
     const userarray = result.data.searchByGamertag.items;
 

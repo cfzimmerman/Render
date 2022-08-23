@@ -24,6 +24,59 @@ export const getPostViewTracker = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
+        Games {
+          id
+          createdAt
+          igdbID
+          title
+          releaseDate
+          series
+          genre
+          theme
+          coverID
+          backgroundID
+          steamID
+          microsoftID
+          xboxMarketplaceID
+          gogID
+          egsID
+          twitchID
+          oculusID
+          playstationID
+          updatedAt
+        }
+        Comments {
+          nextToken
+        }
+        Notifications {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
         updatedAt
       }
       viewerID
@@ -47,6 +100,27 @@ export const getPostViewTracker = /* GraphQL */ `
         setpassword
         storagesizeinbytes
         type
+        Comments {
+          nextToken
+        }
+        UserNotifications {
+          nextToken
+        }
+        UserGames {
+          nextToken
+        }
+        Posts {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
+        SenderRelationships {
+          nextToken
+        }
+        ReceiverRelationships {
+          nextToken
+        }
         createdAt
       }
       createdAt
@@ -68,7 +142,49 @@ export const listPostViewTrackers = /* GraphQL */ `
       items {
         id
         postsID
+        Posts {
+          id
+          aspectratio
+          cognitosub
+          contentdate
+          contentkey
+          contentlastupdated
+          contenttype
+          createdAt
+          deleteddate
+          posttext
+          publicpost
+          publicpostdate
+          sizeinbytes
+          thumbnailkey
+          type
+          usersID
+          gamesID
+          updatedAt
+        }
         viewerID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
         createdAt
         updatedAt
       }
@@ -96,8 +212,605 @@ export const postViewByPostID = /* GraphQL */ `
       items {
         id
         postsID
+        Posts {
+          id
+          aspectratio
+          cognitosub
+          contentdate
+          contentkey
+          contentlastupdated
+          contenttype
+          createdAt
+          deleteddate
+          posttext
+          publicpost
+          publicpostdate
+          sizeinbytes
+          thumbnailkey
+          type
+          usersID
+          gamesID
+          updatedAt
+        }
         viewerID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
         createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getGlobalData = /* GraphQL */ `
+  query GetGlobalData($id: ID!) {
+    getGlobalData(id: $id) {
+      id
+      createdAt
+      usecase
+      key
+      strA
+      numA
+      numB
+      updatedAt
+    }
+  }
+`;
+export const listGlobalData = /* GraphQL */ `
+  query ListGlobalData(
+    $filter: ModelGlobalDataFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGlobalData(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        createdAt
+        usecase
+        key
+        strA
+        numA
+        numB
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const gDByUsecase = /* GraphQL */ `
+  query GDByUsecase(
+    $usecase: String!
+    $sortDirection: ModelSortDirection
+    $filter: ModelGlobalDataFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    GDByUsecase(
+      usecase: $usecase
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        usecase
+        key
+        strA
+        numA
+        numB
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getGames = /* GraphQL */ `
+  query GetGames($id: ID!) {
+    getGames(id: $id) {
+      id
+      createdAt
+      igdbID
+      title
+      releaseDate
+      series
+      genre
+      theme
+      coverID
+      backgroundID
+      steamID
+      microsoftID
+      xboxMarketplaceID
+      gogID
+      egsID
+      twitchID
+      oculusID
+      playstationID
+      UserGames {
+        items {
+          id
+          createdAt
+          usersID
+          gamesID
+          updatedAt
+        }
+        nextToken
+      }
+      Posts {
+        items {
+          id
+          aspectratio
+          cognitosub
+          contentdate
+          contentkey
+          contentlastupdated
+          contenttype
+          createdAt
+          deleteddate
+          posttext
+          publicpost
+          publicpostdate
+          sizeinbytes
+          thumbnailkey
+          type
+          usersID
+          gamesID
+          updatedAt
+        }
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const listGames = /* GraphQL */ `
+  query ListGames(
+    $filter: ModelGamesFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        createdAt
+        igdbID
+        title
+        releaseDate
+        series
+        genre
+        theme
+        coverID
+        backgroundID
+        steamID
+        microsoftID
+        xboxMarketplaceID
+        gogID
+        egsID
+        twitchID
+        oculusID
+        playstationID
+        UserGames {
+          nextToken
+        }
+        Posts {
+          nextToken
+        }
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const gamesByTitle = /* GraphQL */ `
+  query GamesByTitle(
+    $title: String!
+    $releaseDate: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGamesFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    gamesByTitle(
+      title: $title
+      releaseDate: $releaseDate
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        igdbID
+        title
+        releaseDate
+        series
+        genre
+        theme
+        coverID
+        backgroundID
+        steamID
+        microsoftID
+        xboxMarketplaceID
+        gogID
+        egsID
+        twitchID
+        oculusID
+        playstationID
+        UserGames {
+          nextToken
+        }
+        Posts {
+          nextToken
+        }
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const searchGames = /* GraphQL */ `
+  query SearchGames(
+    $filter: SearchableGamesFilterInput
+    $sort: [SearchableGamesSortInput]
+    $limit: Int
+    $nextToken: String
+    $from: Int
+    $aggregates: [SearchableGamesAggregationInput]
+  ) {
+    searchGames(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+      from: $from
+      aggregates: $aggregates
+    ) {
+      items {
+        id
+        createdAt
+        igdbID
+        title
+        releaseDate
+        series
+        genre
+        theme
+        coverID
+        backgroundID
+        steamID
+        microsoftID
+        xboxMarketplaceID
+        gogID
+        egsID
+        twitchID
+        oculusID
+        playstationID
+        UserGames {
+          nextToken
+        }
+        Posts {
+          nextToken
+        }
+        updatedAt
+      }
+      nextToken
+      total
+      aggregateItems {
+        name
+        result {
+          ... on SearchableAggregateScalarResult {
+            value
+          }
+          ... on SearchableAggregateBucketResult {
+            buckets {
+              key
+              doc_count
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+export const getUserGames = /* GraphQL */ `
+  query GetUserGames($id: ID!) {
+    getUserGames(id: $id) {
+      id
+      createdAt
+      usersID
+      gamesID
+      Users {
+        id
+        acceptedtos
+        addedcount
+        addedmecount
+        birthday
+        updatedAt
+        cognitosub
+        disablednotifications
+        displayname
+        email
+        emailconfirmed
+        firstvaultupload
+        fullyauthenticated
+        gamertag
+        mostrecentpublicpost
+        pfp
+        setpassword
+        storagesizeinbytes
+        type
+        Comments {
+          nextToken
+        }
+        UserNotifications {
+          nextToken
+        }
+        UserGames {
+          nextToken
+        }
+        Posts {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
+        SenderRelationships {
+          nextToken
+        }
+        ReceiverRelationships {
+          nextToken
+        }
+        createdAt
+      }
+      Games {
+        id
+        createdAt
+        igdbID
+        title
+        releaseDate
+        series
+        genre
+        theme
+        coverID
+        backgroundID
+        steamID
+        microsoftID
+        xboxMarketplaceID
+        gogID
+        egsID
+        twitchID
+        oculusID
+        playstationID
+        UserGames {
+          nextToken
+        }
+        Posts {
+          nextToken
+        }
+        updatedAt
+      }
+      updatedAt
+    }
+  }
+`;
+export const listUserGames = /* GraphQL */ `
+  query ListUserGames(
+    $filter: ModelUserGamesFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        createdAt
+        usersID
+        gamesID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
+        Games {
+          id
+          createdAt
+          igdbID
+          title
+          releaseDate
+          series
+          genre
+          theme
+          coverID
+          backgroundID
+          steamID
+          microsoftID
+          xboxMarketplaceID
+          gogID
+          egsID
+          twitchID
+          oculusID
+          playstationID
+          updatedAt
+        }
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const userGamesByUsers = /* GraphQL */ `
+  query UserGamesByUsers(
+    $usersID: ID!
+    $gamesID: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserGamesFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    userGamesByUsers(
+      usersID: $usersID
+      gamesID: $gamesID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        usersID
+        gamesID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
+        Games {
+          id
+          createdAt
+          igdbID
+          title
+          releaseDate
+          series
+          genre
+          theme
+          coverID
+          backgroundID
+          steamID
+          microsoftID
+          xboxMarketplaceID
+          gogID
+          egsID
+          twitchID
+          oculusID
+          playstationID
+          updatedAt
+        }
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const userGamesByGames = /* GraphQL */ `
+  query UserGamesByGames(
+    $gamesID: ID!
+    $usersID: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserGamesFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    userGamesByGames(
+      gamesID: $gamesID
+      usersID: $usersID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        usersID
+        gamesID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
+        Games {
+          id
+          createdAt
+          igdbID
+          title
+          releaseDate
+          series
+          genre
+          theme
+          coverID
+          backgroundID
+          steamID
+          microsoftID
+          xboxMarketplaceID
+          gogID
+          egsID
+          twitchID
+          oculusID
+          playstationID
+          updatedAt
+        }
         updatedAt
       }
       nextToken
@@ -129,9 +842,69 @@ export const getNotifications = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
+        Games {
+          id
+          createdAt
+          igdbID
+          title
+          releaseDate
+          series
+          genre
+          theme
+          coverID
+          backgroundID
+          steamID
+          microsoftID
+          xboxMarketplaceID
+          gogID
+          egsID
+          twitchID
+          oculusID
+          playstationID
+          updatedAt
+        }
+        Comments {
+          nextToken
+        }
+        Notifications {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
         updatedAt
       }
       UserNotifications {
+        items {
+          id
+          createdAt
+          notificationsID
+          usersID
+          updatedAt
+        }
         nextToken
       }
       updatedAt
@@ -151,6 +924,29 @@ export const listNotifications = /* GraphQL */ `
         code
         payload
         postsID
+        Posts {
+          id
+          aspectratio
+          cognitosub
+          contentdate
+          contentkey
+          contentlastupdated
+          contenttype
+          createdAt
+          deleteddate
+          posttext
+          publicpost
+          publicpostdate
+          sizeinbytes
+          thumbnailkey
+          type
+          usersID
+          gamesID
+          updatedAt
+        }
+        UserNotifications {
+          nextToken
+        }
         updatedAt
       }
       nextToken
@@ -180,6 +976,29 @@ export const notificationsByCodeDate = /* GraphQL */ `
         code
         payload
         postsID
+        Posts {
+          id
+          aspectratio
+          cognitosub
+          contentdate
+          contentkey
+          contentlastupdated
+          contenttype
+          createdAt
+          deleteddate
+          posttext
+          publicpost
+          publicpostdate
+          sizeinbytes
+          thumbnailkey
+          type
+          usersID
+          gamesID
+          updatedAt
+        }
+        UserNotifications {
+          nextToken
+        }
         updatedAt
       }
       nextToken
@@ -209,6 +1028,29 @@ export const notificationsByCode = /* GraphQL */ `
         code
         payload
         postsID
+        Posts {
+          id
+          aspectratio
+          cognitosub
+          contentdate
+          contentkey
+          contentlastupdated
+          contenttype
+          createdAt
+          deleteddate
+          posttext
+          publicpost
+          publicpostdate
+          sizeinbytes
+          thumbnailkey
+          type
+          usersID
+          gamesID
+          updatedAt
+        }
+        UserNotifications {
+          nextToken
+        }
         updatedAt
       }
       nextToken
@@ -238,6 +1080,29 @@ export const notificationsByPostsID = /* GraphQL */ `
         code
         payload
         postsID
+        Posts {
+          id
+          aspectratio
+          cognitosub
+          contentdate
+          contentkey
+          contentlastupdated
+          contenttype
+          createdAt
+          deleteddate
+          posttext
+          publicpost
+          publicpostdate
+          sizeinbytes
+          thumbnailkey
+          type
+          usersID
+          gamesID
+          updatedAt
+        }
+        UserNotifications {
+          nextToken
+        }
         updatedAt
       }
       nextToken
@@ -257,6 +1122,29 @@ export const getUserNotifications = /* GraphQL */ `
         code
         payload
         postsID
+        Posts {
+          id
+          aspectratio
+          cognitosub
+          contentdate
+          contentkey
+          contentlastupdated
+          contenttype
+          createdAt
+          deleteddate
+          posttext
+          publicpost
+          publicpostdate
+          sizeinbytes
+          thumbnailkey
+          type
+          usersID
+          gamesID
+          updatedAt
+        }
+        UserNotifications {
+          nextToken
+        }
         updatedAt
       }
       Users {
@@ -279,6 +1167,27 @@ export const getUserNotifications = /* GraphQL */ `
         setpassword
         storagesizeinbytes
         type
+        Comments {
+          nextToken
+        }
+        UserNotifications {
+          nextToken
+        }
+        UserGames {
+          nextToken
+        }
+        Posts {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
+        SenderRelationships {
+          nextToken
+        }
+        ReceiverRelationships {
+          nextToken
+        }
         createdAt
       }
       updatedAt
@@ -301,6 +1210,36 @@ export const listUserNotifications = /* GraphQL */ `
         createdAt
         notificationsID
         usersID
+        Notifications {
+          id
+          createdAt
+          code
+          payload
+          postsID
+          updatedAt
+        }
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
         updatedAt
       }
       nextToken
@@ -329,6 +1268,36 @@ export const userNotificationsByNotifications = /* GraphQL */ `
         createdAt
         notificationsID
         usersID
+        Notifications {
+          id
+          createdAt
+          code
+          payload
+          postsID
+          updatedAt
+        }
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
         updatedAt
       }
       nextToken
@@ -357,6 +1326,36 @@ export const userNotificationsByUsers = /* GraphQL */ `
         createdAt
         notificationsID
         usersID
+        Notifications {
+          id
+          createdAt
+          code
+          payload
+          postsID
+          updatedAt
+        }
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
         updatedAt
       }
       nextToken
@@ -386,6 +1385,59 @@ export const getComments = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
+        Games {
+          id
+          createdAt
+          igdbID
+          title
+          releaseDate
+          series
+          genre
+          theme
+          coverID
+          backgroundID
+          steamID
+          microsoftID
+          xboxMarketplaceID
+          gogID
+          egsID
+          twitchID
+          oculusID
+          playstationID
+          updatedAt
+        }
+        Comments {
+          nextToken
+        }
+        Notifications {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
         updatedAt
       }
       usersID
@@ -409,6 +1461,27 @@ export const getComments = /* GraphQL */ `
         setpassword
         storagesizeinbytes
         type
+        Comments {
+          nextToken
+        }
+        UserNotifications {
+          nextToken
+        }
+        UserGames {
+          nextToken
+        }
+        Posts {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
+        SenderRelationships {
+          nextToken
+        }
+        ReceiverRelationships {
+          nextToken
+        }
         createdAt
       }
       createdAt
@@ -427,7 +1500,49 @@ export const listComments = /* GraphQL */ `
         id
         commenttext
         postsID
+        Posts {
+          id
+          aspectratio
+          cognitosub
+          contentdate
+          contentkey
+          contentlastupdated
+          contenttype
+          createdAt
+          deleteddate
+          posttext
+          publicpost
+          publicpostdate
+          sizeinbytes
+          thumbnailkey
+          type
+          usersID
+          gamesID
+          updatedAt
+        }
         usersID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
         createdAt
         updatedAt
       }
@@ -456,7 +1571,49 @@ export const commentsByCreatedDate = /* GraphQL */ `
         id
         commenttext
         postsID
+        Posts {
+          id
+          aspectratio
+          cognitosub
+          contentdate
+          contentkey
+          contentlastupdated
+          contenttype
+          createdAt
+          deleteddate
+          posttext
+          publicpost
+          publicpostdate
+          sizeinbytes
+          thumbnailkey
+          type
+          usersID
+          gamesID
+          updatedAt
+        }
         usersID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
         createdAt
         updatedAt
       }
@@ -485,7 +1642,49 @@ export const commentsByUsersID = /* GraphQL */ `
         id
         commenttext
         postsID
+        Posts {
+          id
+          aspectratio
+          cognitosub
+          contentdate
+          contentkey
+          contentlastupdated
+          contenttype
+          createdAt
+          deleteddate
+          posttext
+          publicpost
+          publicpostdate
+          sizeinbytes
+          thumbnailkey
+          type
+          usersID
+          gamesID
+          updatedAt
+        }
         usersID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
         createdAt
         updatedAt
       }
@@ -519,6 +1718,27 @@ export const getUserRelationships = /* GraphQL */ `
         setpassword
         storagesizeinbytes
         type
+        Comments {
+          nextToken
+        }
+        UserNotifications {
+          nextToken
+        }
+        UserGames {
+          nextToken
+        }
+        Posts {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
+        SenderRelationships {
+          nextToken
+        }
+        ReceiverRelationships {
+          nextToken
+        }
         createdAt
       }
       receiverID
@@ -542,6 +1762,27 @@ export const getUserRelationships = /* GraphQL */ `
         setpassword
         storagesizeinbytes
         type
+        Comments {
+          nextToken
+        }
+        UserNotifications {
+          nextToken
+        }
+        UserGames {
+          nextToken
+        }
+        Posts {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
+        SenderRelationships {
+          nextToken
+        }
+        ReceiverRelationships {
+          nextToken
+        }
         createdAt
       }
       updatedAt
@@ -563,7 +1804,51 @@ export const listUserRelationships = /* GraphQL */ `
         id
         createdAt
         senderID
+        SenderUser {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
         receiverID
+        ReceiverUser {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
         updatedAt
       }
       nextToken
@@ -591,7 +1876,51 @@ export const senderRelationshipsByDate = /* GraphQL */ `
         id
         createdAt
         senderID
+        SenderUser {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
         receiverID
+        ReceiverUser {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
         updatedAt
       }
       nextToken
@@ -617,7 +1946,51 @@ export const addedByCurrentUser = /* GraphQL */ `
         id
         createdAt
         senderID
+        SenderUser {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
         receiverID
+        ReceiverUser {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
         updatedAt
       }
       nextToken
@@ -645,7 +2018,51 @@ export const checkAddedUser = /* GraphQL */ `
         id
         createdAt
         senderID
+        SenderUser {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
         receiverID
+        ReceiverUser {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
         updatedAt
       }
       nextToken
@@ -673,7 +2090,51 @@ export const receiverRelationshipsByDate = /* GraphQL */ `
         id
         createdAt
         senderID
+        SenderUser {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
         receiverID
+        ReceiverUser {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
         updatedAt
       }
       nextToken
@@ -699,6 +2160,7 @@ export const getPosts = /* GraphQL */ `
       thumbnailkey
       type
       usersID
+      gamesID
       Users {
         id
         acceptedtos
@@ -719,15 +2181,86 @@ export const getPosts = /* GraphQL */ `
         setpassword
         storagesizeinbytes
         type
+        Comments {
+          nextToken
+        }
+        UserNotifications {
+          nextToken
+        }
+        UserGames {
+          nextToken
+        }
+        Posts {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
+        SenderRelationships {
+          nextToken
+        }
+        ReceiverRelationships {
+          nextToken
+        }
         createdAt
       }
+      Games {
+        id
+        createdAt
+        igdbID
+        title
+        releaseDate
+        series
+        genre
+        theme
+        coverID
+        backgroundID
+        steamID
+        microsoftID
+        xboxMarketplaceID
+        gogID
+        egsID
+        twitchID
+        oculusID
+        playstationID
+        UserGames {
+          nextToken
+        }
+        Posts {
+          nextToken
+        }
+        updatedAt
+      }
       Comments {
+        items {
+          id
+          commenttext
+          postsID
+          usersID
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       Notifications {
+        items {
+          id
+          createdAt
+          code
+          payload
+          postsID
+          updatedAt
+        }
         nextToken
       }
       PostViewTrackers {
+        items {
+          id
+          postsID
+          viewerID
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       updatedAt
@@ -758,6 +2291,59 @@ export const listPosts = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
+        Games {
+          id
+          createdAt
+          igdbID
+          title
+          releaseDate
+          series
+          genre
+          theme
+          coverID
+          backgroundID
+          steamID
+          microsoftID
+          xboxMarketplaceID
+          gogID
+          egsID
+          twitchID
+          oculusID
+          playstationID
+          updatedAt
+        }
+        Comments {
+          nextToken
+        }
+        Notifications {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
         updatedAt
       }
       nextToken
@@ -798,6 +2384,59 @@ export const postsByCreatedDate = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
+        Games {
+          id
+          createdAt
+          igdbID
+          title
+          releaseDate
+          series
+          genre
+          theme
+          coverID
+          backgroundID
+          steamID
+          microsoftID
+          xboxMarketplaceID
+          gogID
+          egsID
+          twitchID
+          oculusID
+          playstationID
+          updatedAt
+        }
+        Comments {
+          nextToken
+        }
+        Notifications {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
         updatedAt
       }
       nextToken
@@ -838,6 +2477,59 @@ export const postsByPostedDate = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
+        Games {
+          id
+          createdAt
+          igdbID
+          title
+          releaseDate
+          series
+          genre
+          theme
+          coverID
+          backgroundID
+          steamID
+          microsoftID
+          xboxMarketplaceID
+          gogID
+          egsID
+          twitchID
+          oculusID
+          playstationID
+          updatedAt
+        }
+        Comments {
+          nextToken
+        }
+        Notifications {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
         updatedAt
       }
       nextToken
@@ -878,6 +2570,59 @@ export const postsByContentDate = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
+        Games {
+          id
+          createdAt
+          igdbID
+          title
+          releaseDate
+          series
+          genre
+          theme
+          coverID
+          backgroundID
+          steamID
+          microsoftID
+          xboxMarketplaceID
+          gogID
+          egsID
+          twitchID
+          oculusID
+          playstationID
+          updatedAt
+        }
+        Comments {
+          nextToken
+        }
+        Notifications {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
         updatedAt
       }
       nextToken
@@ -916,6 +2661,59 @@ export const postsByContentKey = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
+        Games {
+          id
+          createdAt
+          igdbID
+          title
+          releaseDate
+          series
+          genre
+          theme
+          coverID
+          backgroundID
+          steamID
+          microsoftID
+          xboxMarketplaceID
+          gogID
+          egsID
+          twitchID
+          oculusID
+          playstationID
+          updatedAt
+        }
+        Comments {
+          nextToken
+        }
+        Notifications {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
         updatedAt
       }
       nextToken
@@ -956,6 +2754,152 @@ export const postsByPublicDate = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
+        Games {
+          id
+          createdAt
+          igdbID
+          title
+          releaseDate
+          series
+          genre
+          theme
+          coverID
+          backgroundID
+          steamID
+          microsoftID
+          xboxMarketplaceID
+          gogID
+          egsID
+          twitchID
+          oculusID
+          playstationID
+          updatedAt
+        }
+        Comments {
+          nextToken
+        }
+        Notifications {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const postsByUsers = /* GraphQL */ `
+  query PostsByUsers(
+    $usersID: ID!
+    $contentdate: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    postsByUsers(
+      usersID: $usersID
+      contentdate: $contentdate
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contentlastupdated
+        contenttype
+        createdAt
+        deleteddate
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        gamesID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
+        Games {
+          id
+          createdAt
+          igdbID
+          title
+          releaseDate
+          series
+          genre
+          theme
+          coverID
+          backgroundID
+          steamID
+          microsoftID
+          xboxMarketplaceID
+          gogID
+          egsID
+          twitchID
+          oculusID
+          playstationID
+          updatedAt
+        }
+        Comments {
+          nextToken
+        }
+        Notifications {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
         updatedAt
       }
       nextToken
@@ -996,6 +2940,245 @@ export const postsByDeletedDate = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
+        Games {
+          id
+          createdAt
+          igdbID
+          title
+          releaseDate
+          series
+          genre
+          theme
+          coverID
+          backgroundID
+          steamID
+          microsoftID
+          xboxMarketplaceID
+          gogID
+          egsID
+          twitchID
+          oculusID
+          playstationID
+          updatedAt
+        }
+        Comments {
+          nextToken
+        }
+        Notifications {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const postsByUserGames = /* GraphQL */ `
+  query PostsByUserGames(
+    $usersID: ID!
+    $gamesID: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    postsByUserGames(
+      usersID: $usersID
+      gamesID: $gamesID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contentlastupdated
+        contenttype
+        createdAt
+        deleteddate
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        gamesID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
+        Games {
+          id
+          createdAt
+          igdbID
+          title
+          releaseDate
+          series
+          genre
+          theme
+          coverID
+          backgroundID
+          steamID
+          microsoftID
+          xboxMarketplaceID
+          gogID
+          egsID
+          twitchID
+          oculusID
+          playstationID
+          updatedAt
+        }
+        Comments {
+          nextToken
+        }
+        Notifications {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const postsByGames = /* GraphQL */ `
+  query PostsByGames(
+    $gamesID: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    postsByGames(
+      gamesID: $gamesID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contentlastupdated
+        contenttype
+        createdAt
+        deleteddate
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        gamesID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
+        Games {
+          id
+          createdAt
+          igdbID
+          title
+          releaseDate
+          series
+          genre
+          theme
+          coverID
+          backgroundID
+          steamID
+          microsoftID
+          xboxMarketplaceID
+          gogID
+          egsID
+          twitchID
+          oculusID
+          playstationID
+          updatedAt
+        }
+        Comments {
+          nextToken
+        }
+        Notifications {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
         updatedAt
       }
       nextToken
@@ -1036,6 +3219,59 @@ export const searchPosts = /* GraphQL */ `
         thumbnailkey
         type
         usersID
+        gamesID
+        Users {
+          id
+          acceptedtos
+          addedcount
+          addedmecount
+          birthday
+          updatedAt
+          cognitosub
+          disablednotifications
+          displayname
+          email
+          emailconfirmed
+          firstvaultupload
+          fullyauthenticated
+          gamertag
+          mostrecentpublicpost
+          pfp
+          setpassword
+          storagesizeinbytes
+          type
+          createdAt
+        }
+        Games {
+          id
+          createdAt
+          igdbID
+          title
+          releaseDate
+          series
+          genre
+          theme
+          coverID
+          backgroundID
+          steamID
+          microsoftID
+          xboxMarketplaceID
+          gogID
+          egsID
+          twitchID
+          oculusID
+          playstationID
+          updatedAt
+        }
+        Comments {
+          nextToken
+        }
+        Notifications {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
         updatedAt
       }
       nextToken
@@ -1080,21 +3316,87 @@ export const getUsers = /* GraphQL */ `
       storagesizeinbytes
       type
       Comments {
+        items {
+          id
+          commenttext
+          postsID
+          usersID
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       UserNotifications {
+        items {
+          id
+          createdAt
+          notificationsID
+          usersID
+          updatedAt
+        }
+        nextToken
+      }
+      UserGames {
+        items {
+          id
+          createdAt
+          usersID
+          gamesID
+          updatedAt
+        }
         nextToken
       }
       Posts {
+        items {
+          id
+          aspectratio
+          cognitosub
+          contentdate
+          contentkey
+          contentlastupdated
+          contenttype
+          createdAt
+          deleteddate
+          posttext
+          publicpost
+          publicpostdate
+          sizeinbytes
+          thumbnailkey
+          type
+          usersID
+          gamesID
+          updatedAt
+        }
         nextToken
       }
       PostViewTrackers {
+        items {
+          id
+          postsID
+          viewerID
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       SenderRelationships {
+        items {
+          id
+          createdAt
+          senderID
+          receiverID
+          updatedAt
+        }
         nextToken
       }
       ReceiverRelationships {
+        items {
+          id
+          createdAt
+          senderID
+          receiverID
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -1128,6 +3430,27 @@ export const listUsers = /* GraphQL */ `
         setpassword
         storagesizeinbytes
         type
+        Comments {
+          nextToken
+        }
+        UserNotifications {
+          nextToken
+        }
+        UserGames {
+          nextToken
+        }
+        Posts {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
+        SenderRelationships {
+          nextToken
+        }
+        ReceiverRelationships {
+          nextToken
+        }
         createdAt
       }
       nextToken
@@ -1169,6 +3492,27 @@ export const userByCognitosub = /* GraphQL */ `
         setpassword
         storagesizeinbytes
         type
+        Comments {
+          nextToken
+        }
+        UserNotifications {
+          nextToken
+        }
+        UserGames {
+          nextToken
+        }
+        Posts {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
+        SenderRelationships {
+          nextToken
+        }
+        ReceiverRelationships {
+          nextToken
+        }
         createdAt
       }
       nextToken
@@ -1210,6 +3554,27 @@ export const userByEmail = /* GraphQL */ `
         setpassword
         storagesizeinbytes
         type
+        Comments {
+          nextToken
+        }
+        UserNotifications {
+          nextToken
+        }
+        UserGames {
+          nextToken
+        }
+        Posts {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
+        SenderRelationships {
+          nextToken
+        }
+        ReceiverRelationships {
+          nextToken
+        }
         createdAt
       }
       nextToken
@@ -1251,6 +3616,27 @@ export const userByGamertag = /* GraphQL */ `
         setpassword
         storagesizeinbytes
         type
+        Comments {
+          nextToken
+        }
+        UserNotifications {
+          nextToken
+        }
+        UserGames {
+          nextToken
+        }
+        Posts {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
+        SenderRelationships {
+          nextToken
+        }
+        ReceiverRelationships {
+          nextToken
+        }
         createdAt
       }
       nextToken
@@ -1294,67 +3680,30 @@ export const searchByGamertag = /* GraphQL */ `
         setpassword
         storagesizeinbytes
         type
-        createdAt
-      }
-      nextToken
-    }
-  }
-`;
-export const searchUsers = /* GraphQL */ `
-  query SearchUsers(
-    $filter: SearchableUsersFilterInput
-    $sort: [SearchableUsersSortInput]
-    $limit: Int
-    $nextToken: String
-    $from: Int
-    $aggregates: [SearchableUsersAggregationInput]
-  ) {
-    searchUsers(
-      filter: $filter
-      sort: $sort
-      limit: $limit
-      nextToken: $nextToken
-      from: $from
-      aggregates: $aggregates
-    ) {
-      items {
-        id
-        acceptedtos
-        addedcount
-        addedmecount
-        birthday
-        updatedAt
-        cognitosub
-        disablednotifications
-        displayname
-        email
-        emailconfirmed
-        firstvaultupload
-        fullyauthenticated
-        gamertag
-        mostrecentpublicpost
-        pfp
-        setpassword
-        storagesizeinbytes
-        type
-        createdAt
-      }
-      nextToken
-      total
-      aggregateItems {
-        name
-        result {
-          ... on SearchableAggregateScalarResult {
-            value
-          }
-          ... on SearchableAggregateBucketResult {
-            buckets {
-              key
-              doc_count
-            }
-          }
+        Comments {
+          nextToken
         }
+        UserNotifications {
+          nextToken
+        }
+        UserGames {
+          nextToken
+        }
+        Posts {
+          nextToken
+        }
+        PostViewTrackers {
+          nextToken
+        }
+        SenderRelationships {
+          nextToken
+        }
+        ReceiverRelationships {
+          nextToken
+        }
+        createdAt
       }
+      nextToken
     }
   }
 `;

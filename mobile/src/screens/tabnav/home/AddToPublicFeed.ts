@@ -1,7 +1,8 @@
 import { addToPublicFeed } from "../../../redux/home/homemain";
+import { PostType } from "../../../resources/CommonTypes";
 
 const AddToPublicFeed = ({ dispatch, item, signedurl, thumbnailurl }) => {
-  const post = {
+  const post: PostType = {
     id: item.id,
     contenttype: item.contenttype,
     aspectratio: item.aspectratio,
@@ -16,6 +17,9 @@ const AddToPublicFeed = ({ dispatch, item, signedurl, thumbnailurl }) => {
     displayname: item.Users.displayname,
     userpfp: item.Users.pfp,
     userpfpurl: null,
+    gamesID: item.Games === null ? null : item.Games.id,
+    coverID: item.Games === null ? null : item.Games.coverID,
+    title: item.Games === null ? null : item.Games.title,
   };
 
   dispatch(addToPublicFeed(post));

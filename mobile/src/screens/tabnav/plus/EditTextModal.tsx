@@ -19,6 +19,8 @@ import { setEditTextModalActive } from "../../../redux/plus/plusmain";
 import { Environment, GlobalStyles, Colors } from "../../../resources/project";
 import { HalfbarButton } from "../../../resources/atoms";
 import ChangePostText from "./ChangePostText";
+import { DispatchType, RootStateType } from "../../../redux/store";
+import { PostHeaderType, PostType } from "../../../resources/CommonTypes";
 
 const CustomHalfbarButton = ({ label, Action }) => {
   return (
@@ -30,11 +32,23 @@ const CustomHalfbarButton = ({ label, Action }) => {
   );
 };
 
-const EditTextModal = ({ dispatch, item, vaultpostdata, vaultfeeddata }) => {
+interface EditTextModalPT {
+  dispatch: DispatchType;
+  item: PostType;
+  vaultpostdata: PostHeaderType[];
+  vaultfeeddata: PostType[];
+}
+
+const EditTextModal = ({
+  dispatch,
+  item,
+  vaultpostdata,
+  vaultfeeddata,
+}: EditTextModalPT) => {
   const [postText, setPostText] = useState(item.posttext);
 
   const edittextmodalactive = useSelector(
-    (state) => state.plusmain.edittextmodalactive
+    (state: RootStateType) => state.plusmain.edittextmodalactive
   );
 
   // Character limit for user input text

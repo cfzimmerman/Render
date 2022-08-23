@@ -1,7 +1,8 @@
 import { addToGalleryData } from "../../../redux/profile/profilemain";
+import { PostType } from "../../../resources/CommonTypes";
 
 const AddToGallery = ({ dispatch, item, signedurl, thumbnailurl, userID }) => {
-  const Post = {
+  const Post: PostType = {
     id: item.id,
     contentdate: item.contentdate,
     contenttype: item.contenttype,
@@ -13,6 +14,9 @@ const AddToGallery = ({ dispatch, item, signedurl, thumbnailurl, userID }) => {
     userid: userID,
     signedurl,
     thumbnailurl,
+    gamesID: item.Games === null ? null : item.Games.id,
+    coverID: item.Games === null ? null : item.Games.coverID,
+    title: item.Games === null ? null : item.Games.title,
   };
 
   dispatch(addToGalleryData(Post));

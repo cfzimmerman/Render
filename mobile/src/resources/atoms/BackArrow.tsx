@@ -3,8 +3,20 @@ import { useNavigation } from "@react-navigation/native";
 import { Icons, Colors, Environment, GlobalStyles } from "../project";
 import { ToPortrait } from "../utilities";
 
-const BackArrow = () => {
+interface InputTypes {
+  CustomAction?: Function;
+}
+
+const BackArrow = ({ CustomAction }: InputTypes) => {
   const navigation = useNavigation();
+
+  const ButtonAction = () => {
+    if (typeof CustomAction === "function") {
+      CustomAction();
+    } else {
+      ToPortrait(), navigation.goBack();
+    }
+  };
 
   return (
     <IconButton
@@ -19,9 +31,7 @@ const BackArrow = () => {
           width: Environment.StandardPadding * 3,
         },
       ]}
-      onPress={() => {
-        ToPortrait(), navigation.goBack();
-      }}
+      onPress={ButtonAction}
     />
   );
 };

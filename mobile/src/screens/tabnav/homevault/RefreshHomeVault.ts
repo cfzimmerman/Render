@@ -61,6 +61,11 @@ async function RefreshHomeVault({
                   createdAt
                   usersID
                   updatedAt
+                  Games {
+                    id
+                    coverID
+                    title
+                  }
               }
           }
       }
@@ -71,12 +76,30 @@ async function RefreshHomeVault({
 
     if (postArray.length === 1) {
       const item = postArray[0];
+
+      const newPost: PostType = {
+        id: item.id,
+        contenttype: item.contenttype,
+        aspectratio: item.aspectratio,
+        contentkey: item.contentkey,
+        publicpost: item.publicpost,
+        cognitosub: item.cognitosub,
+        contentdate: item.contentdate,
+        thumbnailkey: item.thumbnailkey,
+        posttext: item.posttext,
+        publicpostdate: item.publicpostdate,
+        userid: item.usersID,
+        gamesID: item.Games === null ? null : item.Games.id,
+        coverID: item.Games === null ? null : item.Games.coverID,
+        title: item.Games === null ? null : item.Games.title,
+      };
+
       ModifyVaultData({
         action: "add",
         dispatch,
         vaultpostdata,
         vaultfeeddata,
-        post: item,
+        post: newPost,
         vaultnexttoken: vaultNextToken,
         newPostID: item.id,
       });

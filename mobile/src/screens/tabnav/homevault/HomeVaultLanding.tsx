@@ -1,4 +1,4 @@
-import react, { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { SectionGrid } from "react-native-super-grid";
 import { useScrollToTop } from "@react-navigation/native";
@@ -64,9 +64,6 @@ const HomeVaultLanding = ({ navigation }) => {
 
   const currentuser = useSelector(
     (state: RootStateType) => state.profilemain.currentuser
-  );
-  const onboardingstatus = useSelector(
-    (state: RootStateType) => state.homemain.onboardingstatus
   );
 
   const vaultpostdata = useSelector(
@@ -248,10 +245,10 @@ const HomeVaultLanding = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <SectionGrid
+        // @ts-ignore
         sections={vaultpostdata}
         style={styles.sectiongridstyle}
-        // @ts-ignore
-        key={(item) => item.id}
+        keyExtractor={(item) => item.id}
         itemDimension={Environment.HalfBar}
         ref={ref}
         fixed

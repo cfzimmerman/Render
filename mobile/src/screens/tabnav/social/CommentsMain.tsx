@@ -40,6 +40,8 @@ const GetPost = ({
   addedfeed,
   publicfeed,
   universalPostData,
+  hvGameSearchResults,
+  vaultfeeddata,
 }) => {
   if (usecase === "gallery") {
     return gallerydata;
@@ -58,6 +60,12 @@ const GetPost = ({
   }
   if (usecase === "universal") {
     return universalPostData;
+  }
+  if (usecase === "HVGameSearch") {
+    return hvGameSearchResults;
+  }
+  if (usecase === "vault") {
+    return vaultfeeddata;
   }
 };
 
@@ -120,6 +128,12 @@ const CommentsMain = ({ navigation, route }) => {
   const universalPostData = useSelector(
     (state: RootStateType) => state.universalpost.universalPostData
   );
+  const hvGameSearchResults = useSelector(
+    (state: RootStateType) => state.gametags.hvGameSearchResults
+  );
+  const vaultfeeddata = useSelector(
+    (state: RootStateType) => state.vaultpostdata.vaultfeeddata
+  );
 
   const currentFeed = GetPost({
     usecase,
@@ -129,6 +143,8 @@ const CommentsMain = ({ navigation, route }) => {
     addedfeed,
     publicfeed,
     universalPostData,
+    hvGameSearchResults,
+    vaultfeeddata,
   });
 
   const postItem: PostType = currentFeed[index];
@@ -165,7 +181,7 @@ const CommentsMain = ({ navigation, route }) => {
 
   return (
     <GestureRecognizer
-      style={{ flex: 1, backgroundColor: Colors.Background }}
+      style={styles.container}
       onSwipeDown={() => {
         navigation.goBack(), dispatch(clearCommentsData());
       }}
@@ -173,25 +189,15 @@ const CommentsMain = ({ navigation, route }) => {
         navigation.goBack(), dispatch(clearCommentsData());
       }}
     >
-      <View style={{ flex: 1 }}>
+      <View style={styles.flexWrapper}>
         <BackgroundImage postItem={postItem} />
-        <SafeAreaView style={{ flex: 1 }}>
-          <View
-            style={{
-              paddingVertical: Environment.StandardPadding,
-              alignItems: "center",
-              flex: 1,
-              justifyContent: "space-between",
-            }}
-          >
+        <SafeAreaView style={styles.flexWrapper}>
+          <View style={styles.flatListHolder}>
             <FlatList
               data={commentsdata}
               renderItem={renderItem}
-              style={{ width: Environment.FullBar }}
-              contentContainerStyle={{
-                paddingBottom: Environment.StandardPadding,
-                alignItems: "flex-end",
-              }}
+              style={styles.flatListStyle}
+              contentContainerStyle={styles.flatListContentontainer}
               ListEmptyComponent={ListEmptyComponent}
             />
             <TouchableOpacity
@@ -200,38 +206,19 @@ const CommentsMain = ({ navigation, route }) => {
                 dispatch(setAddCommentActive(true));
               }}
             >
-              <BlurView
-                tint="dark"
-                intensity={60}
-                style={{
-                  width: Environment.FullBar,
-                  height: Environment.CubeSize,
-                  borderRadius: Environment.StandardRadius,
-                  overflow: "hidden",
-                  padding: Environment.StandardPadding,
-                  justifyContent: "center",
-                }}
-              >
+              <BlurView tint="dark" intensity={60} style={styles.blurWrapper}>
                 <Text
                   style={[
                     GlobalStyles.h3text,
                     GlobalStyles.irregularshadow,
-                    { color: Colors.AccentPartial },
+                    styles.placeHolder,
                   ]}
                 >
                   Comment
                 </Text>
               </BlurView>
             </TouchableOpacity>
-            <View
-              style={{
-                flex: 1,
-                width: Environment.FullBar,
-                position: "absolute",
-                justifyContent: "space-between",
-              }}
-              pointerEvents={"box-none"}
-            >
+            <View style={styles.backArrow} pointerEvents={"box-none"}>
               <BackArrow />
             </View>
           </View>
@@ -255,6 +242,43 @@ const styles = StyleSheet.create({
     height: Environment.ScreenHeight,
     width: Environment.ScreenWidth,
     opacity: Environment.BackgroundOpacity,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: Colors.Background,
+  },
+  flexWrapper: {
+    flex: 1,
+  },
+  flatListHolder: {
+    paddingVertical: Environment.StandardPadding,
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "space-between",
+  },
+  flatListStyle: {
+    width: Environment.FullBar,
+  },
+  flatListContentontainer: {
+    paddingBottom: Environment.StandardPadding,
+    alignItems: "flex-end",
+  },
+  blurWrapper: {
+    width: Environment.FullBar,
+    height: Environment.CubeSize,
+    borderRadius: Environment.StandardRadius,
+    overflow: "hidden",
+    padding: Environment.StandardPadding,
+    justifyContent: "center",
+  },
+  placeHolder: {
+    color: Colors.AccentPartial,
+  },
+  backArrow: {
+    flex: 1,
+    width: Environment.FullBar,
+    position: "absolute",
+    justifyContent: "space-between",
   },
 });
 

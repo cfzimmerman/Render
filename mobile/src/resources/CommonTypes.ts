@@ -41,6 +41,9 @@ export interface PostType {
   userid?: string | null;
   userpfp?: string;
   userpfpurl?: string;
+  gamesID: string | null;
+  coverID: string | null;
+  title: string | null;
 }
 
 interface PostSubHeader {

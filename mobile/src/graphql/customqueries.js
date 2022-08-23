@@ -81,6 +81,11 @@ export const filteredPostsByContentDate = /* GraphQL */ `
         createdAt
         usersID
         updatedAt
+        Games {
+          id
+          coverID
+          title
+        }
       }
       nextToken
     }
@@ -265,6 +270,11 @@ export const filteredSearchPosts = /* GraphQL */ `
           displayname
           pfp
         }
+        Games {
+          id
+          coverID
+          title
+        }
       }
       nextToken
       total
@@ -305,6 +315,11 @@ export const filteredPostsByPublicDate = /* GraphQL */ `
           id
           displayname
           pfp
+        }
+        Games {
+          id
+          coverID
+          title
         }
       }
       nextToken
