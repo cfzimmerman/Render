@@ -14,32 +14,44 @@ import { Environment, Colors, GlobalStyles } from "../../../resources/project";
 import AddVideoToFeedData from "../vault/AddVideoToFeedData";
 import EditOptionsModal from "./EditOptionsModal";
 import EditTextModal from "./EditTextModal";
+import { RootStateType } from "../../../redux/store";
+import { PostType } from "../../../resources/CommonTypes";
 
-function EditPost({ route, navigation }) {
+const EditPost = ({ route, navigation }) => {
   const [newPostDateActive, setNewPostDateActive] = useState(false);
 
-  const currentuser = useSelector((state) => state.profilemain.currentuser);
+  const currentuser = useSelector(
+    (state: RootStateType) => state.profilemain.currentuser
+  );
 
   const vaultpostdata = useSelector(
-    (state) => state.vaultpostdata.vaultpostdata
+    (state: RootStateType) => state.vaultpostdata.vaultpostdata
   );
   const vaultfeeddata = useSelector(
-    (state) => state.vaultpostdata.vaultfeeddata
+    (state: RootStateType) => state.vaultpostdata.vaultfeeddata
   );
-  const vaultnexttoken = useSelector((state) => state.vaultpostdata.nextToken);
+  const vaultnexttoken = useSelector(
+    (state: RootStateType) => state.vaultpostdata.nextToken
+  );
   const edittextmodalactive = useSelector(
-    (state) => state.plusmain.edittextmodalactive
+    (state: RootStateType) => state.plusmain.edittextmodalactive
   );
-  const gallerydata = useSelector((state) => state.profilemain.gallerydata);
-  const localLibrary = useSelector((state) => state.localsync.localLibrary);
-  const localConfig = useSelector((state) => state.localsync.localConfig);
+  const gallerydata = useSelector(
+    (state: RootStateType) => state.profilemain.gallerydata
+  );
+  const localLibrary = useSelector(
+    (state: RootStateType) => state.localsync.localLibrary
+  );
+  const localConfig = useSelector(
+    (state: RootStateType) => state.localsync.localConfig
+  );
 
   const dispatch = useDispatch();
 
   const { index } = route.params;
   const { origin } = route.params;
 
-  const item = vaultfeeddata[index];
+  const item: PostType = vaultfeeddata[index];
 
   if (typeof item === "undefined" || typeof item.aspectratio === "undefined") {
     return null;
@@ -87,6 +99,7 @@ function EditPost({ route, navigation }) {
                   style={{
                     height: dimensions.height,
                     width: dimensions.width,
+                    // @ts-ignore
                     borderRadius: Environment.StandardRadius,
                     controlsBackgroundColor: Colors.AccentOn,
                   }}
@@ -192,7 +205,7 @@ function EditPost({ route, navigation }) {
       </GestureRecognizer>
     );
   }
-}
+};
 
 const styles = StyleSheet.create({
   gesturewrapper: {

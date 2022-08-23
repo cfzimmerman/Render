@@ -28,3 +28,6 @@ export { default as HalfByFullDisplayBox } from "./HalfByFullDisplayBox";
 
 // Halfbar buttons that vary by shades of white background, no Colors.Primary background involved
 export { default as PastyHalfbarButtons } from "./PastyHalfbarButtons";
+
+// Standard spacer at the bottom of full screen flatlists situated in the MasterStack. Provides a bit of space from the bottom so the last content doesn't get clipped.
+export { default as FlatListFooterSpacer } from "./FlatListFooterSpacer";

@@ -13,11 +13,13 @@ import { DispatchType } from "../../../redux/store";
 interface ShortPressActionPropsType {
   multiSelectActive: boolean;
   postID: string;
-  vaultfeeddata: PostType[];
+  vaultfeeddata: PostType[] | null;
   navigation: any;
   isSelected: boolean;
   dispatch: DispatchType;
   selectedPostsLength: number;
+  origin: "vault" | "HVGameSearch";
+  index: number | null;
 }
 
 export const ShortPressAction = ({
@@ -28,14 +30,23 @@ export const ShortPressAction = ({
   postID,
   dispatch,
   selectedPostsLength,
+  origin,
+  index,
 }: ShortPressActionPropsType) => {
   if (multiSelectActive === false) {
-    TransitionToFullView({
-      id: postID,
-      navigation,
-      data: vaultfeeddata,
-      usecase: "vault",
-    });
+    if (origin === "vault") {
+      TransitionToFullView({
+        id: postID,
+        navigation,
+        data: vaultfeeddata,
+        usecase: origin,
+      });
+    } else if (origin === "HVGameSearch") {
+      navigation.navigate("VaultPostFullView", {
+        startindex: index,
+        usecase: "HVGameSearch",
+      });
+    }
   } else {
     if (isSelected === true) {
       dispatch(removeSelectedPost(postID));

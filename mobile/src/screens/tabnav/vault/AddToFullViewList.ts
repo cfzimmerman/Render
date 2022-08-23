@@ -1,4 +1,5 @@
 import { addToVaultFeedData } from "../../../redux/vault/vaultpostdata";
+import { PostType } from "../../../resources/CommonTypes";
 import { AddToFullViewListPropsType } from "./GetVaultData";
 
 const AddToFullviewList = ({
@@ -8,7 +9,7 @@ const AddToFullviewList = ({
   thumbnailurl,
   header,
 }: AddToFullViewListPropsType) => {
-  const Post = {
+  const Post: PostType = {
     id: item.id,
     contenttype: item.contenttype,
     contentkey: item.contentkey,
@@ -21,6 +22,9 @@ const AddToFullviewList = ({
     thumbnailurl: thumbnailurl,
     userid: null,
     header: header,
+    gamesID: item.Games === null ? null : item.Games.id,
+    coverID: item.Games === null ? null : item.Games.coverID,
+    title: item.Games === null ? null : item.Games.title,
   };
 
   dispatch(addToVaultFeedData(Post));

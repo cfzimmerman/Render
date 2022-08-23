@@ -1,9 +1,11 @@
 import { Storage, API, graphqlOperation } from "aws-amplify";
 import AddToStoriesData from "./AddToStoriesData";
 import { filteredSearchPosts } from "../../../graphql/customqueries";
+import { GraphQLResult } from "@aws-amplify/api-graphql";
+import { PostViewByPostIDQuery, SearchPostsQuery } from "../../../API";
 
 async function CheckIfSeen({ dispatch, postItem, currentuser }) {
-  const interactionArray = await API.graphql(
+  const interactionArray = (await API.graphql(
     graphqlOperation(`
         query PostViewByPostID {
             postViewByPostID (
@@ -19,7 +21,7 @@ async function CheckIfSeen({ dispatch, postItem, currentuser }) {
             }
         }
     `)
-  );
+  )) as GraphQLResult<PostViewByPostIDQuery>;
 
   if (interactionArray.data.postViewByPostID.items.length === 0) {
     if (postItem.contenttype === "video") {
@@ -63,9 +65,9 @@ async function GetStoriesData({
   addedusersfilter,
 }) {
   const allowedageindays = 10;
-  const datenow = new Date();
-  const intage = datenow - allowedageindays * 86400000;
-  const cutoffage = new Date(intage).toISOString();
+  const dateNow = new Date();
+  const intAge = dateNow.getTime() - allowedageindays * 86400000;
+  const cutoffAge = new Date(intAge).toISOString();
 
   // Search posts
   // Where cognitosub is a follower -- users I'm friends with
@@ -79,13 +81,13 @@ async function GetStoriesData({
     return console.log("Already fetched or user unauthenticated");
   } else {
     const allowedageindays = 20;
-    const datenow = new Date();
-    const intage = datenow - allowedageindays * 86400000;
-    const cutoffage = new Date(intage).toISOString();
+    const dateNow = new Date();
+    const intAge = dateNow.getTime() - allowedageindays * 86400000;
+    const cutoffAge = new Date(intAge).toISOString();
 
     const searchFilter = {
       publicpost: { eq: true },
-      publicpostdate: { gt: cutoffage },
+      publicpostdate: { gt: cutoffAge },
       or: addedusersfilter,
     };
 
@@ -98,14 +100,14 @@ async function GetStoriesData({
 
     const storiesNextToken = null;
 
-    const postResult = await API.graphql(
+    const postResult = (await API.graphql(
       graphqlOperation(filteredSearchPosts, {
         filter: searchFilter,
         sort: searchSort,
         limit: storiesFetchLimit,
         nextToken: storiesNextToken,
       })
-    );
+    )) as GraphQLResult<SearchPostsQuery>;
 
     const postArray = postResult.data.searchPosts.items;
 

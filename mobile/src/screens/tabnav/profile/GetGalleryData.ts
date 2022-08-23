@@ -44,6 +44,11 @@ async function GetGalleryData({
                         publicpostdate
                         thumbnailkey
                         posttext
+                        Games {
+                          id
+                          coverID
+                          title
+                        }
                     }
                     nextToken
                 }

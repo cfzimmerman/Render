@@ -19,17 +19,17 @@ import { Environment, Colors, GlobalStyles } from "../project";
 import { HalfbarButton } from "../atoms";
 import CancelUpload from "../../screens/tabnav/plus/CancelUpload";
 
-function LoadProgressModal() {
+const LoadProgressModal = () => {
   const [imBored, setImBored] = useState(0);
 
   const loadprogressgeneral = useSelector(
-    (state) => state.loadprogressmessage.general,
+    (state) => state.loadprogressmessage.general
   );
   const percentcomplete = useSelector(
-    (state) => state.loadprogressmessage.percentcomplete,
+    (state) => state.loadprogressmessage.percentcomplete
   );
   const uploadobject = useSelector(
-    (state) => state.loadprogressmessage.uploadobject,
+    (state) => state.loadprogressmessage.uploadobject
   );
 
   // const imBoredArray = ["I'm bored", "👀", "you too?", "Must be", "another", "slow upload.", "Lol", "you probably", "even pay", "for good", "wifi.", "Well,", "the devs", "try their", "best.", "Maybe", "consider", "giving them", "a shoutout.", "Or try", "uploading", "a smaller", "file next", "time", "I mean,", "this is", "a little", "excessive, no?", "Your call.", "Regardless,", ]
@@ -53,9 +53,9 @@ function LoadProgressModal() {
     percentcomplete,
   }) {
     if (
-      uploadobject === null
-      || uploadobject.image.key != null
-      || percentcomplete === "Processing"
+      uploadobject === null ||
+      uploadobject.image.key != null ||
+      percentcomplete === "Processing"
     ) {
       return null;
     }
@@ -93,11 +93,7 @@ function LoadProgressModal() {
       }}
     >
       <View style={styles.modalcontainer}>
-        <BlurView
-          intensity={60}
-          tint="dark"
-          style={StyleSheet.absoluteFill}
-        />
+        <BlurView intensity={60} tint="dark" style={StyleSheet.absoluteFill} />
         <View
           style={[
             styles.modalbox,
@@ -119,7 +115,7 @@ function LoadProgressModal() {
       </View>
     </Modal>
   );
-}
+};
 
 const styles = StyleSheet.create({
   modalcontainer: {
