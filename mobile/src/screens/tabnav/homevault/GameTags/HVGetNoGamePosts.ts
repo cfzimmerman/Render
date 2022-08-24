@@ -24,6 +24,14 @@ const resultsSize = 50;
 const newPosts: PostType[] = [];
 var activeNextToken: string | null;
 
+const UsableNextToken = (nextToken: string | null) => {
+  if (nextToken === null) {
+    return `nextToken: null,`;
+  } else if (typeof nextToken === "string") {
+    return `nextToken: "${nextToken}",`;
+  }
+};
+
 async function FetchPosts({
   queryLimit,
   usersID,
@@ -46,7 +54,7 @@ async function FetchPosts({
               limit: ${queryLimit},
               usersID: "${usersID}",
               sortDirection: DESC,
-              nextToken: ${nextToken},
+              ${UsableNextToken(nextToken)}
               filter: {
                 cognitosub: {
                     ne: "deleted"
@@ -80,11 +88,7 @@ async function FetchPosts({
 
     activeNextToken = nextNextToken;
 
-    if (
-      postsArray.length === 0 &&
-      nextNextToken != null &&
-      newPosts.length < resultsSize
-    ) {
+    if (postsArray.length === 0 && nextNextToken != null) {
       FetchPosts({
         queryLimit,
         usersID,
@@ -92,7 +96,7 @@ async function FetchPosts({
         vaultfeeddata,
         dispatch,
       });
-    } else if (postsArray.length > 0 && newPosts.length < resultsSize) {
+    } else if (postsArray.length > 0) {
       for await (const item of postsArray) {
         const newPost: PostType = {
           id: item.id,
@@ -147,7 +151,7 @@ async function HVGetNoGamePosts({
   initialQuery,
 }: InputTypes) {
   try {
-    const queryLimit = resultsSize;
+    const queryLimit = resultsSize + 5;
     activeNextToken = hvGameSearchNextToken;
 
     // FetchPosts runs until the newPosts array is full (or until the user's posts have been entirely pulled.)
