@@ -76,7 +76,7 @@ async function ModifyPostGame({
     }
   } catch (error) {
     console.log(error);
-    throw new Error("ModifyPostGame Error: " + JSON.stringify(error));
+    throw new Error("ModifyPostGame Error: " + error);
   }
 }
 

@@ -113,6 +113,7 @@ const HVGameDisplay = ({ navigation, route }) => {
       hvGameSearchActive === false &&
       hvGameSearchResults.length === 0
     ) {
+      dispatch(setHVGameSearchActive(true));
       HVGetGamePosts({
         currentUserID,
         gameID,
@@ -123,7 +124,6 @@ const HVGameDisplay = ({ navigation, route }) => {
         hvGameSearchNextToken,
         initialQuery: true,
       });
-      dispatch(setHVGameSearchActive(true));
       setGotPosts(true);
     } else if (
       gameObject != null &&
@@ -132,6 +132,7 @@ const HVGameDisplay = ({ navigation, route }) => {
       gameObject.id === null &&
       hvGameSearchResults.length === 0
     ) {
+      dispatch(setHVGameSearchActive(true));
       HVGetNoGamePosts({
         currentUserID,
         dispatch,
@@ -139,7 +140,6 @@ const HVGameDisplay = ({ navigation, route }) => {
         hvGameSearchNextToken,
         initialQuery: true,
       });
-      dispatch(setHVGameSearchActive(true));
       setGotPosts(true);
     }
   });
@@ -183,7 +183,8 @@ const HVGameDisplay = ({ navigation, route }) => {
       gotPosts === true &&
       hvGameSearchNextToken != null &&
       hvGameSearchActive === false &&
-      gameObject != null
+      gameObject != null &&
+      hvGameSearchResults.length > 0
     ) {
       if (typeof gameObject.id === "string") {
         dispatch(setHVGameSearchActive(true));
@@ -201,7 +202,8 @@ const HVGameDisplay = ({ navigation, route }) => {
         gameObject.id === null &&
         hvGameSearchNextToken != null &&
         hvGameSearchActive === false &&
-        gameObject != null
+        gameObject != null &&
+        hvGameSearchResults.length > 0
       ) {
         dispatch(setHVGameSearchActive(true));
         HVGetNoGamePosts({
