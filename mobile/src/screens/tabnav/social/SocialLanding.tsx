@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { View, FlatList, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { useScrollToTop } from "@react-navigation/native";
@@ -12,6 +12,10 @@ import RefreshPublicFeed from "./RefreshPublicFeed";
 import SocialHeader from "./SocialHeader";
 import RefreshAddedFeed from "./RefreshAddedFeed";
 import { RootStateType } from "../../../redux/store";
+import {
+  setFetchingAddedFeedData,
+  setFetchingPublicFeedData,
+} from "../../../redux/home/homemain";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -50,6 +54,9 @@ const SocialLanding = ({ navigation }) => {
   const addedfeednexttoken = useSelector(
     (state: RootStateType) => state.homemain.addedfeednexttoken
   );
+  const fetchingAddedFeedData = useSelector(
+    (state: RootStateType) => state.homemain.fetchingaddedfeeddata
+  );
 
   const publicfeed = useSelector(
     (state: RootStateType) => state.homemain.publicfeed
@@ -57,36 +64,41 @@ const SocialLanding = ({ navigation }) => {
   const publicfeednexttoken = useSelector(
     (state: RootStateType) => state.homemain.publicfeednexttoken
   );
+  const fetchingPublicFeedData = useSelector(
+    (state: RootStateType) => state.homemain.fetchingpublicfeeddata
+  );
 
   const dispatch = useDispatch();
 
-  if (gotAddedUsersFilter === false && addedusersfilter.length === 0) {
-    GetAddedUsersFilter({ dispatch, currentuser });
-    setGotAddedUsersFilter(true);
-  } else if (
-    (gotAddedUsersFilter === true || addedusersfilter.length > 0) &&
-    gotAddedFeed === false
-  ) {
-    GetAddedFeedData({
-      dispatch,
-      addedusersfilter,
-      addedfeed,
-      addedfeednexttoken,
-    });
-    setAddedRefreshDate(new Date().toISOString());
-    setGotAddedFeed(true);
-  } else if (
-    selectedfeed === "publicfeed" &&
-    publicfeed.length === 0 &&
-    gotPublicFeed === false
-  ) {
-    GetPublicFeedData({
-      dispatch,
-      publicfeednexttoken,
-    });
-    setPublicRefreshDate(new Date().toISOString());
-    setGotPublicFeed(true);
-  }
+  useEffect(() => {
+    if (gotAddedUsersFilter === false && addedusersfilter.length === 0) {
+      GetAddedUsersFilter({ dispatch, currentuser });
+      setGotAddedUsersFilter(true);
+    } else if (
+      (gotAddedUsersFilter === true || addedusersfilter.length > 0) &&
+      gotAddedFeed === false
+    ) {
+      GetAddedFeedData({
+        dispatch,
+        addedusersfilter,
+        addedfeed,
+        addedfeednexttoken,
+      });
+      setAddedRefreshDate(new Date().toISOString());
+      setGotAddedFeed(true);
+    } else if (
+      selectedfeed === "publicfeed" &&
+      publicfeed.length === 0 &&
+      gotPublicFeed === false
+    ) {
+      GetPublicFeedData({
+        dispatch,
+        publicfeednexttoken,
+      });
+      setPublicRefreshDate(new Date().toISOString());
+      setGotPublicFeed(true);
+    }
+  });
 
   const FeedData = () => {
     if (selectedfeed === "addedfeed") {
@@ -102,8 +114,10 @@ const SocialLanding = ({ navigation }) => {
       selectedfeed === "addedfeed" &&
       addedfeed.length > 0 &&
       addedfeednexttoken != null &&
-      gotAddedFeed === true
+      gotAddedFeed === true &&
+      fetchingAddedFeedData === false
     ) {
+      dispatch(setFetchingAddedFeedData(true));
       GetAddedFeedData({
         dispatch,
         addedusersfilter,
@@ -114,8 +128,10 @@ const SocialLanding = ({ navigation }) => {
       selectedfeed === "publicfeed" &&
       publicfeed.length > 0 &&
       publicfeednexttoken != null &&
-      gotPublicFeed === true
+      gotPublicFeed === true &&
+      fetchingPublicFeedData === false
     ) {
+      dispatch(setFetchingPublicFeedData(true));
       GetPublicFeedData({
         dispatch,
         publicfeednexttoken,
