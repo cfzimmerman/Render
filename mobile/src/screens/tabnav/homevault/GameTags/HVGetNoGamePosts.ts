@@ -137,7 +137,10 @@ async function FetchPosts({
         });
       }
     }
-    // console.log(newPosts);
+    if (nextNextToken === null || newPosts.length > resultsSize) {
+      dispatch(setHVGameSearchNextToken(nextNextToken));
+      dispatch(setHVGameSearchActive(false));
+    }
   } catch (error) {
     console.log(error);
   }
@@ -151,6 +154,7 @@ async function HVGetNoGamePosts({
   initialQuery,
 }: InputTypes) {
   try {
+    newPosts.length = 0;
     const queryLimit = resultsSize + 5;
     activeNextToken = hvGameSearchNextToken;
 
@@ -162,9 +166,6 @@ async function HVGetNoGamePosts({
       vaultfeeddata,
       dispatch,
     });
-
-    dispatch(setHVGameSearchNextToken(activeNextToken));
-    dispatch(setHVGameSearchActive(false));
   } catch (error) {
     console.log(error);
   }
