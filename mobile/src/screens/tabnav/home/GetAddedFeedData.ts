@@ -72,7 +72,6 @@ async function GetAddedFeedData({
     };
     dispatch(addToAddedFeed(newPost));
   }
-
   dispatch(setAddedFeedNextToken(newNextToken));
   dispatch(setFetchingAddedFeedData(false));
 }
