@@ -102,6 +102,9 @@ const HVGameDisplay = ({ navigation, route }) => {
         setGameObject(noTag);
       }
       setGotGame(true);
+    } else if (gameObject === null && gotGame === false && gameID === null) {
+      setGameObject(noTag);
+      setGotGame(true);
     }
     if (
       gameObject != null &&
@@ -194,7 +197,12 @@ const HVGameDisplay = ({ navigation, route }) => {
           hvGameSearchNextToken,
           initialQuery: false,
         });
-      } else if (gameObject.id === null) {
+      } else if (
+        gameObject.id === null &&
+        hvGameSearchNextToken != null &&
+        hvGameSearchActive === false &&
+        gameObject != null
+      ) {
         dispatch(setHVGameSearchActive(true));
         HVGetNoGamePosts({
           currentUserID,
