@@ -21,12 +21,43 @@ const GetNextToken = ({ nextToken, items, resultsLimit }) => {
   return nextToken;
 };
 
-async function SearchGameTitle({ title, dispatch }: SearchGameTitlePT) {
-  const resultsLimit = 10;
-  try {
-    const {
-      data: { searchGames },
-    } = (await API.graphql(
+async function GetResults({
+  title,
+  resultsLimit,
+}: {
+  title: string;
+  resultsLimit: number;
+}): Promise<GraphQLResult<SearchGamesQuery>> {
+  if (title.includes(" ")) {
+    // Performs poorly on individual words but crushes it when spaces are involved
+    const result = (await API.graphql(
+      graphqlOperation(`
+        query SearchGames {
+            searchGames (
+                limit: ${resultsLimit},
+                sort: { direction: desc, field: releaseDate },
+                filter: {
+                  title: {
+                    matchPhrase: "${title}",
+                  }
+                }
+
+            ) {
+                items {
+                    id
+                    title
+                    coverID
+                    backgroundID
+                }
+                nextToken
+            }
+        }
+    `)
+    )) as GraphQLResult<SearchGamesQuery>;
+    return result;
+  } else {
+    // wildcard - functions perfectly when no spaces are involved
+    const result = (await API.graphql(
       graphqlOperation(`
         query SearchGames {
             searchGames (
@@ -50,6 +81,16 @@ async function SearchGameTitle({ title, dispatch }: SearchGameTitlePT) {
         }
     `)
     )) as GraphQLResult<SearchGamesQuery>;
+    return result;
+  }
+}
+
+async function SearchGameTitle({ title, dispatch }: SearchGameTitlePT) {
+  const resultsLimit = 10;
+  try {
+    const {
+      data: { searchGames },
+    } = await GetResults({ title, resultsLimit });
 
     const gameResults = searchGames.items;
     const newNextToken = searchGames.nextToken;
