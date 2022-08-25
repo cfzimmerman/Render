@@ -35,6 +35,7 @@ async function RemovePostGameRelationship({
               ) {
                   id
                   gamesID
+                  contentdate
               }
           }
       `)
@@ -53,8 +54,15 @@ async function RemovePostGameRelationship({
             postsByUserGames (
               limit: ${checkLimit},
               usersID: "${currentUserID}",
-              gamesID: {
-                eq: "${gameResult.gamesID}"
+              gamesIDContentdate: {
+                between: [
+                  { gamesID: "${
+                    gameResult.gamesID
+                  }", contentdate: "1944-06-08T05:00:00.000Z"},
+                  { gamesID: "${
+                    gameResult.gamesID
+                  }", contentdate: "${new Date().toISOString()}"},
+                ],
               },
               filter: {
                 cognitosub: {
@@ -108,6 +116,7 @@ async function RemovePostGameRelationship({
       const updatePostsInput: UpdatePostsInput = {
         id: postID,
         gamesID: null,
+        contentdate: gameResult.contentdate,
       };
 
       // Finally, release the post/game relationship back to null
