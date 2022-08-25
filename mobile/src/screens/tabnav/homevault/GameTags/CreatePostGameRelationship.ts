@@ -3,6 +3,7 @@ import { API, graphqlOperation } from "aws-amplify";
 import {
   CreateUserGamesInput,
   CreateUserGamesMutation,
+  GetPostsQuery,
   UpdatePostsInput,
   UserGamesByUsersQuery,
 } from "../../../../API";
@@ -29,9 +30,26 @@ async function CreatePostGameRelationship({
   selectedPostsIndex,
 }: InputTypes) {
   try {
+    const {
+      data: {
+        getPosts: { contentdate: postContentDate },
+      },
+    } = (await API.graphql(
+      graphqlOperation(`
+              query GetPosts {
+                  getPosts (
+                      id: "${postID}"
+                  ) {
+                      contentdate
+                  }
+              }
+          `)
+    )) as GraphQLResult<GetPostsQuery>;
+
     const updatePostsInput: UpdatePostsInput = {
       id: postID,
       gamesID: gameID,
+      contentdate: postContentDate,
     };
 
     await API.graphql(
