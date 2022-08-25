@@ -1,7 +1,10 @@
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { API, graphqlOperation, Storage } from "aws-amplify";
 import * as FileSystem from "expo-file-system";
-import { PostsByUserGamesQuery } from "../../../../API";
+import {
+  ModelPostsPostsByUserGamesCompositeKeyConditionInput,
+  PostsByUserGamesQuery,
+} from "../../../../API";
 import {
   addToHVGameSearchResults,
   setHVGameSearchActive,
@@ -42,9 +45,13 @@ async function HVGetGamePosts({
             postsByUserGames (
               limit: ${postLimit},
               usersID: "${currentUserID}",
-              gamesID: {
-                eq: "${gameID}"
+              gamesIDContentdate: {
+                between: [
+                  { gamesID: "${gameID}", contentdate: "1944-06-08T05:00:00.000Z"},
+                  { gamesID: "${gameID}", contentdate: "${new Date().toISOString()}"},
+                ],
               },
+              sortDirection: DESC,
               nextToken: ${hvGameSearchNextToken},
               filter: {
                 cognitosub: {

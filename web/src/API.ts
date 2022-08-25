@@ -1059,6 +1059,21 @@ export type ModelPostsFilterInput = {
   not?: ModelPostsFilterInput | null,
 };
 
+export type ModelPostsPostsByUserGamesCompositeKeyConditionInput = {
+  eq?: ModelPostsPostsByUserGamesCompositeKeyInput | null,
+  le?: ModelPostsPostsByUserGamesCompositeKeyInput | null,
+  lt?: ModelPostsPostsByUserGamesCompositeKeyInput | null,
+  ge?: ModelPostsPostsByUserGamesCompositeKeyInput | null,
+  gt?: ModelPostsPostsByUserGamesCompositeKeyInput | null,
+  between?: Array< ModelPostsPostsByUserGamesCompositeKeyInput | null > | null,
+  beginsWith?: ModelPostsPostsByUserGamesCompositeKeyInput | null,
+};
+
+export type ModelPostsPostsByUserGamesCompositeKeyInput = {
+  gamesID?: string | null,
+  contentdate?: string | null,
+};
+
 export type SearchablePostsFilterInput = {
   id?: SearchableIDFilterInput | null,
   aspectratio?: SearchableFloatFilterInput | null,
@@ -4208,7 +4223,7 @@ export type PostsByDeletedDateQuery = {
 
 export type PostsByUserGamesQueryVariables = {
   usersID: string,
-  gamesID?: ModelIDKeyConditionInput | null,
+  gamesIDContentdate?: ModelPostsPostsByUserGamesCompositeKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
   filter?: ModelPostsFilterInput | null,
   limit?: number | null,

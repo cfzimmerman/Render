@@ -1432,7 +1432,7 @@ export const postsByDeletedDate = /* GraphQL */ `
 export const postsByUserGames = /* GraphQL */ `
   query PostsByUserGames(
     $usersID: ID!
-    $gamesID: ModelIDKeyConditionInput
+    $gamesIDContentdate: ModelPostsPostsByUserGamesCompositeKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelPostsFilterInput
     $limit: Int
@@ -1440,7 +1440,7 @@ export const postsByUserGames = /* GraphQL */ `
   ) {
     postsByUserGames(
       usersID: $usersID
-      gamesID: $gamesID
+      gamesIDContentdate: $gamesIDContentdate
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
