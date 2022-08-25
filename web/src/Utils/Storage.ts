@@ -15,6 +15,7 @@ export interface DbPostData {
   contentdate: string;
   type: 'post';
   sizeinbytes: number;
+  gamesID: string | null;
 }
 
 export const addPostToDb = async (postData: DbPostData, sub: string) => {
@@ -59,7 +60,8 @@ export const generatePostData = (
   contentdate: new Date().toISOString(),
   type: 'post',
   sizeinbytes: file.size,
-  aspectratio: aspectRatio
+  aspectratio: aspectRatio,
+  gamesID: null
 });
 
 export const upload = async (
