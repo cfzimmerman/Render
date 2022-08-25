@@ -26,6 +26,14 @@ interface InputTypes {
   initialQuery: boolean;
 }
 
+const GetCorrectNextToken = (nextToken: string | null) => {
+  if (typeof nextToken === "string") {
+    return `nextToken: "${nextToken}",`;
+  } else {
+    return `nextToken: null,`;
+  }
+};
+
 async function HVGetGamePosts({
   gameID,
   currentUserID,
@@ -52,7 +60,7 @@ async function HVGetGamePosts({
                 ],
               },
               sortDirection: DESC,
-              nextToken: ${hvGameSearchNextToken},
+              ${GetCorrectNextToken(hvGameSearchNextToken)}
               filter: {
                 cognitosub: {
                     ne: "deleted"
