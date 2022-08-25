@@ -38,7 +38,7 @@ async function GetResults({
                 sort: { direction: desc, field: releaseDate },
                 filter: {
                   title: {
-                    matchPhrase: "${title}",
+                    matchPhrase: "${title}"
                   }
                 }
 
@@ -86,11 +86,12 @@ async function GetResults({
 }
 
 async function SearchGameTitle({ title, dispatch }: SearchGameTitlePT) {
+  const formattedTitle = title.replace(/[’]/g, "'");
   const resultsLimit = 10;
   try {
     const {
       data: { searchGames },
-    } = await GetResults({ title, resultsLimit });
+    } = await GetResults({ title: formattedTitle, resultsLimit });
 
     const gameResults = searchGames.items;
     const newNextToken = searchGames.nextToken;
