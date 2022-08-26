@@ -23,7 +23,10 @@ const HVGameDisplayHeader = ({
   lastDate,
   hvGameSearchActive,
 }: InputTypes) => {
-  if (gameObject === null || gameObject.id === null) {
+  if (
+    gameObject === null ||
+    (gameObject.id === null && hvGameSearchActive === false)
+  ) {
     return null;
   } else if (hvGameSearchActive === true) {
     return (
