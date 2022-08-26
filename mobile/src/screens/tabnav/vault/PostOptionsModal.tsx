@@ -34,30 +34,13 @@ import { PostType } from "../../../resources/CommonTypes";
 import GetGameCoverThumbnailURL from "../homevault/GameTags/GetGameCoverThumbnailURL";
 import { setGameInfoModal } from "../../../redux/homevault/homevaultmain";
 import { setSystemmessageActive } from "../../../redux/system/messagemodal";
+import EnterComments from "../social/EnterComments";
 
 interface EnterCommentsPropTypes {
   index: number;
   usecase: VaultPostFullViewUsecaseTypes;
   navigation: any;
 }
-
-const EnterComments = ({
-  index,
-  usecase,
-  navigation,
-}: EnterCommentsPropTypes) => {
-  // Usecases are explicitly checked as opposed to != "vault" to ensure we've correctly configured CommentsMain for every necessary case
-  if (
-    usecase === "gallery" ||
-    usecase === "otherusergallery" ||
-    usecase === "stories" ||
-    usecase === "addedfeed" ||
-    usecase === "publicfeed" ||
-    usecase === "universal"
-  ) {
-    navigation.navigate("CommentsMain", { usecase, index });
-  }
-};
 
 interface PostOptionsModalInput {
   navigation: any;
@@ -290,10 +273,13 @@ const PostOptionsModal = ({
     return (
       <SafeAreaView style={styles.container} pointerEvents="box-none">
         <Animated.View style={animatedStyles} pointerEvents="box-none">
-          <View style={styles.noprofileheader}>
+          <View style={styles.profileheader}>
             <Animated.View style={animatedStylesHeader}>
               <BackArrow />
             </Animated.View>
+            <Text style={[GlobalStyles.h4text, styles.displayname]}>
+              {format(new Date(item.contentdate), "PP")}
+            </Text>
           </View>
 
           <Animated.View style={animatedStylesFooter}>

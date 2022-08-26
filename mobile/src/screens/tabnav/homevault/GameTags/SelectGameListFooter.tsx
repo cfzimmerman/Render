@@ -1,39 +1,11 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { DispatchType } from "../../../../redux/store";
+import { TextButton } from "../../../../resources/atoms";
 import { Colors, GlobalStyles } from "../../../../resources/project";
 import { Environment } from "../../../../resources/project";
 import { GameCoverTileType } from "./GameCoverTile";
 import GetNextCurrentUserGameLibrary from "./GetNextCurrentUserGameLibrary";
 import SearchNextGameTitle from "./SearchNextGameTitle";
-
-interface TextButtonPT {
-  Action: Function;
-  disabled: boolean;
-  title: string;
-}
-
-const TextButton = ({ Action, disabled, title }: TextButtonPT) => {
-  return (
-    <TouchableOpacity
-      disabled={disabled}
-      onPress={() => Action()}
-      style={styles.textButtonHolder}
-    >
-      <Text
-        style={[
-          GlobalStyles.h4text,
-          GlobalStyles.irregularshadow,
-          styles.textButtonTitle,
-          {
-            textDecorationLine: disabled === true ? "none" : "underline",
-          },
-        ]}
-      >
-        {title}
-      </Text>
-    </TouchableOpacity>
-  );
-};
 
 interface ListFooterPT {
   nextToken: null | string;
@@ -82,18 +54,5 @@ const SelectGameListFooter = ({
     );
   }
 };
-
-const styles = StyleSheet.create({
-  textButtonHolder: {
-    width: Environment.FullBar,
-    alignItems: "center",
-    justifyContent: "flex-start",
-    height: Environment.HalfBar,
-    margin: Environment.StandardPadding,
-  },
-  textButtonTitle: {
-    color: Colors.AccentOn,
-  },
-});
 
 export default SelectGameListFooter;

@@ -2,32 +2,41 @@ import * as FileSystem from "expo-file-system";
 import { PostsByPostedDateQuery } from "../../../API";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { Storage, API, graphqlOperation } from "aws-amplify";
-import AddToGallery from "./AddToGallery";
-import { setFetchingGalleryData } from "../../../redux/profile/profilemain";
+import {
+  addToGalleryData,
+  setFetchingGalleryData,
+  setGalleryNextToken,
+} from "../../../redux/profile/profilemain";
 import UpdateGalleryNextToken from "./UpdateGalleryNextToken";
 import LSAddItem from "./LSAddItem";
+import { CorrectNextToken } from "../../../resources/utilities";
+import { PostType } from "../../../resources/CommonTypes";
+import LSGetImage from "../homevault/LSGetImage";
+import { DispatchType } from "../../../redux/store";
+
+interface InputTypes {
+  dispatch: DispatchType;
+  cognitosub: string;
+  nextToken: string | null;
+  userID: string;
+}
 
 async function GetGalleryData({
   dispatch,
-  gallerydata,
   cognitosub,
   nextToken,
   userID,
-  localLibrary,
-  syncPreference,
-}) {
-  if (gallerydata.length > 0 && nextToken === null) {
-  } else {
-    const fetchlimit = 10;
+}: InputTypes) {
+  const fetchlimit = 10;
 
-    const result = (await API.graphql(
-      graphqlOperation(`
+  const result = (await API.graphql(
+    graphqlOperation(`
             query GetGalleryData {
                 postsByPostedDate (
                     cognitosub: "${cognitosub}"
                     limit: ${fetchlimit},
                     sortDirection: DESC,
-                    nextToken: ${nextToken}
+                    ${CorrectNextToken({ nextToken })}
                     filter: {
                         publicpost: {
                             eq: true
@@ -36,14 +45,14 @@ async function GetGalleryData({
                 ) {
                     items {
                         id
-                        publicpostdate
+                        aspectratio
+                        contentdate
                         contentkey
                         contenttype
-                        contentdate
-                        aspectratio
+                        cognitosub
+                        posttext
                         publicpostdate
                         thumbnailkey
-                        posttext
                         Games {
                           id
                           coverID
@@ -54,103 +63,41 @@ async function GetGalleryData({
                 }
             }
         `)
-    )) as GraphQLResult<PostsByPostedDateQuery>;
+  )) as GraphQLResult<PostsByPostedDateQuery>;
 
-    const userposts = result.data.postsByPostedDate.items;
-    const newnexttoken = result.data.postsByPostedDate.nextToken;
+  const userPosts = result.data.postsByPostedDate.items;
+  const nextNextToken = result.data.postsByPostedDate.nextToken;
 
-    userposts.forEach((item) => {
-      async function GetUrl({ item }) {
-        if (item.contenttype === "video") {
-          const thumbnailAddress =
-            FileSystem.documentDirectory + "LocalSync/" + item.thumbnailkey;
-          const contentExists = await FileSystem.getInfoAsync(thumbnailAddress);
-
-          if (contentExists.exists === true) {
-            const signedurl = null;
-            const thumbnailurl = thumbnailAddress;
-
-            AddToGallery({
-              dispatch,
-              item,
-              signedurl,
-              thumbnailurl,
-              userID,
-            });
-          } else {
-            const signedurl = null;
-            const thumbnailurl = await Storage.get(item.thumbnailkey, {
-              expires: 86400,
-            });
-
-            AddToGallery({
-              dispatch,
-              item,
-              signedurl,
-              thumbnailurl,
-              userID,
-            });
-
-            if (syncPreference === "All" || syncPreference === "Partial") {
-              LSAddItem({
-                contentkey: item.thumbnailkey,
-                signedurl: thumbnailurl,
-                localLibrary,
-                dispatch,
-              });
-            }
-          }
-        } else {
-          const contentAddress =
-            FileSystem.documentDirectory + "LocalSync/" + item.contentkey;
-          const contentExists = await FileSystem.getInfoAsync(contentAddress);
-
-          if (contentExists.exists === true) {
-            const signedurl = contentAddress;
-            const thumbnailurl = null;
-
-            AddToGallery({
-              dispatch,
-              item,
-              signedurl,
-              thumbnailurl,
-              userID,
-            });
-          } else {
-            const signedurl = await Storage.get(item.contentkey, {
-              expires: 86400,
-            });
-            const thumbnailurl = null;
-            AddToGallery({
-              dispatch,
-              item,
-              signedurl,
-              thumbnailurl,
-              userID,
-            });
-
-            if (syncPreference === "All" || syncPreference === "Partial") {
-              LSAddItem({
-                contentkey: item.contentkey,
-                signedurl,
-                localLibrary,
-                dispatch,
-              });
-            }
-          }
-        }
-      }
-      GetUrl({ item });
-
-      if (
-        typeof userposts[fetchlimit - 1] === "undefined" ||
-        item.id === userposts[fetchlimit - 1].id
-      ) {
-        UpdateGalleryNextToken({ dispatch, nextToken: newnexttoken });
-        dispatch(setFetchingGalleryData(false));
-      }
+  for await (const item of userPosts) {
+    const contentInfo = await LSGetImage({
+      contentKey: item.contentkey,
+      thumbnailKey: item.thumbnailkey,
+      // @ts-ignore
+      contentType: item.contenttype,
     });
+    const newGalleryPost: PostType = {
+      id: item.id,
+      aspectratio: item.aspectratio,
+      contentdate: item.contentdate,
+      contentkey: item.contentkey,
+      contenttype: item.contenttype,
+      cognitosub: item.cognitosub,
+      header: false,
+      posttext: item.posttext,
+      publicpost: true,
+      publicpostdate: item.publicpostdate,
+      thumbnailkey: item.thumbnailkey,
+      userid: userID,
+      gamesID: item.Games === null ? null : item.Games.id,
+      coverID: item.Games === null ? null : item.Games.coverID,
+      title: item.Games === null ? null : item.Games.title,
+      signedurl: contentInfo.imageURL,
+      thumbnailurl: contentInfo.thumbnailURL,
+    };
+    dispatch(addToGalleryData(newGalleryPost));
   }
+  dispatch(setGalleryNextToken(nextNextToken));
+  dispatch(setFetchingGalleryData(false));
 }
 
 export default GetGalleryData;

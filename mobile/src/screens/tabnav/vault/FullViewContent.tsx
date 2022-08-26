@@ -36,24 +36,14 @@ import { DispatchType, RootStateType } from "../../../redux/store";
 import { PostType } from "../../../resources/CommonTypes";
 import { VaultPostFullViewUsecaseTypes } from "./VaultPostFullView";
 import AddVideoToHVGameSearchResults from "../homevault/GameTags/AddVideoToHVGameSearchResults";
+import EnterComments from "../social/EnterComments";
 
 // SetOptions({ postid: abc, animateactive: true, animateinactive: false, newchangestatus: false, })
 
 const SwipeUp = ({ index, usecase, navigation }) => {
   // Usecases are explicitly checked as opposed to != "vault" to ensure we've correctly configured CommentsMain for every necessary case
   // Reconsider this, I just enabled "vault" support as well
-  if (
-    usecase === "gallery" ||
-    usecase === "otherusergallery" ||
-    usecase === "stories" ||
-    usecase === "addedfeed" ||
-    usecase === "publicfeed" ||
-    usecase === "universal" ||
-    usecase === "HVGameSearch" ||
-    usecase === "vault"
-  ) {
-    navigation.navigate("CommentsMain", { usecase, index });
-  }
+  EnterComments({ index, usecase, navigation });
 };
 
 const PostTextModalButton = ({ dispatch, item, dimensions, index }) => {
