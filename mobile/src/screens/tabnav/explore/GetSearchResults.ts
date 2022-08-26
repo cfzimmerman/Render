@@ -1,19 +1,36 @@
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { Storage, API, graphqlOperation } from "aws-amplify";
 import { SearchByGamertagQuery } from "../../../API";
+import {
+  addNextUserSearchResultsArray,
+  setUserSearchActive,
+  setUserSearchNextToken,
+  setUserSearchResultsArray,
+} from "../../../redux/explore/exploremain";
+import { CorrectNextToken } from "../../../resources/utilities";
 import AddUserSearchResult from "./AddUserSearchResult";
 
 const IsUser = ({ cognitosub, targetcognitosub }) => {
+  // Tbh this design is atrocious. I wrote this in like March 2022, so I'll let it pass for now. But this whole vertical should be optimized. Leaving for now because it's not worth the time.
   if (cognitosub === targetcognitosub) {
     return "user";
   }
   return false;
 };
 
+export interface UserSearchResultType {
+  id: string;
+  displayname: string;
+  gamertag: string;
+  cognitosub: string;
+  addedmecount: number;
+  pfpurl: string;
+  relationship: false | "user";
+}
+
 async function GetSearchResults({
   input,
   category,
-  fetchmore,
   nextToken,
   dispatch,
   cognitosub,
@@ -35,7 +52,7 @@ async function GetSearchResults({
             query SearchByGamertag {
                 searchByGamertag (
                     limit: 10,
-                    nextToken: ${nextToken},
+                    ${CorrectNextToken({ nextToken })}
                     ${DynamicFilter()}
                 ) {
                     items {
@@ -46,30 +63,39 @@ async function GetSearchResults({
                         addedmecount
                         pfp
                     }
+                    nextToken
                 }
             }
         `)
     )) as GraphQLResult<SearchByGamertagQuery>;
 
-    const userarray = result.data.searchByGamertag.items;
+    const userArray = result.data.searchByGamertag.items;
+    const nextNextToken = result.data.searchByGamertag.nextToken;
 
-    userarray.forEach((item) => {
-      const userresult = IsUser({
-        cognitosub,
-        targetcognitosub: item.cognitosub,
-      });
-      async function GetOtherUserPfp() {
-        const pfpurl = await Storage.get(item.pfp, { expires: 86400 });
-        AddUserSearchResult({
-          dispatch,
-          pfpurl,
-          item,
-          relationship: userresult,
-        });
-      }
+    const searchResults: UserSearchResultType[] = [];
 
-      GetOtherUserPfp();
-    });
+    for await (const item of userArray) {
+      const userResult: UserSearchResultType = {
+        id: item.id,
+        displayname: item.displayname,
+        gamertag: item.gamertag,
+        cognitosub: item.cognitosub,
+        addedmecount: item.addedmecount,
+        pfpurl: await Storage.get(item.pfp, { expires: 86400 }),
+        relationship: IsUser({ cognitosub, targetcognitosub: item.cognitosub }),
+      };
+      searchResults.push(userResult);
+    }
+
+    if (nextToken === null) {
+      // First results
+      dispatch(setUserSearchResultsArray(searchResults));
+    } else {
+      // Get more results
+      dispatch(addNextUserSearchResultsArray(searchResults));
+    }
+    dispatch(setUserSearchNextToken(nextNextToken));
+    dispatch(setUserSearchActive(false));
   } else {
     console.log("currently only user search is supported");
   }
