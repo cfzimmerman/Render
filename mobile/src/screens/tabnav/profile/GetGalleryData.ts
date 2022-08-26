@@ -6,6 +6,7 @@ import AddToGallery from "./AddToGallery";
 import { setFetchingGalleryData } from "../../../redux/profile/profilemain";
 import UpdateGalleryNextToken from "./UpdateGalleryNextToken";
 import LSAddItem from "./LSAddItem";
+import { CorrectNextToken } from "../../../resources/utilities";
 
 async function GetGalleryData({
   dispatch,
@@ -27,7 +28,7 @@ async function GetGalleryData({
                     cognitosub: "${cognitosub}"
                     limit: ${fetchlimit},
                     sortDirection: DESC,
-                    nextToken: ${nextToken}
+                    ${CorrectNextToken({ nextToken })}
                     filter: {
                         publicpost: {
                             eq: true

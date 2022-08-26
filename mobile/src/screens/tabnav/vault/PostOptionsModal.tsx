@@ -290,10 +290,13 @@ const PostOptionsModal = ({
     return (
       <SafeAreaView style={styles.container} pointerEvents="box-none">
         <Animated.View style={animatedStyles} pointerEvents="box-none">
-          <View style={styles.noprofileheader}>
+          <View style={styles.profileheader}>
             <Animated.View style={animatedStylesHeader}>
               <BackArrow />
             </Animated.View>
+            <Text style={[GlobalStyles.h4text, styles.displayname]}>
+              {format(new Date(item.contentdate), "PP")}
+            </Text>
           </View>
 
           <Animated.View style={animatedStylesFooter}>
