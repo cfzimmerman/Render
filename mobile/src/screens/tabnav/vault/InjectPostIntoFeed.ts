@@ -66,6 +66,7 @@ async function InjectPostIntoFeed({
       contentkey: post.contentkey,
       thumbnailkey: post.thumbnailkey,
       publicpost: post.publicpost,
+      publicpostdate: post.publicpostdate,
       contentdate: post.contentdate,
       aspectratio: post.aspectratio,
       posttext: post.posttext,
