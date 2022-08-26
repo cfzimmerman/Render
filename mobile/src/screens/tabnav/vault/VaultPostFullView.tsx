@@ -70,8 +70,8 @@ const VaultPostFullView = ({ navigation, route }) => {
   const gallerynexttoken = useSelector(
     (state: RootStateType) => state.profilemain.gallerynexttoken
   );
-  const fetchinggallerydata = useSelector(
-    (state: RootStateType) => state.profilemain.fetchinggallerydata
+  const fetchingGalleryData = useSelector(
+    (state: RootStateType) => state.profilemain.fetchingGalleryData
   );
 
   const otheruser = useSelector(
@@ -188,17 +188,14 @@ const VaultPostFullView = ({ navigation, route }) => {
       usecase === "gallery" &&
       gallerydata.length > 0 &&
       gallerynexttoken != null &&
-      fetchinggallerydata === false
+      fetchingGalleryData === false
     ) {
       dispatch(setFetchingGalleryData(false));
       GetGalleryData({
         dispatch,
-        gallerydata,
         cognitosub,
         nextToken: gallerynexttoken,
         userID: currentuser.id,
-        localLibrary,
-        syncPreference: localConfig.syncPreference,
       });
     } else if (
       usecase === "otherusergallery" &&

@@ -66,22 +66,11 @@ async function ChangeVaultPostDate({
     console.log(`Error: ${error}`);
   }
 
-  const post: PostType = {
-    id: item.id,
-    contenttype: item.contenttype,
-    contentkey: item.contentkey,
-    publicpost: item.publicpost,
-    posttext: item.posttext,
-    contentdate: newContentDate,
-    signedurl: item.signedurl,
-    aspectratio: item.aspectratio,
-    thumbnailurl: item.thumbnailurl,
-    gamesID: item.gamesID,
-    title: item.title,
-    coverID: item.coverID,
-  };
+  const post: PostType = { ...item, contentdate: newContentDate };
 
   try {
+    console.log("\n\nChangeVaultPostDate item: ");
+    console.log(item);
     ModifyVaultData({
       action: "add",
       vaultfeeddata,

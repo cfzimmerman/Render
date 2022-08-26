@@ -23,10 +23,25 @@ const HVGameDisplayHeader = ({
   lastDate,
   hvGameSearchActive,
 }: InputTypes) => {
-  if (gameObject === null || gameObject.id === null) {
+  if (
+    gameObject === null ||
+    (gameObject.id === null && hvGameSearchActive === false)
+  ) {
     return null;
   } else if (hvGameSearchActive === true) {
-    return <View style={styles.loadingPlaceholder} />;
+    return (
+      <View style={[GlobalStyles.shadow, styles.loadingPlaceholder]}>
+        <Text
+          style={[
+            GlobalStyles.irregularshadow,
+            GlobalStyles.h2text,
+            styles.loadingText,
+          ]}
+        >
+          Loading
+        </Text>
+      </View>
+    );
   }
   return (
     <View style={[GlobalStyles.shadow, styles.headerContainer]}>
@@ -101,6 +116,16 @@ const styles = StyleSheet.create({
   loadingPlaceholder: {
     height: Environment.GameCoverWidth * (4 / 3) + Environment.LargePadding,
     width: Environment.FullBar,
+    borderRadius: Environment.StandardRadius,
+    backgroundColor: Colors.Primary,
+    marginTop: Environment.StandardPadding,
+    marginBottom: Environment.LargePadding,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: Environment.StandardPadding,
+  },
+  loadingText: {
+    color: Colors.AccentOn,
   },
 });
 

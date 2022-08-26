@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
   textinputstyle: {
     color: Colors.AccentOn,
     height: Environment.HalfBar,
+    textAlignVertical: "top",
   },
   buttonholder: {
     width: Environment.FullBar,

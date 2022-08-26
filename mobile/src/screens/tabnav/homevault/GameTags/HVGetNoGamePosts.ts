@@ -98,6 +98,12 @@ async function FetchPosts({
       });
     } else if (postsArray.length > 0) {
       for await (const item of postsArray) {
+        const contentInfo = await LSGetImage({
+          contentKey: item.contentkey,
+          thumbnailKey: item.thumbnailkey,
+          // @ts-ignore
+          contentType: item.contenttype,
+        });
         const newPost: PostType = {
           id: item.id,
           aspectratio: item.aspectratio,
@@ -114,14 +120,8 @@ async function FetchPosts({
           gamesID: item.gamesID,
           coverID: null,
           title: null,
-          signedurl:
-            item.contenttype === "image"
-              ? await LSGetImage({ key: item.contentkey })
-              : null,
-          thumbnailurl:
-            item.contenttype === "video"
-              ? await LSGetImage({ key: item.thumbnailkey })
-              : null,
+          signedurl: contentInfo.imageURL,
+          thumbnailurl: contentInfo.thumbnailURL,
         };
         newPosts.push(newPost);
         dispatch(addToHVGameSearchResults(newPost));

@@ -1,4 +1,4 @@
-import react, { useState } from "react";
+import react, { useEffect, useState } from "react";
 import {
   Modal,
   Text,
@@ -16,6 +16,7 @@ import { Environment, Colors, GlobalStyles } from "../../../resources/project";
 import ChangePostPublic from "./ChangePostPublic";
 import PostPublic from "./PostPublic";
 import UnpostPublic from "./UnpostPublic";
+import { RootStateType } from "../../../redux/store";
 
 const CorrectOptions = ({
   item,
@@ -115,35 +116,44 @@ function VaultPostPublicModal({ dispatch, item, origin, navigation }) {
 
   const [userMessage, setUserMessage] = useState(initialUserMessage);
 
-  const currentuser = useSelector((state) => state.profilemain.currentuser);
+  const currentuser = useSelector(
+    (state: RootStateType) => state.profilemain.currentuser
+  );
   const postpublicmodal = useSelector(
-    (state) => state.vaultpostdata.postpublicmodal
+    (state: RootStateType) => state.vaultpostdata.postpublicmodal
   );
 
   const vaultpostdata = useSelector(
-    (state) => state.vaultpostdata.vaultpostdata
+    (state: RootStateType) => state.vaultpostdata.vaultpostdata
   );
   const vaultfeeddata = useSelector(
-    (state) => state.vaultpostdata.vaultfeeddata
+    (state: RootStateType) => state.vaultpostdata.vaultfeeddata
   );
 
   // Passed to unpostpublic to determine if we need to remove a newly unposted image from any feeds
-  const gallerydata = useSelector((state) => state.profilemain.gallerydata);
-  const publicfeeddata = useSelector((state) => state.homemain.publicfeed);
+  const gallerydata = useSelector(
+    (state: RootStateType) => state.profilemain.gallerydata
+  );
+  const publicfeeddata = useSelector(
+    (state: RootStateType) => state.homemain.publicfeed
+  );
 
-  if (item.publicpost === true) {
-    const newMessage = `Posted on ${format(
-      new Date(item.publicpostdate),
-      "PP"
-    )}.`;
-    if (userMessage != newMessage) {
-      setUserMessage(newMessage);
+  useEffect(() => {
+    if (item.publicpost === true && typeof item.publicpostdate != "undefined") {
+      console.log(item.publicpostdate);
+      const newMessage = `Posted on ${format(
+        new Date(item.publicpostdate),
+        "PP"
+      )}.`;
+      if (userMessage != newMessage) {
+        setUserMessage(newMessage);
+      }
     }
-  }
 
-  if (item.publicpost === false && userMessage != initialUserMessage) {
-    setUserMessage(initialUserMessage);
-  }
+    if (item.publicpost === false && userMessage != initialUserMessage) {
+      setUserMessage(initialUserMessage);
+    }
+  });
 
   return (
     <Modal

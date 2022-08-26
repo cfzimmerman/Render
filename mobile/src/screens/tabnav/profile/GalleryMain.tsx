@@ -6,47 +6,61 @@ import { Colors, Environment } from "../../../resources/project";
 import GalleryTile from "./GalleryTile";
 import GalleryFooter from "./GalleryFooter";
 import GetGalleryData from "./GetGalleryData";
-import SelfGalleryHeader from "./SelfGalleryHeader.tsx";
+import SelfGalleryHeader from "./SelfGalleryHeader";
+import { RootStateType } from "../../../redux/store";
+import { setFetchingGalleryData } from "../../../redux/profile/profilemain";
 
 const GalleryMain = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  const gallerydata = useSelector((state) => state.profilemain.gallerydata);
-  const currentuser = useSelector((state) => state.profilemain.currentuser);
-  const gallerynexttoken = useSelector(
-    (state) => state.profilemain.gallerynexttoken
+  const gallerydata = useSelector(
+    (state: RootStateType) => state.profilemain.gallerydata
   );
-  const localConfig = useSelector((state) => state.localsync.localConfig);
-  const localLibrary = useSelector((state) => state.localsync.localLibrary);
+  const currentuser = useSelector(
+    (state: RootStateType) => state.profilemain.currentuser
+  );
+  const gallerynexttoken = useSelector(
+    (state: RootStateType) => state.profilemain.gallerynexttoken
+  );
+  const fetchingGalleryData = useSelector(
+    (state: RootStateType) => state.profilemain.fetchingGalleryData
+  );
+  const localConfig = useSelector(
+    (state: RootStateType) => state.localsync.localConfig
+  );
+  const localLibrary = useSelector(
+    (state: RootStateType) => state.localsync.localLibrary
+  );
 
   const isFocused = useIsFocused();
 
   if (
     isFocused === true &&
     gallerydata.length === 0 &&
-    gallerynexttoken === null
+    gallerynexttoken === null &&
+    fetchingGalleryData === false
   ) {
+    setFetchingGalleryData(true);
     GetGalleryData({
       dispatch,
-      gallerydata,
       cognitosub: currentuser.cognitosub,
       nextToken: gallerynexttoken,
       userID: currentuser.id,
-      localLibrary,
-      syncPreference: localConfig.syncPreference,
     });
   }
 
   const EndReached = () => {
-    if (gallerydata.length > 0 && gallerynexttoken != null) {
+    if (
+      gallerydata.length > 0 &&
+      gallerynexttoken != null &&
+      fetchingGalleryData === false
+    ) {
+      setFetchingGalleryData(true);
       GetGalleryData({
         dispatch,
-        gallerydata,
         cognitosub: currentuser.cognitosub,
         nextToken: gallerynexttoken,
         userID: currentuser.id,
-        localLibrary,
-        syncPreference: localConfig.syncPreference,
       });
     }
   };
@@ -57,7 +71,6 @@ const GalleryMain = ({ navigation }) => {
       index={index}
       navigation={navigation}
       usecase="gallery"
-      dispatch={dispatch}
     />
   );
 
