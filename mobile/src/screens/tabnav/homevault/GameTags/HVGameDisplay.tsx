@@ -26,6 +26,7 @@ import {
 } from "../../../../resources/project";
 import HomeVaultOptionsBar from "../HomeVaultOptionsBar";
 import { GameCoverTileType } from "./GameCoverTile";
+import HVGameDisplayEmptyComponent from "./HVGameDisplayEmptyComponent";
 import HVGameDisplayHeader from "./HVGameDisplayHeader";
 import HVGetGamePosts from "./HVGetGamePosts";
 import HVGetNoGamePosts from "./HVGetNoGamePosts";
@@ -217,6 +218,18 @@ const HVGameDisplay = ({ navigation, route }) => {
     }
   };
 
+  const ListEmptyComponent = () => {
+    if (
+      gotGame === true &&
+      gotPosts === true &&
+      gameObject.id === null &&
+      hvGameSearchActive === false
+    ) {
+      return <HVGameDisplayEmptyComponent />;
+    }
+    return null;
+  };
+
   const CustomButtonAction = () => {
     dispatch(deactivateMultiSelect());
     dispatch(clearHVGameSearchResults());
@@ -249,6 +262,7 @@ const HVGameDisplay = ({ navigation, route }) => {
           data={hvGameSearchResults}
           ListHeaderComponent={ListHeader}
           ListFooterComponent={ListFooter}
+          ListEmptyComponent={ListEmptyComponent}
           renderItem={renderItem}
           numColumns={2}
           style={styles.flatlistWrapper}
