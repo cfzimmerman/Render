@@ -11,7 +11,7 @@ interface SliceStateTypes {
   gallerydata: PostType[];
   gallerynexttoken: string | null;
   addbackusers: any[];
-  fetchinggallerydata: boolean;
+  fetchingGalleryData: boolean;
 }
 
 const slice = createSlice({
@@ -36,7 +36,7 @@ const slice = createSlice({
     gallerydata: [],
     gallerynexttoken: null,
     addbackusers: [],
-    fetchinggallerydata: false,
+    fetchingGalleryData: false,
   } as SliceStateTypes,
   reducers: {
     clearProfile: (state) => {
@@ -70,7 +70,7 @@ const slice = createSlice({
       state.gallerydata.push(action.payload);
     },
     setFetchingGalleryData: (state, action: PayloadAction<boolean>) => {
-      state.fetchinggallerydata = action.payload;
+      state.fetchingGalleryData = action.payload;
     },
     clearGalleryData: (state) => {
       state.gallerydata.length = 0;

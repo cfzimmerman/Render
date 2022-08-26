@@ -23,7 +23,6 @@ interface InputTypes {
   title: string;
   vaultfeeddata: PostType[];
   hvGameSearchNextToken: string | null;
-  initialQuery: boolean;
 }
 
 const GetCorrectNextToken = (nextToken: string | null) => {
@@ -42,7 +41,6 @@ async function HVGetGamePosts({
   title,
   vaultfeeddata,
   hvGameSearchNextToken,
-  initialQuery,
 }: InputTypes) {
   try {
     const postLimit = 100;
@@ -90,6 +88,12 @@ async function HVGetGamePosts({
     const nextToken = results.data.postsByUserGames.nextToken;
 
     for await (const item of postResults) {
+      const contentInfo = await LSGetImage({
+        contentKey: item.contentkey,
+        thumbnailKey: item.thumbnailkey,
+        // @ts-ignore
+        contentType: item.contenttype,
+      });
       var newPost: PostType = {
         id: item.id,
         aspectratio: item.aspectratio,
@@ -106,15 +110,9 @@ async function HVGetGamePosts({
         gamesID: gameID,
         coverID: coverID,
         title: title,
-        signedurl: null,
-        thumbnailurl: null,
+        signedurl: contentInfo.imageURL,
+        thumbnailurl: contentInfo.thumbnailURL,
       };
-
-      if (item.contenttype === "image") {
-        newPost.signedurl = await LSGetImage({ key: item.contentkey });
-      } else if (item.contenttype === "video") {
-        newPost.thumbnailurl = await LSGetImage({ key: item.thumbnailkey });
-      }
 
       dispatch(addToHVGameSearchResults(newPost));
     }

@@ -31,3 +31,6 @@ export { default as PastyHalfbarButtons } from "./PastyHalfbarButtons";
 
 // Standard spacer at the bottom of full screen flatlists situated in the MasterStack. Provides a bit of space from the bottom so the last content doesn't get clipped.
 export { default as FlatListFooterSpacer } from "./FlatListFooterSpacer";
+
+// Touchable opacity over text. Often used at the end of a flatlist.
+export { default as TextButton } from "./TextButton";

@@ -179,15 +179,15 @@ const CommentsMain = ({ navigation, route }) => {
     );
   };
 
+  const ExitComments = () => {
+    navigation.goBack(), dispatch(clearCommentsData());
+  };
+
   return (
     <GestureRecognizer
       style={styles.container}
-      onSwipeDown={() => {
-        navigation.goBack(), dispatch(clearCommentsData());
-      }}
-      onSwipeRight={() => {
-        navigation.goBack(), dispatch(clearCommentsData());
-      }}
+      onSwipeDown={ExitComments}
+      onSwipeRight={ExitComments}
     >
       <View style={styles.flexWrapper}>
         <BackgroundImage postItem={postItem} />
@@ -219,7 +219,7 @@ const CommentsMain = ({ navigation, route }) => {
               </BlurView>
             </TouchableOpacity>
             <View style={styles.backArrow} pointerEvents={"box-none"}>
-              <BackArrow />
+              <BackArrow CustomAction={ExitComments} />
             </View>
           </View>
         </SafeAreaView>

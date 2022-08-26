@@ -53,6 +53,9 @@ const ModifyVaultData = ({
   const postDate = new Date(post.contentdate);
   const postSimpleDate = GetDate(postDate);
 
+  console.log("\n\nModifyVaultData post: ");
+  console.log(post);
+
   dispatch(setVaultRefreshDate(new Date().toISOString()));
 
   if (action === "add") {

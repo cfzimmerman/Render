@@ -12,6 +12,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useDispatch, useSelector } from "react-redux";
+import { RootStateType } from "../../../redux/store";
 import {
   GlobalStyles,
   Environment,
@@ -19,6 +20,7 @@ import {
   Icons,
 } from "../../../resources/project";
 import ClearSearchArray from "./ClearSearchArray";
+import ExploreListFooter from "./ExploreListFooter";
 import GetSearchResults from "./GetSearchResults";
 import SearchResultHeader from "./SearchResultHeader";
 import UserTile from "./UserTile";
@@ -32,9 +34,15 @@ function ExploreLanding({ navigation }) {
 
   const dispatch = useDispatch();
 
-  const currentuser = useSelector((state) => state.profilemain.currentuser);
-  const nextToken = useSelector((state) => state.exploremain.nextToken);
-  const searchresult = useSelector((state) => state.exploremain.searchresult);
+  const currentuser = useSelector(
+    (state: RootStateType) => state.profilemain.currentuser
+  );
+  const nextToken = useSelector(
+    (state: RootStateType) => state.exploremain.nextToken
+  );
+  const searchresult = useSelector(
+    (state: RootStateType) => state.exploremain.searchresult
+  );
 
   const opacity = new Animated.Value(0);
 
@@ -118,7 +126,7 @@ function ExploreLanding({ navigation }) {
     setInitialPageLoad(false);
   }
 
-  function CorrectTile({ item, index }) {
+  const renderItem = ({ item, index }) => {
     if (currentCategory === "users") {
       return (
         <UserTile
@@ -131,7 +139,18 @@ function ExploreLanding({ navigation }) {
         />
       );
     }
-  }
+  };
+
+  const ListFooter = () => (
+    <ExploreListFooter
+      input={input}
+      category={"users"}
+      searchResultsLength={searchresult.length}
+      nextToken={nextToken}
+      cognitosub={currentuser.cognitosub}
+      dispatch={dispatch}
+    />
+  );
 
   return (
     <SafeAreaView
@@ -157,7 +176,10 @@ function ExploreLanding({ navigation }) {
             animateout(Easing.ease), Keyboard.dismiss();
           }}
         >
-          <Animated.View style={animatedStyles}>
+          <Animated.View
+            // @ts-ignore
+            style={animatedStyles}
+          >
             <Icons.OriginalSize.X
               stroke={Colors.AccentOn}
               height={Environment.IconSize}
@@ -168,23 +190,15 @@ function ExploreLanding({ navigation }) {
       </View>
       <View>
         <FlatList
+          contentContainerStyle={styles.contentContainer}
           data={searchresult}
-          renderItem={({ item, index }) =>
-            CorrectTile({ item, index, dispatch })
-          }
+          renderItem={renderItem}
           numColumns={2}
           columnWrapperStyle={styles.columnwrapper}
           keyboardDismissMode="on-drag"
           onEndReachedThreshold={0.25}
           showsVerticalScrollIndicator={false}
-          ListHeaderComponent={SearchResultHeader({
-            length: searchresult.length,
-            GetData,
-            input,
-            dispatch,
-            nextToken,
-          })}
-          ListFooterComponent={() => <View style={styles.footer} />}
+          ListFooterComponent={ListFooter}
         />
       </View>
     </SafeAreaView>
@@ -226,6 +240,9 @@ const styles = StyleSheet.create({
   },
   inputtext: {
     color: Colors.AccentOn,
+  },
+  contentContainer: {
+    alignItems: "center",
   },
 });
 
