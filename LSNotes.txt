@@ -58,3 +58,34 @@ File path:
 
 * Note 1, the contents: {} wrapper is purely for organizing the documentation examples. documentDirectory/contents isn't a route in use. Maybe that's confusing, but the nested const exampleField = {} below is probably worse, so just deal with it 😘
 ** Note 2, in LocalLibrary.txt, contentkey includes a "." for the file extension. Object must be read using contents["imgname.png"] syntax.
+
+
+
+        const query = /* GraphQL */ `
+          query GDByUsecase {
+            GDByUsecase(usecase: "IGDB_GAMES", limit: 1) {
+              items {
+                id
+                strA
+                numA
+              }
+            }
+          }
+        `;
+        
+        const { data: { data: { GDByUsecase: { items }}}} = await axios({
+          url: GRAPHQL_ENDPOINT,
+          method: "post",
+          headers: {
+            "x-api-key": GRAPHQL_API_KEY,
+          },
+          data: JSON.stringify({ query }),
+        });
+    
+        const { id, strA, numA } = items[0];
+        
+        return {
+            id,
+            strA,
+            numA
+        }
