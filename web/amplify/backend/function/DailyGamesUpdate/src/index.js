@@ -10,15 +10,26 @@ Amplify Params - DO NOT EDIT */
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
 
-exports.handler = async (event) => {
-  console.log(`EVENT: ${JSON.stringify(event)}`);
-  return {
-    statusCode: 200,
-    //  Uncomment below to enable CORS requests
-    //  headers: {
-    //      "Access-Control-Allow-Origin": "*",
-    //      "Access-Control-Allow-Headers": "*"
-    //  },
-    body: JSON.stringify('Hello from Lambda!')
-  };
+import axios from 'axios';
+
+const GRAPHQL_ENDPOINT = process.env.API_MOBILE_GRAPHQLAPIENDPOINTOUTPUT;
+const GRAPHQL_API_KEY = process.env.API_MOBILE_GRAPHQLAPIKEYOUTPUT;
+
+export const handler = async (event) => {
+  var returnMessage;
+
+  try {
+    returnMessage = {
+      statusCode: 400,
+      message: 'Success!',
+      error: null
+    };
+  } catch (error) {
+    returnMessage = {
+      statusCode: 400,
+      message: 'error',
+      error: error
+    };
+  }
+  return returnMessage;
 };
