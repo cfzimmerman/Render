@@ -28,8 +28,8 @@ const getGlobalDataQuery = /* GraphQL */ `
       items {
         id
         strA
+        strB
         numA
-        updatedAt
       }
     }
   }
@@ -43,6 +43,7 @@ const updateGlobalDataMutation = /* GraphQL */ `
       usecase
       key
       strA
+      strB
       numA
       numB
       updatedAt
@@ -141,11 +142,11 @@ export const handler = async (event) => {
       data: JSON.stringify({ query: getGlobalDataQuery })
     });
 
-    const { id, strA: accessToken, numA: expirationDate, updatedAt } = items[0];
+    const { id, strA: accessToken, strB: lastAddedGames, numA: expirationDate } = items[0];
 
-    const cutoffDate = Math.floor(new Date(updatedAt).getTime() / 1000);
+    const cutoffDate = Math.floor(new Date(lastAddedGames).getTime() / 1000);
 
-    const nextUpdatedAt = new Date().toISOString();
+    const nextLastAddedGames = new Date().toISOString();
 
     const { data: games } = await axios({
       url: 'https://api.igdb.com/v4/games',
@@ -210,13 +211,16 @@ export const handler = async (event) => {
           };
 
           // Await can be removed if necessary. Rn the cost savings would be smaller than pennies (and I tested it like this), but the change can def be made for a faster loop.
-          await axios({
+          const { data } = await axios({
             url: GRAPHQL_ENDPOINT,
             method: 'post',
             headers: {
               'x-api-key': GRAPHQL_API_KEY
             },
-            data: JSON.stringify({ query: createGamesMutation, variables: newGameUpload })
+            data: JSON.stringify({
+              query: createGamesMutation,
+              variables: { input: newGameUpload }
+            })
           });
         }
       }
@@ -229,7 +233,7 @@ export const handler = async (event) => {
     const updateGlobalDataMutationVariables = {
       input: {
         id,
-        updatedAt: nextUpdatedAt
+        strB: nextLastAddedGames
       }
     };
 
@@ -247,7 +251,7 @@ export const handler = async (event) => {
 
     return {
       statusCode: 200,
-      message: `Successfully uploaded ${games.length} items at ${nextUpdatedAt}.`,
+      message: `Successfully uploaded ${games.length} items at ${nextLastAddedGames}.`,
       error: null
     };
   } catch (error) {
