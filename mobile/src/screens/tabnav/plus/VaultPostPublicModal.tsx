@@ -140,7 +140,6 @@ function VaultPostPublicModal({ dispatch, item, origin, navigation }) {
 
   useEffect(() => {
     if (item.publicpost === true && typeof item.publicpostdate != "undefined") {
-      console.log(item.publicpostdate);
       const newMessage = `Posted on ${format(
         new Date(item.publicpostdate),
         "PP"
