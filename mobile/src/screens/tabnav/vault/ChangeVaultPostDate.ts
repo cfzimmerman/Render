@@ -69,8 +69,6 @@ async function ChangeVaultPostDate({
   const post: PostType = { ...item, contentdate: newContentDate };
 
   try {
-    console.log("\n\nChangeVaultPostDate item: ");
-    console.log(item);
     ModifyVaultData({
       action: "add",
       vaultfeeddata,

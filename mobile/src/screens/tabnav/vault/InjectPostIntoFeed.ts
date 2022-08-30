@@ -130,7 +130,7 @@ async function InjectPostIntoFeed({
     } else if (pathway === "pushnewsection") {
       // Add new section / post to end of both vault data arrays
 
-      console.log("AddNewSection");
+      // console.log("AddNewSection");
 
       batch(() => {
         dispatch(addVaultPostDataObject(newSection));

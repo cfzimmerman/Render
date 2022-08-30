@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   View,
   StyleSheet,
@@ -86,6 +86,8 @@ const HVGameDisplay = ({ navigation, route }) => {
 
   const gameID = route.params.gameID;
 
+  const flatListRef = useRef();
+
   useEffect(() => {
     if (
       gameObject === null &&
@@ -123,7 +125,6 @@ const HVGameDisplay = ({ navigation, route }) => {
         title: gameObject.title,
         vaultfeeddata,
         hvGameSearchNextToken,
-        initialQuery: true,
       });
       setGotPosts(true);
     } else if (
@@ -197,7 +198,6 @@ const HVGameDisplay = ({ navigation, route }) => {
           title: gameObject.title,
           vaultfeeddata,
           hvGameSearchNextToken,
-          initialQuery: false,
         });
       } else if (
         gameObject.id === null &&
@@ -243,7 +243,10 @@ const HVGameDisplay = ({ navigation, route }) => {
           <BackArrow CustomAction={CustomButtonAction} />
         </View>
         <TouchableOpacity
-          onPress={CustomButtonAction}
+          onPress={() =>
+            // @ts-ignore
+            flatListRef.current.scrollToIndex({ index: 0, animated: true })
+          }
           style={[GlobalStyles.shadow, styles.searchBar]}
         >
           <Text
@@ -260,6 +263,7 @@ const HVGameDisplay = ({ navigation, route }) => {
       <View>
         <FlatList
           data={hvGameSearchResults}
+          ref={flatListRef}
           ListHeaderComponent={ListHeader}
           ListFooterComponent={ListFooter}
           ListEmptyComponent={ListEmptyComponent}
