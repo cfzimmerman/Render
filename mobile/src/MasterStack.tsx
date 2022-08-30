@@ -27,6 +27,7 @@ import PostMultiDelete from "./screens/tabnav/homevault/PostMultiDelete";
 import SelectGame from "./screens/tabnav/homevault/GameTags/SelectGame";
 import HVSearchLanding from "./screens/tabnav/homevault/GameTags/HVSearchLanding";
 import HVGameDisplay from "./screens/tabnav/homevault/GameTags/HVGameDisplay";
+import GetStartedLanding from "./screens/masterstack/getstarted/GetStartedLanding";
 import { useNavigation } from "@react-navigation/native";
 
 type RootStackParamList = {
@@ -76,6 +77,7 @@ type RootStackParamList = {
   HVGameDisplay: {
     gameID: string;
   };
+  GetStartedLanding: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -158,6 +160,11 @@ const MasterStack = () => {
       <Stack.Screen
         name="HVGameDisplay"
         component={HVGameDisplay}
+        options={{ animation: "flip" }}
+      />
+      <Stack.Screen
+        name="GetStartedLanding"
+        component={GetStartedLanding}
         options={{ animation: "flip" }}
       />
     </Stack.Navigator>
