@@ -290,7 +290,6 @@ const VaultPostFullView = ({ navigation, route }) => {
 
     if (commentsdata.length != 0) {
       dispatch(clearCommentsData());
-      console.log("ClearComments");
     }
 
     if (usecase === "stories") {
