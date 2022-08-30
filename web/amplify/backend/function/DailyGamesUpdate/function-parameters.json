@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "api": {
+      "Mobile": [
+        "Query",
+        "Mutation"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}
