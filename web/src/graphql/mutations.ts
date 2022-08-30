@@ -181,6 +181,7 @@ export const createGlobalData = /* GraphQL */ `
       usecase
       key
       strA
+      strB
       numA
       numB
       updatedAt
@@ -198,6 +199,7 @@ export const updateGlobalData = /* GraphQL */ `
       usecase
       key
       strA
+      strB
       numA
       numB
       updatedAt
@@ -215,6 +217,7 @@ export const deleteGlobalData = /* GraphQL */ `
       usecase
       key
       strA
+      strB
       numA
       numB
       updatedAt
