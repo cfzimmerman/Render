@@ -211,7 +211,7 @@ export const handler = async (event) => {
           };
 
           // Await can be removed if necessary. Rn the cost savings would be smaller than pennies (and I tested it like this), but the change can def be made for a faster loop.
-          const { data } = await axios({
+          await axios({
             url: GRAPHQL_ENDPOINT,
             method: 'post',
             headers: {
