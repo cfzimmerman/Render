@@ -270,6 +270,7 @@ export const getGlobalData = /* GraphQL */ `
       usecase
       key
       strA
+      strB
       numA
       numB
       updatedAt
@@ -289,6 +290,7 @@ export const listGlobalData = /* GraphQL */ `
         usecase
         key
         strA
+        strB
         numA
         numB
         updatedAt
@@ -318,6 +320,7 @@ export const gDByUsecase = /* GraphQL */ `
         usecase
         key
         strA
+        strB
         numA
         numB
         updatedAt
