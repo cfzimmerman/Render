@@ -197,6 +197,7 @@ type Users @model @auth(rules: [{ allow: public }]) {
   emailconfirmed: Boolean
   firstvaultupload: Boolean
   fullyauthenticated: Boolean
+  fullyonboarded: Boolean
   gamertag: String @index(name: "userByGamertag", queryField: "userByGamertag")
   mostrecentpublicpost: AWSDateTime
   pfp: String
