@@ -81,6 +81,7 @@ export const upload = async (
 
   const contentKey = `${v4()}.${getFileType(file.type)}`;
   await Storage.put(contentKey, file, {
+    resumable: true,
     progressCallback,
     completeCallback
   });
