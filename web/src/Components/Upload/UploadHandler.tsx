@@ -72,10 +72,7 @@ export const UploadHandler: React.FC<{}> = () => {
         return;
       }
 
-      let contentType: 'video' | 'image' = 'video';
-      if (files[index].type.includes('image')) {
-        contentType = 'image';
-      }
+      const contentType = files[index].type.includes('image') ? 'image' : 'video';
 
       const userSub = await getUserSub();
       upload(
@@ -84,21 +81,19 @@ export const UploadHandler: React.FC<{}> = () => {
         contentType,
         aspectRatio,
         (progress) => {
-          setUploadProgress(Math.round((progress.loaded / progress.total) * 100));
-
-          // Ideally would use completeCallback, but that is not firing as expected
-          if (progress.loaded / progress.total === 1) {
-            setUploadState({
-              ...uploadState,
-              fileUploadIndex: index + 1,
-              aspectRatio: 0,
-              uploadNext: index + 1 < files.length
-            });
-            setThumbnail('');
-            setFilePreviewUrl('');
-          }
+          const progressPercent = Math.round((progress.loaded / progress.total) * 100);
+          setUploadProgress(progressPercent === Infinity ? 100 : progressPercent);
         },
-        () => {},
+        () => {
+          setUploadState({
+            ...uploadState,
+            fileUploadIndex: index + 1,
+            aspectRatio: 0,
+            uploadNext: index + 1 < files.length
+          });
+          setThumbnail('');
+          setFilePreviewUrl('');
+        },
         thumbnail
       );
     };
