@@ -11,47 +11,60 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Environment, GlobalStyles, Colors } from "../../../resources/project";
 import GetStartedPageItem from "./GetStartedPageItem";
 
-interface GetStartedPageDataTypes {
+export interface GetStartedPageDataTypes {
   id: number;
   headerImageURL: string;
   titleText: string;
   descriptionText: string;
 }
 
+const totalNumberOfScreens = 5;
+
 const GetStartedPageData: GetStartedPageDataTypes[] = [
   {
     id: 0,
     headerImageURL:
       "https://mobile965f75596afb4ca68a1e637998665f92161112-production.s3.amazonaws.com/public/CompanyStock/GetStarted1-0.jpg",
-    titleText: "",
+    titleText: "Welcome!",
     descriptionText: "Render is the best place to save your screen captures.",
+  },
+  {
+    id: 1,
+    headerImageURL:
+      "https://mobile965f75596afb4ca68a1e637998665f92161112-production.s3.amazonaws.com/public/CompanyStock/GetStarted2-3.png",
+    titleText: "Upload",
+    descriptionText: "Use our web portal or app to upload captures.",
+  },
+  {
+    id: 2,
+    headerImageURL:
+      "https://mobile965f75596afb4ca68a1e637998665f92161112-production.s3.amazonaws.com/public/CompanyStock/GetStarted3-0.jpg",
+    titleText: "Save",
+    descriptionText: "The Vault is your private cloud storage library.",
+  },
+  {
+    id: 3,
+    headerImageURL:
+      "https://mobile965f75596afb4ca68a1e637998665f92161112-production.s3.amazonaws.com/public/CompanyStock/GetStarted4-0.jpg",
+    titleText: "Sort",
+    descriptionText: "Tag games, add text, and order by date.",
+  },
+  {
+    id: 4,
+    headerImageURL:
+      "https://mobile965f75596afb4ca68a1e637998665f92161112-production.s3.amazonaws.com/public/CompanyStock/GetStarted5-0.jpg",
+    titleText: "Export",
+    descriptionText: "Download, export to other apps, or share within Render.",
   },
 ];
 
-/*
 const renderItem = ({ index, item }) => {
-  return <GetStartedPageItem />;
-};
-*/
-
-const renderItem = () => {
   return (
-    <SafeAreaView
-      style={{
-        height: Environment.ScreenHeight,
-        alignItems: "center",
-        paddingVertical:
-          Platform.OS === "android" ? Environment.StandardPadding : 0,
-      }}
-    >
-      <View
-        style={{
-          backgroundColor: "crimson",
-          width: Environment.FullBar,
-          flex: 1,
-        }}
-      ></View>
-    </SafeAreaView>
+    <GetStartedPageItem
+      item={item}
+      index={index}
+      totalNumberOfScreens={totalNumberOfScreens}
+    />
   );
 };
 
@@ -60,7 +73,10 @@ const GetStartedLanding = () => {
     <FlatList
       data={GetStartedPageData}
       renderItem={renderItem}
-      style={{ flex: 1, backgroundColor: "moccasin" }}
+      style={{ flex: 1 }}
+      horizontal={true}
+      snapToInterval={Environment.ScreenWidth}
+      decelerationRate="fast"
     />
   );
 };
