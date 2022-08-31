@@ -42,6 +42,7 @@ export const createPostViewTracker = /* GraphQL */ `
           emailconfirmed
           firstvaultupload
           fullyauthenticated
+          fullyonboarded
           gamertag
           mostrecentpublicpost
           pfp
@@ -97,6 +98,7 @@ export const createPostViewTracker = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -171,6 +173,7 @@ export const updatePostViewTracker = /* GraphQL */ `
           emailconfirmed
           firstvaultupload
           fullyauthenticated
+          fullyonboarded
           gamertag
           mostrecentpublicpost
           pfp
@@ -226,6 +229,7 @@ export const updatePostViewTracker = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -300,6 +304,7 @@ export const deletePostViewTracker = /* GraphQL */ `
           emailconfirmed
           firstvaultupload
           fullyauthenticated
+          fullyonboarded
           gamertag
           mostrecentpublicpost
           pfp
@@ -355,6 +360,7 @@ export const deletePostViewTracker = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -650,6 +656,7 @@ export const createUserGames = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -734,6 +741,7 @@ export const updateUserGames = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -818,6 +826,7 @@ export const deleteUserGames = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -921,6 +930,7 @@ export const createNotifications = /* GraphQL */ `
           emailconfirmed
           firstvaultupload
           fullyauthenticated
+          fullyonboarded
           gamertag
           mostrecentpublicpost
           pfp
@@ -1018,6 +1028,7 @@ export const updateNotifications = /* GraphQL */ `
           emailconfirmed
           firstvaultupload
           fullyauthenticated
+          fullyonboarded
           gamertag
           mostrecentpublicpost
           pfp
@@ -1115,6 +1126,7 @@ export const deleteNotifications = /* GraphQL */ `
           emailconfirmed
           firstvaultupload
           fullyauthenticated
+          fullyonboarded
           gamertag
           mostrecentpublicpost
           pfp
@@ -1224,6 +1236,7 @@ export const createUserNotifications = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1312,6 +1325,7 @@ export const updateUserNotifications = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1400,6 +1414,7 @@ export const deleteUserNotifications = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1474,6 +1489,7 @@ export const createComments = /* GraphQL */ `
           emailconfirmed
           firstvaultupload
           fullyauthenticated
+          fullyonboarded
           gamertag
           mostrecentpublicpost
           pfp
@@ -1529,6 +1545,7 @@ export const createComments = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1604,6 +1621,7 @@ export const updateComments = /* GraphQL */ `
           emailconfirmed
           firstvaultupload
           fullyauthenticated
+          fullyonboarded
           gamertag
           mostrecentpublicpost
           pfp
@@ -1659,6 +1677,7 @@ export const updateComments = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1734,6 +1753,7 @@ export const deleteComments = /* GraphQL */ `
           emailconfirmed
           firstvaultupload
           fullyauthenticated
+          fullyonboarded
           gamertag
           mostrecentpublicpost
           pfp
@@ -1789,6 +1809,7 @@ export const deleteComments = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1846,6 +1867,7 @@ export const createUserRelationships = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1890,6 +1912,7 @@ export const createUserRelationships = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1946,6 +1969,7 @@ export const updateUserRelationships = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1990,6 +2014,7 @@ export const updateUserRelationships = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -2046,6 +2071,7 @@ export const deleteUserRelationships = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -2090,6 +2116,7 @@ export const deleteUserRelationships = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -2160,6 +2187,7 @@ export const createPosts = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -2289,6 +2317,7 @@ export const updatePosts = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -2418,6 +2447,7 @@ export const deletePosts = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -2529,6 +2559,7 @@ export const createUsers = /* GraphQL */ `
       emailconfirmed
       firstvaultupload
       fullyauthenticated
+      fullyonboarded
       gamertag
       mostrecentpublicpost
       pfp
@@ -2642,6 +2673,7 @@ export const updateUsers = /* GraphQL */ `
       emailconfirmed
       firstvaultupload
       fullyauthenticated
+      fullyonboarded
       gamertag
       mostrecentpublicpost
       pfp
@@ -2755,6 +2787,7 @@ export const deleteUsers = /* GraphQL */ `
       emailconfirmed
       firstvaultupload
       fullyauthenticated
+      fullyonboarded
       gamertag
       mostrecentpublicpost
       pfp

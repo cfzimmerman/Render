@@ -1,4 +1,11 @@
+import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { Auth, API, graphqlOperation } from "aws-amplify";
+import {
+  CreateUsersInput,
+  CreateUsersMutation,
+  UpdateUsersInput,
+  UpdateUsersMutation,
+} from "../../../API";
 import {
   createUsers,
   updateUsers,
@@ -12,16 +19,16 @@ async function AttemptSignup({ username, navigation, dispatch }) {
   let createdCognitoSub = null;
 
   try {
-    const userObject = {
+    const userObject: CreateUsersInput = {
       email: username,
       fullyauthenticated: false,
       fullyonboarded: false,
       setpassword: false,
     };
 
-    const newUser = await API.graphql(
+    const newUser = (await API.graphql(
       graphqlOperation(createUsers, { input: userObject })
-    );
+    )) as GraphQLResult<CreateUsersMutation>;
 
     const newUserID = newUser.data.createUsers.id;
     createdUserID = newUserID;
@@ -36,12 +43,14 @@ async function AttemptSignup({ username, navigation, dispatch }) {
 
     createdCognitoSub = createdUser.userSub;
 
-    const updateUser = {
+    const updateUser: UpdateUsersInput = {
       id: newUserID,
       cognitosub: createdUser.userSub,
     };
 
-    await API.graphql(graphqlOperation(updateUsers, { input: updateUser }));
+    (await API.graphql(
+      graphqlOperation(updateUsers, { input: updateUser })
+    )) as GraphQLResult<UpdateUsersMutation>;
 
     const signInResponse = await Auth.signIn(username);
 

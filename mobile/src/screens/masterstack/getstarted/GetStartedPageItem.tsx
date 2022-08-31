@@ -9,12 +9,14 @@ import {
 import { Item } from "react-native-paper/lib/typescript/components/List/List";
 import { SafeAreaView } from "react-native-safe-area-context";
 import GestureRecognizer from "react-native-swipe-gestures";
+import { CurrentUserType } from "../../../resources/CommonTypes";
 import {
   Environment,
   Colors,
   GlobalStyles,
   Icons,
 } from "../../../resources/project";
+import ExitGetStarted from "./ExitGetStarted";
 import { GetStartedPageDataTypes } from "./GetStartedLanding";
 
 interface InputTypes {
@@ -22,6 +24,7 @@ interface InputTypes {
   index: number;
   totalNumberOfScreens: number;
   navigation: any;
+  currentUser: CurrentUserType;
 }
 
 const GetStartedPageItem = ({
@@ -29,9 +32,10 @@ const GetStartedPageItem = ({
   index,
   totalNumberOfScreens,
   navigation,
+  currentUser,
 }: InputTypes) => {
   const NavigateBack = () => {
-    navigation.goBack();
+    ExitGetStarted({ navigation, currentUser });
   };
   return (
     <GestureRecognizer onSwipeDown={NavigateBack}>

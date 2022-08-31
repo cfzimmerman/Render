@@ -1,4 +1,7 @@
 import { FlatList, StyleSheet } from "react-native";
+import { useSelector } from "react-redux";
+import { RootStateType } from "../../../redux/store";
+import { CurrentUserType } from "../../../resources/CommonTypes";
 import { Environment } from "../../../resources/project";
 import {
   GetStartedExportDescription,
@@ -58,6 +61,10 @@ const GetStartedPageData: GetStartedPageDataTypes[] = [
 ];
 
 const GetStartedLanding = ({ navigation }) => {
+  const currentUser: CurrentUserType = useSelector(
+    (state: RootStateType) => state.profilemain.currentuser
+  );
+
   const renderItem = ({ index, item }) => {
     return (
       <GetStartedPageItem
@@ -65,6 +72,7 @@ const GetStartedLanding = ({ navigation }) => {
         index={index}
         totalNumberOfScreens={totalNumberOfScreens}
         navigation={navigation}
+        currentUser={currentUser}
       />
     );
   };
