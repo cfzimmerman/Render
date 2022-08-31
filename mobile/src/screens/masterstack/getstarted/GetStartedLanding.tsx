@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootStateType } from "../../../redux/store";
 import { CurrentUserType } from "../../../resources/CommonTypes";
 import { Environment } from "../../../resources/project";
@@ -65,6 +65,8 @@ const GetStartedLanding = ({ navigation }) => {
     (state: RootStateType) => state.profilemain.currentuser
   );
 
+  const dispatch = useDispatch();
+
   const renderItem = ({ index, item }) => {
     return (
       <GetStartedPageItem
@@ -73,12 +75,13 @@ const GetStartedLanding = ({ navigation }) => {
         totalNumberOfScreens={totalNumberOfScreens}
         navigation={navigation}
         currentUser={currentUser}
+        dispatch={dispatch}
       />
     );
   };
 
   const ListFooter = () => {
-    return <GetStartedFooter navigation={navigation} />;
+    return <GetStartedFooter navigation={navigation} dispatch={dispatch} />;
   };
   return (
     <FlatList

@@ -32,13 +32,12 @@ const SetPasswordBox = ({
           header={"🔒"}
           title={"Add a password"}
           description={"Required for secure web upload"}
-          disabled={true}
+          disabled={false}
         />
       </View>
     );
-  } else {
-    return null;
   }
+  return null;
 };
 
 const styles = StyleSheet.create({
