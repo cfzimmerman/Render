@@ -15,6 +15,7 @@ async function AttemptSignup({ username, navigation, dispatch }) {
     const userObject = {
       email: username,
       fullyauthenticated: false,
+      fullyonboarded: false,
       setpassword: false,
     };
 

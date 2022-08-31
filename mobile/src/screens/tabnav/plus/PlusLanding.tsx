@@ -29,77 +29,6 @@ import GetContentDate from "./GetContentDate";
 import UploadImage from "./UploadImage";
 import UploadVideo from "./UploadVideo";
 import { RootStateType } from "../../../redux/store";
-import {
-  addSelectedPost,
-  deactivateMultiSelect,
-} from "../../../redux/homevault/homevaultmain";
-import GetCurrentUserGameLibrary from "../homevault/GameTags/GetCurrentUserGameLibrary";
-import SearchLibraryGameTitle from "../homevault/GameTags/SearchLibraryGameTitle";
-import { GameCoverTileType } from "../homevault/GameTags/GameCoverTile";
-import RemovePostGameRelationship from "../homevault/GameTags/RemovePostGameRelationship";
-
-const libraryGamesArray: GameCoverTileType[] = [
-  {
-    id: "2797ee70-f003-4a2d-b0bb-c34a45bb3fa0",
-    title: "BioShock",
-    coverID: "co2mli",
-    backgroundID: "eviuwu4ipxp1qems0jzn",
-  },
-  {
-    id: "2aacb549-5a81-43b3-af4f-738550f2e488",
-    title: "Thief: Deadly Shadows",
-    coverID: "co2rom",
-    backgroundID: "ccvyu2a3t0ehowio0kcs",
-  },
-  {
-    id: "3fc1cf85-4fe2-433d-ad86-4f9849c4c3a7",
-    title: "Fallout",
-    coverID: "co1ybn",
-    backgroundID: "ar1qjx",
-  },
-  {
-    id: "462bd003-073b-4f7b-9086-cecd9e602852",
-    title: "Fallout Tactics: Brotherhood of Steel",
-    coverID: "co1ybr",
-    backgroundID: "gs9dc1zpmlt7ami6ret9",
-  },
-  {
-    id: "6b29b79f-5e05-46c6-ab05-fd04f6200ce5",
-    title: "Thief: The Dark Project",
-    coverID: "co22ne",
-    backgroundID: "wisqqkvrtl93vfocx6wn",
-  },
-  {
-    id: "73473ab0-e84f-40e3-929b-e543cc631c76",
-    title: "Fallout: New Vegas",
-    coverID: "co1u60",
-    backgroundID: "ar4hb",
-  },
-  {
-    id: "74a489ab-89a6-42d2-b758-b4431db790c7",
-    title: "Thief",
-    coverID: "co22nc",
-    backgroundID: "d0dmuf0tpw3ffne8as77",
-  },
-  {
-    id: "bdfc3138-2f58-41a0-bcd0-5ffc1a600bee",
-    title: "Fallout 3",
-    coverID: "co1ycw",
-    backgroundID: "ar8pz",
-  },
-  {
-    id: "c533e831-6e8b-40cc-a6c1-9c4d29bf0464",
-    title: "Fallout 2",
-    coverID: "co50kv",
-    backgroundID: "ar18xr",
-  },
-  {
-    id: "e717e144-df6b-426a-8b20-e67691cc57d9",
-    title: "BioShock 2",
-    coverID: "co2mlj",
-    backgroundID: "ntwgt1f8yluhitypt5rh",
-  },
-];
 
 const HalfbarIconBox = ({ Icon, header, description, Action }) => {
   return (
@@ -257,6 +186,11 @@ const PlusLanding = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Button
+        color={"moccasin"}
+        onPress={() => navigation.navigate("GetStartedLanding")}
+        title={"GetStartedLanding"}
+      />
       <ScrollView
         style={styles.scrollviewstyle}
         contentContainerStyle={styles.scrollviewcontainerstyle}
