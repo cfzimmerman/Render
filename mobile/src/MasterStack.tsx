@@ -165,7 +165,7 @@ const MasterStack = () => {
       <Stack.Screen
         name="GetStartedLanding"
         component={GetStartedLanding}
-        options={{ animation: "flip" }}
+        options={{ animation: "slide_from_bottom" }}
       />
     </Stack.Navigator>
   );

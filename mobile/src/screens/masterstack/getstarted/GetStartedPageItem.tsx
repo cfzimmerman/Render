@@ -6,7 +6,9 @@ import {
   Platform,
   TouchableOpacity,
 } from "react-native";
+import { Item } from "react-native-paper/lib/typescript/components/List/List";
 import { SafeAreaView } from "react-native-safe-area-context";
+import GestureRecognizer from "react-native-swipe-gestures";
 import {
   Environment,
   Colors,
@@ -19,61 +21,60 @@ interface InputTypes {
   item: GetStartedPageDataTypes;
   index: number;
   totalNumberOfScreens: number;
+  navigation: any;
 }
 
 const GetStartedPageItem = ({
   item,
   index,
   totalNumberOfScreens,
+  navigation,
 }: InputTypes) => {
+  const NavigateBack = () => {
+    navigation.goBack();
+  };
   return (
-    <SafeAreaView style={styles.itemWrapper}>
-      <View style={styles.dividedContentContainer}>
-        <TouchableOpacity style={[GlobalStyles.shadow, styles.imageWrapper]}>
-          <Image
-            style={styles.topImage}
-            source={{
-              uri: item.headerImageURL,
-            }}
-          />
-        </TouchableOpacity>
+    <GestureRecognizer onSwipeDown={NavigateBack}>
+      <SafeAreaView style={styles.itemWrapper}>
+        <View style={styles.dividedContentContainer}>
+          <View style={[GlobalStyles.shadow, styles.imageWrapper]}>
+            <Image
+              style={styles.topImage}
+              source={{
+                uri: item.headerImageURL,
+              }}
+            />
+          </View>
 
-        <View style={styles.bottomContentContainer}>
-          <View style={[GlobalStyles.shadow, styles.bottomTextBox]}>
-            <View style={styles.textWrapper}>
+          <View style={styles.bottomContentContainer}>
+            <View style={[GlobalStyles.shadow, styles.bottomTextBox]}>
+              <View style={styles.textWrapper}>
+                <Text
+                  style={[
+                    GlobalStyles.irregularshadow,
+                    GlobalStyles.h2text,
+                    styles.titleText,
+                  ]}
+                >
+                  {item.titleText}
+                </Text>
+                <item.descriptionTextBlock />
+              </View>
               <Text
                 style={[
                   GlobalStyles.irregularshadow,
-                  GlobalStyles.h2text,
-                  styles.titleText,
+                  GlobalStyles.p1text,
+                  styles.bottomSwipe,
                 ]}
               >
-                {item.titleText}
-              </Text>
-              <Text
-                style={[
-                  GlobalStyles.h4text,
-                  GlobalStyles.irregularshadow,
-                  styles.descriptionText,
-                ]}
-              >
-                {item.descriptionText}
+                {(index + 1).toString()} / {totalNumberOfScreens.toString()}:
+                Swipe →
               </Text>
             </View>
-            <Text
-              style={[
-                GlobalStyles.irregularshadow,
-                GlobalStyles.p1text,
-                styles.bottomSwipe,
-              ]}
-            >
-              {(index + 1).toString()} / {totalNumberOfScreens.toString()}:
-              Swipe →
-            </Text>
           </View>
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </GestureRecognizer>
   );
 };
 
@@ -117,11 +118,6 @@ const styles = StyleSheet.create({
   },
   titleText: {
     color: Colors.AccentOn,
-  },
-  descriptionText: {
-    color: Colors.AccentOn,
-    textAlign: "center",
-    margin: Environment.LargePadding,
   },
   bottomSwipe: {
     color: Colors.AccentPartial,
