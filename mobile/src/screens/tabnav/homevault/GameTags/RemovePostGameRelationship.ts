@@ -10,7 +10,6 @@ import {
 import { deleteUserGames, updatePosts } from "../../../../graphql/mutations";
 import { removeLibraryGame } from "../../../../redux/homevault/gametags";
 import { DispatchType } from "../../../../redux/store";
-import { GameCoverTileType } from "./GameCoverTile";
 
 interface InputTypes {
   postID: string;

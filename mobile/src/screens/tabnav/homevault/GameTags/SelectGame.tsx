@@ -34,6 +34,7 @@ import SearchGameTitle from "./SearchGameTitle";
 import SearchLibraryGameTitle from "./SearchLibraryGameTitle";
 import SelectGameListHeader from "./SelectGameListHeader";
 import SelectGameListFooter from "./SelectGameListFooter";
+import CoverTileAction from "./CoverTileAction";
 
 const opacity = new Animated.Value(0);
 
@@ -219,19 +220,22 @@ const SelectGame = ({ navigation, route }) => {
   const renderItem = ({ item, index }) => (
     <GameCoverTile
       item={item}
-      searchMode={searchMode}
-      dispatch={dispatch}
-      navigation={navigation}
-      // selection={selection}
-      selectedPosts={selectedPosts}
-      currentUserID={currentUserID}
-      // origin={origin}
-      vaultPostData={vaultPostData}
-      vaultFeedData={vaultFeedData}
-      currentUserCognitoSub={currentUserCognitoSub}
-      localLibrary={localLibrary}
-      syncPreference={syncPreference}
-      deleteTag={false}
+      Action={() =>
+        CoverTileAction({
+          item,
+          searchMode,
+          dispatch,
+          navigation,
+          selectedPosts,
+          currentUserID,
+          vaultPostData,
+          vaultFeedData,
+          currentUserCognitoSub,
+          syncPreference,
+          localLibrary,
+          deleteTag: false,
+        })
+      }
     />
   );
 

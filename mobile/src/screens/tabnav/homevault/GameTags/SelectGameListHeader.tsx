@@ -5,8 +5,7 @@ import {
   GlobalStyles,
   Icons,
 } from "../../../../resources/project";
-import CoverTileAction from "./CoverTileAction";
-import { GameCoverTileInput } from "./GameCoverTile";
+import CoverTileAction, { GameCoverTileActionInput } from "./CoverTileAction";
 
 const SelectGameListHeader = ({
   item,
@@ -21,7 +20,7 @@ const SelectGameListHeader = ({
   syncPreference,
   localLibrary,
   deleteTag,
-}: GameCoverTileInput) => {
+}: GameCoverTileActionInput) => {
   return (
     <TouchableOpacity
       style={[GlobalStyles.shadow, styles.headerWrapper]}

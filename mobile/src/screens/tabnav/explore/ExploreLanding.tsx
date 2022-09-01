@@ -1,4 +1,5 @@
-import react, { useState } from "react";
+import { useScrollToTop } from "@react-navigation/native";
+import react, { useRef, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -12,6 +13,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useDispatch, useSelector } from "react-redux";
+import { clearUserSearchResult } from "../../../redux/explore/exploremain";
 import { RootStateType } from "../../../redux/store";
 import {
   GlobalStyles,
@@ -19,18 +21,20 @@ import {
   Colors,
   Icons,
 } from "../../../resources/project";
-import ClearSearchArray from "./ClearSearchArray";
 import ExploreListFooter from "./ExploreListFooter";
 import GetUserSearchResults from "./GetUserSearchResults";
 import SearchResultHeader from "./SearchResultHeader";
 import UserTile from "./UserTile";
+
+export type ExploreSearchCategory = "users" | "games";
 
 const ExploreLanding = ({ navigation }) => {
   const [input, setInput] = useState("");
 
   const [initialPageLoad, setInitialPageLoad] = useState(true);
 
-  const [currentCategory, setCurrentCategory] = useState("users"); // 'users' or 'games' for now
+  const [currentCategory, setCurrentCategory] =
+    useState<ExploreSearchCategory>("users");
 
   const dispatch = useDispatch();
 
@@ -43,6 +47,10 @@ const ExploreLanding = ({ navigation }) => {
   const userSearchResult = useSelector(
     (state: RootStateType) => state.exploremain.userSearchResult
   );
+
+  const flatListRef = useRef();
+
+  useScrollToTop(flatListRef);
 
   const opacity = new Animated.Value(0);
 
@@ -85,8 +93,6 @@ const ExploreLanding = ({ navigation }) => {
       opacity,
       width: size,
       height: size,
-      alignItems: "center",
-      justifyContent: "center",
     },
     GlobalStyles.shadow,
   ];
@@ -100,23 +106,24 @@ const ExploreLanding = ({ navigation }) => {
     styles.bar,
     {
       width: bar,
-      height: Environment.CubeSize,
     },
     GlobalStyles.shadow,
   ];
 
   const GetData = ({ value }) => {
-    ClearSearchArray({ dispatch });
-    GetUserSearchResults({
-      input: value,
-      category: currentCategory,
-      nextToken: null,
-      dispatch,
-      cognitosub: currentuser.cognitosub,
-    });
+    if (currentCategory === "users") {
+      dispatch(clearUserSearchResult());
+      GetUserSearchResults({
+        input: value,
+        category: currentCategory,
+        nextToken: null,
+        dispatch,
+        cognitosub: currentuser.cognitosub,
+      });
+    }
   };
 
-  const HandleChange = (value) => {
+  const HandleChange = (value: string) => {
     setInput(value);
     GetData({ value });
   };
@@ -144,7 +151,7 @@ const ExploreLanding = ({ navigation }) => {
   const ListFooter = () => (
     <ExploreListFooter
       input={input}
-      category={"users"}
+      category={currentCategory}
       searchResultsLength={userSearchResult.length}
       nextToken={nextToken}
       cognitosub={currentuser.cognitosub}
@@ -153,9 +160,7 @@ const ExploreLanding = ({ navigation }) => {
   );
 
   return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: Colors.Secondary }]}
-    >
+    <SafeAreaView style={styles.container}>
       <View style={styles.subcontainer}>
         <Animated.View style={barStyles}>
           <TextInput
@@ -192,6 +197,7 @@ const ExploreLanding = ({ navigation }) => {
         <FlatList
           contentContainerStyle={styles.contentContainer}
           data={userSearchResult}
+          ref={flatListRef}
           renderItem={renderItem}
           numColumns={2}
           columnWrapperStyle={styles.columnwrapper}
@@ -209,6 +215,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    backgroundColor: Colors.Secondary,
   },
   subcontainer: {
     flexDirection: "row",
@@ -219,10 +226,13 @@ const styles = StyleSheet.create({
   bar: {
     borderRadius: Environment.StandardRadius,
     backgroundColor: Colors.Primary,
+    height: Environment.CubeSize,
   },
   box: {
     borderRadius: Environment.StandardRadius,
     backgroundColor: Colors.Primary,
+    alignItems: "center",
+    justifyContent: "center",
   },
   columnwrapper: {
     width: Environment.FullBar,

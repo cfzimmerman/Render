@@ -1,11 +1,12 @@
 import { DispatchType } from "../../../redux/store";
 import GetUserSearchResults from "./GetUserSearchResults";
 import { TextButton } from "../../../resources/atoms";
+import { ExploreSearchCategory } from "./ExploreLanding";
 
 interface InputTypes {
   input: string;
   searchResultsLength: number;
-  category: "users";
+  category: ExploreSearchCategory;
   nextToken: string | null;
   dispatch: DispatchType;
   cognitosub: string;
@@ -19,6 +20,17 @@ const ExploreListFooter = ({
   dispatch,
   cognitosub,
 }: InputTypes) => {
+  const GetMoreResults = () => {
+    if (category === "users") {
+      GetUserSearchResults({
+        input,
+        category: "users",
+        nextToken,
+        dispatch,
+        cognitosub,
+      });
+    }
+  };
   if (searchResultsLength < 3) {
     return <TextButton title={""} disabled={true} Action={() => null} />;
   } else if (nextToken === null) {
@@ -34,15 +46,7 @@ const ExploreListFooter = ({
       <TextButton
         title={"Get more results"}
         disabled={false}
-        Action={() =>
-          GetUserSearchResults({
-            input,
-            category: "users",
-            nextToken,
-            dispatch,
-            cognitosub,
-          })
-        }
+        Action={GetMoreResults}
       />
     );
   }
