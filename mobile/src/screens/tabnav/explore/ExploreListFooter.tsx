@@ -1,6 +1,6 @@
 import { DispatchType } from "../../../redux/store";
+import GetUserSearchResults from "./GetUserSearchResults";
 import { TextButton } from "../../../resources/atoms";
-import GetSearchResults from "./GetSearchResults";
 
 interface InputTypes {
   input: string;
@@ -35,7 +35,7 @@ const ExploreListFooter = ({
         title={"Get more results"}
         disabled={false}
         Action={() =>
-          GetSearchResults({
+          GetUserSearchResults({
             input,
             category: "users",
             nextToken,
@@ -49,30 +49,3 @@ const ExploreListFooter = ({
 };
 
 export default ExploreListFooter;
-
-/*
-
-
-  if (listData === null || listData.length === 0 || searchMode === "library") {
-    return <TextButton title={""} disabled={true} Action={() => null} />;
-  } else if (nextToken === null) {
-    return (
-      <TextButton
-        title={"All results displayed"}
-        disabled={true}
-        Action={() => null}
-      />
-    );
-  } else {
-    return (
-      <TextButton
-        title={"Get more results"}
-        disabled={false}
-        Action={() =>
-          GetMore({ searchMode, title, dispatch, nextToken, currentUserID })
-        }
-      />
-    );
-  }
-
-*/

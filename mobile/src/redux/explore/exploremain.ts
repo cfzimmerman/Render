@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { UserSearchResultType } from "../../screens/tabnav/explore/GetSearchResults";
+import { UserSearchResultType } from "../../screens/tabnav/explore/GetUserSearchResults";
 
 interface InitialSliceTypes {
-  searchresult: UserSearchResultType[];
+  userSearchResult: UserSearchResultType[];
   nextToken: string | null;
   userSearchActive: boolean;
 }
@@ -10,25 +10,25 @@ interface InitialSliceTypes {
 const slice = createSlice({
   name: "exploremain",
   initialState: {
-    searchresult: [],
+    userSearchResult: [],
     nextToken: null,
     userSearchActive: false,
   } as InitialSliceTypes,
   reducers: {
     clearExplore: (state, action) => {
-      state.searchresult.length = 0;
+      state.userSearchResult.length = 0;
       state.nextToken = null;
     },
-    addToSearchResult: (state, action) => {
-      state.searchresult.push(action.payload);
+    addToUserSearchResult: (state, action) => {
+      state.userSearchResult.push(action.payload);
     },
-    clearSearchResult: (state) => {
+    clearUserSearchResult: (state) => {
       const emptyArray = [];
-      state.searchresult = emptyArray;
+      state.userSearchResult = emptyArray;
       state.nextToken = null;
     },
     changeFriendStatus: (state, action) => {
-      state.searchresult[action.payload.index].relationship =
+      state.userSearchResult[action.payload.index].relationship =
         action.payload.status;
     },
     setNextToken: (state, action) => {
@@ -38,13 +38,13 @@ const slice = createSlice({
       state,
       action: PayloadAction<UserSearchResultType[]>
     ) => {
-      state.searchresult = action.payload;
+      state.userSearchResult = action.payload;
     },
     addNextUserSearchResultsArray: (
       state,
       action: PayloadAction<UserSearchResultType[]>
     ) => {
-      state.searchresult = state.searchresult.concat(action.payload);
+      state.userSearchResult = state.userSearchResult.concat(action.payload);
     },
     setUserSearchNextToken: (state, action: PayloadAction<string | null>) => {
       state.nextToken = action.payload;
@@ -58,8 +58,8 @@ const slice = createSlice({
 // FriendStatus options: true, false, incomingpending, outgoingpending
 
 export const {
-  addToSearchResult,
-  clearSearchResult,
+  addToUserSearchResult,
+  clearUserSearchResult,
   changeFriendStatus,
   setNextToken,
   clearExplore,

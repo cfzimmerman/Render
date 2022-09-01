@@ -21,11 +21,11 @@ import {
 } from "../../../resources/project";
 import ClearSearchArray from "./ClearSearchArray";
 import ExploreListFooter from "./ExploreListFooter";
-import GetSearchResults from "./GetSearchResults";
+import GetUserSearchResults from "./GetUserSearchResults";
 import SearchResultHeader from "./SearchResultHeader";
 import UserTile from "./UserTile";
 
-function ExploreLanding({ navigation }) {
+const ExploreLanding = ({ navigation }) => {
   const [input, setInput] = useState("");
 
   const [initialPageLoad, setInitialPageLoad] = useState(true);
@@ -40,8 +40,8 @@ function ExploreLanding({ navigation }) {
   const nextToken = useSelector(
     (state: RootStateType) => state.exploremain.nextToken
   );
-  const searchresult = useSelector(
-    (state: RootStateType) => state.exploremain.searchresult
+  const userSearchResult = useSelector(
+    (state: RootStateType) => state.exploremain.userSearchResult
   );
 
   const opacity = new Animated.Value(0);
@@ -107,7 +107,7 @@ function ExploreLanding({ navigation }) {
 
   const GetData = ({ value }) => {
     ClearSearchArray({ dispatch });
-    GetSearchResults({
+    GetUserSearchResults({
       input: value,
       category: currentCategory,
       nextToken: null,
@@ -145,7 +145,7 @@ function ExploreLanding({ navigation }) {
     <ExploreListFooter
       input={input}
       category={"users"}
-      searchResultsLength={searchresult.length}
+      searchResultsLength={userSearchResult.length}
       nextToken={nextToken}
       cognitosub={currentuser.cognitosub}
       dispatch={dispatch}
@@ -191,7 +191,7 @@ function ExploreLanding({ navigation }) {
       <View>
         <FlatList
           contentContainerStyle={styles.contentContainer}
-          data={searchresult}
+          data={userSearchResult}
           renderItem={renderItem}
           numColumns={2}
           columnWrapperStyle={styles.columnwrapper}
@@ -203,7 +203,7 @@ function ExploreLanding({ navigation }) {
       </View>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
