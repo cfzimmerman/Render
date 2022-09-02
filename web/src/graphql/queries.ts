@@ -42,6 +42,7 @@ export const getPostViewTracker = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -193,6 +194,7 @@ export const getGames = /* GraphQL */ `
       twitchID
       oculusID
       playstationID
+      numUserGames
       UserGames {
         nextToken
       }
@@ -229,6 +231,7 @@ export const listGames = /* GraphQL */ `
         twitchID
         oculusID
         playstationID
+        numUserGames
         updatedAt
       }
       nextToken
@@ -271,6 +274,7 @@ export const gamesByTitle = /* GraphQL */ `
         twitchID
         oculusID
         playstationID
+        numUserGames
         updatedAt
       }
       nextToken
@@ -313,6 +317,7 @@ export const searchGames = /* GraphQL */ `
         twitchID
         oculusID
         playstationID
+        numUserGames
         updatedAt
       }
       nextToken
@@ -355,6 +360,7 @@ export const getUserGames = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -382,6 +388,7 @@ export const getUserGames = /* GraphQL */ `
         twitchID
         oculusID
         playstationID
+        numUserGames
         updatedAt
       }
       updatedAt
@@ -632,6 +639,7 @@ export const getUserNotifications = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -763,6 +771,7 @@ export const getComments = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -873,6 +882,7 @@ export const getUserRelationships = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -896,6 +906,7 @@ export const getUserRelationships = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1074,6 +1085,7 @@ export const getPosts = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1101,6 +1113,7 @@ export const getPosts = /* GraphQL */ `
         twitchID
         oculusID
         playstationID
+        numUserGames
         updatedAt
       }
       Comments {
@@ -1586,6 +1599,7 @@ export const getUsers = /* GraphQL */ `
       emailconfirmed
       firstvaultupload
       fullyauthenticated
+      fullyonboarded
       gamertag
       mostrecentpublicpost
       pfp
@@ -1638,6 +1652,7 @@ export const listUsers = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1679,6 +1694,7 @@ export const userByCognitosub = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1720,6 +1736,7 @@ export const userByEmail = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1761,6 +1778,7 @@ export const userByGamertag = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1804,6 +1822,7 @@ export const searchByGamertag = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp

@@ -45,6 +45,7 @@ export const createPostViewTracker = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -101,6 +102,7 @@ export const updatePostViewTracker = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -157,6 +159,7 @@ export const deletePostViewTracker = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -248,6 +251,7 @@ export const createGames = /* GraphQL */ `
       twitchID
       oculusID
       playstationID
+      numUserGames
       UserGames {
         nextToken
       }
@@ -282,6 +286,7 @@ export const updateGames = /* GraphQL */ `
       twitchID
       oculusID
       playstationID
+      numUserGames
       UserGames {
         nextToken
       }
@@ -316,6 +321,7 @@ export const deleteGames = /* GraphQL */ `
       twitchID
       oculusID
       playstationID
+      numUserGames
       UserGames {
         nextToken
       }
@@ -350,6 +356,7 @@ export const createUserGames = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -377,6 +384,7 @@ export const createUserGames = /* GraphQL */ `
         twitchID
         oculusID
         playstationID
+        numUserGames
         updatedAt
       }
       updatedAt
@@ -407,6 +415,7 @@ export const updateUserGames = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -434,6 +443,7 @@ export const updateUserGames = /* GraphQL */ `
         twitchID
         oculusID
         playstationID
+        numUserGames
         updatedAt
       }
       updatedAt
@@ -464,6 +474,7 @@ export const deleteUserGames = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -491,6 +502,7 @@ export const deleteUserGames = /* GraphQL */ `
         twitchID
         oculusID
         playstationID
+        numUserGames
         updatedAt
       }
       updatedAt
@@ -643,6 +655,7 @@ export const createUserNotifications = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -687,6 +700,7 @@ export const updateUserNotifications = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -731,6 +745,7 @@ export const deleteUserNotifications = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -787,6 +802,7 @@ export const createComments = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -844,6 +860,7 @@ export const updateComments = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -901,6 +918,7 @@ export const deleteComments = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -937,6 +955,7 @@ export const createUserRelationships = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -960,6 +979,7 @@ export const createUserRelationships = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -995,6 +1015,7 @@ export const updateUserRelationships = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1018,6 +1039,7 @@ export const updateUserRelationships = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1053,6 +1075,7 @@ export const deleteUserRelationships = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1076,6 +1099,7 @@ export const deleteUserRelationships = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1125,6 +1149,7 @@ export const createPosts = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1152,6 +1177,7 @@ export const createPosts = /* GraphQL */ `
         twitchID
         oculusID
         playstationID
+        numUserGames
         updatedAt
       }
       Comments {
@@ -1204,6 +1230,7 @@ export const updatePosts = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1231,6 +1258,7 @@ export const updatePosts = /* GraphQL */ `
         twitchID
         oculusID
         playstationID
+        numUserGames
         updatedAt
       }
       Comments {
@@ -1283,6 +1311,7 @@ export const deletePosts = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1310,6 +1339,7 @@ export const deletePosts = /* GraphQL */ `
         twitchID
         oculusID
         playstationID
+        numUserGames
         updatedAt
       }
       Comments {
@@ -1344,6 +1374,7 @@ export const createUsers = /* GraphQL */ `
       emailconfirmed
       firstvaultupload
       fullyauthenticated
+      fullyonboarded
       gamertag
       mostrecentpublicpost
       pfp
@@ -1394,6 +1425,7 @@ export const updateUsers = /* GraphQL */ `
       emailconfirmed
       firstvaultupload
       fullyauthenticated
+      fullyonboarded
       gamertag
       mostrecentpublicpost
       pfp
@@ -1444,6 +1476,7 @@ export const deleteUsers = /* GraphQL */ `
       emailconfirmed
       firstvaultupload
       fullyauthenticated
+      fullyonboarded
       gamertag
       mostrecentpublicpost
       pfp
