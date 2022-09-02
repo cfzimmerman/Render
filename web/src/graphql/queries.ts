@@ -195,6 +195,7 @@ export const getGames = /* GraphQL */ `
       oculusID
       playstationID
       numUserGames
+      type
       UserGames {
         nextToken
       }
@@ -232,6 +233,7 @@ export const listGames = /* GraphQL */ `
         oculusID
         playstationID
         numUserGames
+        type
         updatedAt
       }
       nextToken
@@ -275,6 +277,51 @@ export const gamesByTitle = /* GraphQL */ `
         oculusID
         playstationID
         numUserGames
+        type
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const gamesByNumUserGames = /* GraphQL */ `
+  query GamesByNumUserGames(
+    $type: String!
+    $numUserGames: ModelIntKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGamesFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    gamesByNumUserGames(
+      type: $type
+      numUserGames: $numUserGames
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        igdbID
+        title
+        releaseDate
+        series
+        genre
+        theme
+        coverID
+        backgroundID
+        steamID
+        microsoftID
+        xboxMarketplaceID
+        gogID
+        egsID
+        twitchID
+        oculusID
+        playstationID
+        numUserGames
+        type
         updatedAt
       }
       nextToken
@@ -318,6 +365,7 @@ export const searchGames = /* GraphQL */ `
         oculusID
         playstationID
         numUserGames
+        type
         updatedAt
       }
       nextToken
@@ -389,6 +437,7 @@ export const getUserGames = /* GraphQL */ `
         oculusID
         playstationID
         numUserGames
+        type
         updatedAt
       }
       updatedAt
@@ -1114,6 +1163,7 @@ export const getPosts = /* GraphQL */ `
         oculusID
         playstationID
         numUserGames
+        type
         updatedAt
       }
       Comments {

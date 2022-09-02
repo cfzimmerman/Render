@@ -231,6 +231,7 @@ export const onCreateGames = /* GraphQL */ `
       oculusID
       playstationID
       numUserGames
+      type
       UserGames {
         nextToken
       }
@@ -263,6 +264,7 @@ export const onUpdateGames = /* GraphQL */ `
       oculusID
       playstationID
       numUserGames
+      type
       UserGames {
         nextToken
       }
@@ -295,6 +297,7 @@ export const onDeleteGames = /* GraphQL */ `
       oculusID
       playstationID
       numUserGames
+      type
       UserGames {
         nextToken
       }
@@ -355,6 +358,7 @@ export const onCreateUserGames = /* GraphQL */ `
         oculusID
         playstationID
         numUserGames
+        type
         updatedAt
       }
       updatedAt
@@ -411,6 +415,7 @@ export const onUpdateUserGames = /* GraphQL */ `
         oculusID
         playstationID
         numUserGames
+        type
         updatedAt
       }
       updatedAt
@@ -467,6 +472,7 @@ export const onDeleteUserGames = /* GraphQL */ `
         oculusID
         playstationID
         numUserGames
+        type
         updatedAt
       }
       updatedAt
@@ -1103,6 +1109,7 @@ export const onCreatePosts = /* GraphQL */ `
         oculusID
         playstationID
         numUserGames
+        type
         updatedAt
       }
       Comments {
@@ -1181,6 +1188,7 @@ export const onUpdatePosts = /* GraphQL */ `
         oculusID
         playstationID
         numUserGames
+        type
         updatedAt
       }
       Comments {
@@ -1259,6 +1267,7 @@ export const onDeletePosts = /* GraphQL */ `
         oculusID
         playstationID
         numUserGames
+        type
         updatedAt
       }
       Comments {

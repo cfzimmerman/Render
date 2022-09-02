@@ -68,6 +68,7 @@ export const getPostViewTracker = /* GraphQL */ `
           oculusID
           playstationID
           numUserGames
+          type
           updatedAt
         }
         Comments {
@@ -356,6 +357,7 @@ export const getGames = /* GraphQL */ `
       oculusID
       playstationID
       numUserGames
+      type
       UserGames {
         items {
           id
@@ -420,6 +422,7 @@ export const listGames = /* GraphQL */ `
         oculusID
         playstationID
         numUserGames
+        type
         UserGames {
           nextToken
         }
@@ -469,6 +472,57 @@ export const gamesByTitle = /* GraphQL */ `
         oculusID
         playstationID
         numUserGames
+        type
+        UserGames {
+          nextToken
+        }
+        Posts {
+          nextToken
+        }
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const gamesByNumUserGames = /* GraphQL */ `
+  query GamesByNumUserGames(
+    $type: String!
+    $numUserGames: ModelIntKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGamesFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    gamesByNumUserGames(
+      type: $type
+      numUserGames: $numUserGames
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        igdbID
+        title
+        releaseDate
+        series
+        genre
+        theme
+        coverID
+        backgroundID
+        steamID
+        microsoftID
+        xboxMarketplaceID
+        gogID
+        egsID
+        twitchID
+        oculusID
+        playstationID
+        numUserGames
+        type
         UserGames {
           nextToken
         }
@@ -518,6 +572,7 @@ export const searchGames = /* GraphQL */ `
         oculusID
         playstationID
         numUserGames
+        type
         UserGames {
           nextToken
         }
@@ -616,6 +671,7 @@ export const getUserGames = /* GraphQL */ `
         oculusID
         playstationID
         numUserGames
+        type
         UserGames {
           nextToken
         }
@@ -683,6 +739,7 @@ export const listUserGames = /* GraphQL */ `
           oculusID
           playstationID
           numUserGames
+          type
           updatedAt
         }
         updatedAt
@@ -756,6 +813,7 @@ export const userGamesByUsers = /* GraphQL */ `
           oculusID
           playstationID
           numUserGames
+          type
           updatedAt
         }
         updatedAt
@@ -829,6 +887,7 @@ export const userGamesByGames = /* GraphQL */ `
           oculusID
           playstationID
           numUserGames
+          type
           updatedAt
         }
         updatedAt
@@ -906,6 +965,7 @@ export const getNotifications = /* GraphQL */ `
           oculusID
           playstationID
           numUserGames
+          type
           updatedAt
         }
         Comments {
@@ -1455,6 +1515,7 @@ export const getComments = /* GraphQL */ `
           oculusID
           playstationID
           numUserGames
+          type
           updatedAt
         }
         Comments {
@@ -2269,6 +2330,7 @@ export const getPosts = /* GraphQL */ `
         oculusID
         playstationID
         numUserGames
+        type
         UserGames {
           nextToken
         }
@@ -2381,6 +2443,7 @@ export const listPosts = /* GraphQL */ `
           oculusID
           playstationID
           numUserGames
+          type
           updatedAt
         }
         Comments {
@@ -2476,6 +2539,7 @@ export const postsByCreatedDate = /* GraphQL */ `
           oculusID
           playstationID
           numUserGames
+          type
           updatedAt
         }
         Comments {
@@ -2571,6 +2635,7 @@ export const postsByPostedDate = /* GraphQL */ `
           oculusID
           playstationID
           numUserGames
+          type
           updatedAt
         }
         Comments {
@@ -2666,6 +2731,7 @@ export const postsByContentDate = /* GraphQL */ `
           oculusID
           playstationID
           numUserGames
+          type
           updatedAt
         }
         Comments {
@@ -2759,6 +2825,7 @@ export const postsByContentKey = /* GraphQL */ `
           oculusID
           playstationID
           numUserGames
+          type
           updatedAt
         }
         Comments {
@@ -2854,6 +2921,7 @@ export const postsByPublicDate = /* GraphQL */ `
           oculusID
           playstationID
           numUserGames
+          type
           updatedAt
         }
         Comments {
@@ -2949,6 +3017,7 @@ export const postsByUsers = /* GraphQL */ `
           oculusID
           playstationID
           numUserGames
+          type
           updatedAt
         }
         Comments {
@@ -3044,6 +3113,7 @@ export const postsByDeletedDate = /* GraphQL */ `
           oculusID
           playstationID
           numUserGames
+          type
           updatedAt
         }
         Comments {
@@ -3139,6 +3209,7 @@ export const postsByUserGames = /* GraphQL */ `
           oculusID
           playstationID
           numUserGames
+          type
           updatedAt
         }
         Comments {
@@ -3234,6 +3305,7 @@ export const postsByGames = /* GraphQL */ `
           oculusID
           playstationID
           numUserGames
+          type
           updatedAt
         }
         Comments {
@@ -3329,6 +3401,7 @@ export const searchPosts = /* GraphQL */ `
           oculusID
           playstationID
           numUserGames
+          type
           updatedAt
         }
         Comments {
