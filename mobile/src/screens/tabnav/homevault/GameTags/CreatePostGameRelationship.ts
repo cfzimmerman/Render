@@ -103,10 +103,19 @@ async function CreatePostGameRelationship({
         const currentNumUserGames =
           relationshipResult.data.getGames.numUserGames;
 
-        const updatedGame: UpdateGamesInput = {
-          id: gameID,
-          numUserGames:
-            currentNumUserGames === null ? 1 : currentNumUserGames + 1,
+        const GetUpdatedGame = () => {
+          if (currentNumUserGames === null) {
+            return {
+              id: gameID,
+              numUserGames: 1,
+              type: "games",
+            };
+          } else {
+            return {
+              id: gameID,
+              numUserGames: currentNumUserGames + 1,
+            };
+          }
         };
 
         const [
@@ -119,7 +128,7 @@ async function CreatePostGameRelationship({
             graphqlOperation(createUserGames, { input: newUserGames })
           ) as GraphQLResult<CreateUserGamesMutation>,
           API.graphql(
-            graphqlOperation(updateGames, { input: updatedGame })
+            graphqlOperation(updateGames, { input: GetUpdatedGame() })
           ) as GraphQLResult<UpdateGamesMutation>,
         ]);
 
