@@ -3,7 +3,7 @@ import { UserSearchResultType } from "../../screens/tabnav/explore/GetUserSearch
 
 interface InitialSliceTypes {
   userSearchResult: UserSearchResultType[];
-  nextToken: string | null;
+  userSearchNextToken: string | null;
   userSearchActive: boolean;
 }
 
@@ -11,13 +11,13 @@ const slice = createSlice({
   name: "exploremain",
   initialState: {
     userSearchResult: [],
-    nextToken: null,
+    userSearchNextToken: null,
     userSearchActive: false,
   } as InitialSliceTypes,
   reducers: {
     clearExplore: (state, action) => {
       state.userSearchResult.length = 0;
-      state.nextToken = null;
+      state.userSearchNextToken = null;
     },
     addToUserSearchResult: (state, action) => {
       state.userSearchResult.push(action.payload);
@@ -25,14 +25,11 @@ const slice = createSlice({
     clearUserSearchResult: (state) => {
       const emptyArray = [];
       state.userSearchResult = emptyArray;
-      state.nextToken = null;
+      state.userSearchNextToken = null;
     },
     changeFriendStatus: (state, action) => {
       state.userSearchResult[action.payload.index].relationship =
         action.payload.status;
-    },
-    setNextToken: (state, action) => {
-      state.nextToken = action.payload;
     },
     setUserSearchResultsArray: (
       state,
@@ -47,7 +44,7 @@ const slice = createSlice({
       state.userSearchResult = state.userSearchResult.concat(action.payload);
     },
     setUserSearchNextToken: (state, action: PayloadAction<string | null>) => {
-      state.nextToken = action.payload;
+      state.userSearchNextToken = action.payload;
     },
     setUserSearchActive: (state, action: PayloadAction<boolean>) => {
       state.userSearchActive = action.payload;
@@ -61,7 +58,6 @@ export const {
   addToUserSearchResult,
   clearUserSearchResult,
   changeFriendStatus,
-  setNextToken,
   clearExplore,
   setUserSearchResultsArray,
   addNextUserSearchResultsArray,

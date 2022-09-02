@@ -1,0 +1,48 @@
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import { HalfbarButton, PrimaryDivider } from "../../../resources/atoms";
+import { Environment } from "../../../resources/project";
+import { ExploreSearchCategory } from "./ExploreLanding";
+
+interface InputTypes {
+  currentCategory: ExploreSearchCategory;
+  setCurrentCategory: Function;
+}
+
+const AreEqual = (previousProps: InputTypes, nextProps: InputTypes) => {
+  if (previousProps.currentCategory === nextProps.currentCategory) {
+    return true;
+  }
+  return false;
+};
+
+const ExploreLandingHeader = ({
+  currentCategory,
+  setCurrentCategory,
+}: InputTypes) => {
+  return (
+    <View style={styles.buttonHolder}>
+      <HalfbarButton
+        label={"Users"}
+        active={currentCategory === "users" ? true : false}
+        Action={() => setCurrentCategory("users")}
+      />
+      <HalfbarButton
+        label={"Games"}
+        active={currentCategory === "games" ? true : false}
+        Action={() => setCurrentCategory("games")}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  buttonHolder: {
+    width: Environment.FullBar,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: Environment.StandardPadding,
+  },
+});
+
+export default React.memo(ExploreLandingHeader, AreEqual);

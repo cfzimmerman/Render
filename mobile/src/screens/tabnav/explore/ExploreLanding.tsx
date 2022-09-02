@@ -1,5 +1,5 @@
 import { useScrollToTop } from "@react-navigation/native";
-import react, { useRef, useState } from "react";
+import react, { useEffect, useRef, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -21,6 +21,7 @@ import {
   Colors,
   Icons,
 } from "../../../resources/project";
+import ExploreLandingHeader from "./ExploreLandingHeader";
 import ExploreListFooter from "./ExploreListFooter";
 import GetUserSearchResults from "./GetUserSearchResults";
 import SearchResultHeader from "./SearchResultHeader";
@@ -41,8 +42,8 @@ const ExploreLanding = ({ navigation }) => {
   const currentuser = useSelector(
     (state: RootStateType) => state.profilemain.currentuser
   );
-  const nextToken = useSelector(
-    (state: RootStateType) => state.exploremain.nextToken
+  const userSearchNextToken = useSelector(
+    (state: RootStateType) => state.exploremain.userSearchNextToken
   );
   const userSearchResult = useSelector(
     (state: RootStateType) => state.exploremain.userSearchResult
@@ -51,6 +52,13 @@ const ExploreLanding = ({ navigation }) => {
   const flatListRef = useRef();
 
   useScrollToTop(flatListRef);
+
+  useEffect(() => {
+    if (initialPageLoad === true) {
+      GetData({ value: input });
+      setInitialPageLoad(false);
+    }
+  });
 
   const opacity = new Animated.Value(0);
 
@@ -128,10 +136,12 @@ const ExploreLanding = ({ navigation }) => {
     GetData({ value });
   };
 
-  if (initialPageLoad === true) {
-    GetData({ value: input });
-    setInitialPageLoad(false);
-  }
+  const ListHeader = () => (
+    <ExploreLandingHeader
+      currentCategory={currentCategory}
+      setCurrentCategory={setCurrentCategory}
+    />
+  );
 
   const renderItem = ({ item, index }) => {
     if (currentCategory === "users") {
@@ -153,7 +163,7 @@ const ExploreLanding = ({ navigation }) => {
       input={input}
       category={currentCategory}
       searchResultsLength={userSearchResult.length}
-      nextToken={nextToken}
+      nextToken={userSearchNextToken}
       cognitosub={currentuser.cognitosub}
       dispatch={dispatch}
     />
@@ -204,6 +214,7 @@ const ExploreLanding = ({ navigation }) => {
           keyboardDismissMode="on-drag"
           onEndReachedThreshold={0.25}
           showsVerticalScrollIndicator={false}
+          ListHeaderComponent={ListHeader}
           ListFooterComponent={ListFooter}
         />
       </View>
