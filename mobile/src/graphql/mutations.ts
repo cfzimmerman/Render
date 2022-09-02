@@ -70,6 +70,7 @@ export const createPostViewTracker = /* GraphQL */ `
           twitchID
           oculusID
           playstationID
+          numUserGames
           updatedAt
         }
         Comments {
@@ -201,6 +202,7 @@ export const updatePostViewTracker = /* GraphQL */ `
           twitchID
           oculusID
           playstationID
+          numUserGames
           updatedAt
         }
         Comments {
@@ -332,6 +334,7 @@ export const deletePostViewTracker = /* GraphQL */ `
           twitchID
           oculusID
           playstationID
+          numUserGames
           updatedAt
         }
         Comments {
@@ -473,6 +476,7 @@ export const createGames = /* GraphQL */ `
       twitchID
       oculusID
       playstationID
+      numUserGames
       UserGames {
         items {
           id
@@ -534,6 +538,7 @@ export const updateGames = /* GraphQL */ `
       twitchID
       oculusID
       playstationID
+      numUserGames
       UserGames {
         items {
           id
@@ -595,6 +600,7 @@ export const deleteGames = /* GraphQL */ `
       twitchID
       oculusID
       playstationID
+      numUserGames
       UserGames {
         items {
           id
@@ -705,6 +711,7 @@ export const createUserGames = /* GraphQL */ `
         twitchID
         oculusID
         playstationID
+        numUserGames
         UserGames {
           nextToken
         }
@@ -790,6 +797,7 @@ export const updateUserGames = /* GraphQL */ `
         twitchID
         oculusID
         playstationID
+        numUserGames
         UserGames {
           nextToken
         }
@@ -875,6 +883,7 @@ export const deleteUserGames = /* GraphQL */ `
         twitchID
         oculusID
         playstationID
+        numUserGames
         UserGames {
           nextToken
         }
@@ -958,6 +967,7 @@ export const createNotifications = /* GraphQL */ `
           twitchID
           oculusID
           playstationID
+          numUserGames
           updatedAt
         }
         Comments {
@@ -1056,6 +1066,7 @@ export const updateNotifications = /* GraphQL */ `
           twitchID
           oculusID
           playstationID
+          numUserGames
           updatedAt
         }
         Comments {
@@ -1154,6 +1165,7 @@ export const deleteNotifications = /* GraphQL */ `
           twitchID
           oculusID
           playstationID
+          numUserGames
           updatedAt
         }
         Comments {
@@ -1517,6 +1529,7 @@ export const createComments = /* GraphQL */ `
           twitchID
           oculusID
           playstationID
+          numUserGames
           updatedAt
         }
         Comments {
@@ -1649,6 +1662,7 @@ export const updateComments = /* GraphQL */ `
           twitchID
           oculusID
           playstationID
+          numUserGames
           updatedAt
         }
         Comments {
@@ -1781,6 +1795,7 @@ export const deleteComments = /* GraphQL */ `
           twitchID
           oculusID
           playstationID
+          numUserGames
           updatedAt
         }
         Comments {
@@ -2236,6 +2251,7 @@ export const createPosts = /* GraphQL */ `
         twitchID
         oculusID
         playstationID
+        numUserGames
         UserGames {
           nextToken
         }
@@ -2366,6 +2382,7 @@ export const updatePosts = /* GraphQL */ `
         twitchID
         oculusID
         playstationID
+        numUserGames
         UserGames {
           nextToken
         }
@@ -2496,6 +2513,7 @@ export const deletePosts = /* GraphQL */ `
         twitchID
         oculusID
         playstationID
+        numUserGames
         UserGames {
           nextToken
         }

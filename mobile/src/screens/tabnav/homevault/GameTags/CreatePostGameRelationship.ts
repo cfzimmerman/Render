@@ -3,11 +3,19 @@ import { API, graphqlOperation } from "aws-amplify";
 import {
   CreateUserGamesInput,
   CreateUserGamesMutation,
+  GetGamesQuery,
   GetPostsQuery,
+  GetUserGamesQuery,
+  UpdateGamesInput,
+  UpdateGamesMutation,
   UpdatePostsInput,
   UserGamesByUsersQuery,
 } from "../../../../API";
-import { createUserGames, updatePosts } from "../../../../graphql/mutations";
+import {
+  createUserGames,
+  updateGames,
+  updatePosts,
+} from "../../../../graphql/mutations";
 import { addNewLibraryGame } from "../../../../redux/homevault/gametags";
 import { DispatchType } from "../../../../redux/store";
 import { GameCoverTileType } from "./GameCoverTile";
@@ -57,26 +65,33 @@ async function CreatePostGameRelationship({
     );
 
     if (selectedPostsIndex === 0 && gameID != null) {
+      // Only query whether to add a relationship for the first post in an array. Every other post will have the same gameID based on this structure.
       const relationshipResult = (await API.graphql(
         graphqlOperation(`
-          query UserGamesByUsers {
-            userGamesByUsers (
-              usersID: "${userID}",
-              limit: 1,
-              gamesID: {
-                eq: "${gameID}"
+          query GetGames {
+              getGames (
+                  id: "${gameID}"
+              ) {
+                  id
+                  title
+                  numUserGames
+                  UserGames (
+                      usersID: {
+                          eq: "${userID}"
+                      }
+                  ) {
+                      items {
+                          id
+                          usersID
+                      }
+                  }
               }
-            ) {
-              items {
-                id
-              }
-            }
           }
-        `)
-      )) as GraphQLResult<UserGamesByUsersQuery>;
+      `)
+      )) as GraphQLResult<GetGamesQuery>;
 
       if (
-        relationshipResult.data.userGamesByUsers.items.length === 0 &&
+        relationshipResult.data.getGames.UserGames.items.length === 0 &&
         typeof userID === "string" &&
         typeof gameID === "string"
       ) {
@@ -85,11 +100,28 @@ async function CreatePostGameRelationship({
           gamesID: gameID,
         };
 
-        const {
-          data: { createUserGames: newRelation },
-        } = (await API.graphql(
-          graphqlOperation(createUserGames, { input: newUserGames })
-        )) as GraphQLResult<CreateUserGamesMutation>;
+        const currentNumUserGames =
+          relationshipResult.data.getGames.numUserGames;
+
+        const updatedGame: UpdateGamesInput = {
+          id: gameID,
+          numUserGames:
+            currentNumUserGames === null ? 1 : currentNumUserGames + 1,
+        };
+
+        const [
+          {
+            data: { createUserGames: newRelation },
+          },
+          updateGamesResult,
+        ] = await Promise.all([
+          API.graphql(
+            graphqlOperation(createUserGames, { input: newUserGames })
+          ) as GraphQLResult<CreateUserGamesMutation>,
+          API.graphql(
+            graphqlOperation(updateGames, { input: updatedGame })
+          ) as GraphQLResult<UpdateGamesMutation>,
+        ]);
 
         const newLibraryGame: GameCoverTileType = {
           id: gameID,
