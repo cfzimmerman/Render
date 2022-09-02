@@ -41,6 +41,12 @@ type Games @model @searchable @auth(rules: [{ allow: public }]) {
   playstationID: String
   numUserGames: Int
   type: String
+    @index(
+      name: "gamesByNumUserGames"
+      queryField: "gamesByNumUserGames"
+      sortKeyFields: ["numUserGames"]
+    )
+  #type: "games"
   UserGames: [UserGames] @hasMany(indexName: "byGames", fields: ["id"])
   Posts: [Posts] @hasMany(indexName: "postsByGames", fields: ["id"])
 }
