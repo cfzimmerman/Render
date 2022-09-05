@@ -85,7 +85,8 @@ export const GetStartedSaveDescription = () => {
         onPress={NavigateToVault}
         // @ts-ignore
       />{" "}
-      is your private cloud storage library. All uploads start here.
+      is your cloud storage library. All uploads are private by default until
+      posted publicly.
     </DefaultText>
   );
 };

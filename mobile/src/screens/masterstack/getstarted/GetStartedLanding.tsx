@@ -33,14 +33,14 @@ const GetStartedPageData: GetStartedPageDataTypes[] = [
   {
     id: 1,
     headerImageURL:
-      "https://mobile965f75596afb4ca68a1e637998665f92161112-production.s3.amazonaws.com/public/CompanyStock/GetStarted2-3.png",
+      "https://mobile965f75596afb4ca68a1e637998665f92161112-production.s3.amazonaws.com/public/CompanyStock/GetStarted2-4.png",
     titleText: "Upload",
     descriptionTextBlock: GetStartedUploadDescription,
   },
   {
     id: 2,
     headerImageURL:
-      "https://mobile965f75596afb4ca68a1e637998665f92161112-production.s3.amazonaws.com/public/CompanyStock/GetStarted3-0.jpg",
+      "https://mobile965f75596afb4ca68a1e637998665f92161112-production.s3.amazonaws.com/public/CompanyStock/GetStarted3-1.jpg",
     titleText: "Save",
     descriptionTextBlock: GetStartedSaveDescription,
   },
