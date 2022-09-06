@@ -2,6 +2,7 @@ import { DispatchType } from "../../../redux/store";
 import GetUserSearchResults from "./GetUserSearchResults";
 import { TextButton } from "../../../resources/atoms";
 import { ExploreSearchCategory } from "./ExploreLanding";
+import PGSearchTitles from "./PGSearchTitles";
 
 interface InputTypes {
   input: string;
@@ -29,6 +30,8 @@ const ExploreListFooter = ({
         dispatch,
         cognitosub,
       });
+    } else if (category === "games") {
+      PGSearchTitles({ input, dispatch, nextToken });
     }
   };
   if (searchResultsLength < 3) {

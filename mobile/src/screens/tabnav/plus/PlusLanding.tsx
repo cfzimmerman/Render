@@ -196,7 +196,9 @@ const PlusLanding = ({ navigation }) => {
         <Button
           title="PGSearchTitles"
           color={"moccasin"}
-          onPress={() => PGSearchTitles({ dispatch, input: "" })}
+          onPress={() =>
+            PGSearchTitles({ dispatch, input: "", nextToken: null })
+          }
         />
         <View style={styles.sectionwrapper}>
           <Text

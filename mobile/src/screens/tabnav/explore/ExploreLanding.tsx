@@ -13,7 +13,10 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useDispatch, useSelector } from "react-redux";
-import { clearUserSearchResult } from "../../../redux/explore/exploremain";
+import {
+  clearPGSearchResult,
+  clearUserSearchResult,
+} from "../../../redux/explore/exploremain";
 import { RootStateType } from "../../../redux/store";
 import {
   GlobalStyles,
@@ -21,9 +24,11 @@ import {
   Colors,
   Icons,
 } from "../../../resources/project";
+import GameCoverTile from "../homevault/GameTags/GameCoverTile";
 import ExploreLandingHeader from "./ExploreLandingHeader";
 import ExploreListFooter from "./ExploreListFooter";
 import GetUserSearchResults from "./GetUserSearchResults";
+import PGSearchTitles from "./PGSearchTitles";
 import SearchResultHeader from "./SearchResultHeader";
 import UserTile from "./UserTile";
 
@@ -34,6 +39,8 @@ const ExploreLanding = ({ navigation }) => {
 
   const [initialPageLoad, setInitialPageLoad] = useState(true);
 
+  const [gotInitialGames, setGotInitialGames] = useState<boolean>(false);
+
   const [currentCategory, setCurrentCategory] =
     useState<ExploreSearchCategory>("users");
 
@@ -42,12 +49,13 @@ const ExploreLanding = ({ navigation }) => {
   const currentuser = useSelector(
     (state: RootStateType) => state.profilemain.currentuser
   );
-  const userSearchNextToken = useSelector(
-    (state: RootStateType) => state.exploremain.userSearchNextToken
-  );
-  const userSearchResult = useSelector(
-    (state: RootStateType) => state.exploremain.userSearchResult
-  );
+
+  const {
+    userSearchResult,
+    userSearchNextToken,
+    pgSearchResult,
+    pgSearchNextToken,
+  } = useSelector((state: RootStateType) => state.exploremain);
 
   const flatListRef = useRef();
 
@@ -57,6 +65,9 @@ const ExploreLanding = ({ navigation }) => {
     if (initialPageLoad === true) {
       GetData({ value: input });
       setInitialPageLoad(false);
+    } else if (currentCategory === "games" && gotInitialGames === false) {
+      GetData({ value: input });
+      setGotInitialGames(true);
     }
   });
 
@@ -118,7 +129,23 @@ const ExploreLanding = ({ navigation }) => {
     GlobalStyles.shadow,
   ];
 
-  const GetData = ({ value }) => {
+  const CorrectData = () => {
+    if (currentCategory === "users") {
+      return userSearchResult;
+    } else if (currentCategory === "games") {
+      return pgSearchResult;
+    }
+  };
+
+  const CorrectNextToken = () => {
+    if (currentCategory === "users") {
+      return userSearchNextToken;
+    } else if (currentCategory === "games") {
+      return pgSearchNextToken;
+    }
+  };
+
+  const GetData = ({ value }: { value: string }) => {
     if (currentCategory === "users") {
       dispatch(clearUserSearchResult());
       GetUserSearchResults({
@@ -128,6 +155,9 @@ const ExploreLanding = ({ navigation }) => {
         dispatch,
         cognitosub: currentuser.cognitosub,
       });
+    } else if (currentCategory === "games") {
+      dispatch(clearPGSearchResult());
+      PGSearchTitles({ input: value, dispatch, nextToken: pgSearchNextToken });
     }
   };
 
@@ -155,6 +185,8 @@ const ExploreLanding = ({ navigation }) => {
           currentuser={currentuser}
         />
       );
+    } else if (currentCategory === "games") {
+      return <GameCoverTile item={item} Action={() => console.log("hello")} />;
     }
   };
 
@@ -162,8 +194,8 @@ const ExploreLanding = ({ navigation }) => {
     <ExploreListFooter
       input={input}
       category={currentCategory}
-      searchResultsLength={userSearchResult.length}
-      nextToken={userSearchNextToken}
+      searchResultsLength={CorrectData().length}
+      nextToken={CorrectNextToken()}
       cognitosub={currentuser.cognitosub}
       dispatch={dispatch}
     />
@@ -206,7 +238,7 @@ const ExploreLanding = ({ navigation }) => {
       <View>
         <FlatList
           contentContainerStyle={styles.contentContainer}
-          data={userSearchResult}
+          data={CorrectData()}
           ref={flatListRef}
           renderItem={renderItem}
           numColumns={2}

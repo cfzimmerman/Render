@@ -142,7 +142,7 @@ const SelectGame = ({ navigation, route }) => {
       gotEmptyAllGames === false &&
       allGamesArray.length === 0
     ) {
-      SearchGameTitle({ title: "", dispatch });
+      SearchGameTitle({ title: "", dispatch, nextToken: allGamesNextToken });
       setGotEmptyAllGames(true);
     }
     /*
@@ -181,7 +181,7 @@ const SelectGame = ({ navigation, route }) => {
         dispatch,
       });
     } else if (searchMode === "all") {
-      SearchGameTitle({ title: input, dispatch });
+      SearchGameTitle({ title: input, dispatch, nextToken: allGamesNextToken });
     }
   };
 
