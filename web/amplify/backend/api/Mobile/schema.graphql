@@ -183,7 +183,13 @@ type Posts @model @searchable @auth(rules: [{ allow: public }]) {
       queryField: "postsByUserGames"
       sortKeyFields: ["gamesID", "contentdate"]
     )
-  gamesID: ID @index(name: "postsByGames", queryField: "postsByGames", sortKeyFields: ["createdAt"])
+  gamesID: ID
+    @index(name: "postsByGames", queryField: "postsByGames", sortKeyFields: ["createdAt"])
+    @index(
+      name: "publicPostsByGames"
+      queryField: "publicPostsByGames"
+      sortKeyFields: ["publicpostdate"]
+    )
   Users: Users @belongsTo(fields: ["usersID"])
   Games: Games @belongsTo(fields: ["gamesID"])
   Comments: [Comments] @hasMany(indexName: "byPosts", fields: ["id"])
