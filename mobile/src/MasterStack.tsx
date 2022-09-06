@@ -28,6 +28,7 @@ import SelectGame from "./screens/tabnav/homevault/GameTags/SelectGame";
 import HVSearchLanding from "./screens/tabnav/homevault/GameTags/HVSearchLanding";
 import HVGameDisplay from "./screens/tabnav/homevault/GameTags/HVGameDisplay";
 import GetStartedLanding from "./screens/masterstack/getstarted/GetStartedLanding";
+import PGLanding from "./screens/tabnav/explore/PGLanding";
 import { useNavigation } from "@react-navigation/native";
 
 type RootStackParamList = {
@@ -78,6 +79,9 @@ type RootStackParamList = {
     gameID: string;
   };
   GetStartedLanding: undefined;
+  PGLanding: {
+    gameID: string;
+  };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -167,6 +171,7 @@ const MasterStack = () => {
         component={GetStartedLanding}
         options={{ animation: "slide_from_bottom" }}
       />
+      <Stack.Screen name="PGLanding" component={PGLanding} />
     </Stack.Navigator>
   );
 };

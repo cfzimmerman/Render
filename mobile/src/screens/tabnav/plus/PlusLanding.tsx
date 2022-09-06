@@ -29,7 +29,6 @@ import GetContentDate from "./GetContentDate";
 import UploadImage from "./UploadImage";
 import UploadVideo from "./UploadVideo";
 import { RootStateType } from "../../../redux/store";
-import PGSearchTitles from "../explore/PGSearchTitles";
 
 const HalfbarIconBox = ({ Icon, header, description, Action }) => {
   return (
@@ -187,19 +186,17 @@ const PlusLanding = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Button
+        title={"PGLanding"}
+        onPress={() => navigation.navigate("PGLanding")}
+        color={"crimson"}
+      />
       <ScrollView
         style={styles.scrollviewstyle}
         contentContainerStyle={styles.scrollviewcontainerstyle}
         bounces={false}
         showsVerticalScrollIndicator={false}
       >
-        <Button
-          title="PGSearchTitles"
-          color={"moccasin"}
-          onPress={() =>
-            PGSearchTitles({ dispatch, input: "", nextToken: null })
-          }
-        />
         <View style={styles.sectionwrapper}>
           <Text
             style={[
