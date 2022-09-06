@@ -14,6 +14,7 @@ interface InitialSliceTypes {
   pgSearchActive: boolean;
   pgFullGame: FullGameItemType;
   pgFullGamePosts: PostType[];
+  pgFullGamePostsNextToken: string | null;
 }
 
 const emptyArray = [];
@@ -39,6 +40,7 @@ const slice = createSlice({
     pgSearchActive: false,
     pgFullGame: emptyPGFullGame,
     pgFullGamePosts: [],
+    pgFullGamePostsNextToken: null,
   } as InitialSliceTypes,
   reducers: {
     clearExplore: (state, action) => {
@@ -103,6 +105,19 @@ const slice = createSlice({
     clearPGFullGame: (state) => {
       state.pgFullGame = emptyPGFullGame;
     },
+    clearPGFullGamePosts: (state) => {
+      state.pgFullGamePosts = emptyArray;
+      state.pgFullGamePostsNextToken = null;
+    },
+    addToPGFullGamePosts: (state, action: PayloadAction<PostType>) => {
+      state.pgFullGamePosts.push(action.payload);
+    },
+    setPGFullGamePostsNextToken: (
+      state,
+      action: PayloadAction<string | null>
+    ) => {
+      state.pgFullGamePostsNextToken = action.payload;
+    },
   },
 });
 
@@ -123,5 +138,7 @@ export const {
   addNextPGSearchResults,
   setPGFullGame,
   clearPGFullGame,
+  clearPGFullGamePosts,
+  setPGFullGamePostsNextToken,
 } = slice.actions;
 export default slice.reducer;

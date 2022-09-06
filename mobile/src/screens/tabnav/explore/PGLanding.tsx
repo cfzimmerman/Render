@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { View, FlatList, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { clearPGFullGame } from "../../../redux/explore/exploremain";
+import {
+  clearPGFullGame,
+  clearPGFullGamePosts,
+} from "../../../redux/explore/exploremain";
 import { RootStateType } from "../../../redux/store";
 import { Colors, Environment, GlobalStyles } from "../../../resources/project";
 import PGGetFullGame from "./PGGetFullGame";
@@ -30,10 +33,11 @@ const fullGameItem: FullGameItemType = {
 
 const PGLanding = ({ navigation, route }) => {
   const [gotFullGame, setGotFullGame] = useState<boolean>(false);
+  const [gotFullGamePosts, setGotFullGamePosts] = useState<boolean>(false);
 
   const { gameID } = route.params;
 
-  const { pgFullGame, pgFullGamePosts } = useSelector(
+  const { pgFullGame, pgFullGamePosts, pgFullGamePostsNextToken } = useSelector(
     (state: RootStateType) => state.exploremain
   );
 
@@ -41,10 +45,12 @@ const PGLanding = ({ navigation, route }) => {
 
   useEffect(() => {
     if (gotFullGame === false) {
+      dispatch(clearPGFullGamePosts());
       PGGetFullGame({ dispatch, gameID });
       setGotFullGame(true);
     }
     if (typeof pgFullGame.id === "string" && pgFullGame.id != gameID) {
+      dispatch(clearPGFullGamePosts());
       dispatch(clearPGFullGame());
       setGotFullGame(false);
     }

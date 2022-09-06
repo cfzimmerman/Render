@@ -73,7 +73,7 @@
         },
         "DailyGamesUpdate": {
           "deploymentBucketName": "amplify-mobile-monostage-180223-deployment",
-          "s3Key": "amplify-builds/DailyGamesUpdate-726f44505a36592b314e-build.zip"
+          "s3Key": "amplify-builds/DailyGamesUpdate-594c795768363246536d-build.zip"
         }
       },
       "auth": {

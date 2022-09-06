@@ -4428,6 +4428,43 @@ export type PostsByGamesQuery = {
   } | null,
 };
 
+export type PublicPostsByGamesQueryVariables = {
+  gamesID: string,
+  publicpostdate?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelPostsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type PublicPostsByGamesQuery = {
+  publicPostsByGames?:  {
+    __typename: "ModelPostsConnection",
+    items:  Array< {
+      __typename: "Posts",
+      id: string,
+      aspectratio?: number | null,
+      cognitosub: string,
+      contentdate?: string | null,
+      contentkey?: string | null,
+      contentlastupdated?: string | null,
+      contenttype?: string | null,
+      createdAt: string,
+      deleteddate?: string | null,
+      posttext?: string | null,
+      publicpost?: boolean | null,
+      publicpostdate?: string | null,
+      sizeinbytes?: number | null,
+      thumbnailkey?: string | null,
+      type?: string | null,
+      usersID: string,
+      gamesID?: string | null,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type SearchPostsQueryVariables = {
   filter?: SearchablePostsFilterInput | null,
   sort?: Array< SearchablePostsSortInput | null > | null,
