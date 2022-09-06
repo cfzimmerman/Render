@@ -186,7 +186,16 @@ const ExploreLanding = ({ navigation }) => {
         />
       );
     } else if (currentCategory === "games") {
-      return <GameCoverTile item={item} Action={() => console.log("hello")} />;
+      return (
+        <GameCoverTile
+          item={item}
+          Action={() =>
+            navigation.navigate("PGLanding", {
+              gameID: item.id,
+            })
+          }
+        />
+      );
     }
   };
 

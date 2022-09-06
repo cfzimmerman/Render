@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PostType } from "../../resources/CommonTypes";
 import { UserSearchResultType } from "../../screens/tabnav/explore/GetUserSearchResults";
+import { FullGameItemType } from "../../screens/tabnav/explore/PGLanding";
 import { SetPGSearchResultInputTypes } from "../../screens/tabnav/explore/PGSearchTitles";
 import { GameCoverTileType } from "../../screens/tabnav/homevault/GameTags/GameCoverTile";
 
@@ -10,9 +12,21 @@ interface InitialSliceTypes {
   pgSearchResult: GameCoverTileType[];
   pgSearchNextToken: string | null;
   pgSearchActive: boolean;
+  pgFullGame: FullGameItemType;
+  pgFullGamePosts: PostType[];
 }
 
 const emptyArray = [];
+
+const emptyPGFullGame: FullGameItemType = {
+  id: null,
+  title: null,
+  coverID: null,
+  backgroundID: null,
+  series: null,
+  releaseDate: null,
+  numUserGames: null,
+};
 
 const slice = createSlice({
   name: "exploremain",
@@ -23,6 +37,8 @@ const slice = createSlice({
     pgSearchResult: [],
     pgSearchNextToken: null,
     pgSearchActive: false,
+    pgFullGame: emptyPGFullGame,
+    pgFullGamePosts: [],
   } as InitialSliceTypes,
   reducers: {
     clearExplore: (state, action) => {
@@ -81,6 +97,12 @@ const slice = createSlice({
       );
       state.pgSearchNextToken = action.payload.nextNextToken;
     },
+    setPGFullGame: (state, action: PayloadAction<FullGameItemType>) => {
+      state.pgFullGame = action.payload;
+    },
+    clearPGFullGame: (state) => {
+      state.pgFullGame = emptyPGFullGame;
+    },
   },
 });
 
@@ -99,5 +121,7 @@ export const {
   setPGSearchResult,
   setPGSearchNextToken,
   addNextPGSearchResults,
+  setPGFullGame,
+  clearPGFullGame,
 } = slice.actions;
 export default slice.reducer;

@@ -186,11 +186,6 @@ const PlusLanding = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Button
-        title={"PGLanding"}
-        onPress={() => navigation.navigate("PGLanding")}
-        color={"crimson"}
-      />
       <ScrollView
         style={styles.scrollviewstyle}
         contentContainerStyle={styles.scrollviewcontainerstyle}
