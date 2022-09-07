@@ -4,10 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   clearPGFullGame,
   clearPGFullGamePosts,
+  setPGFullGamePostSearchActive,
 } from "../../../redux/explore/exploremain";
 import { RootStateType } from "../../../redux/store";
+import { FlatListFooterSpacer } from "../../../resources/atoms";
 import { Colors, Environment, GlobalStyles } from "../../../resources/project";
+import PostTile from "../home/PostTile";
 import PGGetFullGame from "./PGGetFullGame";
+import PGGetGamePosts from "./PGGetGamePosts";
 import PGLandingHeader from "./PGLandingHeader";
 
 export interface FullGameItemType {
@@ -37,9 +41,12 @@ const PGLanding = ({ navigation, route }) => {
 
   const { gameID } = route.params;
 
-  const { pgFullGame, pgFullGamePosts, pgFullGamePostsNextToken } = useSelector(
-    (state: RootStateType) => state.exploremain
-  );
+  const {
+    pgFullGame,
+    pgFullGamePosts,
+    pgFullGamePostsNextToken,
+    pgFullGamePostSearchActive,
+  } = useSelector((state: RootStateType) => state.exploremain);
 
   const dispatch = useDispatch();
 
@@ -54,13 +61,65 @@ const PGLanding = ({ navigation, route }) => {
       dispatch(clearPGFullGame());
       setGotFullGame(false);
     }
+    if (
+      gotFullGamePosts === false &&
+      gotFullGame === true &&
+      typeof fullGameItem.id === "string" &&
+      pgFullGamePosts.length === 0 &&
+      pgFullGamePostSearchActive === false
+    ) {
+      PGGetGamePosts({
+        gameID,
+        nextToken: pgFullGamePostsNextToken,
+        dispatch,
+        coverID: fullGameItem.coverID,
+        title: fullGameItem.title,
+      });
+      setGotFullGamePosts(true);
+      dispatch(setPGFullGamePostSearchActive(true));
+    }
   });
 
+  const ListHeader = () => {
+    if (gotFullGame === false || typeof pgFullGame.coverID != "string") {
+      return null;
+    }
+    return <PGLandingHeader fullGameItem={pgFullGame} />;
+  };
+
+  const renderItem = ({ item, index }) => {
+    return (
+      <PostTile
+        item={item}
+        index={index}
+        dispatch={dispatch}
+        navigation={navigation}
+        selectedfeed={"PGLanding"}
+      />
+    );
+  };
+
+  const ListFooter = () => {
+    return <FlatListFooterSpacer />;
+  };
+
   return (
-    <View style={{ flex: 1, backgroundColor: Colors.Secondary }}>
-      <PGLandingHeader fullGameItem={pgFullGame} />
-    </View>
+    <FlatList
+      data={pgFullGamePosts}
+      ListHeaderComponent={ListHeader}
+      renderItem={renderItem}
+      ListFooterComponent={ListFooter}
+      style={styles.flatlistStyle}
+      bounces={false}
+    />
   );
 };
+
+const styles = StyleSheet.create({
+  flatlistStyle: {
+    flex: 1,
+    backgroundColor: Colors.Secondary,
+  },
+});
 
 export default PGLanding;
