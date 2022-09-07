@@ -336,8 +336,8 @@ const SelectGame = ({ navigation, route }) => {
           numColumns={2}
           renderItem={renderItem}
           keyboardDismissMode="on-drag"
-          ListHeaderComponent={ListHeader}
-          ListFooterComponent={ListFooter}
+          ListHeaderComponent={ListHeader()}
+          ListFooterComponent={ListFooter()}
         />
       </View>
       <LoadProgressModal />

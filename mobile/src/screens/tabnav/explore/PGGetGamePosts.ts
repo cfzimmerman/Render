@@ -8,6 +8,7 @@ import {
 } from "../../../redux/explore/exploremain";
 import { DispatchType } from "../../../redux/store";
 import { PostType } from "../../../resources/CommonTypes";
+import { CorrectNextToken } from "../../../resources/utilities";
 
 interface InputTypes {
   gameID: string;
@@ -15,6 +16,7 @@ interface InputTypes {
   coverID: string;
   title: string;
   dispatch: DispatchType;
+  resultsLimit: number;
 }
 
 async function PGGetGamePosts({
@@ -23,9 +25,9 @@ async function PGGetGamePosts({
   dispatch,
   coverID,
   title,
+  resultsLimit,
 }: InputTypes) {
   try {
-    const resultLimit = 10;
     const {
       data: { publicPostsByGames },
     } = (await API.graphql(
@@ -34,7 +36,8 @@ async function PGGetGamePosts({
             publicPostsByGames (
                 gamesID: "${gameID}",
                 sortDirection: DESC,
-                limit: ${resultLimit},
+                limit: ${resultsLimit},
+                ${CorrectNextToken({ nextToken })}
                 filter: {
                     publicpost: {
                         eq: true

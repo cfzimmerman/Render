@@ -30,6 +30,11 @@ const emptyPGFullGame: FullGameItemType = {
   numUserGames: null,
 };
 
+interface AddVideoToPGFullGamePostsPT {
+  index: number;
+  signedURL: string;
+}
+
 const slice = createSlice({
   name: "exploremain",
   initialState: {
@@ -123,6 +128,13 @@ const slice = createSlice({
     setPGFullGamePostSearchActive: (state, action: PayloadAction<boolean>) => {
       state.pgFullGamePostSearchActive = action.payload;
     },
+    addVideoToPGFullGamePosts: (
+      state,
+      action: PayloadAction<AddVideoToPGFullGamePostsPT>
+    ) => {
+      state.pgFullGamePosts[action.payload.index].signedurl =
+        action.payload.signedURL;
+    },
   },
 });
 
@@ -147,5 +159,6 @@ export const {
   setPGFullGamePostsNextToken,
   setPGFullGamePostSearchActive,
   addToPGFullGamePosts,
+  addVideoToPGFullGamePosts,
 } = slice.actions;
 export default slice.reducer;

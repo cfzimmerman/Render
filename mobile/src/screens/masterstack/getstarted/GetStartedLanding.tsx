@@ -83,6 +83,7 @@ const GetStartedLanding = ({ navigation }) => {
   const ListFooter = () => {
     return <GetStartedFooter navigation={navigation} dispatch={dispatch} />;
   };
+
   return (
     <FlatList
       data={GetStartedPageData}
@@ -91,7 +92,7 @@ const GetStartedLanding = ({ navigation }) => {
       horizontal={true}
       snapToInterval={Environment.ScreenWidth}
       decelerationRate="fast"
-      ListFooterComponent={ListFooter}
+      ListFooterComponent={ListFooter()}
     />
   );
 };

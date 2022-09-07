@@ -40,6 +40,8 @@ const PGLanding = ({ navigation, route }) => {
 
   const dispatch = useDispatch();
 
+  const resultsLimit = 10;
+
   useEffect(() => {
     if (gotFullGame === false) {
       dispatch(clearPGFullGamePosts());
@@ -49,7 +51,7 @@ const PGLanding = ({ navigation, route }) => {
     if (typeof pgFullGame.id === "string" && pgFullGame.id != gameID) {
       dispatch(clearPGFullGamePosts());
       dispatch(clearPGFullGame());
-      console.log("Nuclear option");
+      console.log("Fallback deletion. Try to prevent this.");
       setGotFullGame(false);
     }
     if (
@@ -65,6 +67,7 @@ const PGLanding = ({ navigation, route }) => {
         dispatch,
         coverID: pgFullGame.coverID,
         title: pgFullGame.title,
+        resultsLimit,
       });
       setGotFullGamePosts(true);
       dispatch(setPGFullGamePostSearchActive(true));
@@ -79,6 +82,7 @@ const PGLanding = ({ navigation, route }) => {
     ) {
       return <PGLandingHeader fullGameItem={pgFullGame} />;
     }
+
     return null;
   };
 
@@ -113,16 +117,32 @@ const PGLanding = ({ navigation, route }) => {
   };
 
   const EndReached = () => {
-    console.log("Bummer");
+    if (
+      typeof pgFullGame.id === "string" &&
+      pgFullGame.id === gameID &&
+      pgFullGamePosts.length > resultsLimit - 1 &&
+      typeof pgFullGamePostsNextToken === "string" &&
+      pgFullGamePostSearchActive === false
+    ) {
+      PGGetGamePosts({
+        gameID,
+        nextToken: pgFullGamePostsNextToken,
+        dispatch,
+        coverID: pgFullGame.coverID,
+        title: pgFullGame.title,
+        resultsLimit,
+      });
+    }
   };
 
   return (
     <FlatList
       data={pgFullGamePosts}
-      ListHeaderComponent={ListHeader}
+      ListHeaderComponent={ListHeader()}
       renderItem={renderItem}
-      ListFooterComponent={ListFooter}
-      ListEmptyComponent={ListEmpty}
+      ListFooterComponent={ListFooter()}
+      ListEmptyComponent={ListEmpty()}
+      onEndReached={EndReached}
       style={styles.flatlistStyle}
       contentContainerStyle={styles.containerStyle}
       bounces={false}

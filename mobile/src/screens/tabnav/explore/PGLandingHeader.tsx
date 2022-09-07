@@ -13,9 +13,6 @@ interface InputTypes {
 }
 
 const AreEqual = (previousProps: InputTypes, nextProps: InputTypes) => {
-  console.log("AreEqual");
-  // console.log("\n" + previousProps.fullGameItem.id);
-  // console.log(nextProps.fullGameItem.id);
   if (previousProps.fullGameItem.id === nextProps.fullGameItem.id) {
     return true;
   }
@@ -49,7 +46,6 @@ const GameInfoPoints = (fullGameItem: FullGameItemType): string => {
 };
 
 const PGLandingHeader = ({ fullGameItem }: InputTypes) => {
-  console.log("PGLandingHeader rerender");
   return (
     <View style={styles.componentContainer}>
       <Image

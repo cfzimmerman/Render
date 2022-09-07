@@ -9,6 +9,7 @@ import {
   Easing,
   TextInput,
   Keyboard,
+  Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -258,7 +259,7 @@ const ExploreLanding = ({ navigation }) => {
           keyboardDismissMode="on-drag"
           onEndReachedThreshold={0.25}
           showsVerticalScrollIndicator={false}
-          ListHeaderComponent={ListHeader}
+          ListHeaderComponent={ListHeader()}
           ListFooterComponent={ListFooter}
         />
       </View>
@@ -276,7 +277,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: Environment.FullBar,
-    marginVertical: Environment.StandardPadding,
+    marginBottom: Environment.StandardPadding,
+    marginTop: Platform.OS === "android" ? Environment.StandardPadding : 0,
   },
   bar: {
     borderRadius: Environment.StandardRadius,

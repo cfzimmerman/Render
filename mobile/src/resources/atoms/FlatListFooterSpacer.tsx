@@ -17,6 +17,4 @@ const styles = StyleSheet.create({
   },
 });
 
-// export default FlatListFooterSpacer;
-
 export default React.memo(FlatListFooterSpacer, AreEqual);
