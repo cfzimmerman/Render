@@ -3,6 +3,7 @@ import { ExploreLanding } from "../screens/tabnav/explore";
 
 import OtherUserProfileLanding from "../screens/tabnav/explore/OtherUserProfileLanding";
 import OtherUserGalleryMain from "../screens/tabnav/explore/OtherUserGalleryMain";
+import PGLanding from "../screens/tabnav/explore/PGLanding";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,10 @@ const Explore = () => {
       <Stack.Screen
         name="OtherUserGalleryMain"
         component={OtherUserGalleryMain}
+      />
+      <Stack.Screen
+        name="PGLanding"
+        component={PGLanding} /* gameID: string */
       />
     </Stack.Navigator>
   );

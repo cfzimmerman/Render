@@ -23,14 +23,14 @@ const ExploreLandingHeader = ({
   return (
     <View style={styles.buttonHolder}>
       <HalfbarButton
-        label={"Users"}
-        active={currentCategory === "users" ? true : false}
-        Action={() => setCurrentCategory("users")}
-      />
-      <HalfbarButton
         label={"Games"}
         active={currentCategory === "games" ? true : false}
         Action={() => setCurrentCategory("games")}
+      />
+      <HalfbarButton
+        label={"Users"}
+        active={currentCategory === "users" ? true : false}
+        Action={() => setCurrentCategory("users")}
       />
     </View>
   );

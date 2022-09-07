@@ -12,6 +12,7 @@ import { Colors, Environment, GlobalStyles } from "../../../resources/project";
 import PostTile from "../home/PostTile";
 import PGGetFullGame from "./PGGetFullGame";
 import PGGetGamePosts from "./PGGetGamePosts";
+import PGLandingEmptyComponent from "./PGLandingEmptyComponent";
 import PGLandingHeader from "./PGLandingHeader";
 
 export interface FullGameItemType {
@@ -23,17 +24,6 @@ export interface FullGameItemType {
   releaseDate: string | null;
   numUserGames: number | null;
 }
-
-// series, releaseDate, numUserGames ("")
-const fullGameItem: FullGameItemType = {
-  id: "6a16a3a9-327a-4ac9-bd20-7dd07d3c00c4",
-  title: "Teslagrad 2",
-  coverID: "co54c7",
-  backgroundID: "sciijh",
-  series: "Teslagrad",
-  releaseDate: "2023-06-30T00:00:00.000Z",
-  numUserGames: 2,
-};
 
 const PGLanding = ({ navigation, route }) => {
   const [gotFullGame, setGotFullGame] = useState<boolean>(false);
@@ -59,12 +49,13 @@ const PGLanding = ({ navigation, route }) => {
     if (typeof pgFullGame.id === "string" && pgFullGame.id != gameID) {
       dispatch(clearPGFullGamePosts());
       dispatch(clearPGFullGame());
+      console.log("Nuclear option");
       setGotFullGame(false);
     }
     if (
       gotFullGamePosts === false &&
       gotFullGame === true &&
-      typeof fullGameItem.id === "string" &&
+      typeof pgFullGame.id === "string" &&
       pgFullGamePosts.length === 0 &&
       pgFullGamePostSearchActive === false
     ) {
@@ -72,8 +63,8 @@ const PGLanding = ({ navigation, route }) => {
         gameID,
         nextToken: pgFullGamePostsNextToken,
         dispatch,
-        coverID: fullGameItem.coverID,
-        title: fullGameItem.title,
+        coverID: pgFullGame.coverID,
+        title: pgFullGame.title,
       });
       setGotFullGamePosts(true);
       dispatch(setPGFullGamePostSearchActive(true));
@@ -81,10 +72,14 @@ const PGLanding = ({ navigation, route }) => {
   });
 
   const ListHeader = () => {
-    if (gotFullGame === false || typeof pgFullGame.coverID != "string") {
-      return null;
+    if (
+      gotFullGame === true &&
+      pgFullGame.id === gameID &&
+      typeof pgFullGame.coverID === "string"
+    ) {
+      return <PGLandingHeader fullGameItem={pgFullGame} />;
     }
-    return <PGLandingHeader fullGameItem={pgFullGame} />;
+    return null;
   };
 
   const renderItem = ({ item, index }) => {
@@ -103,13 +98,33 @@ const PGLanding = ({ navigation, route }) => {
     return <FlatListFooterSpacer />;
   };
 
+  const ListEmpty = () => {
+    if (
+      gotFullGame === true &&
+      typeof pgFullGame.coverID === "string" &&
+      gotFullGamePosts === true &&
+      pgFullGamePosts.length === 0 &&
+      pgFullGamePostSearchActive === false &&
+      pgFullGamePostsNextToken === null
+    ) {
+      return <PGLandingEmptyComponent />;
+    }
+    return null;
+  };
+
+  const EndReached = () => {
+    console.log("Bummer");
+  };
+
   return (
     <FlatList
       data={pgFullGamePosts}
       ListHeaderComponent={ListHeader}
       renderItem={renderItem}
       ListFooterComponent={ListFooter}
+      ListEmptyComponent={ListEmpty}
       style={styles.flatlistStyle}
+      contentContainerStyle={styles.containerStyle}
       bounces={false}
     />
   );
@@ -119,6 +134,9 @@ const styles = StyleSheet.create({
   flatlistStyle: {
     flex: 1,
     backgroundColor: Colors.Secondary,
+  },
+  containerStyle: {
+    alignItems: "center",
   },
 });
 

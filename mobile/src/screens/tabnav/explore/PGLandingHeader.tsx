@@ -1,3 +1,4 @@
+import React from "react";
 import { View, Text, Platform, StyleSheet, Image } from "react-native";
 import { format } from "date-fns";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -5,7 +6,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Environment, Colors, GlobalStyles } from "../../../resources/project";
 import { FullGameItemType } from "./PGLanding";
 import GetGameCoverURL from "../homevault/GameTags/GetGameCoverURL";
-import React from "react";
 import { BackArrow } from "../../../resources/atoms";
 
 interface InputTypes {
@@ -13,10 +13,13 @@ interface InputTypes {
 }
 
 const AreEqual = (previousProps: InputTypes, nextProps: InputTypes) => {
-  if (previousProps.fullGameItem != nextProps.fullGameItem) {
-    return false;
+  console.log("AreEqual");
+  // console.log("\n" + previousProps.fullGameItem.id);
+  // console.log(nextProps.fullGameItem.id);
+  if (previousProps.fullGameItem.id === nextProps.fullGameItem.id) {
+    return true;
   }
-  return true;
+  return false;
 };
 
 const GameInfoPoints = (fullGameItem: FullGameItemType): string => {
@@ -46,6 +49,7 @@ const GameInfoPoints = (fullGameItem: FullGameItemType): string => {
 };
 
 const PGLandingHeader = ({ fullGameItem }: InputTypes) => {
+  console.log("PGLandingHeader rerender");
   return (
     <View style={styles.componentContainer}>
       <Image

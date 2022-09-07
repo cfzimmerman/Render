@@ -14,6 +14,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
+  clearPGFullGame,
+  clearPGFullGamePosts,
   clearPGSearchResult,
   clearUserSearchResult,
 } from "../../../redux/explore/exploremain";
@@ -29,7 +31,6 @@ import ExploreLandingHeader from "./ExploreLandingHeader";
 import ExploreListFooter from "./ExploreListFooter";
 import GetUserSearchResults from "./GetUserSearchResults";
 import PGSearchTitles from "./PGSearchTitles";
-import SearchResultHeader from "./SearchResultHeader";
 import UserTile from "./UserTile";
 
 export type ExploreSearchCategory = "users" | "games";
@@ -37,12 +38,12 @@ export type ExploreSearchCategory = "users" | "games";
 const ExploreLanding = ({ navigation }) => {
   const [input, setInput] = useState("");
 
-  const [initialPageLoad, setInitialPageLoad] = useState(true);
+  const [gotInitialUsers, setGotInitialUsers] = useState(false);
 
   const [gotInitialGames, setGotInitialGames] = useState<boolean>(false);
 
   const [currentCategory, setCurrentCategory] =
-    useState<ExploreSearchCategory>("users");
+    useState<ExploreSearchCategory>("games");
 
   const dispatch = useDispatch();
 
@@ -62,9 +63,9 @@ const ExploreLanding = ({ navigation }) => {
   useScrollToTop(flatListRef);
 
   useEffect(() => {
-    if (initialPageLoad === true) {
+    if (currentCategory === "users" && gotInitialUsers === false) {
       GetData({ value: input });
-      setInitialPageLoad(false);
+      setGotInitialUsers(true);
     } else if (currentCategory === "games" && gotInitialGames === false) {
       GetData({ value: input });
       setGotInitialGames(true);
@@ -189,11 +190,13 @@ const ExploreLanding = ({ navigation }) => {
       return (
         <GameCoverTile
           item={item}
-          Action={() =>
-            navigation.navigate("PGLanding", {
-              gameID: item.id,
-            })
-          }
+          Action={() => {
+            dispatch(clearPGFullGame()),
+              dispatch(clearPGFullGamePosts()),
+              navigation.navigate("PGLanding", {
+                gameID: item.id,
+              });
+          }}
         />
       );
     }

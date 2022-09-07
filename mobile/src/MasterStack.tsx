@@ -79,9 +79,6 @@ type RootStackParamList = {
     gameID: string;
   };
   GetStartedLanding: undefined;
-  PGLanding: {
-    gameID: string;
-  };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -171,7 +168,6 @@ const MasterStack = () => {
         component={GetStartedLanding}
         options={{ animation: "slide_from_bottom" }}
       />
-      <Stack.Screen name="PGLanding" component={PGLanding} />
     </Stack.Navigator>
   );
 };
