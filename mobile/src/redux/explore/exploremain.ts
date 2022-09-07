@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PostType } from "../../resources/CommonTypes";
+import { AddVideoToPGFullGamePostsPT } from "../../screens/tabnav/explore/AddVideoToPGPosts";
 import { UserSearchResultType } from "../../screens/tabnav/explore/GetUserSearchResults";
 import { FullGameItemType } from "../../screens/tabnav/explore/PGLanding";
 import { SetPGSearchResultInputTypes } from "../../screens/tabnav/explore/PGSearchTitles";
@@ -29,11 +30,6 @@ const emptyPGFullGame: FullGameItemType = {
   releaseDate: null,
   numUserGames: null,
 };
-
-interface AddVideoToPGFullGamePostsPT {
-  index: number;
-  signedURL: string;
-}
 
 const slice = createSlice({
   name: "exploremain",

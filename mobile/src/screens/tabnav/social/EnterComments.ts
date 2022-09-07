@@ -15,7 +15,8 @@ const EnterComments = ({ usecase, navigation, index }: InputTypes) => {
     usecase === "publicfeed" ||
     usecase === "universal" ||
     usecase === "HVGameSearch" ||
-    usecase === "vault"
+    usecase === "vault" ||
+    usecase === "PGLanding"
   ) {
     navigation.navigate("CommentsMain", { usecase, index });
   }

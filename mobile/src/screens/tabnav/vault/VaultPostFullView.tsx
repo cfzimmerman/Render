@@ -29,6 +29,8 @@ import { SystemmessageModal } from "../../../resources/molecules";
 import GameInfoModal from "../homevault/GameTags/GameInfoModal";
 import { setHVGameSearchActive } from "../../../redux/homevault/gametags";
 import HVGetGamePosts from "../homevault/GameTags/HVGetGamePosts";
+import { setPGFullGamePostSearchActive } from "../../../redux/explore/exploremain";
+import PGGetGamePosts from "../explore/PGGetGamePosts";
 
 export type VaultPostFullViewUsecaseTypes =
   | "vault"
@@ -38,7 +40,8 @@ export type VaultPostFullViewUsecaseTypes =
   | "publicfeed"
   | "stories"
   | "universal"
-  | "HVGameSearch";
+  | "HVGameSearch"
+  | "PGLanding";
 
 interface UsecaseObject {
   usecase: VaultPostFullViewUsecaseTypes;
@@ -125,6 +128,13 @@ const VaultPostFullView = ({ navigation, route }) => {
     (state: RootStateType) => state.gametags.hvGameSearchActive
   );
 
+  const {
+    pgFullGame,
+    pgFullGamePosts,
+    pgFullGamePostsNextToken,
+    pgFullGamePostSearchActive,
+  } = useSelector((state: RootStateType) => state.exploremain);
+
   const commentsdata = useSelector(
     (state: RootStateType) => state.socialmain.commentsdata
   );
@@ -164,6 +174,9 @@ const VaultPostFullView = ({ navigation, route }) => {
     }
     if (usecase === "HVGameSearch") {
       return hvGameSearchResults;
+    }
+    if (usecase === "PGLanding") {
+      return pgFullGamePosts;
     }
   };
 
@@ -249,6 +262,21 @@ const VaultPostFullView = ({ navigation, route }) => {
         title: hvGameSearchResults[0].title,
         vaultfeeddata,
         hvGameSearchNextToken,
+      });
+    } else if (
+      usecase === "PGLanding" &&
+      pgFullGamePosts.length > 0 &&
+      pgFullGamePostSearchActive === false &&
+      pgFullGamePostsNextToken != null
+    ) {
+      dispatch(setPGFullGamePostSearchActive(true));
+      PGGetGamePosts({
+        gameID: pgFullGame.id,
+        nextToken: pgFullGamePostsNextToken,
+        dispatch,
+        coverID: pgFullGame.coverID,
+        title: pgFullGame.title,
+        resultsLimit: 10,
       });
     }
     /*
