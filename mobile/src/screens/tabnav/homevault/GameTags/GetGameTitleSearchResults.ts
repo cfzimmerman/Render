@@ -18,7 +18,7 @@ async function GetGameTitleSearchResults({
 }: InputTypes): Promise<GraphQLResult<SearchGamesQuery>> {
   const CorrectSort = () => {
     if (origin === "SearchGameTitle") {
-      return `sort: { direction: desc, field: releaseDate },`;
+      return `sort: { direction: desc, field: updatedAt },`;
     } else if (origin === "PGSearchTitles") {
       return `sort: { direction: desc, field: numUserGames },`;
     }

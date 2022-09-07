@@ -214,6 +214,7 @@ export const onCreateGames = /* GraphQL */ `
     onCreateGames {
       id
       createdAt
+      updatedAt
       igdbID
       title
       releaseDate
@@ -238,7 +239,6 @@ export const onCreateGames = /* GraphQL */ `
       Posts {
         nextToken
       }
-      updatedAt
     }
   }
 `;
@@ -247,6 +247,7 @@ export const onUpdateGames = /* GraphQL */ `
     onUpdateGames {
       id
       createdAt
+      updatedAt
       igdbID
       title
       releaseDate
@@ -271,7 +272,6 @@ export const onUpdateGames = /* GraphQL */ `
       Posts {
         nextToken
       }
-      updatedAt
     }
   }
 `;
@@ -280,6 +280,7 @@ export const onDeleteGames = /* GraphQL */ `
     onDeleteGames {
       id
       createdAt
+      updatedAt
       igdbID
       title
       releaseDate
@@ -304,7 +305,6 @@ export const onDeleteGames = /* GraphQL */ `
       Posts {
         nextToken
       }
-      updatedAt
     }
   }
 `;
@@ -341,6 +341,7 @@ export const onCreateUserGames = /* GraphQL */ `
       Games {
         id
         createdAt
+        updatedAt
         igdbID
         title
         releaseDate
@@ -359,7 +360,6 @@ export const onCreateUserGames = /* GraphQL */ `
         playstationID
         numUserGames
         type
-        updatedAt
       }
       updatedAt
     }
@@ -398,6 +398,7 @@ export const onUpdateUserGames = /* GraphQL */ `
       Games {
         id
         createdAt
+        updatedAt
         igdbID
         title
         releaseDate
@@ -416,7 +417,6 @@ export const onUpdateUserGames = /* GraphQL */ `
         playstationID
         numUserGames
         type
-        updatedAt
       }
       updatedAt
     }
@@ -455,6 +455,7 @@ export const onDeleteUserGames = /* GraphQL */ `
       Games {
         id
         createdAt
+        updatedAt
         igdbID
         title
         releaseDate
@@ -473,7 +474,6 @@ export const onDeleteUserGames = /* GraphQL */ `
         playstationID
         numUserGames
         type
-        updatedAt
       }
       updatedAt
     }
@@ -1092,6 +1092,7 @@ export const onCreatePosts = /* GraphQL */ `
       Games {
         id
         createdAt
+        updatedAt
         igdbID
         title
         releaseDate
@@ -1110,7 +1111,6 @@ export const onCreatePosts = /* GraphQL */ `
         playstationID
         numUserGames
         type
-        updatedAt
       }
       Comments {
         nextToken
@@ -1171,6 +1171,7 @@ export const onUpdatePosts = /* GraphQL */ `
       Games {
         id
         createdAt
+        updatedAt
         igdbID
         title
         releaseDate
@@ -1189,7 +1190,6 @@ export const onUpdatePosts = /* GraphQL */ `
         playstationID
         numUserGames
         type
-        updatedAt
       }
       Comments {
         nextToken
@@ -1250,6 +1250,7 @@ export const onDeletePosts = /* GraphQL */ `
       Games {
         id
         createdAt
+        updatedAt
         igdbID
         title
         releaseDate
@@ -1268,7 +1269,6 @@ export const onDeletePosts = /* GraphQL */ `
         playstationID
         numUserGames
         type
-        updatedAt
       }
       Comments {
         nextToken

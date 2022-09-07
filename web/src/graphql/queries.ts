@@ -178,6 +178,7 @@ export const getGames = /* GraphQL */ `
     getGames(id: $id) {
       id
       createdAt
+      updatedAt
       igdbID
       title
       releaseDate
@@ -202,7 +203,6 @@ export const getGames = /* GraphQL */ `
       Posts {
         nextToken
       }
-      updatedAt
     }
   }
 `;
@@ -216,6 +216,7 @@ export const listGames = /* GraphQL */ `
       items {
         id
         createdAt
+        updatedAt
         igdbID
         title
         releaseDate
@@ -234,7 +235,6 @@ export const listGames = /* GraphQL */ `
         playstationID
         numUserGames
         type
-        updatedAt
       }
       nextToken
     }
@@ -260,6 +260,7 @@ export const gamesByTitle = /* GraphQL */ `
       items {
         id
         createdAt
+        updatedAt
         igdbID
         title
         releaseDate
@@ -278,7 +279,6 @@ export const gamesByTitle = /* GraphQL */ `
         playstationID
         numUserGames
         type
-        updatedAt
       }
       nextToken
     }
@@ -304,6 +304,7 @@ export const gamesByNumUserGames = /* GraphQL */ `
       items {
         id
         createdAt
+        updatedAt
         igdbID
         title
         releaseDate
@@ -322,7 +323,6 @@ export const gamesByNumUserGames = /* GraphQL */ `
         playstationID
         numUserGames
         type
-        updatedAt
       }
       nextToken
     }
@@ -348,6 +348,7 @@ export const searchGames = /* GraphQL */ `
       items {
         id
         createdAt
+        updatedAt
         igdbID
         title
         releaseDate
@@ -366,7 +367,6 @@ export const searchGames = /* GraphQL */ `
         playstationID
         numUserGames
         type
-        updatedAt
       }
       nextToken
       total
@@ -420,6 +420,7 @@ export const getUserGames = /* GraphQL */ `
       Games {
         id
         createdAt
+        updatedAt
         igdbID
         title
         releaseDate
@@ -438,7 +439,6 @@ export const getUserGames = /* GraphQL */ `
         playstationID
         numUserGames
         type
-        updatedAt
       }
       updatedAt
     }
@@ -1146,6 +1146,7 @@ export const getPosts = /* GraphQL */ `
       Games {
         id
         createdAt
+        updatedAt
         igdbID
         title
         releaseDate
@@ -1164,7 +1165,6 @@ export const getPosts = /* GraphQL */ `
         playstationID
         numUserGames
         type
-        updatedAt
       }
       Comments {
         nextToken
