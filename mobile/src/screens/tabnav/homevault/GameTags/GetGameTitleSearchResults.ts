@@ -85,7 +85,6 @@ async function GetGameTitleSearchResults({
                       title
                       coverID
                       backgroundID
-                      createdAt
                   }
                   nextToken
               }
