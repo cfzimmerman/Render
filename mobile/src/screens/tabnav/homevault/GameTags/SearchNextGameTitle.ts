@@ -1,11 +1,7 @@
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { API, graphqlOperation } from "aws-amplify";
-import { SearchableGamesFilterInput, SearchGamesQuery } from "../../../../API";
-import {
-  addNextAllGamesArray,
-  setNewAllGamesArray,
-  SetNewAllGamesArrayPT,
-} from "../../../../redux/homevault/gametags";
+import { SearchGamesQuery } from "../../../../API";
+import { addNextAllGamesArray } from "../../../../redux/homevault/gametags";
 import { DispatchType } from "../../../../redux/store";
 import { GameCoverTileType } from "./GameCoverTile";
 

@@ -14,6 +14,8 @@ import SetPasswordBox from "./SetPasswordBox";
 import HeaderButtons from "./HeaderButtons";
 import StoriesBox from "./StoriesBox";
 import NewNotificationsPreview from "./NewNotificationsPreview";
+import GetStartedHeaderBox from "./GetStartedHeaderBox";
+import { DispatchType } from "../../../redux/store";
 
 const HomeVaultHeader = ({
   navigation,
@@ -69,6 +71,10 @@ const HomeVaultHeader = ({
         dispatch={dispatch}
       />
 
+      <GetStartedHeaderBox
+        navigation={navigation}
+        fullyOnboarded={currentuser.fullyonboarded}
+      />
       <SetPasswordBox currentuser={currentuser} navigation={navigation} />
 
       <PrimaryDivider />

@@ -24,6 +24,7 @@ const slice = createSlice({
       displayname: null,
       pfp: null,
       fullyauthenticated: null,
+      fullyonboarded: null,
       firstvaultupload: null,
       cognitosub: null,
       createdAt: null,
@@ -46,6 +47,7 @@ const slice = createSlice({
         gamertag: null,
         displayname: null,
         pfp: null,
+        fullyonboarded: null,
         fullyauthenticated: null,
         firstvaultupload: null,
         cognitosub: null,
@@ -110,6 +112,9 @@ const slice = createSlice({
     setSetPassword: (state, action: PayloadAction<boolean>) => {
       state.currentuser.setpassword = action.payload;
     },
+    setUserOnboarded: (state) => {
+      state.currentuser.fullyonboarded = true;
+    },
   },
 });
 
@@ -128,6 +133,7 @@ export const {
   exciseGalleryPost,
   injectGalleryPost,
   setSetPassword,
+  setUserOnboarded,
 } = slice.actions;
 
 export default slice.reducer;

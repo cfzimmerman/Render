@@ -11,17 +11,17 @@ import { Environment, Colors, GlobalStyles } from "../../../resources/project";
 
 import TransitionToFullView from "../vault/TransitionToFullView";
 
-function StoryTile({
-  item, dispatch, navigation, storiesfullview, size3,
-}) {
+function StoryTile({ item, dispatch, navigation, storiesfullview, size3 }) {
   return (
     <TouchableOpacity
-      onPress={() => TransitionToFullView({
-        id: item.firstpostid,
-        navigation,
-        data: storiesfullview,
-        usecase: "stories",
-      })}
+      onPress={() =>
+        TransitionToFullView({
+          id: item.firstpostid,
+          navigation,
+          data: storiesfullview,
+          usecase: "stories",
+        })
+      }
     >
       <View style={[styles.tilewrapper, { width: size3 }]}>
         <View style={GlobalStyles.shadow}>
@@ -59,38 +59,40 @@ const TileOverlay = (viewed) => {
   return 0.5;
 };
 
-function StoriesBox({
+const StoriesBox = ({
   dispatch,
   navigation,
   storiesfullview,
   storiessectionlist,
-}) {
+}) => {
   const size3 = TransformDimensions(
-    (Environment.FullBar - Environment.StandardPadding * 4) / 3,
+    (Environment.FullBar - Environment.StandardPadding * 4) / 3
+  );
+
+  const renderItem = ({ item, index }) => (
+    <StoryTile
+      item={item}
+      dispatch={dispatch}
+      navigation={navigation}
+      storiesfullview={storiesfullview}
+      size3={size3}
+    />
   );
 
   return (
     <FlatList
       data={storiessectionlist}
       keyExtractor={(item) => item.cognitosub}
-      renderItem={({ item, index }) => (
-        <StoryTile
-          item={item}
-          dispatch={dispatch}
-          navigation={navigation}
-          storiesfullview={storiesfullview}
-          size3={size3}
-        />
-      )}
+      renderItem={renderItem}
       // ListHeaderComponent={() => <StoriesHeader storiesfullview={storiesfullview} />}
       bounces={false}
       scrollEnabled={false}
       numColumns={3}
       columnWrapperStyle={styles.columnstyle}
-      style={styles.flatliststyle}
+      style={[styles.flatliststyle, GlobalStyles.shadow]}
     />
   );
-}
+};
 
 const styles = StyleSheet.create({
   columnstyle: {

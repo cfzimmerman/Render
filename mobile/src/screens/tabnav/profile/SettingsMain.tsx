@@ -18,14 +18,23 @@ import ChangePfp from "./ChangePfp";
 import GetPfp from "./GetPfp";
 import LogOut from "./LogOut";
 import ProfileNavOptions from "./ProfileNavOptions";
+import { RootStateType } from "../../../redux/store";
 
 const SettingsMain = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  const currentuser = useSelector((state) => state.profilemain.currentuser);
-  const pfpsignedurl = useSelector((state) => state.profilemain.pfpsignedurl);
-  const localLibrary = useSelector((state) => state.localsync.localLibrary);
-  const localConfig = useSelector((state) => state.localsync.localConfig);
+  const currentuser = useSelector(
+    (state: RootStateType) => state.profilemain.currentuser
+  );
+  const pfpsignedurl = useSelector(
+    (state: RootStateType) => state.profilemain.pfpsignedurl
+  );
+  const localLibrary = useSelector(
+    (state: RootStateType) => state.localsync.localLibrary
+  );
+  const localConfig = useSelector(
+    (state: RootStateType) => state.localsync.localConfig
+  );
 
   if (typeof currentuser.cognitosub === "undefined") {
     navigation.navigate("ProfileLanding");
@@ -59,6 +68,7 @@ const SettingsMain = ({ navigation }) => {
             onPress={() =>
               ChangePfp({
                 dispatch,
+                currentuserid: currentuser.id,
                 currentpfpkey: currentuser.pfp,
                 cognitosub: currentuser.cognitosub,
                 localLibrary,
@@ -106,6 +116,13 @@ const SettingsMain = ({ navigation }) => {
               Action={() => navigation.navigate("ForgotPassword")}
               active={false}
             />
+            <HalfbarButton
+              label="Onboarding"
+              Action={() => navigation.navigate("GetStartedLanding")}
+              active={false}
+            />
+          </View>
+          <View style={styles.buttonrowwrapper}>
             <HalfbarButton
               label="Log out"
               Action={() => LogOut({ dispatch, navigation })}

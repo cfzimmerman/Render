@@ -6,15 +6,17 @@ import {
   Platform,
   TouchableOpacity,
 } from "react-native";
-import { Item } from "react-native-paper/lib/typescript/components/List/List";
 import { SafeAreaView } from "react-native-safe-area-context";
 import GestureRecognizer from "react-native-swipe-gestures";
+import { DispatchType } from "../../../redux/store";
+import { CurrentUserType } from "../../../resources/CommonTypes";
 import {
   Environment,
   Colors,
   GlobalStyles,
   Icons,
 } from "../../../resources/project";
+import ExitGetStarted from "./ExitGetStarted";
 import { GetStartedPageDataTypes } from "./GetStartedLanding";
 
 interface InputTypes {
@@ -22,6 +24,8 @@ interface InputTypes {
   index: number;
   totalNumberOfScreens: number;
   navigation: any;
+  currentUser: CurrentUserType;
+  dispatch: DispatchType;
 }
 
 const GetStartedPageItem = ({
@@ -29,9 +33,11 @@ const GetStartedPageItem = ({
   index,
   totalNumberOfScreens,
   navigation,
+  currentUser,
+  dispatch,
 }: InputTypes) => {
   const NavigateBack = () => {
-    navigation.goBack();
+    ExitGetStarted({ navigation, currentUser, dispatch });
   };
   return (
     <GestureRecognizer onSwipeDown={NavigateBack}>

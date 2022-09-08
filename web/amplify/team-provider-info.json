@@ -32,6 +32,10 @@
         "MobilePreSignup": {
           "deploymentBucketName": "amplify-mobile-production-161112-deployment",
           "s3Key": "amplify-builds/MobilePreSignup-6b6b59417a4f57744a52-build.zip"
+        },
+        "DailyGamesUpdate": {
+          "deploymentBucketName": "amplify-mobile-production-161112-deployment",
+          "s3Key": "amplify-builds/DailyGamesUpdate-49597a6c717a46652f70-build.zip"
         }
       }
     }
@@ -66,6 +70,10 @@
         "MobilePreSignup": {
           "deploymentBucketName": "amplify-mobile-monostage-180223-deployment",
           "s3Key": "amplify-builds/MobilePreSignup-6b6b59417a4f57744a52-build.zip"
+        },
+        "DailyGamesUpdate": {
+          "deploymentBucketName": "amplify-mobile-monostage-180223-deployment",
+          "s3Key": "amplify-builds/DailyGamesUpdate-594c795768363246536d-build.zip"
         }
       },
       "auth": {

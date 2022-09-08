@@ -18,7 +18,11 @@ import {
   Icons,
   UserDialogue,
 } from "../../../resources/project";
-import { CubeSizeButton, IconHalfbarButton } from "../../../resources/atoms";
+import {
+  CubeSizeButton,
+  IconHalfbarButton,
+  PrimaryDivider,
+} from "../../../resources/atoms";
 
 import AddBackDisplay from "./AddBackDisplay";
 import ChangePfp from "./ChangePfp";
@@ -30,6 +34,9 @@ import {
   SystemmessageModal,
   LoadProgressModal,
 } from "../../../resources/molecules";
+import { RootStateType } from "../../../redux/store";
+import InviteFriendBox from "./InviteFriendBox";
+import { useState } from "react";
 
 // To add: (1) Remove follower, (2) clear add back recommendation
 // First, implement 'AddBackDisplay'
@@ -37,18 +44,33 @@ import {
 const ProfileLanding = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  const currentuser = useSelector((state) => state.profilemain.currentuser);
-  const pfpsignedurl = useSelector((state) => state.profilemain.pfpsignedurl);
+  const [inviteFriendLinkCopied, setInviteFriendLinkCopied] =
+    useState<boolean>(false);
 
-  const addedmeusers = useSelector((state) => state.relationships.addedme);
-  const addedmenexttoken = useSelector(
-    (state) => state.relationships.addedmenexttoken
+  const currentuser = useSelector(
+    (state: RootStateType) => state.profilemain.currentuser
   );
-  const addbackusers = useSelector((state) => state.profilemain.addbackusers);
-  const localConfig = useSelector((state) => state.localsync.localConfig);
-  const localLibrary = useSelector((state) => state.localsync.localLibrary);
+  const pfpsignedurl = useSelector(
+    (state: RootStateType) => state.profilemain.pfpsignedurl
+  );
+
+  const addedmeusers = useSelector(
+    (state: RootStateType) => state.relationships.addedme
+  );
+  const addedmenexttoken = useSelector(
+    (state: RootStateType) => state.relationships.addedmenexttoken
+  );
+  const addbackusers = useSelector(
+    (state: RootStateType) => state.profilemain.addbackusers
+  );
+  const localConfig = useSelector(
+    (state: RootStateType) => state.localsync.localConfig
+  );
+  const localLibrary = useSelector(
+    (state: RootStateType) => state.localsync.localLibrary
+  );
   if (typeof currentuser.id === "undefined") {
-    GetCurrentUser({ dispatch });
+    GetCurrentUser({ dispatch, navigation });
   }
 
   if (
@@ -103,6 +125,8 @@ const ProfileLanding = ({ navigation }) => {
             currentpfpkey: currentuser.pfp,
             cognitosub: currentuser.cognitosub,
             currentuserid: currentuser.id,
+            localLibrary,
+            syncPreference: localConfig.syncPreference,
           })
         }
         onLongPress={() => {
@@ -165,6 +189,8 @@ const ProfileLanding = ({ navigation }) => {
         currentScreen="ProfileLanding"
       />
 
+      <PrimaryDivider />
+
       <View style={styles.bottomfiller}>
         <AddBackDisplay
           addbackusers={addbackusers}
@@ -172,6 +198,11 @@ const ProfileLanding = ({ navigation }) => {
           navigation={navigation}
           currentuser={currentuser}
           addedmeusers={addedmeusers}
+        />
+        <InviteFriendBox
+          username={currentuser.gamertag}
+          inviteFriendLinkCopied={inviteFriendLinkCopied}
+          setInviteFriendLinkCopied={setInviteFriendLinkCopied}
         />
       </View>
       <LoadProgressModal />
@@ -184,6 +215,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.Secondary,
+    paddingBottom: Environment.HalfBar,
   },
   scrollviewcontainerstyle: {
     alignItems: "center",
@@ -231,8 +263,8 @@ const styles = StyleSheet.create({
     color: Colors.AccentOn,
   },
   bottomfiller: {
-    height: Environment.CubeSize + Environment.LargePadding,
     width: Environment.FullBar,
+    marginBottom: Environment.CubeSize * 2,
   },
 });
 

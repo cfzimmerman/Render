@@ -42,6 +42,7 @@ const GetPost = ({
   universalPostData,
   hvGameSearchResults,
   vaultfeeddata,
+  pgFullGamePosts,
 }) => {
   if (usecase === "gallery") {
     return gallerydata;
@@ -66,6 +67,9 @@ const GetPost = ({
   }
   if (usecase === "vault") {
     return vaultfeeddata;
+  }
+  if (usecase === "PGLanding") {
+    return pgFullGamePosts;
   }
 };
 
@@ -134,6 +138,9 @@ const CommentsMain = ({ navigation, route }) => {
   const vaultfeeddata = useSelector(
     (state: RootStateType) => state.vaultpostdata.vaultfeeddata
   );
+  const pgFullGamePosts = useSelector(
+    (state: RootStateType) => state.exploremain.pgFullGamePosts
+  );
 
   const currentFeed = GetPost({
     usecase,
@@ -145,6 +152,7 @@ const CommentsMain = ({ navigation, route }) => {
     universalPostData,
     hvGameSearchResults,
     vaultfeeddata,
+    pgFullGamePosts,
   });
 
   const postItem: PostType = currentFeed[index];

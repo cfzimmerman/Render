@@ -151,7 +151,7 @@ const SocialLanding = ({ navigation }) => {
       index={index}
       dispatch={dispatch}
       navigation={navigation}
-      addedfeed={addedfeed}
+      // @ts-ignore
       selectedfeed={selectedfeed}
     />
   );
