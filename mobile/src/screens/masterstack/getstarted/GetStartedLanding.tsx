@@ -1,4 +1,7 @@
 import { FlatList, StyleSheet } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { RootStateType } from "../../../redux/store";
+import { CurrentUserType } from "../../../resources/CommonTypes";
 import { Environment } from "../../../resources/project";
 import {
   GetStartedExportDescription,
@@ -30,14 +33,14 @@ const GetStartedPageData: GetStartedPageDataTypes[] = [
   {
     id: 1,
     headerImageURL:
-      "https://mobile965f75596afb4ca68a1e637998665f92161112-production.s3.amazonaws.com/public/CompanyStock/GetStarted2-3.png",
+      "https://mobile965f75596afb4ca68a1e637998665f92161112-production.s3.amazonaws.com/public/CompanyStock/GetStarted2-4.png",
     titleText: "Upload",
     descriptionTextBlock: GetStartedUploadDescription,
   },
   {
     id: 2,
     headerImageURL:
-      "https://mobile965f75596afb4ca68a1e637998665f92161112-production.s3.amazonaws.com/public/CompanyStock/GetStarted3-0.jpg",
+      "https://mobile965f75596afb4ca68a1e637998665f92161112-production.s3.amazonaws.com/public/CompanyStock/GetStarted3-1.jpg",
     titleText: "Save",
     descriptionTextBlock: GetStartedSaveDescription,
   },
@@ -58,6 +61,12 @@ const GetStartedPageData: GetStartedPageDataTypes[] = [
 ];
 
 const GetStartedLanding = ({ navigation }) => {
+  const currentUser: CurrentUserType = useSelector(
+    (state: RootStateType) => state.profilemain.currentuser
+  );
+
+  const dispatch = useDispatch();
+
   const renderItem = ({ index, item }) => {
     return (
       <GetStartedPageItem
@@ -65,13 +74,16 @@ const GetStartedLanding = ({ navigation }) => {
         index={index}
         totalNumberOfScreens={totalNumberOfScreens}
         navigation={navigation}
+        currentUser={currentUser}
+        dispatch={dispatch}
       />
     );
   };
 
   const ListFooter = () => {
-    return <GetStartedFooter navigation={navigation} />;
+    return <GetStartedFooter navigation={navigation} dispatch={dispatch} />;
   };
+
   return (
     <FlatList
       data={GetStartedPageData}
@@ -80,7 +92,7 @@ const GetStartedLanding = ({ navigation }) => {
       horizontal={true}
       snapToInterval={Environment.ScreenWidth}
       decelerationRate="fast"
-      ListFooterComponent={ListFooter}
+      ListFooterComponent={ListFooter()}
     />
   );
 };

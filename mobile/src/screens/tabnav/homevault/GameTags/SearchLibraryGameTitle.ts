@@ -1,10 +1,6 @@
-import { graphqlOperation, GraphQLResult } from "@aws-amplify/api-graphql";
-import { API } from "aws-amplify";
-import { SearchGamesQuery, UserGamesByUsersQuery } from "../../../../API";
 import { setLibraryGamesSearchResults } from "../../../../redux/homevault/gametags";
 import { DispatchType } from "../../../../redux/store";
 import { GameCoverTileType } from "./GameCoverTile";
-import { SetNewLibraryGamesArrayInput } from "./GetCurrentUserGameLibrary";
 import GetNextCurrentUserGameLibrary from "./GetNextCurrentUserGameLibrary";
 
 interface InputTypes {

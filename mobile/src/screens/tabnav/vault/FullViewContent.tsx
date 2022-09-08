@@ -37,6 +37,7 @@ import { PostType } from "../../../resources/CommonTypes";
 import { VaultPostFullViewUsecaseTypes } from "./VaultPostFullView";
 import AddVideoToHVGameSearchResults from "../homevault/GameTags/AddVideoToHVGameSearchResults";
 import EnterComments from "../social/EnterComments";
+import AddVideoToPGPosts from "../explore/AddVideoToPGPosts";
 
 // SetOptions({ postid: abc, animateactive: true, animateinactive: false, newchangestatus: false, })
 
@@ -171,6 +172,8 @@ const FullViewContent = ({
           syncPreference: localConfig.syncPreference,
           localLibrary,
         });
+      } else if (usecase === "PGLanding") {
+        AddVideoToPGPosts({ dispatch, index, contentkey: item.contentkey });
       }
       // HVGameSearchResults
     }

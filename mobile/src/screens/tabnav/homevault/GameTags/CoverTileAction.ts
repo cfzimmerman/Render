@@ -1,16 +1,36 @@
 import { deactivateMultiSelect } from "../../../../redux/homevault/homevaultmain";
+import { DispatchType } from "../../../../redux/store";
 import { setErrormessageActive } from "../../../../redux/system/errormessage";
 import {
   setLoadProgressActive,
   setLoadProgressInactive,
   setPercentComplete,
 } from "../../../../redux/system/loadprogressmessage";
+import { LSLibraryItemType } from "../../../../redux/system/localsync";
+import { PostHeaderType, PostType } from "../../../../resources/CommonTypes";
 import { UserDialogue } from "../../../../resources/project";
 import HomeVaultFullRefresh from "../HomeVaultFullRefresh";
 import CreatePostGameRelationship from "./CreatePostGameRelationship";
-import { GameCoverTileInput } from "./GameCoverTile";
+import { GameCoverTileType } from "./GameCoverTile";
 import ModifyPostGame from "./ModifyPostGame";
 import RemovePostGameRelationship from "./RemovePostGameRelationship";
+
+export interface GameCoverTileActionInput {
+  item: null | GameCoverTileType;
+  searchMode: "library" | "all";
+  // origin: "vaultPostEdit" | "vaultMultiSelect";
+  dispatch: DispatchType;
+  navigation: any;
+  // selection: "single" | "multi";
+  selectedPosts: string[];
+  currentUserID: string;
+  vaultPostData: PostHeaderType[];
+  vaultFeedData: PostType[];
+  currentUserCognitoSub: string;
+  syncPreference: null | "All" | "Partial" | "None";
+  localLibrary: Record<string, LSLibraryItemType>;
+  deleteTag: boolean;
+}
 
 async function CoverTileAction({
   item,
@@ -25,7 +45,7 @@ async function CoverTileAction({
   syncPreference,
   localLibrary,
   deleteTag,
-}: GameCoverTileInput) {
+}: GameCoverTileActionInput) {
   try {
     if (selectedPosts.length === 1 && item != null) {
       if (deleteTag === false) {

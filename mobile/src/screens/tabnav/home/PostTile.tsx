@@ -8,6 +8,8 @@ import {
   Icons,
 } from "../../../resources/project";
 import PostTextDisplay from "../social/PostTextDisplay";
+import { PostType } from "../../../resources/CommonTypes";
+import { DispatchType } from "../../../redux/store";
 
 const EnterFullView = ({ navigation, index, selectedfeed }) => {
   navigation.navigate("VaultPostFullView", {
@@ -71,14 +73,21 @@ const AreEqual = (previousProps, nextProps) => {
   return false;
 };
 
+interface InputTypes {
+  item: PostType;
+  index: number;
+  dispatch: DispatchType;
+  navigation: any;
+  selectedfeed: "addedfeed" | "publicfeed" | "PGLanding";
+}
+
 const PostTile = ({
   item,
   index,
   dispatch,
   navigation,
-  addedfeed,
   selectedfeed,
-}) => {
+}: InputTypes) => {
   const postDimensions = GetPostDimensions(item.aspectratio);
 
   const DisplaySize = () => {
@@ -111,10 +120,8 @@ const PostTile = ({
       <PostContent
         item={item}
         newHeight={newHeight}
-        dispatch={dispatch}
         navigation={navigation}
         index={index}
-        addedfeed={addedfeed}
         selectedfeed={selectedfeed}
       />
       <PostTextDisplay

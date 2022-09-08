@@ -1,4 +1,4 @@
-import { GraphQLResult } from "@aws-amplify/api-graphql";
+import { GraphQLOperation, GraphQLResult } from "@aws-amplify/api-graphql";
 import { API, graphqlOperation } from "aws-amplify";
 import {
   GetPostsQuery,
@@ -6,11 +6,17 @@ import {
   UpdatePostsInput,
   UserGamesByUsersQuery,
   DeleteUserGamesInput,
+  DeleteUserGamesMutation,
+  UpdateGamesInput,
+  UpdateGamesMutation,
 } from "../../../../API";
-import { deleteUserGames, updatePosts } from "../../../../graphql/mutations";
+import {
+  deleteUserGames,
+  updateGames,
+  updatePosts,
+} from "../../../../graphql/mutations";
 import { removeLibraryGame } from "../../../../redux/homevault/gametags";
 import { DispatchType } from "../../../../redux/store";
-import { GameCoverTileType } from "./GameCoverTile";
 
 interface InputTypes {
   postID: string;
@@ -95,6 +101,9 @@ async function RemovePostGameRelationship({
               ) {
                 items {
                   id
+                  Games {
+                    numUserGames
+                  }
                 }
               }
             }
@@ -106,9 +115,20 @@ async function RemovePostGameRelationship({
             id: userGamesResult[0].id,
           };
 
-          await API.graphql(
-            graphqlOperation(deleteUserGames, { input: deleteID })
-          );
+          const updatedGame: UpdateGamesInput = {
+            id: gameResult.gamesID,
+            numUserGames: userGamesResult[0].Games.numUserGames - 1,
+          };
+
+          await Promise.all([
+            API.graphql(
+              graphqlOperation(deleteUserGames, { input: deleteID })
+            ) as GraphQLResult<DeleteUserGamesMutation>,
+            API.graphql(
+              graphqlOperation(updateGames, { input: updatedGame })
+            ) as GraphQLResult<UpdateGamesMutation>,
+          ]);
+
           dispatch(removeLibraryGame(gameResult.gamesID));
         }
       }

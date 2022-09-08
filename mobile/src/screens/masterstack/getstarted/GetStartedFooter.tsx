@@ -2,14 +2,25 @@ import { View, Text, StyleSheet, Platform } from "react-native";
 import { GlobalStyles, Environment, Colors } from "../../../resources/project";
 import { SafeAreaView } from "react-native-safe-area-context";
 import GestureRecognizer from "react-native-swipe-gestures";
+import { useSelector } from "react-redux";
+import { DispatchType, RootStateType } from "../../../redux/store";
+import { CurrentUserType } from "../../../resources/CommonTypes";
+import ExitGetStarted from "./ExitGetStarted";
 
 interface InputTypes {
   navigation: any;
+  dispatch: DispatchType;
 }
 
-const GetStartedFooter = ({ navigation }: InputTypes) => {
+const GetStartedFooter = ({ navigation, dispatch }: InputTypes) => {
+  const currentUser: CurrentUserType = useSelector(
+    (state: RootStateType) => state.profilemain.currentuser
+  );
+  const NavigateBack = () => {
+    ExitGetStarted({ currentUser, navigation, dispatch });
+  };
   return (
-    <GestureRecognizer onSwipeDown={() => navigation.goBack()}>
+    <GestureRecognizer onSwipeDown={NavigateBack}>
       <SafeAreaView style={styles.itemWrapper}>
         <View style={styles.dividedContentContainer}>
           <View style={[GlobalStyles.shadow, styles.additionalInfoWrapper]}>

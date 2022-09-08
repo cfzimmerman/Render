@@ -1,56 +1,135 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { UserSearchResultType } from "../../screens/tabnav/explore/GetSearchResults";
+import { PostType } from "../../resources/CommonTypes";
+import { AddVideoToPGFullGamePostsPT } from "../../screens/tabnav/explore/AddVideoToPGPosts";
+import { UserSearchResultType } from "../../screens/tabnav/explore/GetUserSearchResults";
+import { FullGameItemType } from "../../screens/tabnav/explore/PGLanding";
+import { SetPGSearchResultInputTypes } from "../../screens/tabnav/explore/PGSearchTitles";
+import { GameCoverTileType } from "../../screens/tabnav/homevault/GameTags/GameCoverTile";
 
 interface InitialSliceTypes {
-  searchresult: UserSearchResultType[];
-  nextToken: string | null;
+  userSearchResult: UserSearchResultType[];
+  userSearchNextToken: string | null;
   userSearchActive: boolean;
+  pgSearchResult: GameCoverTileType[];
+  pgSearchNextToken: string | null;
+  pgSearchActive: boolean;
+  pgFullGame: FullGameItemType;
+  pgFullGamePosts: PostType[];
+  pgFullGamePostsNextToken: string | null;
+  pgFullGamePostSearchActive: boolean;
 }
+
+const emptyArray = [];
+
+const emptyPGFullGame: FullGameItemType = {
+  id: null,
+  title: null,
+  coverID: null,
+  backgroundID: null,
+  series: null,
+  releaseDate: null,
+  numUserGames: null,
+};
 
 const slice = createSlice({
   name: "exploremain",
   initialState: {
-    searchresult: [],
-    nextToken: null,
+    userSearchResult: [],
+    userSearchNextToken: null,
     userSearchActive: false,
+    pgSearchResult: [],
+    pgSearchNextToken: null,
+    pgSearchActive: false,
+    pgFullGame: emptyPGFullGame,
+    pgFullGamePosts: [],
+    pgFullGamePostsNextToken: null,
+    pgFullGamePostSearchActive: false,
   } as InitialSliceTypes,
   reducers: {
     clearExplore: (state, action) => {
-      state.searchresult.length = 0;
-      state.nextToken = null;
+      state.userSearchResult.length = 0;
+      state.userSearchNextToken = null;
     },
-    addToSearchResult: (state, action) => {
-      state.searchresult.push(action.payload);
+    addToUserSearchResult: (state, action) => {
+      state.userSearchResult.push(action.payload);
     },
-    clearSearchResult: (state) => {
-      const emptyArray = [];
-      state.searchresult = emptyArray;
-      state.nextToken = null;
+    clearUserSearchResult: (state) => {
+      state.userSearchResult = emptyArray;
+      state.userSearchNextToken = null;
     },
     changeFriendStatus: (state, action) => {
-      state.searchresult[action.payload.index].relationship =
+      state.userSearchResult[action.payload.index].relationship =
         action.payload.status;
-    },
-    setNextToken: (state, action) => {
-      state.nextToken = action.payload;
     },
     setUserSearchResultsArray: (
       state,
       action: PayloadAction<UserSearchResultType[]>
     ) => {
-      state.searchresult = action.payload;
+      state.userSearchResult = action.payload;
     },
     addNextUserSearchResultsArray: (
       state,
       action: PayloadAction<UserSearchResultType[]>
     ) => {
-      state.searchresult = state.searchresult.concat(action.payload);
+      state.userSearchResult = state.userSearchResult.concat(action.payload);
     },
     setUserSearchNextToken: (state, action: PayloadAction<string | null>) => {
-      state.nextToken = action.payload;
+      state.userSearchNextToken = action.payload;
     },
     setUserSearchActive: (state, action: PayloadAction<boolean>) => {
       state.userSearchActive = action.payload;
+    },
+    clearPGSearchResult: (state) => {
+      state.pgSearchResult = emptyArray;
+      state.pgSearchNextToken = null;
+    },
+    setPGSearchResult: (
+      state,
+      action: PayloadAction<SetPGSearchResultInputTypes>
+    ) => {
+      state.pgSearchResult = action.payload.resultsArray;
+      state.pgSearchNextToken = action.payload.nextNextToken;
+    },
+    setPGSearchNextToken: (state, action: PayloadAction<string | null>) => {
+      state.pgSearchNextToken = action.payload;
+    },
+    addNextPGSearchResults: (
+      state,
+      action: PayloadAction<SetPGSearchResultInputTypes>
+    ) => {
+      state.pgSearchResult = state.pgSearchResult.concat(
+        action.payload.resultsArray
+      );
+      state.pgSearchNextToken = action.payload.nextNextToken;
+    },
+    setPGFullGame: (state, action: PayloadAction<FullGameItemType>) => {
+      state.pgFullGame = action.payload;
+    },
+    clearPGFullGame: (state) => {
+      state.pgFullGame = emptyPGFullGame;
+    },
+    clearPGFullGamePosts: (state) => {
+      state.pgFullGamePosts = emptyArray;
+      state.pgFullGamePostsNextToken = null;
+    },
+    addToPGFullGamePosts: (state, action: PayloadAction<PostType>) => {
+      state.pgFullGamePosts.push(action.payload);
+    },
+    setPGFullGamePostsNextToken: (
+      state,
+      action: PayloadAction<string | null>
+    ) => {
+      state.pgFullGamePostsNextToken = action.payload;
+    },
+    setPGFullGamePostSearchActive: (state, action: PayloadAction<boolean>) => {
+      state.pgFullGamePostSearchActive = action.payload;
+    },
+    addVideoToPGFullGamePosts: (
+      state,
+      action: PayloadAction<AddVideoToPGFullGamePostsPT>
+    ) => {
+      state.pgFullGamePosts[action.payload.index].signedurl =
+        action.payload.signedURL;
     },
   },
 });
@@ -58,14 +137,24 @@ const slice = createSlice({
 // FriendStatus options: true, false, incomingpending, outgoingpending
 
 export const {
-  addToSearchResult,
-  clearSearchResult,
+  addToUserSearchResult,
+  clearUserSearchResult,
   changeFriendStatus,
-  setNextToken,
   clearExplore,
   setUserSearchResultsArray,
   addNextUserSearchResultsArray,
   setUserSearchNextToken,
   setUserSearchActive,
+  clearPGSearchResult,
+  setPGSearchResult,
+  setPGSearchNextToken,
+  addNextPGSearchResults,
+  setPGFullGame,
+  clearPGFullGame,
+  clearPGFullGamePosts,
+  setPGFullGamePostsNextToken,
+  setPGFullGamePostSearchActive,
+  addToPGFullGamePosts,
+  addVideoToPGFullGamePosts,
 } = slice.actions;
 export default slice.reducer;

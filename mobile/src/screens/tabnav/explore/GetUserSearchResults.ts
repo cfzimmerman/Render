@@ -28,7 +28,7 @@ export interface UserSearchResultType {
   relationship: false | "user";
 }
 
-async function GetSearchResults({
+async function GetUserSearchResults({
   input,
   category,
   nextToken,
@@ -101,4 +101,4 @@ async function GetSearchResults({
   }
 }
 
-export default GetSearchResults;
+export default GetUserSearchResults;

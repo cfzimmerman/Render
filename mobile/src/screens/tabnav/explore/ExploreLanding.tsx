@@ -1,4 +1,5 @@
-import react, { useState } from "react";
+import { useScrollToTop } from "@react-navigation/native";
+import react, { useEffect, useRef, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -8,10 +9,17 @@ import {
   Easing,
   TextInput,
   Keyboard,
+  Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useDispatch, useSelector } from "react-redux";
+import {
+  clearPGFullGame,
+  clearPGFullGamePosts,
+  clearPGSearchResult,
+  clearUserSearchResult,
+} from "../../../redux/explore/exploremain";
 import { RootStateType } from "../../../redux/store";
 import {
   GlobalStyles,
@@ -19,30 +27,51 @@ import {
   Colors,
   Icons,
 } from "../../../resources/project";
-import ClearSearchArray from "./ClearSearchArray";
+import GameCoverTile from "../homevault/GameTags/GameCoverTile";
+import ExploreLandingHeader from "./ExploreLandingHeader";
 import ExploreListFooter from "./ExploreListFooter";
-import GetSearchResults from "./GetSearchResults";
-import SearchResultHeader from "./SearchResultHeader";
+import GetUserSearchResults from "./GetUserSearchResults";
+import PGSearchTitles from "./PGSearchTitles";
 import UserTile from "./UserTile";
 
-function ExploreLanding({ navigation }) {
+export type ExploreSearchCategory = "users" | "games";
+
+const ExploreLanding = ({ navigation }) => {
   const [input, setInput] = useState("");
 
-  const [initialPageLoad, setInitialPageLoad] = useState(true);
+  const [gotInitialUsers, setGotInitialUsers] = useState(false);
 
-  const [currentCategory, setCurrentCategory] = useState("users"); // 'users' or 'games' for now
+  const [gotInitialGames, setGotInitialGames] = useState<boolean>(false);
+
+  const [currentCategory, setCurrentCategory] =
+    useState<ExploreSearchCategory>("games");
 
   const dispatch = useDispatch();
 
   const currentuser = useSelector(
     (state: RootStateType) => state.profilemain.currentuser
   );
-  const nextToken = useSelector(
-    (state: RootStateType) => state.exploremain.nextToken
-  );
-  const searchresult = useSelector(
-    (state: RootStateType) => state.exploremain.searchresult
-  );
+
+  const {
+    userSearchResult,
+    userSearchNextToken,
+    pgSearchResult,
+    pgSearchNextToken,
+  } = useSelector((state: RootStateType) => state.exploremain);
+
+  const flatListRef = useRef();
+
+  useScrollToTop(flatListRef);
+
+  useEffect(() => {
+    if (currentCategory === "users" && gotInitialUsers === false) {
+      GetData({ value: input });
+      setGotInitialUsers(true);
+    } else if (currentCategory === "games" && gotInitialGames === false) {
+      GetData({ value: input });
+      setGotInitialGames(true);
+    }
+  });
 
   const opacity = new Animated.Value(0);
 
@@ -85,8 +114,6 @@ function ExploreLanding({ navigation }) {
       opacity,
       width: size,
       height: size,
-      alignItems: "center",
-      justifyContent: "center",
     },
     GlobalStyles.shadow,
   ];
@@ -100,31 +127,53 @@ function ExploreLanding({ navigation }) {
     styles.bar,
     {
       width: bar,
-      height: Environment.CubeSize,
     },
     GlobalStyles.shadow,
   ];
 
-  const GetData = ({ value }) => {
-    ClearSearchArray({ dispatch });
-    GetSearchResults({
-      input: value,
-      category: currentCategory,
-      nextToken: null,
-      dispatch,
-      cognitosub: currentuser.cognitosub,
-    });
+  const CorrectData = () => {
+    if (currentCategory === "users") {
+      return userSearchResult;
+    } else if (currentCategory === "games") {
+      return pgSearchResult;
+    }
   };
 
-  const HandleChange = (value) => {
+  const CorrectNextToken = () => {
+    if (currentCategory === "users") {
+      return userSearchNextToken;
+    } else if (currentCategory === "games") {
+      return pgSearchNextToken;
+    }
+  };
+
+  const GetData = ({ value }: { value: string }) => {
+    if (currentCategory === "users") {
+      dispatch(clearUserSearchResult());
+      GetUserSearchResults({
+        input: value,
+        category: currentCategory,
+        nextToken: null,
+        dispatch,
+        cognitosub: currentuser.cognitosub,
+      });
+    } else if (currentCategory === "games") {
+      dispatch(clearPGSearchResult());
+      PGSearchTitles({ input: value, dispatch, nextToken: pgSearchNextToken });
+    }
+  };
+
+  const HandleChange = (value: string) => {
     setInput(value);
     GetData({ value });
   };
 
-  if (initialPageLoad === true) {
-    GetData({ value: input });
-    setInitialPageLoad(false);
-  }
+  const ListHeader = () => (
+    <ExploreLandingHeader
+      currentCategory={currentCategory}
+      setCurrentCategory={setCurrentCategory}
+    />
+  );
 
   const renderItem = ({ item, index }) => {
     if (currentCategory === "users") {
@@ -138,24 +187,35 @@ function ExploreLanding({ navigation }) {
           currentuser={currentuser}
         />
       );
+    } else if (currentCategory === "games") {
+      return (
+        <GameCoverTile
+          item={item}
+          Action={() => {
+            dispatch(clearPGFullGame()),
+              dispatch(clearPGFullGamePosts()),
+              navigation.navigate("PGLanding", {
+                gameID: item.id,
+              });
+          }}
+        />
+      );
     }
   };
 
   const ListFooter = () => (
     <ExploreListFooter
       input={input}
-      category={"users"}
-      searchResultsLength={searchresult.length}
-      nextToken={nextToken}
+      category={currentCategory}
+      searchResultsLength={CorrectData().length}
+      nextToken={CorrectNextToken()}
       cognitosub={currentuser.cognitosub}
       dispatch={dispatch}
     />
   );
 
   return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: Colors.Secondary }]}
-    >
+    <SafeAreaView style={styles.container}>
       <View style={styles.subcontainer}>
         <Animated.View style={barStyles}>
           <TextInput
@@ -191,38 +251,45 @@ function ExploreLanding({ navigation }) {
       <View>
         <FlatList
           contentContainerStyle={styles.contentContainer}
-          data={searchresult}
+          data={CorrectData()}
+          ref={flatListRef}
           renderItem={renderItem}
           numColumns={2}
           columnWrapperStyle={styles.columnwrapper}
           keyboardDismissMode="on-drag"
           onEndReachedThreshold={0.25}
           showsVerticalScrollIndicator={false}
+          ListHeaderComponent={ListHeader()}
           ListFooterComponent={ListFooter}
         />
       </View>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    backgroundColor: Colors.Secondary,
   },
   subcontainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     width: Environment.FullBar,
-    marginVertical: Environment.StandardPadding,
+    marginBottom: Environment.StandardPadding,
+    marginTop: Platform.OS === "android" ? Environment.StandardPadding : 0,
   },
   bar: {
     borderRadius: Environment.StandardRadius,
     backgroundColor: Colors.Primary,
+    height: Environment.CubeSize,
   },
   box: {
     borderRadius: Environment.StandardRadius,
     backgroundColor: Colors.Primary,
+    alignItems: "center",
+    justifyContent: "center",
   },
   columnwrapper: {
     width: Environment.FullBar,

@@ -34,6 +34,7 @@ import SearchGameTitle from "./SearchGameTitle";
 import SearchLibraryGameTitle from "./SearchLibraryGameTitle";
 import SelectGameListHeader from "./SelectGameListHeader";
 import SelectGameListFooter from "./SelectGameListFooter";
+import CoverTileAction from "./CoverTileAction";
 
 const opacity = new Animated.Value(0);
 
@@ -141,7 +142,7 @@ const SelectGame = ({ navigation, route }) => {
       gotEmptyAllGames === false &&
       allGamesArray.length === 0
     ) {
-      SearchGameTitle({ title: "", dispatch });
+      SearchGameTitle({ title: "", dispatch, nextToken: allGamesNextToken });
       setGotEmptyAllGames(true);
     }
     /*
@@ -180,7 +181,7 @@ const SelectGame = ({ navigation, route }) => {
         dispatch,
       });
     } else if (searchMode === "all") {
-      SearchGameTitle({ title: input, dispatch });
+      SearchGameTitle({ title: input, dispatch, nextToken: allGamesNextToken });
     }
   };
 
@@ -219,19 +220,22 @@ const SelectGame = ({ navigation, route }) => {
   const renderItem = ({ item, index }) => (
     <GameCoverTile
       item={item}
-      searchMode={searchMode}
-      dispatch={dispatch}
-      navigation={navigation}
-      // selection={selection}
-      selectedPosts={selectedPosts}
-      currentUserID={currentUserID}
-      // origin={origin}
-      vaultPostData={vaultPostData}
-      vaultFeedData={vaultFeedData}
-      currentUserCognitoSub={currentUserCognitoSub}
-      localLibrary={localLibrary}
-      syncPreference={syncPreference}
-      deleteTag={false}
+      Action={() =>
+        CoverTileAction({
+          item,
+          searchMode,
+          dispatch,
+          navigation,
+          selectedPosts,
+          currentUserID,
+          vaultPostData,
+          vaultFeedData,
+          currentUserCognitoSub,
+          syncPreference,
+          localLibrary,
+          deleteTag: false,
+        })
+      }
     />
   );
 
@@ -332,8 +336,8 @@ const SelectGame = ({ navigation, route }) => {
           numColumns={2}
           renderItem={renderItem}
           keyboardDismissMode="on-drag"
-          ListHeaderComponent={ListHeader}
-          ListFooterComponent={ListFooter}
+          ListHeaderComponent={ListHeader()}
+          ListFooterComponent={ListFooter()}
         />
       </View>
       <LoadProgressModal />

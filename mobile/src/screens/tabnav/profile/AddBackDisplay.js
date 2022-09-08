@@ -13,7 +13,6 @@ function AddBackDisplay({
   dispatch,
   navigation,
   currentuser,
-  origin,
   addedmeusers,
 }) {
   if (addbackusers.length < 1) {

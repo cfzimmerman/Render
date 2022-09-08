@@ -29,29 +29,30 @@ async function GetCurrentUser({ dispatch, navigation }) {
 
       const result = (await API.graphql(
         graphqlOperation(`
-                query GetUser {
-                    getUsers (
-                        id: "${userid}"
-                    ) {
-                        id
-                        email
-                        gamertag
-                        displayname
-                        pfp
-                        fullyauthenticated
-                        firstvaultupload
-                        cognitosub
-                        createdAt
-                        addedmecount
-                        addedcount
-                        storagesizeinbytes
-                        emailconfirmed
-                        acceptedtos
-                        setpassword
-                        updatedAt
-                    }
-                }
-            `)
+          query GetUser {
+              getUsers (
+                  id: "${userid}"
+              ) {
+                  id
+                  email
+                  gamertag
+                  displayname
+                  pfp
+                  fullyauthenticated
+                  fullyonboarded
+                  firstvaultupload
+                  cognitosub
+                  createdAt
+                  addedmecount
+                  addedcount
+                  storagesizeinbytes
+                  emailconfirmed
+                  acceptedtos
+                  setpassword
+                  updatedAt
+              }
+          }
+      `)
       )) as GraphQLResult<GetUsersQuery>;
 
       const user = result.data.getUsers;
@@ -87,6 +88,7 @@ async function GetCurrentUser({ dispatch, navigation }) {
         displayname: user.displayname,
         pfp: user.pfp,
         fullyauthenticated: user.fullyauthenticated,
+        fullyonboarded: user.fullyonboarded,
         firstvaultupload: user.firstvaultupload,
         cognitosub: user.cognitosub,
         createdAt: user.createdAt,

@@ -264,8 +264,8 @@ const HVGameDisplay = ({ navigation, route }) => {
         <FlatList
           data={hvGameSearchResults}
           ref={flatListRef}
-          ListHeaderComponent={ListHeader}
-          ListFooterComponent={ListFooter}
+          ListHeaderComponent={ListHeader()}
+          ListFooterComponent={ListFooter()}
           ListEmptyComponent={ListEmptyComponent}
           renderItem={renderItem}
           numColumns={2}

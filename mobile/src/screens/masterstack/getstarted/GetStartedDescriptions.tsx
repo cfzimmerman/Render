@@ -43,6 +43,10 @@ async function ShareWebUpload() {
 
 export const GetStartedUploadDescription = () => {
   const navigation = useNavigation();
+  const NavigateToPlusLanding = () => {
+    // @ts-ignore
+    navigation.navigate("Plus");
+  };
   return (
     <DefaultText>
       Use our desktop{" "}
@@ -55,7 +59,7 @@ export const GetStartedUploadDescription = () => {
         height={descriptionIconSize}
         width={descriptionIconSize}
         // @ts-ignore
-        onPress={() => navigation.navigate("PlusLanding")}
+        onPress={NavigateToPlusLanding}
       />{" "}
       to upload captures.
     </DefaultText>
@@ -81,7 +85,8 @@ export const GetStartedSaveDescription = () => {
         onPress={NavigateToVault}
         // @ts-ignore
       />{" "}
-      is your private cloud storage library.
+      is your cloud storage library. All uploads are private by default until
+      posted publicly.
     </DefaultText>
   );
 };

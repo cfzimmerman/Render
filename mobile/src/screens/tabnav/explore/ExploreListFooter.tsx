@@ -1,11 +1,13 @@
 import { DispatchType } from "../../../redux/store";
+import GetUserSearchResults from "./GetUserSearchResults";
 import { TextButton } from "../../../resources/atoms";
-import GetSearchResults from "./GetSearchResults";
+import { ExploreSearchCategory } from "./ExploreLanding";
+import PGSearchTitles from "./PGSearchTitles";
 
 interface InputTypes {
   input: string;
   searchResultsLength: number;
-  category: "users";
+  category: ExploreSearchCategory;
   nextToken: string | null;
   dispatch: DispatchType;
   cognitosub: string;
@@ -19,6 +21,19 @@ const ExploreListFooter = ({
   dispatch,
   cognitosub,
 }: InputTypes) => {
+  const GetMoreResults = () => {
+    if (category === "users") {
+      GetUserSearchResults({
+        input,
+        category: "users",
+        nextToken,
+        dispatch,
+        cognitosub,
+      });
+    } else if (category === "games") {
+      PGSearchTitles({ input, dispatch, nextToken });
+    }
+  };
   if (searchResultsLength < 3) {
     return <TextButton title={""} disabled={true} Action={() => null} />;
   } else if (nextToken === null) {
@@ -34,45 +49,10 @@ const ExploreListFooter = ({
       <TextButton
         title={"Get more results"}
         disabled={false}
-        Action={() =>
-          GetSearchResults({
-            input,
-            category: "users",
-            nextToken,
-            dispatch,
-            cognitosub,
-          })
-        }
+        Action={GetMoreResults}
       />
     );
   }
 };
 
 export default ExploreListFooter;
-
-/*
-
-
-  if (listData === null || listData.length === 0 || searchMode === "library") {
-    return <TextButton title={""} disabled={true} Action={() => null} />;
-  } else if (nextToken === null) {
-    return (
-      <TextButton
-        title={"All results displayed"}
-        disabled={true}
-        Action={() => null}
-      />
-    );
-  } else {
-    return (
-      <TextButton
-        title={"Get more results"}
-        disabled={false}
-        Action={() =>
-          GetMore({ searchMode, title, dispatch, nextToken, currentUserID })
-        }
-      />
-    );
-  }
-
-*/

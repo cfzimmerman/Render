@@ -6,92 +6,35 @@ import {
   SetNewAllGamesArrayPT,
 } from "../../../../redux/homevault/gametags";
 import { DispatchType } from "../../../../redux/store";
+import {
+  GetSearchableNextToken,
+  RemoveSmartApostrophe,
+} from "../../../../resources/utilities";
 import { GameCoverTileType } from "./GameCoverTile";
+import GetGameTitleSearchResults from "./GetGameTitleSearchResults";
 
 interface SearchGameTitlePT {
   title: string;
   dispatch: DispatchType;
+  nextToken: string | null;
 }
 
-const GetNextToken = ({ nextToken, items, resultsLimit }) => {
-  // Sometimes OpenSearch returns a non-null nextToken, even when we've clearly found all results
-  if (nextToken === null || items.length < resultsLimit) {
-    return null;
-  }
-  return nextToken;
-};
-
-async function GetResults({
+async function SearchGameTitle({
   title,
-  resultsLimit,
-}: {
-  title: string;
-  resultsLimit: number;
-}): Promise<GraphQLResult<SearchGamesQuery>> {
-  if (title.includes(" ")) {
-    // Performs poorly on individual words but crushes it when spaces are involved
-    const result = (await API.graphql(
-      graphqlOperation(`
-        query SearchGames {
-            searchGames (
-                limit: ${resultsLimit},
-                sort: { direction: desc, field: releaseDate },
-                filter: {
-                  title: {
-                    matchPhrase: "${title}"
-                  }
-                }
-
-            ) {
-                items {
-                    id
-                    title
-                    coverID
-                    backgroundID
-                }
-                nextToken
-            }
-        }
-    `)
-    )) as GraphQLResult<SearchGamesQuery>;
-    return result;
-  } else {
-    // wildcard - functions perfectly when no spaces are involved
-    const result = (await API.graphql(
-      graphqlOperation(`
-        query SearchGames {
-            searchGames (
-                limit: ${resultsLimit},
-                sort: { direction: desc, field: releaseDate },
-                filter: {
-                  title: {
-                    wildcard: "*${title}*"
-                  }
-                }
-
-            ) {
-                items {
-                    id
-                    title
-                    coverID
-                    backgroundID
-                }
-                nextToken
-            }
-        }
-    `)
-    )) as GraphQLResult<SearchGamesQuery>;
-    return result;
-  }
-}
-
-async function SearchGameTitle({ title, dispatch }: SearchGameTitlePT) {
-  const formattedTitle = title.replace(/[’]/g, "'");
+  dispatch,
+  nextToken,
+}: SearchGameTitlePT) {
+  const formattedTitle = RemoveSmartApostrophe(title);
   const resultsLimit = 10;
   try {
     const {
       data: { searchGames },
-    } = await GetResults({ title: formattedTitle, resultsLimit });
+    } = await GetGameTitleSearchResults({
+      title: formattedTitle,
+      resultsLimit,
+      origin: "SearchGameTitle",
+      nextToken,
+    });
 
     const gameResults = searchGames.items;
     const newNextToken = searchGames.nextToken;
@@ -112,7 +55,7 @@ async function SearchGameTitle({ title, dispatch }: SearchGameTitlePT) {
 
     const newAllGamesArray: SetNewAllGamesArrayPT = {
       newAllGamesArray: resultsArray,
-      newAllGamesNextToken: GetNextToken({
+      newAllGamesNextToken: GetSearchableNextToken({
         nextToken: newNextToken,
         items: gameResults,
         resultsLimit,

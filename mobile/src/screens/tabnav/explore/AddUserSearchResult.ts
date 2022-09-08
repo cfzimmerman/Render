@@ -1,4 +1,4 @@
-import { addToSearchResult } from "../../../redux/explore/exploremain";
+import { addToUserSearchResult } from "../../../redux/explore/exploremain";
 
 const AddUserSearchResult = ({ dispatch, pfpurl, item, relationship }) => {
   const user = {
@@ -11,7 +11,7 @@ const AddUserSearchResult = ({ dispatch, pfpurl, item, relationship }) => {
     relationship,
   };
 
-  dispatch(addToSearchResult(user));
+  dispatch(addToUserSearchResult(user));
 };
 
 export default AddUserSearchResult;
