@@ -194,6 +194,7 @@ export type Games = {
   __typename: "Games",
   id: string,
   createdAt: string,
+  updatedAt?: string | null,
   igdbID?: number | null,
   title?: string | null,
   releaseDate?: string | null,
@@ -211,9 +212,9 @@ export type Games = {
   oculusID?: string | null,
   playstationID?: string | null,
   numUserGames?: number | null,
+  type?: string | null,
   UserGames?: ModelUserGamesConnection | null,
   Posts?: ModelPostsConnection | null,
-  updatedAt: string,
 };
 
 export type ModelPostsConnection = {
@@ -344,6 +345,7 @@ export type DeleteGlobalDataInput = {
 export type CreateGamesInput = {
   id?: string | null,
   createdAt?: string | null,
+  updatedAt?: string | null,
   igdbID?: number | null,
   title?: string | null,
   releaseDate?: string | null,
@@ -361,10 +363,12 @@ export type CreateGamesInput = {
   oculusID?: string | null,
   playstationID?: string | null,
   numUserGames?: number | null,
+  type?: string | null,
 };
 
 export type ModelGamesConditionInput = {
   createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   igdbID?: ModelIntInput | null,
   title?: ModelStringInput | null,
   releaseDate?: ModelStringInput | null,
@@ -382,6 +386,7 @@ export type ModelGamesConditionInput = {
   oculusID?: ModelStringInput | null,
   playstationID?: ModelStringInput | null,
   numUserGames?: ModelIntInput | null,
+  type?: ModelStringInput | null,
   and?: Array< ModelGamesConditionInput | null > | null,
   or?: Array< ModelGamesConditionInput | null > | null,
   not?: ModelGamesConditionInput | null,
@@ -402,6 +407,7 @@ export type ModelIntInput = {
 export type UpdateGamesInput = {
   id: string,
   createdAt?: string | null,
+  updatedAt?: string | null,
   igdbID?: number | null,
   title?: string | null,
   releaseDate?: string | null,
@@ -419,6 +425,7 @@ export type UpdateGamesInput = {
   oculusID?: string | null,
   playstationID?: string | null,
   numUserGames?: number | null,
+  type?: string | null,
 };
 
 export type DeleteGamesInput = {
@@ -762,6 +769,7 @@ export type ModelGlobalDataConnection = {
 export type ModelGamesFilterInput = {
   id?: ModelIDInput | null,
   createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   igdbID?: ModelIntInput | null,
   title?: ModelStringInput | null,
   releaseDate?: ModelStringInput | null,
@@ -779,6 +787,7 @@ export type ModelGamesFilterInput = {
   oculusID?: ModelStringInput | null,
   playstationID?: ModelStringInput | null,
   numUserGames?: ModelIntInput | null,
+  type?: ModelStringInput | null,
   and?: Array< ModelGamesFilterInput | null > | null,
   or?: Array< ModelGamesFilterInput | null > | null,
   not?: ModelGamesFilterInput | null,
@@ -800,9 +809,19 @@ export type ModelStringKeyConditionInput = {
   beginsWith?: string | null,
 };
 
+export type ModelIntKeyConditionInput = {
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+};
+
 export type SearchableGamesFilterInput = {
   id?: SearchableIDFilterInput | null,
   createdAt?: SearchableStringFilterInput | null,
+  updatedAt?: SearchableStringFilterInput | null,
   igdbID?: SearchableIntFilterInput | null,
   title?: SearchableStringFilterInput | null,
   releaseDate?: SearchableStringFilterInput | null,
@@ -820,7 +839,7 @@ export type SearchableGamesFilterInput = {
   oculusID?: SearchableStringFilterInput | null,
   playstationID?: SearchableStringFilterInput | null,
   numUserGames?: SearchableIntFilterInput | null,
-  updatedAt?: SearchableStringFilterInput | null,
+  type?: SearchableStringFilterInput | null,
   and?: Array< SearchableGamesFilterInput | null > | null,
   or?: Array< SearchableGamesFilterInput | null > | null,
   not?: SearchableGamesFilterInput | null,
@@ -878,6 +897,7 @@ export type SearchableGamesSortInput = {
 export enum SearchableGamesSortableFields {
   id = "id",
   createdAt = "createdAt",
+  updatedAt = "updatedAt",
   igdbID = "igdbID",
   title = "title",
   releaseDate = "releaseDate",
@@ -895,7 +915,7 @@ export enum SearchableGamesSortableFields {
   oculusID = "oculusID",
   playstationID = "playstationID",
   numUserGames = "numUserGames",
-  updatedAt = "updatedAt",
+  type = "type",
 }
 
 
@@ -923,6 +943,7 @@ export enum SearchableAggregateType {
 export enum SearchableGamesAggregateField {
   id = "id",
   createdAt = "createdAt",
+  updatedAt = "updatedAt",
   igdbID = "igdbID",
   title = "title",
   releaseDate = "releaseDate",
@@ -940,7 +961,7 @@ export enum SearchableGamesAggregateField {
   oculusID = "oculusID",
   playstationID = "playstationID",
   numUserGames = "numUserGames",
-  updatedAt = "updatedAt",
+  type = "type",
 }
 
 
@@ -1011,15 +1032,6 @@ export type ModelNotificationsByPostsCompositeKeyConditionInput = {
 export type ModelNotificationsByPostsCompositeKeyInput = {
   code?: number | null,
   createdAt?: string | null,
-};
-
-export type ModelIntKeyConditionInput = {
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
 };
 
 export type ModelUserNotificationsFilterInput = {
@@ -1478,6 +1490,7 @@ export type CreateGamesMutation = {
     __typename: "Games",
     id: string,
     createdAt: string,
+    updatedAt?: string | null,
     igdbID?: number | null,
     title?: string | null,
     releaseDate?: string | null,
@@ -1495,6 +1508,7 @@ export type CreateGamesMutation = {
     oculusID?: string | null,
     playstationID?: string | null,
     numUserGames?: number | null,
+    type?: string | null,
     UserGames?:  {
       __typename: "ModelUserGamesConnection",
       nextToken?: string | null,
@@ -1503,7 +1517,6 @@ export type CreateGamesMutation = {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
     } | null,
-    updatedAt: string,
   } | null,
 };
 
@@ -1517,6 +1530,7 @@ export type UpdateGamesMutation = {
     __typename: "Games",
     id: string,
     createdAt: string,
+    updatedAt?: string | null,
     igdbID?: number | null,
     title?: string | null,
     releaseDate?: string | null,
@@ -1534,6 +1548,7 @@ export type UpdateGamesMutation = {
     oculusID?: string | null,
     playstationID?: string | null,
     numUserGames?: number | null,
+    type?: string | null,
     UserGames?:  {
       __typename: "ModelUserGamesConnection",
       nextToken?: string | null,
@@ -1542,7 +1557,6 @@ export type UpdateGamesMutation = {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
     } | null,
-    updatedAt: string,
   } | null,
 };
 
@@ -1556,6 +1570,7 @@ export type DeleteGamesMutation = {
     __typename: "Games",
     id: string,
     createdAt: string,
+    updatedAt?: string | null,
     igdbID?: number | null,
     title?: string | null,
     releaseDate?: string | null,
@@ -1573,6 +1588,7 @@ export type DeleteGamesMutation = {
     oculusID?: string | null,
     playstationID?: string | null,
     numUserGames?: number | null,
+    type?: string | null,
     UserGames?:  {
       __typename: "ModelUserGamesConnection",
       nextToken?: string | null,
@@ -1581,7 +1597,6 @@ export type DeleteGamesMutation = {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
     } | null,
-    updatedAt: string,
   } | null,
 };
 
@@ -1625,6 +1640,7 @@ export type CreateUserGamesMutation = {
       __typename: "Games",
       id: string,
       createdAt: string,
+      updatedAt?: string | null,
       igdbID?: number | null,
       title?: string | null,
       releaseDate?: string | null,
@@ -1642,7 +1658,7 @@ export type CreateUserGamesMutation = {
       oculusID?: string | null,
       playstationID?: string | null,
       numUserGames?: number | null,
-      updatedAt: string,
+      type?: string | null,
     } | null,
     updatedAt: string,
   } | null,
@@ -1688,6 +1704,7 @@ export type UpdateUserGamesMutation = {
       __typename: "Games",
       id: string,
       createdAt: string,
+      updatedAt?: string | null,
       igdbID?: number | null,
       title?: string | null,
       releaseDate?: string | null,
@@ -1705,7 +1722,7 @@ export type UpdateUserGamesMutation = {
       oculusID?: string | null,
       playstationID?: string | null,
       numUserGames?: number | null,
-      updatedAt: string,
+      type?: string | null,
     } | null,
     updatedAt: string,
   } | null,
@@ -1751,6 +1768,7 @@ export type DeleteUserGamesMutation = {
       __typename: "Games",
       id: string,
       createdAt: string,
+      updatedAt?: string | null,
       igdbID?: number | null,
       title?: string | null,
       releaseDate?: string | null,
@@ -1768,7 +1786,7 @@ export type DeleteUserGamesMutation = {
       oculusID?: string | null,
       playstationID?: string | null,
       numUserGames?: number | null,
-      updatedAt: string,
+      type?: string | null,
     } | null,
     updatedAt: string,
   } | null,
@@ -2478,6 +2496,7 @@ export type CreatePostsMutation = {
       __typename: "Games",
       id: string,
       createdAt: string,
+      updatedAt?: string | null,
       igdbID?: number | null,
       title?: string | null,
       releaseDate?: string | null,
@@ -2495,7 +2514,7 @@ export type CreatePostsMutation = {
       oculusID?: string | null,
       playstationID?: string | null,
       numUserGames?: number | null,
-      updatedAt: string,
+      type?: string | null,
     } | null,
     Comments?:  {
       __typename: "ModelCommentsConnection",
@@ -2566,6 +2585,7 @@ export type UpdatePostsMutation = {
       __typename: "Games",
       id: string,
       createdAt: string,
+      updatedAt?: string | null,
       igdbID?: number | null,
       title?: string | null,
       releaseDate?: string | null,
@@ -2583,7 +2603,7 @@ export type UpdatePostsMutation = {
       oculusID?: string | null,
       playstationID?: string | null,
       numUserGames?: number | null,
-      updatedAt: string,
+      type?: string | null,
     } | null,
     Comments?:  {
       __typename: "ModelCommentsConnection",
@@ -2654,6 +2674,7 @@ export type DeletePostsMutation = {
       __typename: "Games",
       id: string,
       createdAt: string,
+      updatedAt?: string | null,
       igdbID?: number | null,
       title?: string | null,
       releaseDate?: string | null,
@@ -2671,7 +2692,7 @@ export type DeletePostsMutation = {
       oculusID?: string | null,
       playstationID?: string | null,
       numUserGames?: number | null,
-      updatedAt: string,
+      type?: string | null,
     } | null,
     Comments?:  {
       __typename: "ModelCommentsConnection",
@@ -3054,6 +3075,7 @@ export type GetGamesQuery = {
     __typename: "Games",
     id: string,
     createdAt: string,
+    updatedAt?: string | null,
     igdbID?: number | null,
     title?: string | null,
     releaseDate?: string | null,
@@ -3071,6 +3093,7 @@ export type GetGamesQuery = {
     oculusID?: string | null,
     playstationID?: string | null,
     numUserGames?: number | null,
+    type?: string | null,
     UserGames?:  {
       __typename: "ModelUserGamesConnection",
       nextToken?: string | null,
@@ -3079,7 +3102,6 @@ export type GetGamesQuery = {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
     } | null,
-    updatedAt: string,
   } | null,
 };
 
@@ -3096,6 +3118,7 @@ export type ListGamesQuery = {
       __typename: "Games",
       id: string,
       createdAt: string,
+      updatedAt?: string | null,
       igdbID?: number | null,
       title?: string | null,
       releaseDate?: string | null,
@@ -3113,7 +3136,7 @@ export type ListGamesQuery = {
       oculusID?: string | null,
       playstationID?: string | null,
       numUserGames?: number | null,
-      updatedAt: string,
+      type?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -3135,6 +3158,7 @@ export type GamesByTitleQuery = {
       __typename: "Games",
       id: string,
       createdAt: string,
+      updatedAt?: string | null,
       igdbID?: number | null,
       title?: string | null,
       releaseDate?: string | null,
@@ -3152,7 +3176,47 @@ export type GamesByTitleQuery = {
       oculusID?: string | null,
       playstationID?: string | null,
       numUserGames?: number | null,
-      updatedAt: string,
+      type?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GamesByNumUserGamesQueryVariables = {
+  type: string,
+  numUserGames?: ModelIntKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelGamesFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type GamesByNumUserGamesQuery = {
+  gamesByNumUserGames?:  {
+    __typename: "ModelGamesConnection",
+    items:  Array< {
+      __typename: "Games",
+      id: string,
+      createdAt: string,
+      updatedAt?: string | null,
+      igdbID?: number | null,
+      title?: string | null,
+      releaseDate?: string | null,
+      series?: string | null,
+      genre?: string | null,
+      theme?: string | null,
+      coverID?: string | null,
+      backgroundID?: string | null,
+      steamID?: string | null,
+      microsoftID?: string | null,
+      xboxMarketplaceID?: string | null,
+      gogID?: string | null,
+      egsID?: string | null,
+      twitchID?: string | null,
+      oculusID?: string | null,
+      playstationID?: string | null,
+      numUserGames?: number | null,
+      type?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -3174,6 +3238,7 @@ export type SearchGamesQuery = {
       __typename: "Games",
       id: string,
       createdAt: string,
+      updatedAt?: string | null,
       igdbID?: number | null,
       title?: string | null,
       releaseDate?: string | null,
@@ -3191,7 +3256,7 @@ export type SearchGamesQuery = {
       oculusID?: string | null,
       playstationID?: string | null,
       numUserGames?: number | null,
-      updatedAt: string,
+      type?: string | null,
     } | null >,
     nextToken?: string | null,
     total?: number | null,
@@ -3253,6 +3318,7 @@ export type GetUserGamesQuery = {
       __typename: "Games",
       id: string,
       createdAt: string,
+      updatedAt?: string | null,
       igdbID?: number | null,
       title?: string | null,
       releaseDate?: string | null,
@@ -3270,7 +3336,7 @@ export type GetUserGamesQuery = {
       oculusID?: string | null,
       playstationID?: string | null,
       numUserGames?: number | null,
-      updatedAt: string,
+      type?: string | null,
     } | null,
     updatedAt: string,
   } | null,
@@ -3964,6 +4030,7 @@ export type GetPostsQuery = {
       __typename: "Games",
       id: string,
       createdAt: string,
+      updatedAt?: string | null,
       igdbID?: number | null,
       title?: string | null,
       releaseDate?: string | null,
@@ -3981,7 +4048,7 @@ export type GetPostsQuery = {
       oculusID?: string | null,
       playstationID?: string | null,
       numUserGames?: number | null,
-      updatedAt: string,
+      type?: string | null,
     } | null,
     Comments?:  {
       __typename: "ModelCommentsConnection",
@@ -4339,6 +4406,43 @@ export type PostsByGamesQueryVariables = {
 
 export type PostsByGamesQuery = {
   postsByGames?:  {
+    __typename: "ModelPostsConnection",
+    items:  Array< {
+      __typename: "Posts",
+      id: string,
+      aspectratio?: number | null,
+      cognitosub: string,
+      contentdate?: string | null,
+      contentkey?: string | null,
+      contentlastupdated?: string | null,
+      contenttype?: string | null,
+      createdAt: string,
+      deleteddate?: string | null,
+      posttext?: string | null,
+      publicpost?: boolean | null,
+      publicpostdate?: string | null,
+      sizeinbytes?: number | null,
+      thumbnailkey?: string | null,
+      type?: string | null,
+      usersID: string,
+      gamesID?: string | null,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type PublicPostsByGamesQueryVariables = {
+  gamesID: string,
+  publicpostdate?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelPostsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type PublicPostsByGamesQuery = {
+  publicPostsByGames?:  {
     __typename: "ModelPostsConnection",
     items:  Array< {
       __typename: "Posts",
@@ -4890,6 +4994,7 @@ export type OnCreateGamesSubscription = {
     __typename: "Games",
     id: string,
     createdAt: string,
+    updatedAt?: string | null,
     igdbID?: number | null,
     title?: string | null,
     releaseDate?: string | null,
@@ -4907,6 +5012,7 @@ export type OnCreateGamesSubscription = {
     oculusID?: string | null,
     playstationID?: string | null,
     numUserGames?: number | null,
+    type?: string | null,
     UserGames?:  {
       __typename: "ModelUserGamesConnection",
       nextToken?: string | null,
@@ -4915,7 +5021,6 @@ export type OnCreateGamesSubscription = {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
     } | null,
-    updatedAt: string,
   } | null,
 };
 
@@ -4924,6 +5029,7 @@ export type OnUpdateGamesSubscription = {
     __typename: "Games",
     id: string,
     createdAt: string,
+    updatedAt?: string | null,
     igdbID?: number | null,
     title?: string | null,
     releaseDate?: string | null,
@@ -4941,6 +5047,7 @@ export type OnUpdateGamesSubscription = {
     oculusID?: string | null,
     playstationID?: string | null,
     numUserGames?: number | null,
+    type?: string | null,
     UserGames?:  {
       __typename: "ModelUserGamesConnection",
       nextToken?: string | null,
@@ -4949,7 +5056,6 @@ export type OnUpdateGamesSubscription = {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
     } | null,
-    updatedAt: string,
   } | null,
 };
 
@@ -4958,6 +5064,7 @@ export type OnDeleteGamesSubscription = {
     __typename: "Games",
     id: string,
     createdAt: string,
+    updatedAt?: string | null,
     igdbID?: number | null,
     title?: string | null,
     releaseDate?: string | null,
@@ -4975,6 +5082,7 @@ export type OnDeleteGamesSubscription = {
     oculusID?: string | null,
     playstationID?: string | null,
     numUserGames?: number | null,
+    type?: string | null,
     UserGames?:  {
       __typename: "ModelUserGamesConnection",
       nextToken?: string | null,
@@ -4983,7 +5091,6 @@ export type OnDeleteGamesSubscription = {
       __typename: "ModelPostsConnection",
       nextToken?: string | null,
     } | null,
-    updatedAt: string,
   } | null,
 };
 
@@ -5022,6 +5129,7 @@ export type OnCreateUserGamesSubscription = {
       __typename: "Games",
       id: string,
       createdAt: string,
+      updatedAt?: string | null,
       igdbID?: number | null,
       title?: string | null,
       releaseDate?: string | null,
@@ -5039,7 +5147,7 @@ export type OnCreateUserGamesSubscription = {
       oculusID?: string | null,
       playstationID?: string | null,
       numUserGames?: number | null,
-      updatedAt: string,
+      type?: string | null,
     } | null,
     updatedAt: string,
   } | null,
@@ -5080,6 +5188,7 @@ export type OnUpdateUserGamesSubscription = {
       __typename: "Games",
       id: string,
       createdAt: string,
+      updatedAt?: string | null,
       igdbID?: number | null,
       title?: string | null,
       releaseDate?: string | null,
@@ -5097,7 +5206,7 @@ export type OnUpdateUserGamesSubscription = {
       oculusID?: string | null,
       playstationID?: string | null,
       numUserGames?: number | null,
-      updatedAt: string,
+      type?: string | null,
     } | null,
     updatedAt: string,
   } | null,
@@ -5138,6 +5247,7 @@ export type OnDeleteUserGamesSubscription = {
       __typename: "Games",
       id: string,
       createdAt: string,
+      updatedAt?: string | null,
       igdbID?: number | null,
       title?: string | null,
       releaseDate?: string | null,
@@ -5155,7 +5265,7 @@ export type OnDeleteUserGamesSubscription = {
       oculusID?: string | null,
       playstationID?: string | null,
       numUserGames?: number | null,
-      updatedAt: string,
+      type?: string | null,
     } | null,
     updatedAt: string,
   } | null,
@@ -5800,6 +5910,7 @@ export type OnCreatePostsSubscription = {
       __typename: "Games",
       id: string,
       createdAt: string,
+      updatedAt?: string | null,
       igdbID?: number | null,
       title?: string | null,
       releaseDate?: string | null,
@@ -5817,7 +5928,7 @@ export type OnCreatePostsSubscription = {
       oculusID?: string | null,
       playstationID?: string | null,
       numUserGames?: number | null,
-      updatedAt: string,
+      type?: string | null,
     } | null,
     Comments?:  {
       __typename: "ModelCommentsConnection",
@@ -5883,6 +5994,7 @@ export type OnUpdatePostsSubscription = {
       __typename: "Games",
       id: string,
       createdAt: string,
+      updatedAt?: string | null,
       igdbID?: number | null,
       title?: string | null,
       releaseDate?: string | null,
@@ -5900,7 +6012,7 @@ export type OnUpdatePostsSubscription = {
       oculusID?: string | null,
       playstationID?: string | null,
       numUserGames?: number | null,
-      updatedAt: string,
+      type?: string | null,
     } | null,
     Comments?:  {
       __typename: "ModelCommentsConnection",
@@ -5966,6 +6078,7 @@ export type OnDeletePostsSubscription = {
       __typename: "Games",
       id: string,
       createdAt: string,
+      updatedAt?: string | null,
       igdbID?: number | null,
       title?: string | null,
       releaseDate?: string | null,
@@ -5983,7 +6096,7 @@ export type OnDeletePostsSubscription = {
       oculusID?: string | null,
       playstationID?: string | null,
       numUserGames?: number | null,
-      updatedAt: string,
+      type?: string | null,
     } | null,
     Comments?:  {
       __typename: "ModelCommentsConnection",
