@@ -42,6 +42,7 @@ export const getPostViewTracker = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -177,6 +178,7 @@ export const getGames = /* GraphQL */ `
     getGames(id: $id) {
       id
       createdAt
+      updatedAt
       igdbID
       title
       releaseDate
@@ -193,13 +195,14 @@ export const getGames = /* GraphQL */ `
       twitchID
       oculusID
       playstationID
+      numUserGames
+      type
       UserGames {
         nextToken
       }
       Posts {
         nextToken
       }
-      updatedAt
     }
   }
 `;
@@ -213,6 +216,7 @@ export const listGames = /* GraphQL */ `
       items {
         id
         createdAt
+        updatedAt
         igdbID
         title
         releaseDate
@@ -229,7 +233,8 @@ export const listGames = /* GraphQL */ `
         twitchID
         oculusID
         playstationID
-        updatedAt
+        numUserGames
+        type
       }
       nextToken
     }
@@ -255,6 +260,7 @@ export const gamesByTitle = /* GraphQL */ `
       items {
         id
         createdAt
+        updatedAt
         igdbID
         title
         releaseDate
@@ -271,7 +277,52 @@ export const gamesByTitle = /* GraphQL */ `
         twitchID
         oculusID
         playstationID
+        numUserGames
+        type
+      }
+      nextToken
+    }
+  }
+`;
+export const gamesByNumUserGames = /* GraphQL */ `
+  query GamesByNumUserGames(
+    $type: String!
+    $numUserGames: ModelIntKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGamesFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    gamesByNumUserGames(
+      type: $type
+      numUserGames: $numUserGames
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
         updatedAt
+        igdbID
+        title
+        releaseDate
+        series
+        genre
+        theme
+        coverID
+        backgroundID
+        steamID
+        microsoftID
+        xboxMarketplaceID
+        gogID
+        egsID
+        twitchID
+        oculusID
+        playstationID
+        numUserGames
+        type
       }
       nextToken
     }
@@ -297,6 +348,7 @@ export const searchGames = /* GraphQL */ `
       items {
         id
         createdAt
+        updatedAt
         igdbID
         title
         releaseDate
@@ -313,7 +365,8 @@ export const searchGames = /* GraphQL */ `
         twitchID
         oculusID
         playstationID
-        updatedAt
+        numUserGames
+        type
       }
       nextToken
       total
@@ -355,6 +408,7 @@ export const getUserGames = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -366,6 +420,7 @@ export const getUserGames = /* GraphQL */ `
       Games {
         id
         createdAt
+        updatedAt
         igdbID
         title
         releaseDate
@@ -382,7 +437,8 @@ export const getUserGames = /* GraphQL */ `
         twitchID
         oculusID
         playstationID
-        updatedAt
+        numUserGames
+        type
       }
       updatedAt
     }
@@ -632,6 +688,7 @@ export const getUserNotifications = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -763,6 +820,7 @@ export const getComments = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -873,6 +931,7 @@ export const getUserRelationships = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -896,6 +955,7 @@ export const getUserRelationships = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1074,6 +1134,7 @@ export const getPosts = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1085,6 +1146,7 @@ export const getPosts = /* GraphQL */ `
       Games {
         id
         createdAt
+        updatedAt
         igdbID
         title
         releaseDate
@@ -1101,7 +1163,8 @@ export const getPosts = /* GraphQL */ `
         twitchID
         oculusID
         playstationID
-        updatedAt
+        numUserGames
+        type
       }
       Comments {
         nextToken
@@ -1514,6 +1577,47 @@ export const postsByGames = /* GraphQL */ `
     }
   }
 `;
+export const publicPostsByGames = /* GraphQL */ `
+  query PublicPostsByGames(
+    $gamesID: ID!
+    $publicpostdate: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    publicPostsByGames(
+      gamesID: $gamesID
+      publicpostdate: $publicpostdate
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        aspectratio
+        cognitosub
+        contentdate
+        contentkey
+        contentlastupdated
+        contenttype
+        createdAt
+        deleteddate
+        posttext
+        publicpost
+        publicpostdate
+        sizeinbytes
+        thumbnailkey
+        type
+        usersID
+        gamesID
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const searchPosts = /* GraphQL */ `
   query SearchPosts(
     $filter: SearchablePostsFilterInput
@@ -1586,6 +1690,7 @@ export const getUsers = /* GraphQL */ `
       emailconfirmed
       firstvaultupload
       fullyauthenticated
+      fullyonboarded
       gamertag
       mostrecentpublicpost
       pfp
@@ -1638,6 +1743,7 @@ export const listUsers = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1679,6 +1785,7 @@ export const userByCognitosub = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1720,6 +1827,7 @@ export const userByEmail = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1761,6 +1869,7 @@ export const userByGamertag = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp
@@ -1804,6 +1913,7 @@ export const searchByGamertag = /* GraphQL */ `
         emailconfirmed
         firstvaultupload
         fullyauthenticated
+        fullyonboarded
         gamertag
         mostrecentpublicpost
         pfp

@@ -72,6 +72,8 @@ const createGamesMutation = /* GraphQL */ `
       twitchID
       oculusID
       playstationID
+      numUserGames
+      type
       UserGames {
         nextToken
       }
@@ -207,7 +209,8 @@ export const handler = async (event) => {
             egsID: GetExternalGameID({ targetCategory: 26 }),
             oculusID: GetExternalGameID({ targetCategory: 28 }),
             xboxMarketplaceID: GetExternalGameID({ targetCategory: 31 }),
-            playstationID: GetExternalGameID({ targetCategory: 36 })
+            playstationID: GetExternalGameID({ targetCategory: 36 }),
+            type: 'games'
           };
 
           // Await can be removed if necessary. Rn the cost savings would be smaller than pennies (and I tested it like this), but the change can def be made for a faster loop.
