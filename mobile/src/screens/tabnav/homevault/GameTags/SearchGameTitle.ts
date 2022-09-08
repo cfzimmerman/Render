@@ -1,7 +1,5 @@
-import { GraphQLResult } from "@aws-amplify/api-graphql";
-import { API, graphqlOperation } from "aws-amplify";
-import { SearchableGamesFilterInput, SearchGamesQuery } from "../../../../API";
 import {
+  addNextAllGamesArray,
   setNewAllGamesArray,
   SetNewAllGamesArrayPT,
 } from "../../../../redux/homevault/gametags";
@@ -17,6 +15,11 @@ interface SearchGameTitlePT {
   title: string;
   dispatch: DispatchType;
   nextToken: string | null;
+}
+
+export interface AddNextAllGamesArrayPT {
+  nextAllGamesArray: GameCoverTileType[];
+  nextAllGamesNextToken: null | string;
 }
 
 async function SearchGameTitle({
@@ -53,16 +56,27 @@ async function SearchGameTitle({
       });
     }
 
-    const newAllGamesArray: SetNewAllGamesArrayPT = {
-      newAllGamesArray: resultsArray,
-      newAllGamesNextToken: GetSearchableNextToken({
-        nextToken: newNextToken,
-        items: gameResults,
-        resultsLimit,
-      }),
-    };
-
-    dispatch(setNewAllGamesArray(newAllGamesArray));
+    if (nextToken === null) {
+      const newAllGamesArray: SetNewAllGamesArrayPT = {
+        newAllGamesArray: resultsArray,
+        newAllGamesNextToken: GetSearchableNextToken({
+          nextToken: newNextToken,
+          items: gameResults,
+          resultsLimit,
+        }),
+      };
+      dispatch(setNewAllGamesArray(newAllGamesArray));
+    } else if (typeof nextToken === "string") {
+      const nextAllGamesArray: AddNextAllGamesArrayPT = {
+        nextAllGamesArray: resultsArray,
+        nextAllGamesNextToken: GetSearchableNextToken({
+          nextToken: newNextToken,
+          items: gameResults,
+          resultsLimit,
+        }),
+      };
+      dispatch(addNextAllGamesArray(nextAllGamesArray));
+    }
   } catch (error) {
     console.log(error);
   }

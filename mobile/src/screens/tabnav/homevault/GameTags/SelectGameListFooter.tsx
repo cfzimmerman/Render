@@ -5,7 +5,7 @@ import { Colors, GlobalStyles } from "../../../../resources/project";
 import { Environment } from "../../../../resources/project";
 import { GameCoverTileType } from "./GameCoverTile";
 import GetNextCurrentUserGameLibrary from "./GetNextCurrentUserGameLibrary";
-import SearchNextGameTitle from "./SearchNextGameTitle";
+import SearchGameTitle from "./SearchGameTitle";
 
 interface ListFooterPT {
   nextToken: null | string;
@@ -18,7 +18,7 @@ interface ListFooterPT {
 
 const GetMore = ({ searchMode, title, dispatch, nextToken, currentUserID }) => {
   if (searchMode === "all") {
-    SearchNextGameTitle({ title, dispatch, nextToken });
+    SearchGameTitle({ title, dispatch, nextToken });
   } else if (searchMode === "library") {
     GetNextCurrentUserGameLibrary({ dispatch, nextToken, currentUserID });
   }
