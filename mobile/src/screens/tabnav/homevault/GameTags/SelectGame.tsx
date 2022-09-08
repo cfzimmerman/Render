@@ -29,7 +29,6 @@ import {
 } from "../../../../resources/project";
 import GameCoverTile, { GameCoverTileType } from "./GameCoverTile";
 import GetCurrentUserGameLibrary from "./GetCurrentUserGameLibrary";
-import GetGameCoverURL from "./GetGameCoverURL";
 import SearchGameTitle from "./SearchGameTitle";
 import SearchLibraryGameTitle from "./SearchLibraryGameTitle";
 import SelectGameListHeader from "./SelectGameListHeader";
@@ -181,7 +180,7 @@ const SelectGame = ({ navigation, route }) => {
         dispatch,
       });
     } else if (searchMode === "all") {
-      SearchGameTitle({ title: input, dispatch, nextToken: allGamesNextToken });
+      SearchGameTitle({ title: input, dispatch, nextToken: null });
     }
   };
 

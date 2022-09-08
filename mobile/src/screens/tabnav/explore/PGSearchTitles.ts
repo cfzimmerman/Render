@@ -1,5 +1,3 @@
-import SearchGameTitle from "../homevault/GameTags/SearchGameTitle";
-// ^^^ Take lessons from this
 import { DispatchType } from "../../../redux/store";
 import GetGameTitleSearchResults from "../homevault/GameTags/GetGameTitleSearchResults";
 import {

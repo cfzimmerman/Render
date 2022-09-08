@@ -4,7 +4,7 @@ import { AddVideoToHVGameSearchResultsInputTypes } from "../../screens/tabnav/ho
 import { GameCoverTileType } from "../../screens/tabnav/homevault/GameTags/GameCoverTile";
 import { SetNewLibraryGamesArrayInput } from "../../screens/tabnav/homevault/GameTags/GetCurrentUserGameLibrary";
 import { SetNextLibraryGamesArrayInput } from "../../screens/tabnav/homevault/GameTags/GetNextCurrentUserGameLibrary";
-import { AddNextAllGamesArrayPT } from "../../screens/tabnav/homevault/GameTags/SearchNextGameTitle";
+import { AddNextAllGamesArrayPT } from "../../screens/tabnav/homevault/GameTags/SearchGameTitle";
 
 interface DefaultSliceType {
   allGamesArray: GameCoverTileType[] | null;
