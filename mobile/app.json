@@ -20,7 +20,8 @@
       "userInterfaceStyle": "automatic",
       "requireFullScreen": true,
       "bundleIdentifier": "com.render.render",
-      "buildNumber": "0.1.2"
+      "buildNumber": "0.1.2",
+      "associatedDomains": ["applinks:app.render.game"]
     },
     "android": {
       "adaptiveIcon": {
@@ -29,6 +30,20 @@
       },
       "userInterfaceStyle": "automatic",
       "package": "com.render.render",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "*.app.render.game",
+              "pathPrefix": "/records"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ],
       "versionCode": 3
     },
     "web": {

@@ -1,17 +1,16 @@
 import { Storage } from "aws-amplify";
-import { setPageAssets } from "../../../redux/system/appstart";
 
 async function GetPageAssets({ dispatch }) {
   const whitesquarelogo = await Storage.get(
     "CompanyStock/whitesquarelogo.png",
-    { expires: 86400 },
+    { expires: 86400 }
   );
 
   const pageassets = {
     whitesquarelogo,
   };
 
-  dispatch(setPageAssets(pageassets));
+  // dispatch(setPageAssets(pageassets));
 }
 
 export default GetPageAssets;
