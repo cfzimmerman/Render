@@ -128,6 +128,11 @@ const UserDialogue = (prop?: string) => {
         title: "No game tag",
         description: "Tbh it's probably Minecraft.",
       },
+      copiedPostLink: {
+        header: "🖨",
+        title: "Copied link",
+        description: "Go forth! Don't leave it waiting.",
+      },
     },
   };
 

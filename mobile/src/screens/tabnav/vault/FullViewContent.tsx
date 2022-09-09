@@ -14,12 +14,18 @@ import GestureRecognizer from "react-native-swipe-gestures";
 import { useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import { setTextActive } from "../../../redux/vault/vaultpostdata";
-import { ToPortrait, GetPostDimensions } from "../../../resources/utilities";
+import {
+  ToPortrait,
+  GetPostDimensions,
+  CreateShareableLink,
+  CopyToClipboard,
+} from "../../../resources/utilities";
 import {
   GlobalStyles,
   Environment,
   Colors,
   Icons,
+  UserDialogue,
 } from "../../../resources/project";
 
 import AddVideoToAddedFeed from "../home/AddVideoToAddedFeed";
@@ -38,6 +44,7 @@ import { VaultPostFullViewUsecaseTypes } from "./VaultPostFullView";
 import AddVideoToHVGameSearchResults from "../homevault/GameTags/AddVideoToHVGameSearchResults";
 import EnterComments from "../social/EnterComments";
 import AddVideoToPGPosts from "../explore/AddVideoToPGPosts";
+import { setSystemmessageActive } from "../../../redux/system/messagemodal";
 
 // SetOptions({ postid: abc, animateactive: true, animateinactive: false, newchangestatus: false, })
 
@@ -125,6 +132,13 @@ const FullViewContent = ({
   const localConfig = useSelector(
     (state: RootStateType) => state.localsync.localConfig
   );
+
+  const LongPress = () => {
+    CopyToClipboard(CreateShareableLink({ linkType: "post", itemID: item.id }));
+    dispatch(
+      setSystemmessageActive(UserDialogue().systemmessage.copiedPostLink)
+    );
+  };
 
   if (item.contenttype === "video") {
     if (item.signedurl === null) {
@@ -314,8 +328,8 @@ const FullViewContent = ({
               });
           }}
         >
-
   */
+
   return (
     <GestureRecognizer
       onSwipeDown={() => {
@@ -374,11 +388,9 @@ const FullViewContent = ({
                   postid: item.id,
                 })
               }
-              onLongPress={() => {
-                console.log("LongPress");
-              }}
+              onLongPress={LongPress}
             >
-              <View style={[GlobalStyles.shadow, { backgroundColor: "black" }]}>
+              <View style={[GlobalStyles.shadow, styles.imageBackground]}>
                 <Image
                   style={[
                     styles.postimage,
@@ -447,6 +459,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.Primary90,
     marginTop: Environment.StandardPadding,
     borderRadius: Environment.SmallRadius,
+  },
+  imageBackground: {
+    backgroundColor: "black",
   },
 });
 
