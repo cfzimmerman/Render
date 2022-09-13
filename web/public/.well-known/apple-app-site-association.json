@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "536F498Z62.com.render.render",
+        "paths": ["/view/*"]
+      }
+    ]
+  }
+}
