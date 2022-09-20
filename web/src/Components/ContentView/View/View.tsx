@@ -45,7 +45,7 @@ export const View: React.FC = () => {
       <div
         className={styles.contentContainer}
         style={{
-          backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9) ), url(${contentUrl})`
+          backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ), url(${contentUrl})`
         }}
       />
       {getComponent()}
