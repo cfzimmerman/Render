@@ -7,6 +7,7 @@ import styles from './View.module.css';
 export const View: React.FC = () => {
   const { postId } = useParams();
   const [content, setContent] = useState<ContentWithType>({ contentUrl: '', type: '' });
+  const { contentUrl, type } = content;
 
   useEffect(() => {
     const getContentUrl = async () => {
@@ -21,16 +22,33 @@ export const View: React.FC = () => {
   }
 
   const getComponent = () => {
-    const { contentUrl, type } = content;
     switch (type) {
       case 'image':
-        return <img alt="" src={contentUrl} />;
+        return <img alt="" className={styles.viewContent} src={contentUrl} />;
       case 'video':
-        return <ReactPlayer url={contentUrl} controls />;
+        return (
+          <ReactPlayer
+            width="75%"
+            height="75%"
+            className={styles.viewContent}
+            url={contentUrl}
+            controls
+          />
+        );
       default:
         return <div />; // TODO: Add loading component here
     }
   };
 
-  return <div className={styles.contentContainer}>{getComponent()}</div>;
+  return (
+    <div className={styles.container}>
+      <div
+        className={styles.contentContainer}
+        style={{
+          backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9) ), url(${contentUrl})`
+        }}
+      />
+      {getComponent()}
+    </div>
+  );
 };
