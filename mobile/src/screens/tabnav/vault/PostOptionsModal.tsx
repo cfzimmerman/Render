@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { format } from "date-fns";
@@ -395,6 +396,8 @@ const styles = StyleSheet.create({
     height: Environment.ScreenHeight,
     width: Environment.ScreenWidth,
     position: "absolute",
+    paddingVertical:
+      Platform.OS === "android" ? Environment.StandardPadding : 0,
   },
   noprofileheader: {
     flexDirection: "row",
