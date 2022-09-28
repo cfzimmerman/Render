@@ -5,6 +5,7 @@ import SettingsMain from "../screens/tabnav/profile/SettingsMain";
 import AddedUsers from "../screens/tabnav/profile/AddedUsers";
 import LocalSyncSettings from "../screens/tabnav/profile/LocalSyncSettings";
 import AddedMeUsers from "../screens/tabnav/profile/AddedMeUsers";
+import BackupMain from "../screens/tabnav/profile/BackupMain";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ const Profile = () => {
       <Stack.Screen name="AddedUsers" component={AddedUsers} />
       <Stack.Screen name="LocalSyncSettings" component={LocalSyncSettings} />
       <Stack.Screen name="AddedMeUsers" component={AddedMeUsers} />
+      <Stack.Screen name="BackupMain" component={BackupMain} />
     </Stack.Navigator>
   );
 };

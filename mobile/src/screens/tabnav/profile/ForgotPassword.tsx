@@ -296,6 +296,7 @@ const styles = StyleSheet.create({
     borderRadius: Environment.StandardRadius,
     padding: Environment.StandardPadding,
     color: Colors.Primary,
+    textAlign: "center",
   },
   inputwrapper: {
     backgroundColor: Colors.AccentOff,

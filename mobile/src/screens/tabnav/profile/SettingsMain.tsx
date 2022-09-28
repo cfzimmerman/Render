@@ -124,6 +124,11 @@ const SettingsMain = ({ navigation }) => {
           </View>
           <View style={styles.buttonrowwrapper}>
             <HalfbarButton
+              label="Backup"
+              Action={() => navigation.navigate("BackupMain")}
+              active={false}
+            />
+            <HalfbarButton
               label="Log out"
               Action={() => LogOut({ dispatch, navigation })}
               active={false}
