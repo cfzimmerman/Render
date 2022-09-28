@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import ReactPlayer from 'react-player';
 import { Navigate, useParams } from 'react-router-dom';
 import { ContentWithType, getContentByPostId } from '../../../Utils/Content';
 import styles from './View.module.css';
@@ -24,30 +23,30 @@ export const View: React.FC = () => {
   const getComponent = () => {
     switch (type) {
       case 'image':
-        return <img alt="" className={styles.viewContent} src={contentUrl} />;
+        return <img alt="" className={styles.image} src={contentUrl} />;
       case 'video':
         return (
-          <ReactPlayer
-            width="75%"
-            height="75%"
-            className={styles.viewContent}
-            url={contentUrl}
-            controls
-          />
+          // eslint-disable-next-line jsx-a11y/media-has-caption
+          <video className={styles.video} controls>
+            <source src={contentUrl} type="video/mp4" />
+            <source src={contentUrl} type="video/ogg" />
+          </video>
         );
       default:
         return <div />; // TODO: Add loading component here
     }
   };
 
+  const backgroundStyles: React.CSSProperties = {
+    backgroundImage:
+      type === 'image'
+        ? `linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ), url(${contentUrl})`
+        : `linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) )`
+  };
+
   return (
     <div className={styles.container}>
-      <div
-        className={styles.contentContainer}
-        style={{
-          backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ), url(${contentUrl})`
-        }}
-      />
+      <div className={styles.contentContainer} style={backgroundStyles} />
       {getComponent()}
     </div>
   );
