@@ -35,4 +35,6 @@ export { default as FlatListFooterSpacer } from "./FlatListFooterSpacer";
 // Touchable opacity over text. Often used at the end of a flatlist.
 export { default as TextButton } from "./TextButton";
 
+// Reusable bullet point with padding and customizable style properties
 export { default as BulletListComponent } from "./BulletListComponent";
+
