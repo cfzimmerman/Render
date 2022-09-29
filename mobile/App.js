@@ -12,12 +12,12 @@ import { Provider } from "react-redux";
 import Amplify, { Storage, Auth } from "aws-amplify";
 import { StorageChunkUpload } from "amplify-s3-chunk-upload";
 import { Credentials } from "@aws-amplify/core";
-import store from "./src/redux/store";
+import store from "./src/redux";
 
 import MasterStack from "./src/MasterStack";
 
-import awsconfig from "./src/aws-exports";
-import { Colors } from "./src/resources/project";
+import awsconfig from "./old-src/aws-exports";
+import { Colors } from "./src/global";
 
 Amplify.configure(awsconfig);
 

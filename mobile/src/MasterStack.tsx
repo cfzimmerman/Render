@@ -11,24 +11,24 @@ import {
   Gamertag,
   Birthday,
   TOS,
-} from "./screens/masterstack/auth";
-import { ObservePostDB } from "./resources/utilities";
+} from "../old-src/screens/masterstack/auth";
+import { ObservePostDB } from "../old-src/resources/utilities";
 
 import VaultPostFullView, {
   VaultPostFullViewUsecaseTypes,
-} from "./screens/tabnav/vault/VaultPostFullView";
-import VaultPostFocusView from "./screens/tabnav/vault/VaultPostFocusView";
-import DeletePost from "./screens/tabnav/vault/DeletePost";
-import EditPost from "./screens/tabnav/plus/EditPost";
-import CommentsMain from "./screens/tabnav/social/CommentsMain";
-import AppStart from "./screens/masterstack/AppStart";
-import ForgotPassword from "./screens/tabnav/profile/ForgotPassword";
-import PostMultiDelete from "./screens/tabnav/homevault/PostMultiDelete";
-import SelectGame from "./screens/tabnav/homevault/GameTags/SelectGame";
-import HVSearchLanding from "./screens/tabnav/homevault/GameTags/HVSearchLanding";
-import HVGameDisplay from "./screens/tabnav/homevault/GameTags/HVGameDisplay";
-import GetStartedLanding from "./screens/masterstack/getstarted/GetStartedLanding";
-import PGLanding from "./screens/tabnav/explore/PGLanding";
+} from "./screens/home_vault/pages/VaultPostFullView";
+import VaultPostFocusView from "./screens/shared/content_display/pages/VaultPostFocusView";
+import DeletePost from "./screens/home_vault/pages/DeletePost";
+import EditPost from "./screens/plus/pages/EditPost";
+import CommentsMain from "./screens/shared/content_display/pages/CommentsMain";
+import AppStart from "./screens/shared/master_stack/operations/AppStart";
+import ForgotPassword from "./screens/profile/pages/ForgotPassword";
+import PostMultiDelete from "./screens/home_vault/pages/PostMultiDelete";
+import SelectGame from "./screens/shared/game_tags/pages/SelectGame";
+import HVSearchLanding from "./screens/shared/game_tags/pages/HVSearchLanding";
+import HVGameDisplay from "./screens/shared/game_tags/pages/HVGameDisplay";
+import GetStartedLanding from "./screens/shared/onboarding/pages/GetStartedLanding";
+import PGLanding from "./screens/shared/public_game/pages/PGLanding";
 import { useNavigation } from "@react-navigation/native";
 
 type RootStackParamList = {
