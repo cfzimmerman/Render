@@ -20,7 +20,7 @@
       "userInterfaceStyle": "automatic",
       "requireFullScreen": true,
       "bundleIdentifier": "com.render.render",
-      "buildNumber": "0.1.2",
+      "buildNumber": "0.4.6",
       "associatedDomains": ["applinks:app.render.game"]
     },
     "android": {
@@ -44,7 +44,7 @@
           "category": ["BROWSABLE", "DEFAULT"]
         }
       ],
-      "versionCode": 3
+      "versionCode": 4
     },
     "web": {
       "favicon": "./assets/favicon.png"
