@@ -38,61 +38,60 @@ function HomeLanding({ navigation }) {
 
   const currentuser = useSelector((state) => state.profilemain.currentuser);
   const onboardingstatus = useSelector(
-    (state) => state.homemain.onboardingstatus,
+    (state) => state.homemain.onboardingstatus
   );
   const onboardingassets = useSelector((state) => state.onboarding.imageurls);
 
   const vaultheader = useSelector((state) => state.homemain.vaultheader);
-  const pageassets = useSelector((state) => state.appstart.pageassets);
   const selectedfeed = useSelector((state) => state.homemain.selectedfeed);
 
   const addedusersfilter = useSelector(
-    (state) => state.homemain.addedusersfilter,
+    (state) => state.homemain.addedusersfilter
   );
   const gotaddedusersfilter = useSelector(
-    (state) => state.homemain.gotAddedUsersFilter,
+    (state) => state.homemain.gotAddedUsersFilter
   );
 
   const storiessectionlist = useSelector(
-    (state) => state.homemain.storiessectionlist,
+    (state) => state.homemain.storiessectionlist
   );
   const storiesfullview = useSelector(
-    (state) => state.homemain.storiesfullview,
+    (state) => state.homemain.storiesfullview
   );
 
   const addedfeed = useSelector((state) => state.homemain.addedfeed);
   const addedfeednexttoken = useSelector(
-    (state) => state.homemain.addedfeednexttoken,
+    (state) => state.homemain.addedfeednexttoken
   );
 
   const publicfeed = useSelector((state) => state.homemain.publicfeed);
   const publicfeednexttoken = useSelector(
-    (state) => state.homemain.publicfeednexttoken,
+    (state) => state.homemain.publicfeednexttoken
   );
 
   if (pageassets === null) {
     GetPageAssets({ dispatch });
   } else if (
-    typeof currentuser.cognitosub === "undefined"
-    && gotCurrentUser === false
+    typeof currentuser.cognitosub === "undefined" &&
+    gotCurrentUser === false
   ) {
     GetCurrentUser({ dispatch });
     setGotCurrentUser(true);
   } else if (
-    gotAddedUsersFilter === false
-    && typeof currentuser.cognitosub !== "undefined"
+    gotAddedUsersFilter === false &&
+    typeof currentuser.cognitosub !== "undefined"
   ) {
     GetAddedUsersFilter({ dispatch, currentuser });
     setGotAddedUsersFilter(true);
   } else if (
-    vaultheader === null
-    && typeof currentuser.cognitosub !== "undefined"
+    vaultheader === null &&
+    typeof currentuser.cognitosub !== "undefined"
   ) {
     GetVaultPreviewData({ currentuser, dispatch });
   } else if (
-    typeof currentuser.cognitosub !== "undefined"
-    && initialLoad === false
-    && gotaddedusersfilter === true
+    typeof currentuser.cognitosub !== "undefined" &&
+    initialLoad === false &&
+    gotaddedusersfilter === true
   ) {
     GetStoriesData({
       dispatch,
@@ -109,9 +108,9 @@ function HomeLanding({ navigation }) {
     });
     setInitialLoad(true);
   } else if (
-    selectedfeed === "publicfeed"
-    && publicfeed.length === 0
-    && gotPublicFeed === false
+    selectedfeed === "publicfeed" &&
+    publicfeed.length === 0 &&
+    gotPublicFeed === false
   ) {
     GetPublicFeedData({
       dispatch,
@@ -125,17 +124,18 @@ function HomeLanding({ navigation }) {
   const FeedData = () => {
     if (selectedfeed === "addedfeed") {
       return addedfeed;
-    } if (selectedfeed === "publicfeed") {
+    }
+    if (selectedfeed === "publicfeed") {
       return publicfeed;
     }
   };
 
   const EndReached = () => {
     if (
-      selectedfeed === "addedfeed"
-      && addedfeed.length > 0
-      && addedfeednexttoken != null
-      && initialLoad === true
+      selectedfeed === "addedfeed" &&
+      addedfeed.length > 0 &&
+      addedfeednexttoken != null &&
+      initialLoad === true
     ) {
       GetAddedFeedData({
         dispatch,
@@ -145,10 +145,10 @@ function HomeLanding({ navigation }) {
         addedfeednexttoken,
       });
     } else if (
-      selectedfeed === "publicfeed"
-      && publicfeed.length > 0
-      && publicfeednexttoken != null
-      && gotPublicFeed === true
+      selectedfeed === "publicfeed" &&
+      publicfeed.length > 0 &&
+      publicfeednexttoken != null &&
+      gotPublicFeed === true
     ) {
       GetPublicFeedData({
         dispatch,
@@ -168,7 +168,9 @@ function HomeLanding({ navigation }) {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Explore", { screen: "ExploreLanding" })}
+          onPress={() =>
+            navigation.navigate("Explore", { screen: "ExploreLanding" })
+          }
         >
           <View style={[GlobalStyles.shadow, styles.searchbarwrapper]}>
             <Text
@@ -200,14 +202,16 @@ function HomeLanding({ navigation }) {
             />
           )}
           style={styles.feedstyle}
-          renderItem={({ item, index }) => PostTile({
-            item,
-            index,
-            dispatch,
-            navigation,
-            addedfeed,
-            selectedfeed,
-          })}
+          renderItem={({ item, index }) =>
+            PostTile({
+              item,
+              index,
+              dispatch,
+              navigation,
+              addedfeed,
+              selectedfeed,
+            })
+          }
           ListFooterComponent={() => <View style={styles.footerstyle} />}
           showsVerticalScrollIndicator={false}
           onEndReachedThreshold={0.5}

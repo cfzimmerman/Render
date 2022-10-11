@@ -1,7 +1,6 @@
 import * as SplashScreen from "expo-splash-screen";
 
 import { setCurrentUser } from "../../../redux/profile/profilemain";
-import { setUserAuthenticated } from "../../../redux/system/appstart";
 import { batch } from "react-redux";
 
 import { API, graphqlOperation, Auth } from "aws-amplify";
@@ -100,7 +99,6 @@ async function GetCurrentUser({ dispatch, navigation }) {
 
       batch(() => {
         dispatch(setCurrentUser(currentuser));
-        dispatch(setUserAuthenticated());
       });
 
       /*

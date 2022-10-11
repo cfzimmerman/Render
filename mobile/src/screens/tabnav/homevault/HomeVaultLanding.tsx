@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { SectionGrid } from "react-native-super-grid";
 import { useScrollToTop } from "@react-navigation/native";
@@ -33,6 +33,7 @@ import GetNotificationsCloud from "./GetNotificationsCloud";
 import { RootStateType } from "../../../redux/store";
 import LSUpdateNotificationStore from "./LSUpdateNotificationStore";
 import HomeVaultOptionsBar from "./HomeVaultOptionsBar";
+import GetUniversalPostData from "./GetUniversalPostData";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -61,6 +62,8 @@ const HomeVaultLanding = ({ navigation }) => {
     useState(false);
 
   const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const [checkedInitialLink, setCheckedInitialLink] = useState<boolean>(false);
 
   const currentuser = useSelector(
     (state: RootStateType) => state.profilemain.currentuser
@@ -111,10 +114,14 @@ const HomeVaultLanding = ({ navigation }) => {
   const numberUnread = useSelector(
     (state: RootStateType) => state.notifications.numberUnread
   );
+
+  const initialLinkData = useSelector(
+    (state: RootStateType) => state.universalpost.initialLinkData
+  );
+
   const selectedPosts = useSelector(
     (state: RootStateType) => state.homevaultmain.selectedPosts
   );
-
   const multiSelectActive = useSelector(
     (state: RootStateType) => state.homevaultmain.multiSelectActive
   );
@@ -125,62 +132,84 @@ const HomeVaultLanding = ({ navigation }) => {
 
   useScrollToTop(ref);
 
-  if (
-    gotAddedUsersFilter === false &&
-    typeof currentuser.cognitosub !== "undefined" &&
-    currentuser.cognitosub != null
-  ) {
-    GetAddedUsersFilter({ dispatch, currentuser });
-    LSGetConfig({ dispatch });
-    LSGetLibrary({ dispatch });
-    LSGetNotificationStore({ dispatch });
-    setGotAddedUsersFilter(true);
-  } else if (
-    typeof currentuser.cognitosub !== "undefined" &&
-    initialLoad === false &&
-    gotaddedusersfilter === true
-  ) {
-    GetStoriesData({
-      dispatch,
-      storiessectionlist,
-      currentuser,
-      addedusersfilter,
-    });
-    DelayCheckPosts({ dispatch, localLibrary, currentuser });
-    setInitialLoad(true);
-  } else if (unreadCutoffDate != null && gotNotifications === false) {
-    GetNotificationsCloud({ currentuser, unreadCutoffDate, dispatch });
-    setGotNotifications(true);
-  } else if (
-    updatedNotificationStore === false &&
-    newNotificationData.length > 0 &&
-    numberUnread === newNotificationData.length
-  ) {
-    LSUpdateNotificationStore({ newNotificationData });
-    setUpdatedNotificationStore(true);
-  }
-  async function HideSplash() {
-    await SplashScreen.hideAsync();
-  }
+  useEffect(() => {
+    if (
+      gotAddedUsersFilter === false &&
+      typeof currentuser.cognitosub !== "undefined" &&
+      currentuser.cognitosub != null
+    ) {
+      GetAddedUsersFilter({ dispatch, currentuser });
+      LSGetConfig({ dispatch });
+      LSGetLibrary({ dispatch });
+      LSGetNotificationStore({ dispatch });
+      setGotAddedUsersFilter(true);
+    } else if (
+      typeof currentuser.cognitosub !== "undefined" &&
+      initialLoad === false &&
+      gotaddedusersfilter === true
+    ) {
+      GetStoriesData({
+        dispatch,
+        storiessectionlist,
+        currentuser,
+        addedusersfilter,
+      });
+      DelayCheckPosts({ dispatch, localLibrary, currentuser });
+      setInitialLoad(true);
+    } else if (unreadCutoffDate != null && gotNotifications === false) {
+      GetNotificationsCloud({ currentuser, unreadCutoffDate, dispatch });
+      setGotNotifications(true);
+    } else if (
+      updatedNotificationStore === false &&
+      newNotificationData.length > 0 &&
+      numberUnread === newNotificationData.length
+    ) {
+      LSUpdateNotificationStore({ newNotificationData });
+      setUpdatedNotificationStore(true);
+    }
 
-  if (
-    vaultpostdata.length === 0 &&
-    nextToken === null &&
-    initialLoad === true &&
-    gotInitialVaultData === false
-  ) {
-    GetVaultData({
-      dispatch,
-      vaultpostdata,
-      cognitosub: currentuser.cognitosub,
-      nextToken,
-      syncPreference: localConfig.syncPreference,
-      localLibrary,
-      limit: undefined,
-    }); // .then((result) => console.log(result))
-    HideSplash();
-    setGotInitialVaultData(true);
-  }
+    if (gotNotifications === true && checkedInitialLink === false) {
+      if (
+        initialLinkData != null &&
+        typeof initialLinkData.postID === "string"
+      ) {
+        GetUniversalPostData({
+          dispatch,
+          postID: initialLinkData.postID,
+          navigation,
+        });
+
+        navigation.navigate("VaultPostFullView", {
+          startindex: 0,
+          usecase: "universal",
+        });
+      }
+
+      setCheckedInitialLink(true);
+    }
+    async function HideSplash() {
+      await SplashScreen.hideAsync();
+    }
+
+    if (
+      vaultpostdata.length === 0 &&
+      nextToken === null &&
+      initialLoad === true &&
+      gotInitialVaultData === false
+    ) {
+      GetVaultData({
+        dispatch,
+        vaultpostdata,
+        cognitosub: currentuser.cognitosub,
+        nextToken,
+        syncPreference: localConfig.syncPreference,
+        localLibrary,
+        limit: undefined,
+      }); // .then((result) => console.log(result))
+      HideSplash();
+      setGotInitialVaultData(true);
+    }
+  });
 
   const EndReached = () => {
     if (
