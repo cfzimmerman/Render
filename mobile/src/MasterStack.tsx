@@ -12,7 +12,6 @@ import {
   Birthday,
   TOS,
 } from "./screens/masterstack/auth";
-import { ObservePostDB } from "./resources/utilities";
 
 import VaultPostFullView, {
   VaultPostFullViewUsecaseTypes,
@@ -90,8 +89,6 @@ const MasterStack = () => {
   console.log("calling masterstack");
 
   AppStart({ dispatch, navigation });
-
-  ObservePostDB({ dispatch });
 
   return (
     <Stack.Navigator

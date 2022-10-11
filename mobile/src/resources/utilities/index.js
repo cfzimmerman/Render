@@ -13,9 +13,6 @@ export { default as IsDarkMode } from "./IsDarkMode";
 // Rotates screen orientation to Portrait mode
 export { default as ToPortrait } from "./ToPortrait";
 
-// Watches user's posts and initiates local updates when triggered
-export { default as ObservePostDB } from "./Global/ObservePostDB";
-
 // Takes date object or string and returns "Month YYYY" string
 export { default as GetDate } from "./GetDate";
 
@@ -28,3 +25,7 @@ export { default as ShareLink } from "./ShareLink";
 export { default as RemoveSmartApostrophe } from "./RemoveSmartApostrophe";
 
 export { default as GetSearchableNextToken } from "./GetSearchableNextToken";
+
+export { default as ObserveInboundLink } from "./ObserveInboundLink";
+
+export { default as CreateShareableLink } from "./CreateShareableLink";

@@ -3,7 +3,7 @@
     "name": "Render",
     "slug": "Render",
     "version": "1.0.0",
-    "orientation": "default",
+    "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -20,7 +20,8 @@
       "userInterfaceStyle": "automatic",
       "requireFullScreen": true,
       "bundleIdentifier": "com.render.render",
-      "buildNumber": "0.3.3"
+      "buildNumber": "0.4.6",
+      "associatedDomains": ["applinks:app.render.game"]
     },
     "android": {
       "adaptiveIcon": {
@@ -29,6 +30,20 @@
       },
       "userInterfaceStyle": "automatic",
       "package": "com.render.render",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "*.app.render.game",
+              "pathPrefix": "/records"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ],
       "versionCode": 4
     },
     "web": {

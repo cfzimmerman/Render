@@ -33,13 +33,10 @@ import ProfileNavOptions from "./ProfileNavOptions";
 import {
   SystemmessageModal,
   LoadProgressModal,
+  LinkCopyDisplay,
 } from "../../../resources/molecules";
 import { RootStateType } from "../../../redux/store";
-import InviteFriendBox from "./InviteFriendBox";
 import { useState } from "react";
-
-// To add: (1) Remove follower, (2) clear add back recommendation
-// First, implement 'AddBackDisplay'
 
 const ProfileLanding = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -199,10 +196,10 @@ const ProfileLanding = ({ navigation }) => {
           currentuser={currentuser}
           addedmeusers={addedmeusers}
         />
-        <InviteFriendBox
-          username={currentuser.gamertag}
-          inviteFriendLinkCopied={inviteFriendLinkCopied}
-          setInviteFriendLinkCopied={setInviteFriendLinkCopied}
+        <LinkCopyDisplay
+          copied={inviteFriendLinkCopied}
+          setCopied={setInviteFriendLinkCopied}
+          url={`https://docs.google.com/forms/d/e/1FAIpQLSdeacr-mRudJqcRZC5Ofy5Eoe5VnYAG-HIKSSM5C0_L0valFQ/viewform?usp=pp_url&entry.1470519735=@${currentuser.gamertag}`}
         />
       </View>
       <LoadProgressModal />

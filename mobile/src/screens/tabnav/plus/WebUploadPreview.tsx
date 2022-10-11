@@ -8,7 +8,6 @@ import {
   Share,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import * as Linking from "expo-linking";
 import { CopyToClipboard, ShareLink } from "../../../resources/utilities";
 import {
   BackArrow,
@@ -16,9 +15,10 @@ import {
   IconHalfbarButton,
 } from "../../../resources/atoms";
 import { Environment, Colors, GlobalStyles } from "../../../resources/project";
+import { LinkCopyDisplay } from "../../../resources/molecules";
 
 const WebUploadPreview = ({ navigation }) => {
-  const [copied, setCopied] = useState("Copy");
+  const [copied, setCopied] = useState<boolean>(false);
 
   return (
     <SafeAreaView style={styles.safeAreaWrapper}>
@@ -64,39 +64,11 @@ const WebUploadPreview = ({ navigation }) => {
           .
         </Text>
       </View>
-      <TouchableOpacity
-        onPress={() => Linking.openURL("https://www.app.render.game/")}
-      >
-        <View style={[GlobalStyles.shadow, styles.linkWrapper]}>
-          <Text
-            selectable={true}
-            style={[
-              GlobalStyles.irregularshadow,
-              GlobalStyles.h4text,
-              styles.linkText,
-            ]}
-          >
-            https://www.app.render.game/
-          </Text>
-        </View>
-      </TouchableOpacity>
-      <View style={styles.buttonHolder}>
-        <HalfbarButton
-          label={copied}
-          active={false}
-          Action={() => {
-            CopyToClipboard("https://www.app.render.game/");
-            if (copied != "Copied") {
-              setCopied("Copied");
-            }
-          }}
-        />
-        <HalfbarButton
-          label={"Share"}
-          active={false}
-          Action={() => ShareLink("https://www.app.render.game/")}
-        />
-      </View>
+      <LinkCopyDisplay
+        setCopied={setCopied}
+        copied={copied}
+        url={"https://www.app.render.game/"}
+      />
     </SafeAreaView>
   );
 };
@@ -136,29 +108,6 @@ const styles = StyleSheet.create({
     marginTop: Environment.SmallPadding,
   },
   inlineLinkText: {
-    textDecorationLine: "underline",
-  },
-  linkWrapper: {
-    height: Environment.CubeSize,
-    width: Environment.FullBar,
-    marginTop: Environment.StandardPadding,
-    borderRadius: Environment.StandardRadius,
-    borderWidth: Environment.StandardPadding / 3,
-    padding: Environment.StandardPadding,
-    alignItems: "center",
-    justifyContent: "center",
-    borderColor: Colors.Accent90,
-    backgroundColor: Colors.AccentFaint,
-  },
-  buttonHolder: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: Environment.FullBar,
-    marginTop: Environment.LargePadding,
-  },
-  linkText: {
-    color: Colors.AccentOn,
     textDecorationLine: "underline",
   },
 });

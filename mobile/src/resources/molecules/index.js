@@ -21,3 +21,6 @@ export { default as LoadProgressModal } from "./LoadProgressModal";
 
 // SystemmessageModal with customizable buttons
 export { default as ButtonMessageModal } from "./ButtonMessageModal";
+
+// Box to copy and share external links
+export { default as LinkCopyDisplay } from "./LinkCopyDisplay";
