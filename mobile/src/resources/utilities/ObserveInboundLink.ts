@@ -37,7 +37,7 @@ async function InboundPostLinkAction({
 }
 
 // const inboundLink = null;
-// "https://app.render.game/view/:493e5d87-cd76-4cb2-998c-47fb2c72798a";
+// "https://app.render.game/view/493e5d87-cd76-4cb2-998c-47fb2c72798a";
 
 async function ObserveInboundLink({ dispatch, navigation }: InputTypes) {
   const DelayedLinkEventHandler = ({
@@ -47,11 +47,8 @@ async function ObserveInboundLink({ dispatch, navigation }: InputTypes) {
     url: string;
     event: Object;
   }) => {
-    console.log("🛑 Catch me before production");
-    console.log(url);
-    console.log(event);
     if (typeof url === "string") {
-      const splitLink = url.split(":");
+      const splitLink = url.split("/");
       if (url.includes("view")) {
         InboundPostLinkAction({
           dispatch,

@@ -4,7 +4,7 @@ interface InputTypes {
 }
 
 const baseURL = "https://www.app.render.game/";
-const postShareExtension = "view/:";
+const postShareExtension = "view/";
 
 const CreateShareableLink = ({ linkType, itemID }: InputTypes): string => {
   if (linkType === "post" && typeof itemID === "string") {

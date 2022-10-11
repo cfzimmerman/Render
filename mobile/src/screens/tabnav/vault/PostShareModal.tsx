@@ -73,7 +73,6 @@ async function NativeShare({ item, dispatch, setUserMessage }) {
       itemID: item.id,
     });
     await Share.share({
-      message: shareLink,
       url: shareLink,
     });
   } catch (error) {
