@@ -7,18 +7,19 @@ import {
   TouchableOpacity,
   StyleSheet,
   Button,
+  Share,
 } from "react-native";
 import { useSelector } from "react-redux";
 import { BlurView } from "expo-blur";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
-import * as Sharing from "expo-sharing";
 import { Storage } from "aws-amplify";
 
 import { setShareActive } from "../../../../redux/shared/vaultpostdata";
-import { Environment, Colors, GlobalStyles, Icons } from "../../../../global";
+import { Environment, Colors, GlobalStyles } from "../../../../global";
 import HalfbarButton from "../../general/components/HalfbarButton";
 import { RootStateType } from "../../../../redux";
+import CreateShareableLink from "../operations/CreateShareableLink";
 
 async function DownloadPost({ item, dispatch, setUserMessage }) {
   let cacheUri;
@@ -61,28 +62,17 @@ async function DownloadPost({ item, dispatch, setUserMessage }) {
 }
 
 async function NativeShare({ item, dispatch, setUserMessage }) {
-  let fileURI;
   try {
-    const cloudSignedURL = await Storage.get(item.contentkey, {
-      expires: 86400,
+    const shareLink = CreateShareableLink({
+      linkType: "post",
+      itemID: item.id,
     });
-
-    const cacheAddress =
-      FileSystem.cacheDirectory + "shareable-" + item.contentkey;
-
-    const { uri } = await FileSystem.downloadAsync(
-      cloudSignedURL,
-      cacheAddress
-    );
-
-    fileURI = uri;
-
-    await Sharing.shareAsync(uri);
+    await Share.share({
+      url: shareLink,
+    });
   } catch (error) {
     console.log(error);
   } finally {
-    FileSystem.deleteAsync(fileURI);
-    setUserMessage("Download content");
     dispatch(setShareActive(false));
   }
 }
@@ -135,8 +125,7 @@ const PostShareModal = ({ dispatch, item }) => {
               label="Share"
               active={false}
               Action={() => {
-                NativeShare({ item, dispatch, setUserMessage }),
-                  setUserMessage("Exporting");
+                NativeShare({ item, dispatch, setUserMessage });
               }}
             />
           </View>
