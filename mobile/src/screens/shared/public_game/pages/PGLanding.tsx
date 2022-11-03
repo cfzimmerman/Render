@@ -7,7 +7,7 @@ import {
   setPGFullGamePostSearchActive,
 } from "../../../../redux/exploremain";
 import { RootStateType } from "../../../../redux";
-import { FlatListFooterSpacer } from "../../../resources/atoms";
+import FlatListFooterSpacer from "../../general/components/FlatListFooterSpacer";
 import { Colors, Environment, GlobalStyles } from "../../../../global";
 import PostTile from "../../../home_vault/components/PostTile";
 import PGGetFullGame from "../operations/PGGetFullGame";

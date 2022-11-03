@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { HomeLanding } from "../../../old-src/screens/tabnav/home";
+import HomeLanding from "../home_vault/pages/HomeLanding";
 
 const Stack = createNativeStackNavigator();
 

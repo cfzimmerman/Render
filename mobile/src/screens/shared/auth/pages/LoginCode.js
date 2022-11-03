@@ -24,16 +24,12 @@ import {
   GlobalStyles,
   UserDialogue,
 } from "../../../../global";
-import {
-  ErrormessageModal,
-  SystemmessageModal,
-} from "../../../../../old-src/resources/molecules";
-import { OnboardingScreenTemplate } from "../../../../../old-src/resources/organisms";
+import ErrormessageModal from "../../general/components/ErrormessageModal";
+import SystemmessageModal from "../../general/components/SystemmessageModal";
+import OnboardingScreenTemplate from "../components/OnboardingScreenTemplate";
 import EmailLoginCode from "../operations/EmailLoginCode";
 import GetCurrentUser from "../../../profile/operations/GetCurrentUser";
 import InitiateAuthFlow from "../operations/InitiateAuthFlow";
-
-import { updateUsers } from "../../../../graphql/mutations";
 
 const IsComplete = ({ input, email, navigation, dispatch, cognitoUser }) => {
   if (input.length === 6) {

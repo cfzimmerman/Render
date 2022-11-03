@@ -1,6 +1,6 @@
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { API, graphqlOperation, Storage } from "aws-amplify";
-import { PublicPostsByGamesQuery } from "../../../API";
+import { PublicPostsByGamesQuery } from "../../../../API";
 import {
   addToPGFullGamePosts,
   setPGFullGamePostSearchActive,
@@ -8,7 +8,7 @@ import {
 } from "../../../../redux/exploremain";
 import { DispatchType } from "../../../../redux";
 import { PostType } from "../../../../global/CommonTypes";
-import { CorrectNextToken } from "../../../resources/utilities";
+import CorrectNextToken from "../../general/operations/CorrectNextToken";
 
 interface InputTypes {
   gameID: string;

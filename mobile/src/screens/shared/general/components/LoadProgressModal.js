@@ -1,4 +1,4 @@
-import react, { useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Modal,
@@ -16,7 +16,7 @@ import {
 } from "../../../../redux/shared/loadprogressmessage";
 
 import { Environment, Colors, GlobalStyles } from "../../../../global";
-import { HalfbarButton } from "../atoms";
+import HalfbarButton from "./HalfbarButton";
 import CancelUpload from "../../../plus/operations/CancelUpload";
 
 const LoadProgressModal = () => {

@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import { Environment, Icons } from "../../../global";
-import { CubeSizeButton } from "../../../resources/atoms";
+import CubeSizeButton from "../../shared/general/components/CubeSizeButton";
 
 const IsActive = ({ currentScreen, buttonScreen }) => {
   if (currentScreen === buttonScreen) {

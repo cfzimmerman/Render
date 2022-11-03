@@ -10,7 +10,7 @@ import { BlurView } from "expo-blur";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 
-import { HalfbarButton } from "../../../resources/atoms";
+import HalfbarButton from "../../general/components/HalfbarButton";
 import { setPostPublicModal } from "../../../../redux/shared/vaultpostdata";
 import { Environment, Colors, GlobalStyles } from "../../../../global";
 import ChangePostPublic from "../operations/ChangePostPublic";

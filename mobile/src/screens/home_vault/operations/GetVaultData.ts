@@ -11,7 +11,7 @@ import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { filteredPostsByContentDate } from "../../../graphql/customqueries";
 import { PostsByContentDateQuery } from "../../../API";
 import { LSLibraryItemType } from "../../../redux/shared/localsync";
-import { GetDate } from "../../../resources/utilities";
+import GetDate from "../../shared/general/operations/GetDate";
 
 import { DispatchType } from "../../../redux";
 import { PostHeaderType } from "../../../global/CommonTypes";

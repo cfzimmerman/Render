@@ -1,7 +1,7 @@
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api-graphql";
 import { API } from "aws-amplify";
 import { SearchGamesQuery } from "../../../../API";
-import { CorrectNextToken } from "../../../../resources/utilities";
+import CorrectNextToken from "../../general/operations/CorrectNextToken";
 
 interface InputTypes {
   title: string;

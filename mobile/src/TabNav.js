@@ -2,15 +2,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, View, Platform, Image } from "react-native";
 import { BlurView } from "expo-blur";
 import { AnimatedTabBarNavigator } from "react-native-animated-nav-tab-bar";
-import {
-  Home,
-  Explore,
-  Plus,
-  Vault,
-  Profile,
-  HomeVault,
-  Social,
-} from "../old-src/nav";
+import Explore from "./screens/explore/Explore";
+import Plus from "./screens/plus/Plus";
+import Profile from "./screens/profile/Profile";
+import HomeVault from "./screens/home_vault/HomeVault";
+import Social from "./screens/social/Social";
 import { Colors, Icons, Environment } from "./global/index";
 
 // Each tab screen is a stack for its respective domain of the app

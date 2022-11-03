@@ -2,7 +2,6 @@ import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
 
 import { Environment, GlobalStyles, Colors, Icons } from "../../../global";
 import EnterProfileFromSearch from "../../explore/operations/EnterProfileFromSearch";
-import ChangeUserRelationship from "../../explore/operations/ChangeUserRelationship";
 
 const TileInteraction = ({ item, navigation, dispatch, currentuser }) => {
   EnterProfileFromSearch({

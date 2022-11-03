@@ -15,14 +15,13 @@ import {
   Colors,
   UserDialogue,
 } from "../../../global";
-import {
-  SystemmessageModal,
-  ErrormessageModal,
-} from "../../../resources/molecules";
+import SystemmessageModal from "../../shared/general/components/SystemmessageModal";
+import ErrormessageModal from "../../shared/general/components/ErrormessageModal";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
-import { DismissKeyboard } from "../../../resources/utilities";
-import { BackArrow, PastyHalfbarButtons } from "../../../resources/atoms";
+import DismissKeyboard from "../../shared/general/operations/DismissKeyboard";
+import BackArrow from "../../shared/general/components/BackArrow";
+import PastyHalfbarButtons from "../../shared/general/components/PastyHalfbarButtons";
 import { DispatchType, RootStateType } from "../../../redux";
 import { CurrentUserType } from "../../../global/CommonTypes";
 import { setSystemmessageActive } from "../../../redux/shared/messagemodal";

@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { ExploreLanding } from "../../../old-src/screens/tabnav/explore";
+import ExploreLanding from "./pages/ExploreLanding";
 
 import OtherUserProfileLanding from "./pages/OtherUserProfileLanding";
 import OtherUserGalleryMain from "./pages/OtherUserGalleryMain";

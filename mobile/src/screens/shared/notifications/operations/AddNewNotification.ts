@@ -5,11 +5,11 @@ import {
   CreateNotificationsMutation,
   CreateUserNotificationsInput,
   CreateUserNotificationsMutation,
-} from "../../../API";
+} from "../../../../API";
 import {
   createNotifications,
   createUserNotifications,
-} from "../../../graphql/mutations";
+} from "../../../../graphql/mutations";
 
 export interface AddNewNotificationPropTypes {
   targetUserID: string;

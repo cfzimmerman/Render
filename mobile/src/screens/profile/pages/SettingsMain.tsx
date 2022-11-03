@@ -12,7 +12,7 @@ import * as Linking from "expo-linking";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Colors, Environment, GlobalStyles } from "../../../global";
-import { HalfbarButton } from "../../../resources/atoms";
+import HalfbarButton from "../../shared/general/components/HalfbarButton";
 
 import ChangePfp from "../operations/ChangePfp";
 import GetPfp from "../operations/GetPfp";

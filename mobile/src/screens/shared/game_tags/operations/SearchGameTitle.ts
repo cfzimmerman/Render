@@ -4,10 +4,8 @@ import {
   SetNewAllGamesArrayPT,
 } from "../../../../redux/shared/gametags";
 import { DispatchType } from "../../../../redux";
-import {
-  GetSearchableNextToken,
-  RemoveSmartApostrophe,
-} from "../../../../resources/utilities";
+import GetSearchableNextToken from "../../general/operations/GetSearchableNextToken";
+import RemoveSmartApostrophe from "../../general/operations/RemoveSmartApostrophe";
 import { GameCoverTileType } from "../components/GameCoverTile";
 import GetGameTitleSearchResults from "./GetGameTitleSearchResults";
 

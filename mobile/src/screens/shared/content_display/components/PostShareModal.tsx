@@ -17,7 +17,7 @@ import { Storage } from "aws-amplify";
 
 import { setShareActive } from "../../../../redux/shared/vaultpostdata";
 import { Environment, Colors, GlobalStyles, Icons } from "../../../../global";
-import { HalfbarButton } from "../../../resources/atoms";
+import HalfbarButton from "../../general/components/HalfbarButton";
 import { RootStateType } from "../../../../redux";
 
 async function DownloadPost({ item, dispatch, setUserMessage }) {

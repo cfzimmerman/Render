@@ -1,7 +1,6 @@
 import { Auth, API, graphqlOperation } from "aws-amplify";
 import { listUserOTPS, listUsers } from "../../../../graphql/queries";
 import { updateUsers, updateUserOTP } from "../../../../graphql/mutations";
-import { listUserID } from "../../../../graphql/customqueries";
 
 // Accepts and email and sends the user a log in code.
 

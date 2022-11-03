@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { HalfbarButton, PrimaryDivider } from "../../../resources/atoms";
+import HalfbarButton from "../../shared/general/components/HalfbarButton";
 import { Environment } from "../../../global";
 import { ExploreSearchCategory } from "../pages/ExploreLanding";
 

@@ -19,11 +19,9 @@ import {
   Icons,
   UserDialogue,
 } from "../../../global";
-import { PrimaryDivider } from "../../../resources/atoms";
-import {
-  LoadProgressModal,
-  SystemmessageModal,
-} from "../../../resources/molecules";
+import PrimaryDivider from "../../shared/general/components/PrimaryDivider";
+import LoadProgressModal from "../../shared/general/components/LoadProgressModal";
+import SystemmessageModal from "../../shared/general/components/SystemmessageModal";
 
 import GetContentDate from "../operations/GetContentDate";
 import UploadImage from "../operations/UploadImage";

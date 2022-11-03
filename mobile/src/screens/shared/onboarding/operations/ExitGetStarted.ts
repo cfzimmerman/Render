@@ -1,6 +1,6 @@
 import { API, graphqlOperation } from "aws-amplify";
-import { UpdateUsersInput } from "../../../API";
-import { updateUsers } from "../../../graphql/mutations";
+import { UpdateUsersInput } from "../../../../API";
+import { updateUsers } from "../../../../graphql/mutations";
 import { setUserOnboarded } from "../../../../redux/profilemain";
 import { DispatchType } from "../../../../redux";
 import { CurrentUserType } from "../../../../global/CommonTypes";

@@ -1,5 +1,5 @@
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
-import { PrimaryDivider } from "../../../../resources/atoms";
+import PrimaryDivider from "../../general/components/PrimaryDivider";
 import { GlobalStyles, Colors, Environment, Icons } from "../../../../global";
 
 const HVSearchHeader = ({ navigation }) => {

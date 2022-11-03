@@ -8,7 +8,7 @@ import { PostType, PostHeaderType } from "../../../../global/CommonTypes";
 
 import { API, graphqlOperation } from "aws-amplify";
 import { updatePosts } from "../../../../graphql/mutations";
-import { GetDate } from "../../../resources/utilities";
+import GetDate from "../../general/operations/GetDate";
 import { DispatchType } from "../../../../redux";
 
 interface ChangePostTextPropsType {

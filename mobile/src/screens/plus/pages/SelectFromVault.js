@@ -12,8 +12,9 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { setFetchingData } from "../../../redux/shared/vaultpostdata";
 import { GlobalStyles, Environment, Colors } from "../../../global";
-import { PrimaryDivider, BackArrow } from "../../../resources/atoms";
-import { SystemmessageModal } from "../../../resources/molecules";
+import PrimaryDivider from "../../shared/general/components/PrimaryDivider";
+import BackArrow from "../../shared/general/components/BackArrow";
+import SystemmessageModal from "../../shared/general/components/SystemmessageModal";
 import GetVaultData from "../../home_vault/operations/GetVaultData";
 
 const tilesize = (Environment.FullBar - Environment.StandardPadding * 3) / 4;

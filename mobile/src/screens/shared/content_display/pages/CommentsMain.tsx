@@ -20,7 +20,7 @@ import {
 } from "../../../../global/CommonTypes";
 import { Environment, Colors, GlobalStyles } from "../../../../global";
 import CommentBody from "../components/CommentBody";
-import { BackArrow } from "../../../resources/atoms";
+import BackArrow from "../../general/components/BackArrow";
 import {
   clearCommentsData,
   setAddCommentActive,

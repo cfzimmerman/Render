@@ -1,9 +1,7 @@
 import { DispatchType } from "../../../../redux";
 import GetGameTitleSearchResults from "../../game_tags/operations/GetGameTitleSearchResults";
-import {
-  GetSearchableNextToken,
-  RemoveSmartApostrophe,
-} from "../../../resources/utilities";
+import GetSearchableNextToken from "../../general/operations/GetSearchableNextToken";
+import RemoveSmartApostrophe from "../../general/operations/RemoveSmartApostrophe";
 import { GameCoverTileType } from "../../game_tags/components/GameCoverTile";
 import {
   addNextPGSearchResults,

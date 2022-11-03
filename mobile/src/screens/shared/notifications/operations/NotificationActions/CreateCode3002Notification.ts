@@ -18,11 +18,11 @@ import { DispatchType } from "../../../../../redux";
 import {
   NotificationsByCodeQuery,
   UpdateUserNotificationsInput,
-} from "../../../../API";
+} from "../../../../../API";
 import { CurrentUserType } from "../../../../../global/CommonTypes";
 import AddNewNotification from "../AddNewNotification";
 import { Code3001PayloadType } from "../NotificationLibrary";
-import { updateUserNotifications } from "../../../../graphql/mutations";
+import { updateUserNotifications } from "../../../../../graphql/mutations";
 
 interface CreateCode3002NotificationPropsType {
   postID: string;

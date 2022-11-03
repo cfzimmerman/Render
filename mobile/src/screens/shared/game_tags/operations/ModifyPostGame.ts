@@ -4,7 +4,7 @@ import {
   updateNonHeaderGame,
 } from "../../../../redux/shared/vaultpostdata";
 import { PostHeaderType, PostType } from "../../../../global/CommonTypes";
-import { GetDate } from "../../../../resources/utilities";
+import GetDate from "../../general/operations/GetDate";
 import { GameCoverTileType } from "../components/GameCoverTile";
 
 interface InputTypes {

@@ -1,5 +1,5 @@
 import { GraphQLResult } from "@aws-amplify/api-graphql";
-import { CommentsByCreatedDateQuery } from "../../../API";
+import { CommentsByCreatedDateQuery } from "../../../../API";
 import {
   addCommentsDataItem,
   setCommentsNextToken,

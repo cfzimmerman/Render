@@ -6,7 +6,7 @@ import {
   TouchableWithoutFeedback,
   StyleSheet,
 } from "react-native";
-import { HalfbarButton } from "../../../resources/atoms";
+import HalfbarButton from "../../general/components/HalfbarButton";
 import { DispatchType, RootStateType } from "../../../../redux";
 import { setDeleteComment } from "../../../../redux/socialmain";
 import { Environment, GlobalStyles, Colors } from "../../../../global";

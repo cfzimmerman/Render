@@ -6,7 +6,7 @@ import {
   Text,
   StyleSheet,
 } from "react-native";
-import { TransformDimensions } from "../../../resources/utilities";
+import TransformDimensions from "../../shared/general/operations/TransformDimensions";
 import { Environment, Colors, GlobalStyles } from "../../../global";
 
 import TransitionToFullView from "../operations/TransitionToFullView";

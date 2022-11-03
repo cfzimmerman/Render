@@ -9,7 +9,7 @@ import {
 } from "../../../redux/profilemain";
 import UpdateGalleryNextToken from "./UpdateGalleryNextToken";
 import LSAddItem from "../../shared/local_sync/operations/LSAddItem";
-import { CorrectNextToken } from "../../../resources/utilities";
+import CorrectNextToken from "../../shared/general/operations/CorrectNextToken";
 import { PostType } from "../../../global/CommonTypes";
 import LSGetImage from "../../shared/local_sync/operations/LSGetImage";
 import { DispatchType } from "../../../redux";

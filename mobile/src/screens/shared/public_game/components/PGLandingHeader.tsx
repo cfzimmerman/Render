@@ -6,7 +6,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Environment, Colors, GlobalStyles } from "../../../../global";
 import { FullGameItemType } from "../pages/PGLanding";
 import GetGameCoverURL from "../../game_tags/operations/GetGameCoverURL";
-import { BackArrow } from "../../../resources/atoms";
+import BackArrow from "../../general/components/BackArrow";
 
 interface InputTypes {
   fullGameItem: FullGameItemType;

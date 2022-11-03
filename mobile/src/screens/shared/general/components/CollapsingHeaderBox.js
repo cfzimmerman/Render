@@ -1,5 +1,4 @@
 import { View, StyleSheet, Animated } from "react-native";
-
 import { Environment } from "../../../../global";
 
 function CollapsingHeaderBox({ clampedscroll, Filler }) {

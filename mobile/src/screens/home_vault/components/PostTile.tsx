@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
-import { GetPostDimensions } from "../../../resources/utilities";
+import GetPostDimensions from "../../shared/general/operations/GetPostDimensions";
 import { Environment, Colors, GlobalStyles, Icons } from "../../../global";
 import PostTextDisplay from "../../social/components/PostTextDisplay";
 import { PostType } from "../../../global/CommonTypes";

@@ -1,4 +1,4 @@
-import { deleteComments } from "../../../graphql/mutations";
+import { deleteComments } from "../../../../graphql/mutations";
 import { API, graphqlOperation } from "aws-amplify";
 import { CommentType } from "../../../../global/CommonTypes";
 import { exciseComment, setDeleteComment } from "../../../../redux/socialmain";

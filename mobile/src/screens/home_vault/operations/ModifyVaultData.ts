@@ -8,7 +8,7 @@ import {
   setVaultRefreshDate,
 } from "../../../redux/shared/vaultpostdata";
 import { PostHeaderType, PostType } from "../../../global/CommonTypes";
-import { GetDate } from "../../../resources/utilities";
+import GetDate from "../../shared/general/operations/GetDate";
 
 import InjectPostIntoFeed from "./InjectPostIntoFeed";
 

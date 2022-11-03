@@ -1,8 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { DispatchType } from "../../../../redux";
-import { TextButton } from "../../../../resources/atoms";
-import { Colors, GlobalStyles } from "../../../../global";
-import { Environment } from "../../../../global";
+import TextButton from "../../general/components/TextButton";
 import { GameCoverTileType } from "./GameCoverTile";
 import GetNextCurrentUserGameLibrary from "../operations/GetNextCurrentUserGameLibrary";
 import SearchGameTitle from "../operations/SearchGameTitle";

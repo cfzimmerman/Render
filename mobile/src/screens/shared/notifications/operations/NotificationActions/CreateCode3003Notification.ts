@@ -4,11 +4,11 @@ import {
   CreateNotificationsInput,
   NotificationsByCodeQuery,
   UpdateNotificationsInput,
-} from "../../../../API";
+} from "../../../../../API";
 import {
   createNotifications,
   updateNotifications,
-} from "../../../../graphql/mutations";
+} from "../../../../../graphql/mutations";
 import { Code3003PayloadType } from "../NotificationLibrary";
 
 interface CreateCode3003NotificationPropsType {

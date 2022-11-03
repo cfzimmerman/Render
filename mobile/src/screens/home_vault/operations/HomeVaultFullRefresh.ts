@@ -11,10 +11,6 @@ interface HomeVaultFullRefresh {
   localLibrary: Record<string, LSLibraryItemType>;
 }
 
-// Next, hook up multi refresh flow
-// Ensure data is passed in properly
-// Run and test
-
 async function HomeVaultFullRefresh({
   dispatch,
   cognitosub,

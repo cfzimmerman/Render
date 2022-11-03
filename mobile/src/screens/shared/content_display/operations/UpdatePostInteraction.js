@@ -1,5 +1,5 @@
 import { Auth, Storage, API, graphqlOperation } from "aws-amplify";
-import { createPostViewTracker } from "../../../graphql/mutations";
+import { createPostViewTracker } from "../../../../graphql/mutations";
 
 async function UpdatePostInteraction({ postid, currentuserid }) {
   if (typeof postid !== "undefined" && typeof currentuserid !== "undefined") {

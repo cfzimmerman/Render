@@ -1,9 +1,5 @@
 import { batch } from "react-redux";
 import { API, graphqlOperation } from "aws-amplify";
-import { UserDialogue } from "../../../../global";
-
-import { setSystemmessageActive } from "../../../../redux/shared/messagemodal";
-import { clearGalleryData } from "../../../../redux/profilemain";
 
 import ChangeGalleryPostPublic from "../../../profile/operations/ChangeGalleryPostPublic";
 

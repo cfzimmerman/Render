@@ -17,7 +17,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { setEditTextModalActive } from "../../../../redux/plusmain";
 import { Environment, GlobalStyles, Colors } from "../../../../global";
-import { HalfbarButton } from "../../../resources/atoms";
 import ChangePostText from "../operations/ChangePostText";
 import { DispatchType, RootStateType } from "../../../../redux";
 import { PostHeaderType, PostType } from "../../../../global/CommonTypes";

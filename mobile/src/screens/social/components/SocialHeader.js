@@ -2,9 +2,8 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Environment, GlobalStyles, Colors } from "../../../global";
-import { HalfbarButton } from "../../../resources/atoms";
+import HalfbarButton from "../../shared/general/components/HalfbarButton";
 import ChangeSelectedFeed from "../../home_vault/operations/ChangeSelectedFeed";
-import HomeTopLogo from "../../home_vault/components/HomeTopLogo";
 
 const IsActive = ({ selectedfeed, buttonid }) => {
   if (selectedfeed === buttonid) {

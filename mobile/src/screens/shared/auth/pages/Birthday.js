@@ -14,18 +14,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { Auth, API, graphqlOperation } from "aws-amplify";
 import { setErrormessageActive } from "../../../../redux/shared/errormessage";
 import { setSystemmessageActive } from "../../../../redux/shared/messagemodal";
+
 import {
   GlobalStyles,
   Environment,
   Colors,
   UserDialogue,
-} from "../../../../../old-src/resources/project";
-import { IsDarkMode } from "../../../../../old-src/resources/utilities";
-import {
-  ErrormessageModal,
-  SystemmessageModal,
-} from "../../../../../old-src/resources/molecules";
-import { OnboardingScreenTemplate } from "../../../../../old-src/resources/organisms";
+} from "../../../../global";
+import IsDarkMode from "../../general/operations/IsDarkMode";
+import ErrormessageModal from "../../general/components/ErrormessageModal";
+import SystemmessageModal from "../../general/components/SystemmessageModal";
+import OnboardingScreenTemplate from "../components/OnboardingScreenTemplate";
 
 import { updateUsers } from "../../../../graphql/mutations";
 import NextButton from "../components/NextButton";

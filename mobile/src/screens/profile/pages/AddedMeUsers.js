@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Environment, Colors, GlobalStyles } from "../../../global";
-import { BackArrow } from "../../../resources/atoms";
+import BackArrow from "../../shared/general/components/BackArrow";
 import GetAddedMeUsers from "../operations/GetAddedMeUsers";
 import RelationUserTile from "../components/RelationUserTile";
 

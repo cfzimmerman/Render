@@ -1,9 +1,9 @@
 import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import { GlobalStyles, Environment, Colors } from "../../../global";
 import * as Linking from "expo-linking";
-import { CopyToClipboard, ShareLink } from "../../../resources/utilities";
-import { HalfbarButton, TextButton } from "../../../resources/atoms";
-import { DispatchType } from "../../../redux";
+import CopyToClipboard from "../../shared/general/operations/CopyToClipboard";
+import ShareLink from "../../shared/general/operations/ShareLink";
+import HalfbarButton from "../../shared/general/components/HalfbarButton";
 
 interface InputTypes {
   username: string;

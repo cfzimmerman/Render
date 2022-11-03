@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { HalfByFullDisplayBox } from "../../../resources/atoms";
+import HalfByFullDisplayBox from "../../shared/general/components/HalfByFullDisplayBox";
 import { Environment } from "../../../global";
 
 interface InputTypes {

@@ -1,14 +1,6 @@
 import { View, StyleSheet } from "react-native";
-
-import {
-  Environment,
-  GlobalStyles,
-  Icons,
-  UserDialogue,
-  Colors,
-} from "../../../global";
-import { CubeSizeButton } from "../../../resources/atoms";
-import { setSystemmessageActive } from "../../../redux/shared/messagemodal";
+import { Environment, Icons } from "../../../global";
+import CubeSizeButton from "../../shared/general/components/CubeSizeButton";
 
 const IsActive = ({ currentScreen, buttonScreen }) => {
   if (currentScreen === buttonScreen) {

@@ -1,6 +1,6 @@
 import { View, StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { PrimaryDivider } from "../../../resources/atoms";
+import PrimaryDivider from "../../shared/general/components/PrimaryDivider";
 
 import { Environment, Colors, GlobalStyles } from "../../../global";
 import ProfileNavOptions from "./ProfileNavOptions";

@@ -7,7 +7,7 @@ import {
   Platform,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { CubeSizeButton } from "../../../resources/atoms";
+import CubeSizeButton from "../../shared/general/components/CubeSizeButton";
 import { deactivateMultiSelect } from "../../../redux/homevaultmain";
 import { RootStateType } from "../../../redux";
 import { BlurView } from "expo-blur";

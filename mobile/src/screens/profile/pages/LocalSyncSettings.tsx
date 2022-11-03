@@ -12,7 +12,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import * as FileSystem from "expo-file-system";
 import { GlobalStyles, Environment, Colors, Icons } from "../../../global";
 import { RootStateType } from "../../../redux";
-import { BackArrow, PrimaryDivider } from "../../../resources/atoms";
+import BackArrow from "../../shared/general/components/BackArrow";
+import PrimaryDivider from "../../shared/general/components/PrimaryDivider";
 import LSGetConfig from "../../shared/local_sync/operations/LSGetConfig";
 import LSChangeConfig from "../../shared/local_sync/operations/LSChangeConfig";
 import { LocalConfigType } from "../../../redux/shared/localsync";
@@ -21,12 +22,8 @@ import {
   setButtonMessageActive,
   setButtonMessageInactive,
 } from "../../../redux/shared/messagemodal";
-import { ButtonMessageModal } from "../../../resources/molecules";
-import { Navigation } from "react-native-feather";
+import ButtonMessageModal from "../../shared/general/components/ButtonMessageModal";
 import LSClearStorage from "../../shared/local_sync/operations/LSClearStorage";
-import LSGetLibrary from "../../shared/local_sync/operations/LSGetLibrary";
-import LSAddItem from "../../shared/local_sync/operations/LSAddItem";
-import LSRemoveItem from "../../shared/local_sync/operations/LSRemoveItem";
 
 // Width of 3 buttons in a fullbar row separated by standard padding
 const TriBoxSize = (Environment.FullBar - Environment.LargePadding) / 3;

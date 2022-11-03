@@ -1,5 +1,5 @@
 import { View, StyleSheet } from "react-native";
-import { HalfbarButton, IconHalfbarButton } from "../../../resources/atoms";
+import IconHalfbarButton from "../../shared/general/components/IconHalfbarButton";
 import { Environment, Icons, Colors } from "../../../global";
 
 const GalleryIcon = () => {

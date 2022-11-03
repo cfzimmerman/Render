@@ -7,17 +7,13 @@ import {
   FlatList,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  BackArrow,
-  HalfByFullDisplayBox,
-  PrimaryDivider,
-} from "../../../resources/atoms";
+import BackArrow from "../../general/components/BackArrow";
+import HalfByFullDisplayBox from "../../general/components/HalfByFullDisplayBox";
+import PrimaryDivider from "../../general/components/PrimaryDivider";
 import { Environment, Colors, GlobalStyles, Icons } from "../../../../global";
 import { useDispatch, useSelector } from "react-redux";
 import NotificationItem from "../components/NotificationItem";
 import { RootStateType } from "../../../../redux";
-import LSClearNotificationStore from "../../local_sync/operations/LSClearNotificationStore";
-import CreateCode3001Notification from "../operations/NotificationActions/CreateCode3001Notification";
 
 const NotificationsTitleBox = () => {
   return (

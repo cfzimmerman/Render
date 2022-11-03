@@ -13,7 +13,7 @@ import VideoPlayer from "expo-video-player";
 import { Audio, Video, AVPlaybackStatus } from "expo-av";
 import { useDispatch, useSelector } from "react-redux";
 
-import { ToPortrait } from "../../../resources/utilities";
+import ToPortrait from "../../general/operations/ToPortrait";
 import { Environment, Colors } from "../../../../global";
 import ChangeFocusView from "../../../home_vault/operations/ChangeFocusView";
 import ChangeLandscape from "../../../home_vault/operations/ChangeLandscape";

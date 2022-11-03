@@ -1,6 +1,6 @@
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { API, graphqlOperation, Storage } from "aws-amplify";
-import { GetUsersQuery } from "../../../../API";
+import { GetUsersQuery } from "../../../../../API";
 import { DispatchType } from "../../../../../redux";
 import {
   Code3001PayloadType,

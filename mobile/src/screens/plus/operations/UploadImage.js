@@ -1,7 +1,7 @@
 import * as FileSystem from "expo-file-system";
 
 import { Storage } from "aws-amplify";
-import { TransformDimensions } from "../../../resources/utilities";
+import TransformDimensions from "../../shared/general/operations/TransformDimensions";
 import {
   setLoadProgressActive,
   setLoadProgressInactive,

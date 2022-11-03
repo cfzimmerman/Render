@@ -1,10 +1,8 @@
 import { TouchableOpacity, View, StyleSheet, Text } from "react-native";
 import * as Linking from "expo-linking";
-import {
-  CopyToClipboard,
-  ShareLink,
-} from "../../../../../old-src/resources/utilities";
-import { HalfbarButton } from "../atoms";
+import CopyToClipboard from "../operations/CopyToClipboard";
+import ShareLink from "../operations/ShareLink";
+import HalfbarButton from "./HalfbarButton";
 import { Colors, Environment, GlobalStyles } from "../../../../global";
 
 interface InputTypes {

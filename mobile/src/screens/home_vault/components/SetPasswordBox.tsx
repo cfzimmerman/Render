@@ -1,6 +1,6 @@
 import React from "react";
 import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
-import { HalfByFullDisplayBox } from "../../../resources/atoms";
+import HalfByFullDisplayBox from "../../shared/general/components/HalfByFullDisplayBox";
 import { CurrentUserType } from "../../../global/CommonTypes";
 import { Environment } from "../../../global";
 

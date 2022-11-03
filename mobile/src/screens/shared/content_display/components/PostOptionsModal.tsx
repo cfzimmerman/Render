@@ -17,7 +17,8 @@ import {
   setShareActive,
   setPostPublicModal,
 } from "../../../../redux/shared/vaultpostdata";
-import { BackArrow, CubeSizeButton } from "../../../resources/atoms";
+import BackArrow from "../../general/components/BackArrow";
+import CubeSizeButton from "../../general/components/CubeSizeButton";
 import {
   Environment,
   Colors,

@@ -1,6 +1,6 @@
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { API, graphqlOperation } from "aws-amplify";
-import { CheckAddedUserQuery } from "../../../../API";
+import { CheckAddedUserQuery } from "../../../../../API";
 import AddNewNotification, {
   AddNewNotificationPropTypes,
 } from "../AddNewNotification";

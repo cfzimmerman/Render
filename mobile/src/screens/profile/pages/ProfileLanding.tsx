@@ -18,11 +18,8 @@ import {
   Icons,
   UserDialogue,
 } from "../../../global";
-import {
-  CubeSizeButton,
-  IconHalfbarButton,
-  PrimaryDivider,
-} from "../../../resources/atoms";
+import IconHalfbarButton from "../../shared/general/components/IconHalfbarButton";
+import PrimaryDivider from "../../shared/general/components/PrimaryDivider";
 
 import AddBackDisplay from "../components/AddBackDisplay";
 import ChangePfp from "../operations/ChangePfp";
@@ -30,11 +27,9 @@ import GetAddedMeUsers from "../operations/GetAddedMeUsers";
 import GetCurrentUser from "../operations/GetCurrentUser";
 import GetPfp from "../operations/GetPfp";
 import ProfileNavOptions from "../components/ProfileNavOptions";
-import {
-  SystemmessageModal,
-  LoadProgressModal,
-  LinkCopyDisplay,
-} from "../../../resources/molecules";
+import SystemmessageModal from "../../shared/general/components/SystemmessageModal";
+import LoadProgressModal from "../../shared/general/components/LoadProgressModal";
+import LinkCopyDisplay from "../../shared/general/components/LinkCopyDisplay";
 import { RootStateType } from "../../../redux";
 import { useState } from "react";
 

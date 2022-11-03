@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { HalfByFullDisplayBox } from "../../../resources/atoms";
+import HalfByFullDisplayBox from "../../general/components/HalfByFullDisplayBox";
 import { Environment } from "../../../../global";
 
 const AreEqual = () => {

@@ -7,7 +7,7 @@ import {
   setUserSearchNextToken,
   setUserSearchResultsArray,
 } from "../../../redux/exploremain";
-import { CorrectNextToken } from "../../../resources/utilities";
+import CorrectNextToken from "../../shared/general/operations/CorrectNextToken";
 import AddUserSearchResult from "./AddUserSearchResult";
 
 const IsUser = ({ cognitosub, targetcognitosub }) => {

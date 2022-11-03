@@ -4,15 +4,6 @@ import { ReceiverRelationshipsByDateQuery } from "../../../API";
 import AddToAddedMeUsers from "./AddToAddedMeUsers";
 import ChangeAddedAddedMeNextToken from "./ChangeAddedAddedMeNextToken";
 
-const GetRelationship = ({ relationshiparray }) => {
-  if (relationshiparray.length === 0) {
-    return false;
-  }
-  if (relationshiparray.length > 0) {
-    return true;
-  }
-};
-
 async function GetAddedMeUsers({
   addedmenexttoken,
   dispatch,

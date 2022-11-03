@@ -22,11 +22,9 @@ import {
   Icons,
   UserDialogue,
 } from "../../../../global";
-import {
-  ErrormessageModal,
-  SystemmessageModal,
-} from "../../../../../old-src/resources/molecules";
-import { OnboardingScreenTemplate } from "../../../../../old-src/resources/organisms";
+import ErrormessageModal from "../../general/components/ErrormessageModal";
+import SystemmessageModal from "../../general/components/SystemmessageModal";
+import OnboardingScreenTemplate from "../components/OnboardingScreenTemplate";
 
 import { updateUsers } from "../../../../graphql/mutations";
 import {

@@ -1,7 +1,7 @@
 import GetFullUserRelationship from "../../../../explore/operations/GetFullUserRelationship";
 import { setOtherUser } from "../../../../../redux/shared/otheruserprofile";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
-import { GetUsersQuery } from "../../../../API";
+import { GetUsersQuery } from "../../../../../API";
 import { Storage, API, graphqlOperation } from "aws-amplify";
 import { Code3001PayloadType } from "../NotificationLibrary";
 import { DispatchType } from "../../../../../redux";

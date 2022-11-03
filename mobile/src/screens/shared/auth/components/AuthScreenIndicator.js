@@ -1,6 +1,6 @@
 import { View, StyleSheet, Text } from "react-native";
 import { Environment, Colors } from "../../../../global";
-import { BackArrow } from "../atoms";
+import BackArrow from "../../general/components/BackArrow";
 
 function TabBox(prop) {
   return (

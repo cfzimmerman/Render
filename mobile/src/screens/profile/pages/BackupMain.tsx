@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { View, Text, Platform, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { BackArrow, BulletListComponent } from "../../../resources/atoms";
-import { LinkCopyDisplay } from "../../../resources/molecules";
+import BackArrow from "../../shared/general/components/BackArrow";
+import BulletListComponent from "../../shared/general/components/BulletListComponent";
+import LinkCopyDisplay from "../../shared/general/components/LinkCopyDisplay";
 import { Colors, Environment, GlobalStyles } from "../../../global";
 // accentOn,
 const bulletStyle = [

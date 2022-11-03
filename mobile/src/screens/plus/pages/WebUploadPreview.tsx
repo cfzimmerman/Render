@@ -8,14 +8,9 @@ import {
   Share,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CopyToClipboard, ShareLink } from "../../../resources/utilities";
-import {
-  BackArrow,
-  HalfbarButton,
-  IconHalfbarButton,
-} from "../../../resources/atoms";
+import BackArrow from "../../shared/general/components/BackArrow";
 import { Environment, Colors, GlobalStyles } from "../../../global";
-import { LinkCopyDisplay } from "../../../resources/molecules";
+import LinkCopyDisplay from "../../shared/general/components/LinkCopyDisplay";
 
 const WebUploadPreview = ({ navigation }) => {
   const [copied, setCopied] = useState<boolean>(false);

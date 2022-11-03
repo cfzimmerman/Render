@@ -15,8 +15,7 @@ import { Credentials } from "@aws-amplify/core";
 import store from "./src/redux";
 
 import MasterStack from "./src/MasterStack";
-
-import awsconfig from "./old-src/aws-exports";
+import awsconfig from "./src/aws-exports";
 import { Colors } from "./src/global";
 
 Amplify.configure(awsconfig);

@@ -1,8 +1,5 @@
-import { Storage, Auth, API, graphqlOperation } from "aws-amplify";
-import { batch } from "react-redux";
-import { Users, Posts } from "../../../models";
+import { Auth } from "aws-amplify";
 import { clearVaultPostData } from "../../../../redux/shared/vaultpostdata";
-import { onCreatePosts, onUpdatePosts } from "../../../graphql/subscriptions";
 
 async function ObservePostDB({ dispatch }) {
   const logintime = [new Date().toISOString()];

@@ -1,6 +1,6 @@
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { API, graphqlOperation } from "aws-amplify";
-import { GetGamesQuery } from "../../../API";
+import { GetGamesQuery } from "../../../../API";
 import { setPGFullGame } from "../../../../redux/exploremain";
 import { DispatchType } from "../../../../redux";
 import { FullGameItemType } from "../pages/PGLanding";

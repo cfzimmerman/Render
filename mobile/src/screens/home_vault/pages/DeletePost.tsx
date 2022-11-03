@@ -2,7 +2,7 @@ import { View, Text, TouchableWithoutFeedback, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 
-import { HalfbarButton } from "../../../resources/atoms";
+import HalfbarButton from "../../shared/general/components/HalfbarButton";
 import { Environment, Colors, GlobalStyles } from "../../../global";
 import SentencePost from "../operations/SentencePost";
 import { RootStateType } from "../../../redux";

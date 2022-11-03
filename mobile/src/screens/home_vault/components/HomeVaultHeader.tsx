@@ -8,7 +8,7 @@ import {
   Colors,
   UserDialogue,
 } from "../../../global";
-import { CollapsingHeaderBox, PrimaryDivider } from "../../../resources/atoms";
+import PrimaryDivider from "../../shared/general/components/PrimaryDivider";
 import HomeTopLogo from "./HomeTopLogo";
 import SetPasswordBox from "./SetPasswordBox";
 import HeaderButtons from "./HeaderButtons";

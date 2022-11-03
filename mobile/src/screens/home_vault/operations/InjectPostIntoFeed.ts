@@ -8,7 +8,7 @@ import {
   addVaultPostDataObject,
   addToVaultFeedData,
 } from "../../../redux/shared/vaultpostdata";
-import { GetDate } from "../../../resources/utilities";
+import GetDate from "../../shared/general/operations/GetDate";
 import { PostHeaderType, PostType } from "../../../global/CommonTypes";
 import { InjectPostIntoFeedPropsType } from "./ModifyVaultData";
 import { Storage } from "aws-amplify";

@@ -1,6 +1,6 @@
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { API, graphqlOperation, Storage } from "aws-amplify";
-import { GetPostsQuery } from "../../../API";
+import { GetPostsQuery } from "../../../../API";
 import {
   addToUniversalPostData,
   clearUniversalPostData,

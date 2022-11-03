@@ -1,6 +1,6 @@
 import { DispatchType } from "../../../redux";
 import GetUserSearchResults from "../operations/GetUserSearchResults";
-import { TextButton } from "../../../resources/atoms";
+import TextButton from "../../shared/general/components/TextButton";
 import { ExploreSearchCategory } from "../pages/ExploreLanding";
 import PGSearchTitles from "../../shared/public_game/operations/PGSearchTitles";
 

@@ -22,8 +22,8 @@ import {
   Icons,
   UserDialogue,
 } from "../../../../global";
-import { ErrormessageModal } from "../../../../../old-src/resources/molecules";
-import { OnboardingScreenTemplate } from "../../../../../old-src/resources/organisms";
+import ErrormessageModal from "../../general/components/ErrormessageModal";
+import OnboardingScreenTemplate from "../components/OnboardingScreenTemplate";
 import GetCurrentUser from "../../../profile/operations/GetCurrentUser";
 
 import { getUsers } from "../../../../graphql/queries";

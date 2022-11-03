@@ -18,7 +18,8 @@ import {
   setMultiSelectActive,
 } from "../../../../redux/homevaultmain";
 import { RootStateType } from "../../../../redux";
-import { BackArrow, FlatListFooterSpacer } from "../../../../resources/atoms";
+import BackArrow from "../../general/components/BackArrow";
+import FlatListFooterSpacer from "../../general/components/FlatListFooterSpacer";
 import { Colors, Environment, GlobalStyles } from "../../../../global";
 import HomeVaultOptionsBar from "../../../home_vault/components/HomeVaultOptionsBar";
 import { GameCoverTileType } from "../components/GameCoverTile";

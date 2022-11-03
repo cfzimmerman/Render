@@ -1,7 +1,7 @@
 import { API, graphqlOperation } from "aws-amplify";
 import { CurrentUserType } from "../../../../global/CommonTypes";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
-import { UserNotificationsByUsersQuery } from "../../../API";
+import { UserNotificationsByUsersQuery } from "../../../../API";
 import NotificationLibrary from "./NotificationLibrary";
 import { DispatchType } from "../../../../redux";
 import LSUpdateNotificationStoreDate from "../../local_sync/operations/LSUpdateNotificationStoreDate";

@@ -1,7 +1,7 @@
 import { IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { Icons, Colors, Environment, GlobalStyles } from "../../../../global";
-import { ToPortrait } from "../../../../../old-src/resources/utilities";
+import ToPortrait from "../operations/ToPortrait";
 
 interface InputTypes {
   CustomAction?: Function;

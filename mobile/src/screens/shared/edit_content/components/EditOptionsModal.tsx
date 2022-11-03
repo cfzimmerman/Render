@@ -10,9 +10,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import { setEditTextModalActive } from "../../../../redux/plusmain";
-import { IsDarkMode } from "../../../resources/utilities";
+import IsDarkMode from "../../general/operations/IsDarkMode";
 import { Environment, Colors, GlobalStyles, Icons } from "../../../../global";
-import { BackArrow, CubeSizeButton } from "../../../resources/atoms";
+import BackArrow from "../../general/components/BackArrow";
+import CubeSizeButton from "../../general/components/CubeSizeButton";
 import ChangePostPublic from "../operations/ChangePostPublic";
 import ChangeVaultPostDate from "../../../home_vault/operations/ChangeVaultPostDate";
 import PostPublic from "../operations/PostPublic";

@@ -1,8 +1,8 @@
 import { DispatchType } from "../../../../redux";
 import { graphqlOperation, API } from "aws-amplify";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
-import { CreateCommentsMutation } from "../../../API";
-import { createComments } from "../../../graphql/mutations";
+import { CreateCommentsMutation } from "../../../../API";
+import { createComments } from "../../../../graphql/mutations";
 import { injectComment } from "../../../../redux/socialmain";
 import {
   CurrentUserType,

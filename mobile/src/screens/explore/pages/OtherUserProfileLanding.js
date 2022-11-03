@@ -11,13 +11,9 @@ import TouchableScale from "react-native-touchable-scale";
 import { useDispatch, useSelector } from "react-redux";
 
 import { setSystemmessageActive } from "../../../redux/shared/messagemodal";
-import {
-  CubeSizeButton,
-  BackArrow,
-  IconHalfbarButton,
-  HalfbarButton,
-} from "../../../resources/atoms";
-import { SystemmessageModal } from "../../../resources/molecules";
+import BackArrow from "../../shared/general/components/BackArrow";
+import IconHalfbarButton from "../../shared/general/components/IconHalfbarButton";
+import SystemmessageModal from "../../shared/general/components/SystemmessageModal";
 import {
   GlobalStyles,
   Environment,

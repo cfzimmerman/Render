@@ -1,13 +1,5 @@
 import { View, Image, Platform, StyleSheet } from "react-native";
 import { Environment, GlobalStyles } from "../../../../global";
-import { BackArrow } from "../atoms";
-
-const GetHeight = () => {
-  if (Platform.isPad === true) {
-    return Environment.ScreenHeight * 0.225;
-  }
-  return Environment.HalfBar * 1.125;
-};
 
 function OnboardingLandingImage() {
   return (
@@ -15,7 +7,7 @@ function OnboardingLandingImage() {
       <View style={[styles.imageholder, GlobalStyles.irregularshadow]}>
         <Image
           style={styles.headerimage}
-          source={require("../../../assets/adaptive-icon.png")}
+          source={require("../../../../../assets/adaptive-icon.png")}
         />
       </View>
     </View>

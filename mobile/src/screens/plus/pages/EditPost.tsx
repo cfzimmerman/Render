@@ -8,7 +8,7 @@ import { Audio, Video, AVPlaybackStatus } from "expo-av";
 import { useDispatch, useSelector } from "react-redux";
 
 import GestureRecognizer from "react-native-swipe-gestures";
-import { GetPostDimensions } from "../../../resources/utilities";
+import GetPostDimensions from "../../shared/general/operations/GetPostDimensions";
 import { Environment, Colors, GlobalStyles } from "../../../global";
 
 import AddVideoToFeedData from "../../home_vault/operations/AddVideoToFeedData";

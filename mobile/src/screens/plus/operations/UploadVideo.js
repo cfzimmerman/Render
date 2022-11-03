@@ -10,7 +10,7 @@ import {
   setPercentComplete,
   setUploadObject,
 } from "../../../redux/shared/loadprogressmessage";
-import { TransformDimensions } from "../../../resources/utilities";
+import TransformDimensions from "../../shared/general/operations/TransformDimensions";
 import AddToDB from "./AddToDB";
 import CleanupFailedUpload from "./CleanupFailedUpload";
 import GetContentName from "./GetContentName";

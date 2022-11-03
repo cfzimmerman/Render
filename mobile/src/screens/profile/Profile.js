@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { ProfileLanding } from "../../../old-src/screens/tabnav/profile";
+import ProfileLanding from "./pages/ProfileLanding";
 import GalleryMain from "./pages/GalleryMain";
 import SettingsMain from "./pages/SettingsMain";
 import AddedUsers from "./pages/AddedUsers";

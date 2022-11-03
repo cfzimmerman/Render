@@ -14,7 +14,8 @@ import GestureRecognizer from "react-native-swipe-gestures";
 import { useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import { setTextActive } from "../../../../redux/shared/vaultpostdata";
-import { ToPortrait, GetPostDimensions } from "../../../resources/utilities";
+import ToPortrait from "../../general/operations/ToPortrait";
+import GetPostDimensions from "../../general/operations/GetPostDimensions";
 import { GlobalStyles, Environment, Colors, Icons } from "../../../../global";
 
 import AddVideoToAddedFeed from "../../../home_vault/operations/AddVideoToAddedFeed";

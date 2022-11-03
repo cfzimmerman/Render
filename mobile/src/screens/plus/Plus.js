@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { PlusLanding } from "../../../old-src/screens/tabnav/plus";
+import PlusLanding from "./pages/PlusLanding";
 
 import SelectFromVault from "./pages/SelectFromVault";
 import WebUploadPreview from "./pages/WebUploadPreview";

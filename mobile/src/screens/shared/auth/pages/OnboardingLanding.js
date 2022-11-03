@@ -13,8 +13,8 @@ import { GlobalStyles, Environment, Colors, Icons } from "../../../../global";
 import NextButton from "../components/NextButton";
 
 import OnboardingLandingImage from "../../general/components/OnboardingLandingImage";
-import { ErrormessageModal } from "../../../../../old-src/resources/molecules";
-import { OnboardingScreenTemplate } from "../../../../../old-src/resources/organisms";
+import ErrormessageModal from "../../general/components/ErrormessageModal";
+import OnboardingScreenTemplate from "../components/OnboardingScreenTemplate";
 import InitiateAuthFlow from "../operations/InitiateAuthFlow";
 
 import { Auth } from "aws-amplify";

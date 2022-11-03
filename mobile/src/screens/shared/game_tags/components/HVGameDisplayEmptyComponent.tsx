@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
-import { HalfByFullDisplayBox } from "../../../../resources/atoms";
-import { Environment, Colors, GlobalStyles } from "../../../../global";
+import HalfByFullDisplayBox from "../../general/components/HalfByFullDisplayBox";
 
 const HVGameDisplayEmptyComponent = () => {
   return (

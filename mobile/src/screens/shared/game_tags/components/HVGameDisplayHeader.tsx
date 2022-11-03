@@ -2,7 +2,7 @@ import { View, StyleSheet, Text, Image } from "react-native";
 import { Environment, GlobalStyles, Colors } from "../../../../global";
 import GetGameCoverURL from "../operations/GetGameCoverURL";
 import { GameCoverTileType } from "./GameCoverTile";
-import { GetDate } from "../../../../resources/utilities";
+import GetDate from "../../general/operations/GetDate";
 
 interface InputTypes {
   gameObject: null | GameCoverTileType;

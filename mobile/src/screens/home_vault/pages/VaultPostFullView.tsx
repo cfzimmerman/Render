@@ -25,7 +25,7 @@ import GetVaultData from "../operations/GetVaultData";
 import UpdatePostInteraction from "../../shared/content_display/operations/UpdatePostInteraction";
 import UpdateStoriesViewed from "../operations/UpdateStoriesViewed";
 import { RootStateType } from "../../../redux";
-import { SystemmessageModal } from "../../../resources/molecules";
+import SystemmessageModal from "../../shared/general/components/SystemmessageModal";
 import GameInfoModal from "../../shared/game_tags/components/GameInfoModal";
 import { setHVGameSearchActive } from "../../../redux/shared/gametags";
 import HVGetGamePosts from "../../shared/game_tags/operations/HVGetGamePosts";

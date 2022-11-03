@@ -4,8 +4,8 @@ import { BlurView } from "expo-blur";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { GlobalStyles, Environment, Colors, Icons } from "../../../../global";
-import { DismissKeyboard } from "../../../../../old-src/resources/utilities";
-import { AuthScreenIndicator } from "../../../../../old-src/resources/molecules";
+import DismissKeyboard from "../../general/operations/DismissKeyboard";
+import AuthScreenIndicator from "./AuthScreenIndicator";
 
 // Use case example below
 

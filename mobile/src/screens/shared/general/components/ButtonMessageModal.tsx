@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootStateType } from "../../../../redux";
 import { setButtonMessageInactive } from "../../../../redux/shared/messagemodal";
 import { BlurView } from "expo-blur";
-import { HalfbarButton } from "../atoms";
+import HalfbarButton from "./HalfbarButton";
 import { Environment, Colors, GlobalStyles } from "../../../../global";
 
 const ButtonMessageModal = () => {

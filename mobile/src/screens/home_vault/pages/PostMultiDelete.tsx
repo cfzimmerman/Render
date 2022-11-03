@@ -3,7 +3,8 @@ import { View, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import { RootStateType } from "../../../redux";
-import { HalfbarButton, HalfByFullDisplayBox } from "../../../resources/atoms";
+import HalfbarButton from "../../shared/general/components/HalfbarButton";
+import HalfByFullDisplayBox from "../../shared/general/components/HalfByFullDisplayBox";
 import GestureRecognizer from "react-native-swipe-gestures";
 import { Environment } from "../../../global";
 import {

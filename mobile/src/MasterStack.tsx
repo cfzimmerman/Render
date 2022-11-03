@@ -3,17 +3,14 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useDispatch } from "react-redux";
 
 import TabNav from "./TabNav";
-import {
-  OnboardingLanding,
-  SignupCode,
-  LoginCode,
-  DisplayName,
-  Gamertag,
-  Birthday,
-  TOS,
-} from "../old-src/screens/masterstack/auth";
-import { ObservePostDB } from "../old-src/resources/utilities";
-
+import OnboardingLanding from "./screens/shared/auth/pages/OnboardingLanding";
+import SignupCode from "./screens/shared/auth/pages/SignupCode";
+import LoginCode from "./screens/shared/auth/pages/LoginCode";
+import DisplayName from "./screens/shared/auth/pages/DisplayName";
+import Gamertag from "./screens/shared/auth/pages/Gamertag";
+import Birthday from "./screens/shared/auth/pages/Birthday";
+import TOS from "./screens/shared/auth/pages/TOS";
+import ObservePostDB from "./screens/shared/general/operations/ObservePostDB";
 import VaultPostFullView, {
   VaultPostFullViewUsecaseTypes,
 } from "./screens/home_vault/pages/VaultPostFullView";
