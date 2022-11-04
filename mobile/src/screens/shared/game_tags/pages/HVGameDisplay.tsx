@@ -13,10 +13,7 @@ import {
   clearHVGameSearchResults,
   setHVGameSearchActive,
 } from "../../../../redux/shared/gametags";
-import {
-  deactivateMultiSelect,
-  setMultiSelectActive,
-} from "../../../../redux/homevaultmain";
+import { deactivateMultiSelect } from "../../../../redux/homevaultmain";
 import { RootStateType } from "../../../../redux";
 import BackArrow from "../../general/components/BackArrow";
 import FlatListFooterSpacer from "../../general/components/FlatListFooterSpacer";

@@ -1,9 +1,5 @@
-import { format } from "date-fns";
-
 import { updatePostPublic } from "../../../../redux/shared/vaultpostdata";
 import GetDate from "../../general/operations/GetDate";
-import { API, graphqlOperation } from "aws-amplify";
-import { updatePosts } from "../../../../graphql/mutations";
 
 import {
   ChangePostPublicPropsType,

@@ -69,20 +69,6 @@ async function UploadVideo({
     thumbnailNameArray.unshift("CompanyStock/defaultthumbnail.png");
   }
 
-  /*
-    const postobject = {
-        video: {
-            key: videoname
-        },
-        thumbnail: {
-            key: thumbnailname
-        },
-        image: {
-            key: null
-        }
-    }
-    */
-
   const videoname = GetContentName(uri);
 
   const file = {

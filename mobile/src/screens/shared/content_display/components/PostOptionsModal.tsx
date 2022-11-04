@@ -1,4 +1,3 @@
-import react, { useState } from "react";
 import {
   View,
   Text,
@@ -6,7 +5,6 @@ import {
   Animated,
   TouchableOpacity,
   StyleSheet,
-  ScrollView,
   Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -37,12 +35,6 @@ import GetGameCoverThumbnailURL from "../../game_tags/operations/GetGameCoverThu
 import { setGameInfoModal } from "../../../../redux/homevaultmain";
 import { setSystemMessageActive } from "../../../../redux/shared/messagemodal";
 import EnterComments from "../operations/EnterComments";
-
-interface EnterCommentsPropTypes {
-  index: number;
-  usecase: VaultPostFullViewUsecaseTypes;
-  navigation: any;
-}
 
 interface PostOptionsModalInput {
   navigation: any;

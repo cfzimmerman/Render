@@ -1,10 +1,6 @@
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { API, graphqlOperation, Storage } from "aws-amplify";
-import * as FileSystem from "expo-file-system";
-import {
-  ModelPostsPostsByUserGamesCompositeKeyConditionInput,
-  PostsByUserGamesQuery,
-} from "../../../../API";
+import { PostsByUserGamesQuery } from "../../../../API";
 import {
   addToHVGameSearchResults,
   setHVGameSearchActive,

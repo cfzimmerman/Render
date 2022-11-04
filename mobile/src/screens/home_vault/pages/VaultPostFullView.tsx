@@ -7,6 +7,7 @@ import { Environment, Colors } from "../../../global";
 
 import { clearCommentsData } from "../../../redux/socialmain";
 import {
+  setActivePost,
   setFetchingData,
   setFocusViewActive,
 } from "../../../redux/shared/vaultpostdata";
@@ -15,8 +16,8 @@ import { setFetchingOtherUserGalleryData } from "../../../redux/shared/otheruser
 import {
   setFetchingAddedFeedData,
   setFetchingPublicFeedData,
+  setStoryViewed,
 } from "../../../redux/shared/homemain";
-import ChangeActivePost from "../operations/ChangeActivePost";
 import FullViewContent from "../../shared/content_display/components/FullViewContent";
 import GetAddedFeedData from "../operations/GetAddedFeedData";
 import GetOtherUserGalleryData from "../../explore/operations/GetOtherUserGalleryData";
@@ -24,7 +25,6 @@ import GetPublicFeedData from "../operations/GetPublicFeedData";
 import GetGalleryData from "../../profile/operations/GetGalleryData";
 import GetVaultData from "../operations/GetVaultData";
 import UpdatePostInteraction from "../../shared/content_display/operations/UpdatePostInteraction";
-import UpdateStoriesViewed from "../operations/UpdateStoriesViewed";
 import { RootStateType } from "../../../redux";
 import SystemMessageModal from "../../shared/general/components/SystemMessageModal";
 import GameInfoModal from "../../shared/game_tags/components/GameInfoModal";
@@ -301,10 +301,7 @@ const VaultPostFullView = ({ navigation, route }) => {
   });
 
   const onviewref = useRef((viewableItems) => {
-    ChangeActivePost({
-      dispatch,
-      index: viewableItems.viewableItems[0].index,
-    });
+    dispatch(setActivePost(viewableItems.viewableItems[0].index));
 
     if (usecase === "otherusergallery" || usecase === "stories") {
       UpdatePostInteraction({
@@ -318,10 +315,7 @@ const VaultPostFullView = ({ navigation, route }) => {
     }
 
     if (usecase === "stories") {
-      UpdateStoriesViewed({
-        dispatch,
-        targetcognitosub: viewableItems.viewableItems[0].item.cognitosub,
-      });
+      dispatch(setStoryViewed(viewableItems.viewableItems[0].item.cognitosub));
     }
   });
 

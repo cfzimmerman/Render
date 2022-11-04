@@ -11,8 +11,8 @@ import GestureRecognizer from "react-native-swipe-gestures";
 import { DispatchType } from "../../../../redux";
 import { CurrentUserType } from "../../../../global/CommonTypes";
 import { Environment, Colors, GlobalStyles, Icons } from "../../../../global";
-import ExitGetStarted from "../../onboarding/operations/ExitGetStarted";
-import { GetStartedPageDataTypes } from "../../onboarding/pages/GetStartedLanding";
+import ExitGetStarted from "../operations/ExitGetStarted";
+import { GetStartedPageDataTypes } from "../pages/GetStartedLanding";
 
 interface InputTypes {
   item: GetStartedPageDataTypes;

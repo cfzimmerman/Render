@@ -9,9 +9,9 @@ import {
   GetStartedSortDescription,
   GetStartedUploadDescription,
   GetStartedWelcomeDescription,
-} from "../../content_display/components/GetStartedDescriptions";
-import GetStartedFooter from "../../content_display/components/GetStartedFooter";
-import GetStartedPageItem from "../../content_display/components/GetStartedPageItem";
+} from "../components/GetStartedDescriptions";
+import GetStartedFooter from "../components/GetStartedFooter";
+import GetStartedPageItem from "../components/GetStartedPageItem";
 
 export interface GetStartedPageDataTypes {
   id: number;

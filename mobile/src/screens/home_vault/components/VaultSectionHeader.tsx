@@ -29,22 +29,6 @@ interface VaultSecttionHeaderPropsType {
   dispatch: DispatchType;
 }
 
-/*
-const AreEqual = (previousProps, nextProps) => {
-  if (
-    previousProps.section.header.post.contentkey ===
-      nextProps.section.header.post.contentkey &&
-    previousProps.section.header.post.publicpost ===
-      nextProps.section.header.post.publicpost &&
-    previousProps.section.header.post.posttext ===
-      nextProps.section.header.post.posttext
-  ) {
-    return true;
-  }
-  return false;
-};
-*/
-
 const AreEqual = (
   previousProps: VaultSecttionHeaderPropsType,
   nextProps: VaultSecttionHeaderPropsType

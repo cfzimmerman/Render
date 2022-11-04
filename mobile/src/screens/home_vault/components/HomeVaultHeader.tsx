@@ -1,7 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { setSystemMessageActive } from "../../../redux/shared/messagemodal";
 import {
   Environment,
   GlobalStyles,
@@ -15,7 +14,6 @@ import HeaderButtons from "./HeaderButtons";
 import StoriesBox from "./StoriesBox";
 import NewNotificationsPreview from "../../shared/notifications/components/NewNotificationsPreview";
 import GetStartedHeaderBox from "./GetStartedHeaderBox";
-import { DispatchType } from "../../../redux";
 
 const HomeVaultHeader = ({
   navigation,

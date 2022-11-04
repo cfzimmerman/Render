@@ -1,4 +1,3 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { DispatchType } from "../../../../redux";
 import TextButton from "../../general/components/TextButton";
 import { GameCoverTileType } from "./GameCoverTile";

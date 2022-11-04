@@ -2,8 +2,6 @@ import { API, graphqlOperation } from "aws-amplify";
 import { UserDialogue } from "../../../../global";
 
 import { setSystemMessageActive } from "../../../../redux/shared/messagemodal";
-import { clearGalleryData } from "../../../../redux/profilemain";
-
 import ChangeGalleryPostPublic from "../../../profile/operations/ChangeGalleryPostPublic";
 
 import { updatePosts, updateUsers } from "../../../../graphql/mutations";
@@ -47,8 +45,6 @@ async function PostPublic({
     publicfeeddata,
   });
   dispatch(setSystemMessageActive(UserDialogue().systemmessage.postsuccess));
-
-  // dispatch(clearGalleryData())
 }
 
 export default PostPublic;

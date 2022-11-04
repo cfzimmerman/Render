@@ -4,9 +4,7 @@ import {
   Modal,
   Text,
   TouchableWithoutFeedback,
-  TouchableOpacity,
   StyleSheet,
-  Button,
   Share,
 } from "react-native";
 import { useSelector } from "react-redux";

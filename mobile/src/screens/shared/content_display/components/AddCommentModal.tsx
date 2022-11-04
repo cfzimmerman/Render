@@ -17,11 +17,7 @@ import { setAddCommentActive } from "../../../../redux/socialmain";
 import { Environment, Colors, GlobalStyles } from "../../../../global";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AddComment from "../operations/AddComment";
-import {
-  PostType,
-  PostHeaderType,
-  CurrentUserType,
-} from "../../../../global/CommonTypes";
+import { PostType, CurrentUserType } from "../../../../global/CommonTypes";
 import { VaultPostFullViewUsecaseTypes } from "../../../home_vault/pages/VaultPostFullView";
 
 interface AddCommentModalPropType {

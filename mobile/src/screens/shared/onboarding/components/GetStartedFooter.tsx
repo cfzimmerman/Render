@@ -5,7 +5,7 @@ import GestureRecognizer from "react-native-swipe-gestures";
 import { useSelector } from "react-redux";
 import { DispatchType, RootStateType } from "../../../../redux";
 import { CurrentUserType } from "../../../../global/CommonTypes";
-import ExitGetStarted from "../../onboarding/operations/ExitGetStarted";
+import ExitGetStarted from "../operations/ExitGetStarted";
 
 interface InputTypes {
   navigation: any;

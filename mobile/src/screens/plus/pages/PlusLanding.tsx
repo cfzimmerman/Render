@@ -74,11 +74,6 @@ const PlusLanding = ({ navigation }) => {
   const gotaddedusersfilter = useSelector(
     (state: RootStateType) => state.homemain.gotaddedusersfilter
   );
-
-  const uploadcanceled = useSelector(
-    (state: RootStateType) => state.loadprogressmessage.uploadcanceled
-  );
-
   const vaultpostdata = useSelector(
     (state: RootStateType) => state.vaultpostdata.vaultpostdata
   );

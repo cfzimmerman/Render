@@ -22,7 +22,7 @@ const defaultGameInfoModal: SetGameInfoModalInputs = {
   title: null,
 };
 
-const AreEqual = (previousProps, nextProps) => {
+const AreEqual = () => {
   return true;
 };
 

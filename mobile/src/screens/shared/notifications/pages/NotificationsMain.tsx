@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Platform,
-  Button,
-  FlatList,
-} from "react-native";
+import { View, Text, StyleSheet, Platform, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BackArrow from "../../general/components/BackArrow";
 import HalfByFullDisplayBox from "../../general/components/HalfByFullDisplayBox";

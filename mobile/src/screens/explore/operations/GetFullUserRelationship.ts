@@ -11,7 +11,7 @@ async function GetFullUserRelationship({ targetID, dispatch, currentuser }) {
     typeof targetID === "undefined"
   ) {
     const otheruser = {
-      relationship: "unauthenticated",
+      relationship: false,
       increment: 0,
     };
     dispatch(setOtherUserRelationship(otheruser));
@@ -20,6 +20,7 @@ async function GetFullUserRelationship({ targetID, dispatch, currentuser }) {
       relationship: "user",
       increment: 0,
     };
+    // @ts-ignore
     dispatch(setOtherUserRelationship(otheruser));
   } else {
     const result = (await API.graphql(

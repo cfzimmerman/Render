@@ -1,8 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import {
   View,
-  Image,
-  Text,
   FlatList,
   StyleSheet,
   Animated,
@@ -11,19 +9,15 @@ import {
   TouchableOpacity,
   Keyboard,
   Platform,
-  Button,
 } from "react-native";
-import { GraphQLResult } from "@aws-amplify/api-graphql";
-import { API, graphqlOperation } from "aws-amplify";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
-import { GetGamesQuery } from "../../../../API";
 import { RootStateType } from "../../../../redux";
 import BackArrow from "../../general/components/BackArrow";
 import HalfbarButton from "../../general/components/HalfbarButton";
 import LoadProgressModal from "../../general/components/LoadProgressModal";
 import { Colors, Environment, GlobalStyles, Icons } from "../../../../global";
-import GameCoverTile, { GameCoverTileType } from "../components/GameCoverTile";
+import GameCoverTile from "../components/GameCoverTile";
 import GetCurrentUserGameLibrary from "../operations/GetCurrentUserGameLibrary";
 import SearchGameTitle from "../operations/SearchGameTitle";
 import SearchLibraryGameTitle from "../operations/SearchLibraryGameTitle";

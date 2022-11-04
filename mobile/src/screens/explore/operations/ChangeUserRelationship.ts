@@ -16,7 +16,7 @@ import { Code3001PayloadType } from "../../shared/notifications/operations/Notif
 import CreateCode3001Notification from "../../shared/notifications/operations/NotificationActions/CreateCode3001Notification";
 
 export interface SetUserRelationshipType {
-  relationship: boolean;
+  relationship: boolean | "user";
   increment: number;
 }
 

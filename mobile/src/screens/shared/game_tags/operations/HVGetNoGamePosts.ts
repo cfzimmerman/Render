@@ -2,7 +2,6 @@ import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { API, graphqlOperation } from "aws-amplify";
 import { PostsByUsersQuery } from "../../../../API";
 import {
-  addNextHVGameSearchResultsArray,
   addToHVGameSearchResults,
   setHVGameSearchActive,
   setHVGameSearchNextToken,

@@ -80,7 +80,7 @@ const NotificationItem = ({
   currentuser,
 }: NotificationItemPropsType) => {
   var flipRef;
-  // ^ This admittedly looks hella sus to me, but useRef in FlatList children is forbidden. If there's a better solution, feel free to implement it.
+  // ^ This admittedly looks mega sus to me, but useRef in FlatList children is forbidden. If there's a better solution, feel free to implement it.
 
   const FlipCard = () => {
     flipRef.flip();

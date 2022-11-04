@@ -2,8 +2,6 @@ import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { useDispatch } from "react-redux";
 
-import appstart from "./shared/appstart";
-
 import errormessage from "./shared/errormessage";
 import messagemodal from "./shared/messagemodal";
 import loadprogressmessage from "./shared/loadprogressmessage";
@@ -43,7 +41,6 @@ const reducer = combineReducers({
   plusmain,
   exploremain,
   otheruserprofile,
-  appstart,
   homemain,
   onboarding,
   socialmain,

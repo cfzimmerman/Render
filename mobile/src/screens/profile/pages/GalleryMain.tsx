@@ -25,12 +25,6 @@ const GalleryMain = ({ navigation }) => {
   const fetchingGalleryData = useSelector(
     (state: RootStateType) => state.profilemain.fetchingGalleryData
   );
-  const localConfig = useSelector(
-    (state: RootStateType) => state.localsync.localConfig
-  );
-  const localLibrary = useSelector(
-    (state: RootStateType) => state.localsync.localLibrary
-  );
 
   const isFocused = useIsFocused();
 

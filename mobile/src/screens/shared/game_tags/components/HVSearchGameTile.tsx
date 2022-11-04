@@ -9,12 +9,6 @@ interface InputTypes {
   index: number;
   navigation: any;
 }
-/*
-onPress={() =>
-  navigation.navigate("HVGameDisplay", {
-    gameID: "bdfc3138-2f58-41a0-bcd0-5ffc1a600bee",
-  })
-  */
 
 const HVSearchGameTile = ({ item, index, navigation }: InputTypes) => {
   return (

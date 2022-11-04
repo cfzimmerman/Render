@@ -9,7 +9,7 @@ interface DefaultSliceType {
   otherusergallerydata: PostType[];
   fetchingotherusergallerydata: boolean;
   otherusergallerynexttoken: string | null;
-  relationship: boolean;
+  relationship: boolean | "user";
   addedmecount: number;
 }
 

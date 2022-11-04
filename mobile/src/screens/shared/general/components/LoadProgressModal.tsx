@@ -1,23 +1,11 @@
 import React, { useState } from "react";
-import {
-  View,
-  Modal,
-  Text,
-  StyleSheet,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { View, Modal, Text, StyleSheet } from "react-native";
 import { BlurView } from "expo-blur";
 
-import { useDispatch, useSelector } from "react-redux";
-import {
-  setLoadProgressActive,
-  setLoadProgressInactive,
-  setPercentComplete,
-} from "../../../../redux/shared/loadprogressmessage";
+import { useSelector } from "react-redux";
+import { setLoadProgressInactive } from "../../../../redux/shared/loadprogressmessage";
 
 import { Environment, Colors, GlobalStyles } from "../../../../global";
-import HalfbarButton from "./HalfbarButton";
-import CancelUpload from "../../../plus/operations/CancelUpload";
 import { RootStateType } from "../../../../redux";
 
 export interface LoadProgressActiveTypes {

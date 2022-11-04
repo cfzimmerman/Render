@@ -1,4 +1,4 @@
-import react, { useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,7 +6,6 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   TouchableOpacity,
-  ScrollView,
   TextInput,
   Keyboard,
   KeyboardAvoidingView,

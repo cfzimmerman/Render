@@ -5,7 +5,6 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  Button,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -14,7 +13,6 @@ import { GlobalStyles, Environment, Colors, Icons } from "../../../global";
 import { RootStateType } from "../../../redux";
 import BackArrow from "../../shared/general/components/BackArrow";
 import PrimaryDivider from "../../shared/general/components/PrimaryDivider";
-import LSGetConfig from "../../shared/local_sync/operations/LSGetConfig";
 import LSChangeConfig from "../../shared/local_sync/operations/LSChangeConfig";
 import { LocalConfigType } from "../../../redux/shared/localsync";
 import {

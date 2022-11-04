@@ -1,11 +1,4 @@
-import {
-  TouchableOpacity,
-  View,
-  Animated,
-  Easing,
-  StyleSheet,
-  Button,
-} from "react-native";
+import { View, Animated, Easing, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
@@ -26,10 +19,7 @@ import {
 import { DispatchType } from "../../../../redux";
 import GameCoverCubesizeButton from "../../game_tags/components/GameCoverCubesizeButton";
 import GetGameCoverThumbnailURL from "../../game_tags/operations/GetGameCoverThumbnailURL";
-import {
-  addSelectedPost,
-  resetWithNewSelectedPost,
-} from "../../../../redux/homevaultmain";
+import { resetWithNewSelectedPost } from "../../../../redux/homevaultmain";
 
 const ShouldHighlight = ({ item }) => {
   if (

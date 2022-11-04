@@ -12,16 +12,7 @@ const TileInteraction = ({ item, navigation, dispatch, currentuser }) => {
   });
 };
 
-const TileBottom = ({
-  origin,
-  item,
-  dispatch,
-  currentuserid,
-  currentusercognitosub,
-  index,
-  addbackusers,
-  addedmeusers,
-}) => {
+const TileBottom = ({ item }) => {
   return (
     <View style={styles.tbtruewrapper}>
       <View style={styles.tbtruetextwrapper}>
@@ -73,16 +64,7 @@ function RelationUserTile({
         <View style={GlobalStyles.shadow}>
           <Image style={styles.userpfp} source={{ uri: item.pfpurl }} />
         </View>
-        <TileBottom
-          origin={origin}
-          item={item}
-          dispatch={dispatch}
-          currentuserid={currentuser.id}
-          currentusercognitosub={currentuser.cognitosub}
-          index={index}
-          addbackusers={addbackusers}
-          addedmeusers={addedmeusers}
-        />
+        <TileBottom item={item} />
       </View>
     </TouchableOpacity>
   );

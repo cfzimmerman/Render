@@ -1,7 +1,9 @@
 import { API, Storage, graphqlOperation } from "aws-amplify";
 import AddToOtherUserGallery from "./AddToOtherUserGallery";
-import { setFetchingOtherUserGalleryData } from "../../../redux/shared/otheruserprofile";
-import UpdateOtherUserGalleryNextToken from "./UpdateOtherUserGalleryNextToken";
+import {
+  setFetchingOtherUserGalleryData,
+  setOtherUserGalleryNextToken,
+} from "../../../redux/shared/otheruserprofile";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import CorrectNextToken from "../../shared/general/operations/CorrectNextToken";
 import { PostsByPostedDateQuery } from "../../../API";
@@ -89,7 +91,7 @@ async function GetOtherUserGalleryData({
         }
         GetUrl({ item });
         if (item.id === lastPostID) {
-          UpdateOtherUserGalleryNextToken({ dispatch, token: newnexttoken });
+          dispatch(setOtherUserGalleryNextToken(newnexttoken));
           dispatch(setFetchingOtherUserGalleryData(false));
         }
       });
