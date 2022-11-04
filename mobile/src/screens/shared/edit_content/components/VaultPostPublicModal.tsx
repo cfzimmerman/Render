@@ -54,6 +54,7 @@ const CorrectOptions = ({
               currentuser,
               isodate,
               gallerydata,
+              publicfeeddata,
             });
             ChangePostPublic({
               postID: item.id,

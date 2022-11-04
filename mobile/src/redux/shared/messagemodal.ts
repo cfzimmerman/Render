@@ -60,7 +60,7 @@ const slice = createSlice({
       state.systemmessagemodal.title = action.payload.title;
       state.systemmessagemodal.description = action.payload.description;
     },
-    setSystemmessageInactive: (state, action) => {
+    setSystemmessageInactive: (state) => {
       state.systemmessagemodal.isactive = false;
     },
     setButtonMessageActive: (

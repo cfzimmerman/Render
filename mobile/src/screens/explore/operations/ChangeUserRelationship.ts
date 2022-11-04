@@ -135,21 +135,15 @@ async function RemoveUser({
   } catch (error) {
     console.log(`\nError: ${error}`);
   }
-
-  // ReplaceAdded({ dispatch: dispatch, updatedcurrentuser: updatedcurrentuser, })
-
   console.log("Successfully removed");
 }
 
 async function ChangeUserRelationship({
-  index,
   action,
   dispatch,
   currentuserid,
   targetuserid,
   origin,
-  addbackusersindex,
-  addedmeusersindex,
 }) {
   try {
     // Current supported origins: 'otheruserprofile', 'AddedMeUsers', 'ProfileLanding'

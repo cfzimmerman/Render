@@ -4,13 +4,11 @@ import { useDispatch } from "react-redux";
 
 import TabNav from "./TabNav";
 import OnboardingLanding from "./screens/shared/auth/pages/OnboardingLanding";
-import SignupCode from "./screens/shared/auth/pages/SignupCode";
 import LoginCode from "./screens/shared/auth/pages/LoginCode";
 import DisplayName from "./screens/shared/auth/pages/DisplayName";
 import Gamertag from "./screens/shared/auth/pages/Gamertag";
 import Birthday from "./screens/shared/auth/pages/Birthday";
 import TOS from "./screens/shared/auth/pages/TOS";
-import ObservePostDB from "./screens/shared/general/operations/ObservePostDB";
 import VaultPostFullView, {
   VaultPostFullViewUsecaseTypes,
 } from "./screens/home_vault/pages/VaultPostFullView";
@@ -25,16 +23,11 @@ import SelectGame from "./screens/shared/game_tags/pages/SelectGame";
 import HVSearchLanding from "./screens/shared/game_tags/pages/HVSearchLanding";
 import HVGameDisplay from "./screens/shared/game_tags/pages/HVGameDisplay";
 import GetStartedLanding from "./screens/shared/onboarding/pages/GetStartedLanding";
-import PGLanding from "./screens/shared/public_game/pages/PGLanding";
 import { useNavigation } from "@react-navigation/native";
 
 type RootStackParamList = {
   TabNav: undefined;
   OnboardingLanding: undefined;
-  SignupCode: {
-    email: string;
-    userid: string;
-  };
   LoginCode: {
     email: string;
   };
@@ -88,8 +81,6 @@ const MasterStack = () => {
 
   AppStart({ dispatch, navigation });
 
-  ObservePostDB({ dispatch });
-
   return (
     <Stack.Navigator
       initialRouteName="TabNav"
@@ -104,7 +95,6 @@ const MasterStack = () => {
         component={OnboardingLanding}
         options={{ gestureEnabled: false }}
       />
-      <Stack.Screen name="SignupCode" component={SignupCode} />
       <Stack.Screen name="LoginCode" component={LoginCode} />
       <Stack.Screen name="DisplayName" component={DisplayName} />
       <Stack.Screen name="Gamertag" component={Gamertag} />

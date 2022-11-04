@@ -51,6 +51,7 @@ interface NewPublicPostPropsType {
   vaultpostdata: PostHeaderType[];
   vaultfeeddata: PostType[];
   gallerydata: PostType[];
+  publicfeeddata: PostType[];
 }
 
 export interface PostOperationType {
@@ -75,6 +76,7 @@ const NewPublicPost = ({
   vaultpostdata,
   vaultfeeddata,
   gallerydata,
+  publicfeeddata,
 }: NewPublicPostPropsType) => {
   const isodate = new Date().toISOString();
 
@@ -84,7 +86,14 @@ const NewPublicPost = ({
   };
 
   navigation.navigate("TabNav", { screen: "HomeVault" }),
-    PostPublic({ dispatch, item, currentuser, isodate, gallerydata }),
+    PostPublic({
+      dispatch,
+      item,
+      currentuser,
+      isodate,
+      gallerydata,
+      publicfeeddata,
+    }),
     ChangePostPublic({
       postID: item.id,
       contentdate: item.contentdate,
@@ -107,6 +116,7 @@ interface EditOptionsModalPropsType {
   vaultpostdata: PostHeaderType[];
   vaultnexttoken: string | null;
   gallerydata: PostType[];
+  publicfeeddata: PostType[];
 }
 
 interface EditOptionsModal {
@@ -129,6 +139,7 @@ const EditOptionsModal = ({
   vaultpostdata,
   vaultnexttoken,
   gallerydata,
+  publicfeeddata,
 }: EditOptionsModalPropsType) => {
   const HideModal = () => {
     setTimeout(() => {
@@ -233,6 +244,7 @@ const EditOptionsModal = ({
                     vaultpostdata,
                     vaultfeeddata,
                     gallerydata,
+                    publicfeeddata,
                   })
                 }
                 isactive={false}

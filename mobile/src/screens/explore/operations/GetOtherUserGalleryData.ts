@@ -3,6 +3,7 @@ import AddToOtherUserGallery from "./AddToOtherUserGallery";
 import { setFetchingOtherUserGalleryData } from "../../../redux/shared/otheruserprofile";
 import UpdateOtherUserGalleryNextToken from "./UpdateOtherUserGalleryNextToken";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
+import CorrectNextToken from "../../shared/general/operations/CorrectNextToken";
 import { PostsByPostedDateQuery } from "../../../API";
 
 async function GetOtherUserGalleryData({
@@ -22,7 +23,7 @@ async function GetOtherUserGalleryData({
                     cognitosub: "${otheruser.cognitosub}"
                     limit: ${fetchlimit},
                     sortDirection: DESC,
-                    nextToken: ${nextToken}
+                    ${CorrectNextToken({ nextToken })}
                     filter: {
                         publicpost: {
                             eq: true

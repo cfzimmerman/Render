@@ -33,6 +33,9 @@ const EditPost = ({ route, navigation }) => {
   const vaultnexttoken = useSelector(
     (state: RootStateType) => state.vaultpostdata.nextToken
   );
+  const publicfeeddata = useSelector(
+    (state: RootStateType) => state.homemain.publicfeed
+  );
   const edittextmodalactive = useSelector(
     (state: RootStateType) => state.plusmain.edittextmodalactive
   );
@@ -136,6 +139,7 @@ const EditPost = ({ route, navigation }) => {
             vaultpostdata={vaultpostdata}
             vaultnexttoken={vaultnexttoken}
             gallerydata={gallerydata}
+            publicfeeddata={publicfeeddata}
           />
         </View>
         <EditTextModal
@@ -194,6 +198,7 @@ const EditPost = ({ route, navigation }) => {
             vaultpostdata={vaultpostdata}
             vaultnexttoken={vaultnexttoken}
             gallerydata={gallerydata}
+            publicfeeddata={publicfeeddata}
           />
         </View>
         <EditTextModal

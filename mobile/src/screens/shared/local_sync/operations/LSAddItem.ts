@@ -83,7 +83,7 @@ async function LSAddItem({
     }
   } catch (error) {
     // console.log("Error: " + JSON.stringify(error));
-    console.log("🛑 Big Error");
+    console.log("🤖 Big Error");
   }
 }
 
