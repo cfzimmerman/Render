@@ -20,6 +20,11 @@ import HalfbarButton from "./HalfbarButton";
 import CancelUpload from "../../../plus/operations/CancelUpload";
 import { RootStateType } from "../../../../redux";
 
+export interface LoadProgressActiveTypes {
+  title: string;
+  description: string;
+}
+
 const LoadProgressModal = () => {
   const [imBored, setImBored] = useState(0);
 
@@ -102,13 +107,13 @@ export default LoadProgressModal;
 
 import { useDispatch } from 'react-redux';
 
-import { setSystemmessageActive } from "../../../redux/system/systemmessage";
+import { setSystemMessageActive } from "../../../redux/system/systemmessage";
 import { UserDialogue } from '../../../resources/project'
-import { SystemmessageModal } from "../../../resources/molecules";
+import { SystemMessageModal } from "../../../resources/molecules";
 
 const Helper = () => {
     if (condition === met) {
-        dispatch(setSystemmessageActive(UserDialogue().systemmessage.resendcodesuccess))
+        dispatch(setSystemMessageActive(UserDialogue().systemmessage.resendcodesuccess))
     }
 }
 
@@ -119,7 +124,7 @@ const Example = () => {
     Helper( dispatch );
     return (
         ...
-        <SystemmessageModal />
+        <SystemMessageModal />
         ...
     )
 }

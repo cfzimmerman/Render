@@ -1,6 +1,26 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PostType } from "../../global/CommonTypes";
+import {
+  StoriesSectionListItemType,
+  UpdateStoriesDataType,
+} from "../../screens/home_vault/operations/AddToStoriesData";
+import { AddVideoToFeedDataType } from "../../screens/home_vault/operations/AddVideoToStories";
 import { AddedUsersFilterItem } from "../../screens/home_vault/operations/GetAddedUsersFilter";
+type SelectedFeedTypes = "addedfeed" | "publicfeed";
+
+interface DefaultSliceType {
+  addedusersfilter: AddedUsersFilterItem[];
+  storiessectionlist: StoriesSectionListItemType[];
+  storiesfullview: PostType[];
+  addedfeed: PostType[];
+  addedfeednexttoken: string | null;
+  fetchingaddedfeeddata: boolean;
+  publicfeed: PostType[];
+  publicfeednexttoken: string | null;
+  fetchingpublicfeeddata: boolean;
+  gotaddedusersfilter: boolean;
+  selectedfeed: SelectedFeedTypes;
+}
 
 const slice = createSlice({
   name: "homemain",
@@ -15,8 +35,8 @@ const slice = createSlice({
     publicfeednexttoken: null,
     fetchingpublicfeeddata: false,
     gotaddedusersfilter: false,
-    selectedfeed: "addedfeed", // "addedfeed" or "publicfeed"
-  },
+    selectedfeed: "addedfeed",
+  } as DefaultSliceType,
   reducers: {
     clearHome: (state) => {
       state.addedusersfilter.length = 0;
@@ -29,21 +49,27 @@ const slice = createSlice({
       state.gotaddedusersfilter = false;
       state.selectedfeed = "addedfeed";
     },
-    addStoriesSectionListObject: (state, action) => {
-      // state.storiessectionlist.push(action.payload)
+    addStoriesSectionListObject: (
+      state,
+      action: PayloadAction<UpdateStoriesDataType>
+    ) => {
       const index = state.storiessectionlist.findIndex(
-        (item) => item.cognitosub === action.payload.newsection.cognitosub
+        (item: StoriesSectionListItemType) =>
+          item.cognitosub === action.payload.newSection.cognitosub
       );
       if (index < 0) {
-        state.storiessectionlist.push(action.payload.newsection);
+        state.storiessectionlist.push(action.payload.newSection);
       }
-      state.storiesfullview.push(action.payload.newpost);
+      state.storiesfullview.push(action.payload.newPost);
     },
-    addVideoToStories: (state, action) => {
+    addVideoToStories: (
+      state,
+      action: PayloadAction<AddVideoToFeedDataType>
+    ) => {
       state.storiesfullview[action.payload.index].signedurl =
-        action.payload.signedurl;
+        action.payload.signedURL;
     },
-    setStoryViewed: (state, action) => {
+    setStoryViewed: (state, action: PayloadAction<string>) => {
       const index = state.storiessectionlist.findIndex(
         (item) => item.cognitosub === action.payload
       );
@@ -57,49 +83,51 @@ const slice = createSlice({
     ) => {
       state.addedusersfilter.push(action.payload);
     },
-    setGotAddedUsersFilter: (state, action) => {
+    setGotAddedUsersFilter: (state, action: PayloadAction<boolean>) => {
       state.gotaddedusersfilter = action.payload;
     },
-    setAddedFeedNextToken: (state, action) => {
+    setAddedFeedNextToken: (state, action: PayloadAction<string | null>) => {
       state.addedfeednexttoken = action.payload;
     },
-    addToAddedFeed: (state, action) => {
+    addToAddedFeed: (state, action: PayloadAction<PostType>) => {
       state.addedfeed.push(action.payload);
     },
-    setSelectedFeed: (state, action) => {
+    setSelectedFeed: (state, action: PayloadAction<SelectedFeedTypes>) => {
       state.selectedfeed = action.payload;
     },
-    addVideoToAddedFeed: (state, action) => {
+    addVideoToAddedFeed: (
+      state,
+      action: PayloadAction<AddVideoToFeedDataType>
+    ) => {
       state.addedfeed[action.payload.index].signedurl =
-        action.payload.signedurl;
+        action.payload.signedURL;
     },
-    addPfpToAddedFeedPost: (state, action) => {
-      state.addedfeed[action.payload.index].userpfpurl =
-        action.payload.userpfpurl;
-    },
-    addToPublicFeed: (state, action) => {
+    addToPublicFeed: (state, action: PayloadAction<PostType>) => {
       state.publicfeed.push(action.payload);
     },
-    addVideoToPublicFeed: (state, action) => {
+    addVideoToPublicFeed: (
+      state,
+      action: PayloadAction<AddVideoToFeedDataType>
+    ) => {
       state.publicfeed[action.payload.index].signedurl =
-        action.payload.signedurl;
+        action.payload.signedURL;
     },
-    setPublicFeedNextToken: (state, action) => {
+    setPublicFeedNextToken: (state, action: PayloadAction<string | null>) => {
       state.publicfeednexttoken = action.payload;
     },
-    stackPublicFeedUpdate: (state, action) => {
+    stackPublicFeedUpdate: (state, action: PayloadAction<PostType>) => {
       state.publicfeed.unshift(action.payload);
     },
-    excisePublicFeedPost: (state, action) => {
+    excisePublicFeedPost: (state, action: PayloadAction<number>) => {
       state.publicfeed.splice(action.payload, 1);
     },
-    stackAddedFeedUpdate: (state, action) => {
+    stackAddedFeedUpdate: (state, action: PayloadAction<PostType>) => {
       state.addedfeed.unshift(action.payload);
     },
-    setFetchingAddedFeedData: (state, action) => {
+    setFetchingAddedFeedData: (state, action: PayloadAction<boolean>) => {
       state.fetchingaddedfeeddata = action.payload;
     },
-    setFetchingPublicFeedData: (state, action) => {
+    setFetchingPublicFeedData: (state, action: PayloadAction<boolean>) => {
       state.fetchingpublicfeeddata = action.payload;
     },
   },
@@ -115,7 +143,6 @@ export const {
   addToAddedFeed,
   setSelectedFeed,
   addVideoToAddedFeed,
-  addPfpToAddedFeedPost,
   addToPublicFeed,
   addVideoToPublicFeed,
   setPublicFeedNextToken,

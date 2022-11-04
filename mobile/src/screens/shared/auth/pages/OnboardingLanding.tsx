@@ -13,12 +13,12 @@ import { GlobalStyles, Environment, Colors, Icons } from "../../../../global";
 import NextButton from "../components/NextButton";
 
 import OnboardingLandingImage from "../../general/components/OnboardingLandingImage";
-import ErrormessageModal from "../../general/components/ErrormessageModal";
 import OnboardingScreenTemplate from "../components/OnboardingScreenTemplate";
 import InitiateAuthFlow from "../operations/InitiateAuthFlow";
 
 import { Auth } from "aws-amplify";
 import { RootStateType } from "../../../../redux";
+import ErrorMessageModal from "../../general/components/ErrorMessageModal";
 
 async function IsNewUser({ userinfo, navigation, dispatch }) {
   const input3 = userinfo.email.trim();
@@ -79,7 +79,7 @@ const OnboardingLanding = ({ navigation }) => {
 
   return (
     <OnboardingScreenTemplate options={Items}>
-      <ErrormessageModal />
+      <ErrorMessageModal />
       <KeyboardAvoidingView style={styles.boxContainer}>
         <View style={[styles.bar, GlobalStyles.irregularshadow]}>
           <TextInput

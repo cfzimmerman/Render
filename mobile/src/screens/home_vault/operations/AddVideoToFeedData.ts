@@ -4,11 +4,7 @@ import { Storage } from "aws-amplify";
 import { LSLibraryItemType } from "../../../redux/shared/localsync";
 import { DispatchType } from "../../../redux";
 import LSAddItem from "../../shared/local_sync/operations/LSAddItem";
-
-export interface AddVideoToFeedDataPropsType {
-  index: number;
-  signedurl: string;
-}
+import { AddVideoToFeedDataType } from "./AddVideoToStories";
 
 async function AddVideoToFeedData({
   dispatch,
@@ -28,25 +24,20 @@ async function AddVideoToFeedData({
   const contentExists = await FileSystem.getInfoAsync(contentAddress);
 
   if (contentExists.exists === true) {
-    const update: AddVideoToFeedDataPropsType = {
+    const update: AddVideoToFeedDataType = {
       index: index,
-      signedurl: contentAddress,
+      signedURL: contentAddress,
     };
     dispatch(addVideoToFeedData(update));
   } else {
-    const signedurl = await Storage.get(contentkey, { expires: 86400 });
+    const signedURL = await Storage.get(contentkey, { expires: 86400 });
 
-    const update: AddVideoToFeedDataPropsType = {
-      index: index,
-      signedurl: signedurl,
-    };
-
-    dispatch(addVideoToFeedData(update));
+    dispatch(addVideoToFeedData({ index, signedURL }));
 
     if (syncPreference === "All") {
       LSAddItem({
         contentkey,
-        signedurl,
+        signedurl: signedURL,
         localLibrary,
         dispatch,
       });

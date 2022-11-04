@@ -1,32 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+interface InitialSliceTypes {
+  edittextmodalactive: boolean;
+}
 
 const slice = createSlice({
   name: "plusmain",
   initialState: {
-    uploadarray: [],
     edittextmodalactive: false,
-  },
+  } as InitialSliceTypes,
   reducers: {
-    addToUploadArray: (state, action) => {
-      state.uploadarray.unshift(action.payload);
-    },
-    clearUploadArray: (state, action) => {
-      state.uploadarray.length = 0;
-      state.edittextmodalactive = false;
-    },
-    clearPlus: (state) => {
-      state.uploadarray.length = 0;
-    },
-    setEditTextModalActive: (state, action) => {
+    setEditTextModalActive: (state, action: PayloadAction<boolean>) => {
       state.edittextmodalactive = action.payload;
     },
   },
 });
 
-export const {
-  addToUploadArray,
-  clearUploadArray,
-  clearPlus,
-  setEditTextModalActive,
-} = slice.actions;
+export const { setEditTextModalActive } = slice.actions;
 export default slice.reducer;

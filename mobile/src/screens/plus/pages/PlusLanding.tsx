@@ -11,7 +11,7 @@ import * as ImagePicker from "expo-image-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setSystemmessageActive } from "../../../redux/shared/messagemodal";
+import { setSystemMessageActive } from "../../../redux/shared/messagemodal";
 import {
   GlobalStyles,
   Environment,
@@ -21,7 +21,7 @@ import {
 } from "../../../global";
 import PrimaryDivider from "../../shared/general/components/PrimaryDivider";
 import LoadProgressModal from "../../shared/general/components/LoadProgressModal";
-import SystemmessageModal from "../../shared/general/components/SystemmessageModal";
+import SystemMessageModal from "../../shared/general/components/SystemMessageModal";
 
 import GetContentDate from "../operations/GetContentDate";
 import UploadImage from "../operations/UploadImage";
@@ -142,7 +142,7 @@ const PlusLanding = ({ navigation }) => {
         ).toString()} seconds.`,
       };
 
-      dispatch(setSystemmessageActive(userdialogue));
+      dispatch(setSystemMessageActive(userdialogue));
       return;
     }
 
@@ -242,7 +242,7 @@ const PlusLanding = ({ navigation }) => {
           </View>
         </View>
       </ScrollView>
-      <SystemmessageModal />
+      <SystemMessageModal />
       <LoadProgressModal />
     </SafeAreaView>
   );

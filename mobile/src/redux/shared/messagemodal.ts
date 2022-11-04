@@ -54,13 +54,13 @@ const slice = createSlice({
       state.buttonmessagemodal.rightButton.Action = null;
       state.buttonmessagemodal.rightButton.title = " ";
     },
-    setSystemmessageActive: (state, action) => {
+    setSystemMessageActive: (state, action) => {
       state.systemmessagemodal.isactive = true;
       state.systemmessagemodal.header = action.payload.header;
       state.systemmessagemodal.title = action.payload.title;
       state.systemmessagemodal.description = action.payload.description;
     },
-    setSystemmessageInactive: (state) => {
+    setSystemMessageInactive: (state) => {
       state.systemmessagemodal.isactive = false;
     },
     setButtonMessageActive: (
@@ -95,8 +95,8 @@ const slice = createSlice({
 });
 
 export const {
-  setSystemmessageActive,
-  setSystemmessageInactive,
+  setSystemMessageActive,
+  setSystemMessageInactive,
   clearSystemMessage,
   setButtonMessageActive,
   setButtonMessageInactive,

@@ -1,10 +1,12 @@
 import * as FileSystem from "expo-file-system";
-import { setFetchingData } from "../../../redux/shared/vaultpostdata";
+import {
+  setFetchingData,
+  setVaultNextToken,
+} from "../../../redux/shared/vaultpostdata";
 import { Environment } from "../../../global";
 import CreateNewMonth from "./CreateNewMonth";
 import AddToCurrentMonth from "./AddToCurrentMonth";
 import AddToFullviewList from "./AddToFullViewList";
-import ChangeNextToken from "./ChangeNextToken";
 
 import { Storage, API, graphqlOperation } from "aws-amplify";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
@@ -68,11 +70,6 @@ export interface AddToCurrentMonthPropsType {
   item: GetPostsReturnType;
   signedurl: string | null;
   thumbnailurl: string | null;
-}
-
-export interface ChangeNextTokenPropsType {
-  dispatch: DispatchType;
-  nextToken: string | null;
 }
 
 async function GetVaultData({
@@ -316,7 +313,7 @@ async function GetVaultData({
         typeof userposts[loadlimit[0] - 1] === "undefined" ||
         item.id === userposts[loadlimit[0] - 1].id
       ) {
-        ChangeNextToken({ dispatch, nextToken: token });
+        dispatch(setVaultNextToken(token));
         dispatch(setFetchingData(false));
       }
     });

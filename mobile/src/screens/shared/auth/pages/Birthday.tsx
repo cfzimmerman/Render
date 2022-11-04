@@ -12,8 +12,8 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Auth, API, graphqlOperation } from "aws-amplify";
-import { setErrormessageActive } from "../../../../redux/shared/errormessage";
-import { setSystemmessageActive } from "../../../../redux/shared/messagemodal";
+import { setErrorMessageActive } from "../../../../redux/shared/errormessage";
+import { setSystemMessageActive } from "../../../../redux/shared/messagemodal";
 
 import {
   GlobalStyles,
@@ -22,8 +22,8 @@ import {
   UserDialogue,
 } from "../../../../global";
 import IsDarkMode from "../../general/operations/IsDarkMode";
-import ErrormessageModal from "../../general/components/ErrormessageModal";
-import SystemmessageModal from "../../general/components/SystemmessageModal";
+import ErrorMessageModal from "../../general/components/ErrorMessageModal";
+import SystemMessageModal from "../../general/components/SystemMessageModal";
 import OnboardingScreenTemplate from "../components/OnboardingScreenTemplate";
 
 import { updateUsers } from "../../../../graphql/mutations";
@@ -35,7 +35,7 @@ async function AddBirthday({ input, navigation, dispatch }) {
   const birthday = format(input, "yyyy-MM-dd");
 
   if (age < 365 * 13) {
-    dispatch(setSystemmessageActive(UserDialogue().systemmessage.usertooyoung));
+    dispatch(setSystemMessageActive(UserDialogue().systemmessage.usertooyoung));
     return;
   }
 
@@ -60,7 +60,7 @@ async function UpdateBirthday({ birthday, userid, navigation, dispatch }) {
   try {
     await API.graphql(graphqlOperation(updateUsers, { input: updateduser }));
   } catch (error) {
-    dispatch(setErrormessageActive(UserDialogue("9").errormessage.systemerror));
+    dispatch(setErrorMessageActive(UserDialogue("9").errormessage.systemerror));
     return;
   }
 
@@ -141,8 +141,8 @@ const Birthday = () => {
 
   return (
     <OnboardingScreenTemplate options={Items}>
-      <ErrormessageModal />
-      <SystemmessageModal />
+      <ErrorMessageModal />
+      <SystemMessageModal />
       <KeyboardAvoidingView style={styles.boxcontainer}>
         <View style={[GlobalStyles.shadow, styles.box]}>
           <TouchableOpacity

@@ -6,7 +6,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { Environment, Colors } from "../../../global";
 
 import { clearCommentsData } from "../../../redux/socialmain";
-import { setFetchingData } from "../../../redux/shared/vaultpostdata";
+import {
+  setFetchingData,
+  setFocusViewActive,
+} from "../../../redux/shared/vaultpostdata";
 import { setFetchingGalleryData } from "../../../redux/profilemain";
 import { setFetchingOtherUserGalleryData } from "../../../redux/shared/otheruserprofile";
 import {
@@ -14,8 +17,6 @@ import {
   setFetchingPublicFeedData,
 } from "../../../redux/shared/homemain";
 import ChangeActivePost from "../operations/ChangeActivePost";
-import ChangeFocusView from "../operations/ChangeFocusView";
-import ChangeLandscape from "../operations/ChangeLandscape";
 import FullViewContent from "../../shared/content_display/components/FullViewContent";
 import GetAddedFeedData from "../operations/GetAddedFeedData";
 import GetOtherUserGalleryData from "../../explore/operations/GetOtherUserGalleryData";
@@ -25,12 +26,13 @@ import GetVaultData from "../operations/GetVaultData";
 import UpdatePostInteraction from "../../shared/content_display/operations/UpdatePostInteraction";
 import UpdateStoriesViewed from "../operations/UpdateStoriesViewed";
 import { RootStateType } from "../../../redux";
-import SystemmessageModal from "../../shared/general/components/SystemmessageModal";
+import SystemMessageModal from "../../shared/general/components/SystemMessageModal";
 import GameInfoModal from "../../shared/game_tags/components/GameInfoModal";
 import { setHVGameSearchActive } from "../../../redux/shared/gametags";
 import HVGetGamePosts from "../../shared/game_tags/operations/HVGetGamePosts";
 import { setPGFullGamePostSearchActive } from "../../../redux/exploremain";
 import PGGetGamePosts from "../../shared/public_game/operations/PGGetGamePosts";
+import { setLandscapeActive } from "../../../redux/shared/pageoptions";
 
 export type VaultPostFullViewUsecaseTypes =
   | "vault"
@@ -279,11 +281,6 @@ const VaultPostFullView = ({ navigation, route }) => {
         resultsLimit: 10,
       });
     }
-    /*
-     else if (usecase === "stories" || usecase === "universal") {
-      console.log("EndReached");
-    }
-    */
   };
 
   const dispatch = useDispatch();
@@ -295,11 +292,11 @@ const VaultPostFullView = ({ navigation, route }) => {
       change.orientationInfo.orientation === 3 ||
       change.orientationInfo.orientation === 4
     ) {
-      ChangeLandscape({ dispatch: dispatch, set: true });
-      ChangeFocusView({ dispatch: dispatch, set: true });
+      dispatch(setLandscapeActive(true));
+      dispatch(setFocusViewActive(true));
       navigation.navigate("VaultPostFocusView", { usecase: usecase });
     } else {
-      ChangeLandscape({ dispatch: dispatch, set: false });
+      dispatch(setLandscapeActive(false));
     }
   });
 
@@ -366,7 +363,7 @@ const VaultPostFullView = ({ navigation, route }) => {
         onEndReachedThreshold={1.5}
         onEndReached={EndReached}
       />
-      <SystemmessageModal />
+      <SystemMessageModal />
       <GameInfoModal />
     </View>
   );

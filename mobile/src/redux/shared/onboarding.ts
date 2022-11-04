@@ -1,5 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+interface DefaultSliceType {
+  imageurls: {
+    squarelogo: string | null;
+    onboardinglanding: string | null;
+    signup: string | null;
+    displayname: string | null;
+    gamertag: string | null;
+    birthday: string | null;
+    tos: string | null;
+  };
+  cognitouser: string | null;
+}
+
 const slice = createSlice({
   name: "onboarding",
   initialState: {
@@ -13,7 +26,7 @@ const slice = createSlice({
       tos: null,
     },
     cognitouser: null,
-  },
+  } as DefaultSliceType,
   reducers: {
     clearOnboarding: (state) => {
       state.imageurls = {
@@ -44,5 +57,6 @@ const slice = createSlice({
   },
 });
 
-export const { clearOnboarding, setOnboardingImages, setCognitoUser } = slice.actions;
+export const { clearOnboarding, setOnboardingImages, setCognitoUser } =
+  slice.actions;
 export default slice.reducer;

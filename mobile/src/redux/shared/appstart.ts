@@ -1,4 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PageAssetsType } from "../../screens/home_vault/operations/GetPageAssets";
+
+interface InitialSliceTypes {
+  authenticated: boolean;
+  initialdataloaded: boolean;
+  pageassets: PageAssetsType | null;
+}
 
 const slice = createSlice({
   name: "appstart",
@@ -6,34 +13,22 @@ const slice = createSlice({
     authenticated: false,
     initialdataloaded: false,
     pageassets: null,
-  },
+  } as InitialSliceTypes,
   reducers: {
     clearAppStart: (state) => {
       state.authenticated = false;
       state.initialdataloaded = false;
       state.pageassets = null;
     },
-    setAllLoaded: (state) => {
-      state.authenticated = true;
-      state.initialdataloaded = true;
-    },
     setUserAuthenticated: (state) => {
       state.authenticated = true;
     },
-    setPageAssets: (state, action) => {
+    setPageAssets: (state, action: PayloadAction<PageAssetsType>) => {
       state.pageassets = action.payload;
-    },
-    addToPageAssets: (state, action) => {
-      state.pageassets[action.payload.key] = action.payload.value;
     },
   },
 });
 
-export const {
-  setAllLoaded,
-  setUserAuthenticated,
-  setPageAssets,
-  addToPageAssets,
-  clearAppStart,
-} = slice.actions;
+export const { setUserAuthenticated, setPageAssets, clearAppStart } =
+  slice.actions;
 export default slice.reducer;

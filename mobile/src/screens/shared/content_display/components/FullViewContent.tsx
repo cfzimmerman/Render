@@ -300,18 +300,6 @@ const FullViewContent = ({
     );
   }
 
-  /*
-
-        <PinchGestureHandler
-          onBegan={() => {
-            ChangeFocusView({ dispatch, set: true }),
-              navigation.navigate("VaultPostFocusView", {
-                usecase,
-              });
-          }}
-        >
-
-  */
   return (
     <GestureRecognizer
       onSwipeDown={() => {

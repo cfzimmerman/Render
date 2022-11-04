@@ -1,4 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { OtherUserType } from "../../screens/explore/operations/EnterProfileFromSearch";
+import { AddedMeUsersType } from "../../screens/profile/operations/AddToAddedMeUsers";
+
+interface DefaultSliceType {
+  added: OtherUserType[];
+  addednexttoken: string | null;
+  addedme: AddedMeUsersType[];
+  addedmenexttoken: string | null;
+}
 
 const slice = createSlice({
   name: "relationships",
@@ -7,7 +16,7 @@ const slice = createSlice({
     addednexttoken: null,
     addedme: [],
     addedmenexttoken: null,
-  },
+  } as DefaultSliceType,
   reducers: {
     clearRelationships: (state) => {
       state.added.length = 0;
@@ -15,38 +24,24 @@ const slice = createSlice({
       state.addedme.length = 0;
       state.addedmenexttoken = null;
     },
-    addToAdded: (state, action) => {
+    addToAddedUsers: (state, action: PayloadAction<OtherUserType>) => {
       state.added.push(action.payload);
     },
-    clearAdded: (state, action) => {
-      state.added.length = 0;
-      state.addednexttoken = null;
-    },
-    setAddedNextToken: (state, action) => {
+    setAddedNextToken: (state, action: PayloadAction<string | null>) => {
       state.addednexttoken = action.payload;
     },
-    changeAddedMeRelationship: (state, action) => {
-      state.addedme[action.payload].relationship = true;
-      state.addedme[action.payload].addedmecount = state.addedme[action.payload].addedmecount + 1;
-    },
-    addToAddedMe: (state, action) => {
+    addToAddedMe: (state, action: PayloadAction<AddedMeUsersType>) => {
       state.addedme.push(action.payload);
     },
-    clearAddedMe: (state, action) => {
-      state.addedme.length = 0;
-    },
-    setAddedMeNextToken: (state, action) => {
+    setAddedMeNextToken: (state, action: PayloadAction<string | null>) => {
       state.addedmenexttoken = action.payload;
     },
   },
 });
 
 export const {
-  addToAdded,
-  clearAdded,
+  addToAddedUsers,
   addToAddedMe,
-  clearAddedMe,
-  changeAddedMeRelationship,
   setAddedNextToken,
   setAddedMeNextToken,
   clearRelationships,

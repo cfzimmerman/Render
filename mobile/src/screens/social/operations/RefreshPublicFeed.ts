@@ -13,7 +13,7 @@ async function AddUpdatedPublicPost({ item, dispatch }) {
       expires: 86400,
     });
 
-    const post = {
+    const post: PostType = {
       id: item.id,
       contenttype: item.contenttype,
       aspectratio: item.aspectratio,
@@ -28,6 +28,9 @@ async function AddUpdatedPublicPost({ item, dispatch }) {
       displayname: item.Users.displayname,
       userpfp: item.Users.pfp,
       userpfpurl: null,
+      gamesID: item.Games === null ? null : item.Games.id,
+      coverID: item.Games === null ? null : item.Games.coverID,
+      title: item.Games === null ? null : item.Games.title,
     };
 
     dispatch(stackPublicFeedUpdate(post));
@@ -35,7 +38,7 @@ async function AddUpdatedPublicPost({ item, dispatch }) {
     const signedurl = await Storage.get(item.contentkey, { expires: 86400 });
     const thumbnailurl = null;
 
-    const post = {
+    const post: PostType = {
       id: item.id,
       contenttype: item.contenttype,
       aspectratio: item.aspectratio,
@@ -50,6 +53,9 @@ async function AddUpdatedPublicPost({ item, dispatch }) {
       displayname: item.Users.displayname,
       userpfp: item.Users.pfp,
       userpfpurl: null,
+      gamesID: item.Games === null ? null : item.Games.id,
+      coverID: item.Games === null ? null : item.Games.coverID,
+      title: item.Games === null ? null : item.Games.title,
     };
     dispatch(stackPublicFeedUpdate(post));
   }

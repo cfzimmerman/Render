@@ -2,14 +2,9 @@ import { Storage } from "aws-amplify";
 import { addVideoToOtherUserGalleryData } from "../../../redux/shared/otheruserprofile";
 
 async function AddVideoToOtherUserGallery({ dispatch, index, contentkey }) {
-  const signedurl = await Storage.get(contentkey, { expires: 86400 });
+  const signedURL = await Storage.get(contentkey, { expires: 86400 });
 
-  const Update = {
-    index,
-    signedurl,
-  };
-
-  dispatch(addVideoToOtherUserGalleryData(Update));
+  dispatch(addVideoToOtherUserGalleryData({ signedURL, index }));
 }
 
 export default AddVideoToOtherUserGallery;

@@ -1,9 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { PostType } from "../global/CommonTypes";
 import { SetGameInfoModalInputs } from "../screens/shared/game_tags/components/GameInfoModal";
 
 type PostID = string;
-// Just using this for semantic clarity
+// Just using this for readability
 
 interface HomeVaultMainDefaultSliceType {
   selectedPosts: PostID[];

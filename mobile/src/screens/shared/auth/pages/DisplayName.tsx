@@ -10,16 +10,16 @@ import { IconButton } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Auth, API, graphqlOperation } from "aws-amplify";
-import { setErrormessageActive } from "../../../../redux/shared/errormessage";
-import { setSystemmessageActive } from "../../../../redux/shared/messagemodal";
+import { setErrorMessageActive } from "../../../../redux/shared/errormessage";
+import { setSystemMessageActive } from "../../../../redux/shared/messagemodal";
 import {
   GlobalStyles,
   Environment,
   Colors,
   UserDialogue,
 } from "../../../../global";
-import ErrormessageModal from "../../general/components/ErrormessageModal";
-import SystemmessageModal from "../../general/components/SystemmessageModal";
+import ErrorMessageModal from "../../general/components/ErrorMessageModal";
+import SystemMessageModal from "../../general/components/SystemMessageModal";
 import OnboardingScreenTemplate from "../components/OnboardingScreenTemplate";
 
 import { updateUsers } from "../../../../graphql/mutations";
@@ -34,7 +34,7 @@ async function AddDisplayName({ input, navigation, dispatch }) {
 
   if (trimmedinput.length > 20 || trimmedinput.length < 2) {
     dispatch(
-      setSystemmessageActive(UserDialogue().systemmessage.impropernameformat)
+      setSystemMessageActive(UserDialogue().systemmessage.impropernameformat)
     );
     return;
   }
@@ -56,7 +56,7 @@ async function UpdateName({ displayname, userid, navigation, dispatch }) {
   try {
     await API.graphql(graphqlOperation(updateUsers, { input: userobject }));
   } catch (error) {
-    dispatch(setErrormessageActive(UserDialogue("7").errormessage.systemerror));
+    dispatch(setErrorMessageActive(UserDialogue("7").errormessage.systemerror));
     return;
   }
 
@@ -108,8 +108,8 @@ const DisplayName = () => {
 
   return (
     <OnboardingScreenTemplate options={Items}>
-      <ErrormessageModal />
-      <SystemmessageModal />
+      <ErrorMessageModal />
+      <SystemMessageModal />
       <KeyboardAvoidingView style={styles.boxContainer}>
         <View style={[styles.box, GlobalStyles.shadow]}>
           <TextInput

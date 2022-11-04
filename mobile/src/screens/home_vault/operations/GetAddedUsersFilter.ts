@@ -41,11 +41,9 @@ async function GetAddedUsersFilter({ dispatch, currentuser }) {
     dispatch(setGotAddedUsersFilter(true));
   } else {
     userArray.forEach((item) => {
-      // @ts-ignore
       if (item.ReceiverUser != null) {
         const filterObject: AddedUsersFilterItem = {
           usersID: {
-            // @ts-ignore
             eq: item.ReceiverUser.id,
           },
         };

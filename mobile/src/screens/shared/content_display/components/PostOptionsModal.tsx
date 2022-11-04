@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import {
   setShareActive,
   setPostPublicModal,
+  setFocusViewActive,
 } from "../../../../redux/shared/vaultpostdata";
 import BackArrow from "../../general/components/BackArrow";
 import CubeSizeButton from "../../general/components/CubeSizeButton";
@@ -26,7 +27,6 @@ import {
   Icons,
   UserDialogue,
 } from "../../../../global";
-import ChangeFocusView from "../../../home_vault/operations/ChangeFocusView";
 import PostShareModal from "./PostShareModal";
 import { DispatchType, RootStateType } from "../../../../redux";
 import { VaultPostFullViewUsecaseTypes } from "../../../home_vault/pages/VaultPostFullView";
@@ -35,7 +35,7 @@ import { PostType } from "../../../../global/CommonTypes";
 
 import GetGameCoverThumbnailURL from "../../game_tags/operations/GetGameCoverThumbnailURL";
 import { setGameInfoModal } from "../../../../redux/homevaultmain";
-import { setSystemmessageActive } from "../../../../redux/shared/messagemodal";
+import { setSystemMessageActive } from "../../../../redux/shared/messagemodal";
 import EnterComments from "../operations/EnterComments";
 
 interface EnterCommentsPropTypes {
@@ -228,7 +228,7 @@ const PostOptionsModal = ({
               <CubeSizeButton
                 Icon={Icons.OriginalSize.FullScreen}
                 Action={() => {
-                  ChangeFocusView({ dispatch, set: true }),
+                  dispatch(setFocusViewActive(true)),
                     navigation.navigate("VaultPostFocusView", {
                       usecase: "vault",
                     });
@@ -305,7 +305,7 @@ const PostOptionsModal = ({
               <CubeSizeButton
                 Icon={Icons.OriginalSize.FullScreen}
                 Action={() => {
-                  ChangeFocusView({ dispatch, set: true }),
+                  dispatch(setFocusViewActive(true)),
                     navigation.navigate("VaultPostFocusView", {
                       usecase: usecase,
                     });
@@ -357,7 +357,7 @@ const PostOptionsModal = ({
                   );
                 } else {
                   dispatch(
-                    setSystemmessageActive(
+                    setSystemMessageActive(
                       UserDialogue().systemmessage.noGameTagged
                     )
                   );
@@ -377,7 +377,7 @@ const PostOptionsModal = ({
             <CubeSizeButton
               Icon={Icons.OriginalSize.FullScreen}
               Action={() => {
-                ChangeFocusView({ dispatch, set: true }),
+                dispatch(setFocusViewActive(true)),
                   navigation.navigate("VaultPostFocusView", {
                     usecase,
                   });

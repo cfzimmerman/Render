@@ -10,7 +10,7 @@ import {
   setVaultRefreshDate,
 } from "../../../redux/shared/vaultpostdata";
 import { GlobalStyles, Environment, Colors, Icons } from "../../../global";
-import SystemmessageModal from "../../shared/general/components/SystemmessageModal";
+import SystemMessageModal from "../../shared/general/components/SystemMessageModal";
 import GetAddedUsersFilter from "../operations/GetAddedUsersFilter";
 import GetStoriesData from "../operations/GetStoriesData";
 import GetVaultData from "../operations/GetVaultData";
@@ -273,7 +273,7 @@ const HomeVaultLanding = ({ navigation }) => {
           firstvaultupload: currentuser.firstvaultupload,
         })}
       />
-      <SystemmessageModal />
+      <SystemMessageModal />
       <HomeVaultOptionsBar />
     </View>
   );

@@ -13,8 +13,8 @@ import { IconButton } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Auth, API, graphqlOperation } from "aws-amplify";
-import { setErrormessageActive } from "../../../../redux/shared/errormessage";
-import { setSystemmessageActive } from "../../../../redux/shared/messagemodal";
+import { setErrorMessageActive } from "../../../../redux/shared/errormessage";
+import { setSystemMessageActive } from "../../../../redux/shared/messagemodal";
 import {
   GlobalStyles,
   Environment,
@@ -22,8 +22,8 @@ import {
   Icons,
   UserDialogue,
 } from "../../../../global";
-import ErrormessageModal from "../../general/components/ErrormessageModal";
-import SystemmessageModal from "../../general/components/SystemmessageModal";
+import ErrorMessageModal from "../../general/components/ErrorMessageModal";
+import SystemMessageModal from "../../general/components/SystemMessageModal";
 import OnboardingScreenTemplate from "../components/OnboardingScreenTemplate";
 
 import { updateUsers } from "../../../../graphql/mutations";
@@ -47,7 +47,7 @@ async function AddGamertag({ input, navigation, dispatch }) {
   // Checks to ensure name doesn't exceed length limit
   if (trimmedinput.length > 20 || trimmedinput.length < 2) {
     dispatch(
-      setSystemmessageActive(UserDialogue().systemmessage.impropernameformat)
+      setSystemMessageActive(UserDialogue().systemmessage.impropernameformat)
     );
     return;
   }
@@ -60,7 +60,7 @@ async function AddGamertag({ input, navigation, dispatch }) {
 
   if (userarray.length > 0) {
     dispatch(
-      setSystemmessageActive(UserDialogue().systemmessage.namealreadytaken)
+      setSystemMessageActive(UserDialogue().systemmessage.namealreadytaken)
     );
     return;
   }
@@ -85,7 +85,7 @@ async function UpdateName({ gamertag, userid, navigation, dispatch }) {
   try {
     await API.graphql(graphqlOperation(updateUsers, { input: updateduser }));
   } catch (error) {
-    dispatch(setErrormessageActive(UserDialogue("8").errormessage.systemerror));
+    dispatch(setErrorMessageActive(UserDialogue("8").errormessage.systemerror));
     return;
   }
 
@@ -158,8 +158,8 @@ function Gamertag() {
 
   return (
     <OnboardingScreenTemplate options={Items}>
-      <ErrormessageModal />
-      <SystemmessageModal />
+      <ErrorMessageModal />
+      <SystemMessageModal />
       <View style={styles.contentcontainer}>
         <KeyboardAvoidingView style={styles.boxcontainer}>
           <View style={[GlobalStyles.shadow, styles.box]}>

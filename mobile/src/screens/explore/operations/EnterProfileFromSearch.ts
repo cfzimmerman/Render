@@ -1,6 +1,15 @@
 import GetFullUserRelationship from "./GetFullUserRelationship";
 import { setOtherUser } from "../../../redux/shared/otheruserprofile";
 
+export interface OtherUserType {
+  id: string;
+  displayname: string;
+  gamertag: string;
+  cognitosub: string;
+  pfpurl: string;
+  addedmecount: number;
+}
+
 const EnterProfileFromSearch = ({
   item,
   navigation,
@@ -8,7 +17,7 @@ const EnterProfileFromSearch = ({
   currentuser,
 }) => {
   async function AssembleData() {
-    const otheruser = {
+    const otheruser: OtherUserType = {
       id: item.id,
       displayname: item.displayname,
       gamertag: item.gamertag,

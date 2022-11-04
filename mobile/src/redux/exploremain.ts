@@ -46,20 +46,19 @@ const slice = createSlice({
     pgFullGamePostSearchActive: false,
   } as InitialSliceTypes,
   reducers: {
-    clearExplore: (state, action) => {
+    clearExplore: (state) => {
       state.userSearchResult.length = 0;
       state.userSearchNextToken = null;
     },
-    addToUserSearchResult: (state, action) => {
+    addToUserSearchResult: (
+      state,
+      action: PayloadAction<UserSearchResultType>
+    ) => {
       state.userSearchResult.push(action.payload);
     },
     clearUserSearchResult: (state) => {
       state.userSearchResult = emptyArray;
       state.userSearchNextToken = null;
-    },
-    changeFriendStatus: (state, action) => {
-      state.userSearchResult[action.payload.index].relationship =
-        action.payload.status;
     },
     setUserSearchResultsArray: (
       state,
@@ -139,7 +138,6 @@ const slice = createSlice({
 export const {
   addToUserSearchResult,
   clearUserSearchResult,
-  changeFriendStatus,
   clearExplore,
   setUserSearchResultsArray,
   addNextUserSearchResultsArray,

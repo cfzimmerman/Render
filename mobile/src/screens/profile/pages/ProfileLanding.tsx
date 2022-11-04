@@ -10,7 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import TouchableScale from "react-native-touchable-scale";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setSystemmessageActive } from "../../../redux/shared/messagemodal";
+import { setSystemMessageActive } from "../../../redux/shared/messagemodal";
 import {
   GlobalStyles,
   Environment,
@@ -27,7 +27,7 @@ import GetAddedMeUsers from "../operations/GetAddedMeUsers";
 import GetCurrentUser from "../operations/GetCurrentUser";
 import GetPfp from "../operations/GetPfp";
 import ProfileNavOptions from "../components/ProfileNavOptions";
-import SystemmessageModal from "../../shared/general/components/SystemmessageModal";
+import SystemMessageModal from "../../shared/general/components/SystemMessageModal";
 import LoadProgressModal from "../../shared/general/components/LoadProgressModal";
 import LinkCopyDisplay from "../../shared/general/components/LinkCopyDisplay";
 import { RootStateType } from "../../../redux";
@@ -164,7 +164,7 @@ const ProfileLanding = ({ navigation }) => {
           label={" "}
           Action={() =>
             dispatch(
-              setSystemmessageActive(
+              setSystemMessageActive(
                 UserDialogue().systemmessage.shareconstruction
               )
             )
@@ -198,7 +198,7 @@ const ProfileLanding = ({ navigation }) => {
         />
       </View>
       <LoadProgressModal />
-      <SystemmessageModal />
+      <SystemMessageModal />
     </ScrollView>
   );
 };

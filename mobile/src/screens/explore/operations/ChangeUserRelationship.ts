@@ -1,5 +1,4 @@
 import { API, graphqlOperation } from "aws-amplify";
-import { changeAddedMeRelationship } from "../../../redux/shared/relationships";
 import { removeAddBackUser } from "../../../redux/profilemain";
 import { setOtherUserRelationship } from "../../../redux/shared/otheruserprofile";
 
@@ -15,6 +14,11 @@ import AddNewNotification, {
 } from "../../shared/notifications/operations/AddNewNotification";
 import { Code3001PayloadType } from "../../shared/notifications/operations/NotificationLibrary";
 import CreateCode3001Notification from "../../shared/notifications/operations/NotificationActions/CreateCode3001Notification";
+
+export interface SetUserRelationshipType {
+  relationship: boolean;
+  increment: number;
+}
 
 const UpdateOtherUserProfile = ({ action, dispatch }) => {
   const addeduser = {
@@ -32,20 +36,6 @@ const UpdateOtherUserProfile = ({ action, dispatch }) => {
   } else if (action === "remove") {
     dispatch(setOtherUserRelationship(removeduser));
   }
-};
-
-const UpdateAddedMeUsers = ({ dispatch, index, addbackusersindex }) => {
-  dispatch(changeAddedMeRelationship(index));
-  if (addbackusersindex != null) {
-    dispatch(removeAddBackUser(addbackusersindex));
-  }
-};
-
-const UpdateAddBackUsers = ({ dispatch, index, addedmeusersindex }) => {
-  if (addedmeusersindex != null) {
-    dispatch(changeAddedMeRelationship(addedmeusersindex));
-  }
-  dispatch(removeAddBackUser(index));
 };
 
 async function AddUser({

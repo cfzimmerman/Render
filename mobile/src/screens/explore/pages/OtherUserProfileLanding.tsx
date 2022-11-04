@@ -10,10 +10,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import TouchableScale from "react-native-touchable-scale";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setSystemmessageActive } from "../../../redux/shared/messagemodal";
+import { setSystemMessageActive } from "../../../redux/shared/messagemodal";
 import BackArrow from "../../shared/general/components/BackArrow";
 import IconHalfbarButton from "../../shared/general/components/IconHalfbarButton";
-import SystemmessageModal from "../../shared/general/components/SystemmessageModal";
+import SystemMessageModal from "../../shared/general/components/SystemMessageModal";
 import {
   GlobalStyles,
   Environment,
@@ -186,7 +186,7 @@ function OtherUserProfileLanding({ navigation }) {
           label=""
           Action={() =>
             dispatch(
-              setSystemmessageActive(
+              setSystemMessageActive(
                 UserDialogue().systemmessage.shareconstruction
               )
             )
@@ -204,7 +204,7 @@ function OtherUserProfileLanding({ navigation }) {
 
       <View style={styles.bottomplaceholder} />
 
-      <SystemmessageModal />
+      <SystemMessageModal />
     </ScrollView>
   );
 }

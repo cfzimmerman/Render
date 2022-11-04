@@ -14,7 +14,7 @@ import { IconButton } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Auth, API, graphqlOperation } from "aws-amplify";
-import { setErrormessageActive } from "../../../../redux/shared/errormessage";
+import { setErrorMessageActive } from "../../../../redux/shared/errormessage";
 import {
   GlobalStyles,
   Environment,
@@ -22,7 +22,7 @@ import {
   Icons,
   UserDialogue,
 } from "../../../../global";
-import ErrormessageModal from "../../general/components/ErrormessageModal";
+import ErrorMessageModal from "../../general/components/ErrorMessageModal";
 import OnboardingScreenTemplate from "../components/OnboardingScreenTemplate";
 import GetCurrentUser from "../../../profile/operations/GetCurrentUser";
 
@@ -55,7 +55,7 @@ async function UpdateTOS({ navigation, dispatch }) {
     await API.graphql(graphqlOperation(updateUsers, { input: updateduser }));
   } catch (error) {
     dispatch(
-      setErrormessageActive(UserDialogue("10").errormessage.systemerror)
+      setErrorMessageActive(UserDialogue("10").errormessage.systemerror)
     );
   }
 
@@ -94,7 +94,7 @@ function TOS({ navigation }) {
 
   return (
     <OnboardingScreenTemplate options={Items}>
-      <ErrormessageModal />
+      <ErrorMessageModal />
       <KeyboardAvoidingView style={styles.boxcontainer}>
         <View style={styles.inputbox}>
           <TouchableOpacity

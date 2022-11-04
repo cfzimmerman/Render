@@ -33,7 +33,7 @@ function ProfileNavOptions({ currentScreen, navigation, dispatch }) {
         />
       </View>
 
-      {/* <CubeSizeButton Icon={ Icons.OriginalSize.Saved } Action={() => { dispatch(setSystemmessageActive(UserDialogue().systemmessage.shareconstruction)) }} isactive={false} /> */}
+      {/* <CubeSizeButton Icon={ Icons.OriginalSize.Saved } Action={() => { dispatch(setSystemMessageActive(UserDialogue().systemmessage.shareconstruction)) }} isactive={false} /> */}
 
       <View style={styles.buttonwrapper}>
         <CubeSizeButton

@@ -1,6 +1,6 @@
 import { deactivateMultiSelect } from "../../../../redux/homevaultmain";
 import { DispatchType } from "../../../../redux";
-import { setErrormessageActive } from "../../../../redux/shared/errormessage";
+import { setErrorMessageActive } from "../../../../redux/shared/errormessage";
 import {
   setLoadProgressActive,
   setLoadProgressInactive,
@@ -116,7 +116,7 @@ async function CoverTileAction({
   } catch (error) {
     console.log(error);
     dispatch(
-      setErrormessageActive(UserDialogue("13").errormessage.systemerror)
+      setErrorMessageActive(UserDialogue("13").errormessage.systemerror)
     );
   }
 }

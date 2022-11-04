@@ -1,7 +1,8 @@
-import { addToAdded } from "../../../redux/shared/relationships";
+import { addToAddedUsers } from "../../../redux/shared/relationships";
+import { OtherUserType } from "../../explore/operations/EnterProfileFromSearch";
 
 const AddToAddedUsers = ({ dispatch, user, pfpurl }) => {
-  const User = {
+  const newAddedUser: OtherUserType = {
     id: user.id,
     cognitosub: user.cognitosub,
     displayname: user.displayname,
@@ -10,7 +11,7 @@ const AddToAddedUsers = ({ dispatch, user, pfpurl }) => {
     addedmecount: user.addedmecount,
   };
 
-  dispatch(addToAdded(User));
+  dispatch(addToAddedUsers(newAddedUser));
 };
 
 export default AddToAddedUsers;

@@ -8,18 +8,18 @@ import {
 import { BlurView } from "expo-blur";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setSystemmessageInactive } from "../../../../redux/shared/messagemodal";
+import { setSystemMessageInactive } from "../../../../redux/shared/messagemodal";
 import { Environment, Colors, GlobalStyles } from "../../../../global";
 import { RootStateType } from "../../../../redux";
 
-const SystemmessageModal = () => {
+const SystemMessageModal = () => {
   const systemmessage = useSelector(
     (state: RootStateType) => state.messagemodal.systemmessagemodal
   );
   const dispatch = useDispatch();
 
   setTimeout(() => {
-    dispatch(setSystemmessageInactive());
+    dispatch(setSystemMessageInactive());
   }, 10000);
 
   return (
@@ -28,12 +28,12 @@ const SystemmessageModal = () => {
       transparent
       visible={systemmessage.isactive}
       onRequestClose={() => {
-        dispatch(setSystemmessageInactive());
+        dispatch(setSystemMessageInactive());
       }}
     >
       <TouchableWithoutFeedback
         onPress={() => {
-          dispatch(setSystemmessageInactive());
+          dispatch(setSystemMessageInactive());
         }}
       >
         <View style={styles.modalcontainer}>
@@ -84,19 +84,19 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SystemmessageModal;
+export default SystemMessageModal;
 
 /* Example:
 
 import { useDispatch } from 'react-redux';
 
-import { setSystemmessageActive } from "../../../redux/system/systemmessage";
+import { setSystemMessageActive } from "../../../redux/system/systemmessage";
 import { UserDialogue } from '../../../resources/project'
-import { SystemmessageModal } from "../../../resources/molecules";
+import { SystemMessageModal } from "../../../resources/molecules";
 
 const Helper = () => {
     if (condition === met) {
-        dispatch(setSystemmessageActive(UserDialogue().systemmessage.resendcodesuccess))
+        dispatch(setSystemMessageActive(UserDialogue().systemmessage.resendcodesuccess))
     }
 }
 
@@ -107,7 +107,7 @@ const Example = () => {
     Helper( dispatch );
     return (
         ...
-        <SystemmessageModal />
+        <SystemMessageModal />
         ...
     )
 }

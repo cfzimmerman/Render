@@ -1,4 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { UserDialogueType } from "../../global/UserDialogue";
+
+interface InitialSliceTypes {
+  isactive: boolean;
+  header: string;
+  title: string;
+  description: string;
+}
 
 const slice = createSlice({
   name: "errormessage",
@@ -7,7 +15,7 @@ const slice = createSlice({
     header: " ",
     title: " ",
     description: " ",
-  },
+  } as InitialSliceTypes,
   reducers: {
     clearErrorMessage: (state) => {
       state.isactive = false;
@@ -15,21 +23,21 @@ const slice = createSlice({
       state.title = " ";
       state.description = " ";
     },
-    setErrormessageActive: (state, action) => {
+    setErrorMessageActive: (state, action: PayloadAction<UserDialogueType>) => {
       state.isactive = true;
       state.header = action.payload.header;
       state.title = action.payload.title;
       state.description = action.payload.description;
     },
-    setErrormessageInactive: (state) => {
+    setErrorMessageInactive: (state) => {
       state.isactive = false;
     },
   },
 });
 
 export const {
-  setErrormessageActive,
-  setErrormessageInactive,
+  setErrorMessageActive,
+  setErrorMessageInactive,
   clearErrorMessage,
 } = slice.actions;
 export default slice.reducer;

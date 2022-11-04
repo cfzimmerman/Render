@@ -16,16 +16,16 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 import { Auth, API, graphqlOperation } from "aws-amplify";
-import { setErrormessageActive } from "../../../../redux/shared/errormessage";
-import { setSystemmessageActive } from "../../../../redux/shared/messagemodal";
+import { setErrorMessageActive } from "../../../../redux/shared/errormessage";
+import { setSystemMessageActive } from "../../../../redux/shared/messagemodal";
 import {
   Environment,
   Colors,
   GlobalStyles,
   UserDialogue,
 } from "../../../../global";
-import ErrormessageModal from "../../general/components/ErrormessageModal";
-import SystemmessageModal from "../../general/components/SystemmessageModal";
+import ErrorMessageModal from "../../general/components/ErrorMessageModal";
+import SystemMessageModal from "../../general/components/SystemMessageModal";
 import OnboardingScreenTemplate from "../components/OnboardingScreenTemplate";
 import GetCurrentUser from "../../../profile/operations/GetCurrentUser";
 import InitiateAuthFlow from "../operations/InitiateAuthFlow";
@@ -58,7 +58,7 @@ async function HandleCode({ input, email, navigation, dispatch, cognitoUser }) {
   } catch (error) {
     console.log(`Error: ${error}`);
     dispatch(
-      setSystemmessageActive(UserDialogue().systemmessage.incorrectcode)
+      setSystemMessageActive(UserDialogue().systemmessage.incorrectcode)
     );
   }
 }
@@ -71,7 +71,7 @@ const ResendCode = ({ username, dispatch, navigation }) => {
   }
 
   dispatch(
-    setSystemmessageActive(UserDialogue().systemmessage.resendcodesuccess)
+    setSystemMessageActive(UserDialogue().systemmessage.resendcodesuccess)
   );
 };
 
@@ -174,8 +174,8 @@ const LoginCode = ({ navigation, route }) => {
 
   return (
     <OnboardingScreenTemplate options={Items}>
-      <ErrormessageModal />
-      <SystemmessageModal />
+      <ErrorMessageModal />
+      <SystemMessageModal />
       <View>
         <View style={styles.resendholder}>
           <TouchableOpacity

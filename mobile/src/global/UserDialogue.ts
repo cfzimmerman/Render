@@ -42,6 +42,12 @@ USERTOOYOUNG = [
 
 */
 
+export interface UserDialogueType {
+  header: string;
+  title: string;
+  description: string;
+}
+
 const UserDialogue = (prop?: string) => {
   const UserDialogue = {
     errormessage: {

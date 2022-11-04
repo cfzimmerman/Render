@@ -1,4 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { LoadProgressActiveTypes } from "../../screens/shared/general/components/LoadProgressModal";
+
+interface GeneralMessageType {
+  isactive: boolean;
+  title: string;
+  description: string;
+}
+
+interface DefaultSliceType {
+  general: GeneralMessageType;
+  percentcomplete: string;
+  uploadobject: any;
+  uploadcancelled: boolean;
+}
 
 const slice = createSlice({
   name: "loadprogressmessage",
@@ -10,8 +24,8 @@ const slice = createSlice({
     },
     percentcomplete: " ",
     uploadobject: null,
-    uploadcanceled: false,
-  },
+    uploadcancelled: false,
+  } as DefaultSliceType,
   reducers: {
     clearLoadProgressMessage: (state) => {
       state.general = {
@@ -21,23 +35,27 @@ const slice = createSlice({
       };
       state.percentcomplete = " ";
     },
-    setLoadProgressActive: (state, action) => {
+    setLoadProgressActive: (
+      state,
+      action: PayloadAction<LoadProgressActiveTypes>
+    ) => {
       state.general.isactive = true;
       state.general.title = action.payload.title;
       state.general.description = action.payload.description;
-      state.uploadcanceled = false;
+      state.uploadcancelled = false;
     },
     setLoadProgressInactive: (state) => {
       state.general.isactive = false;
     },
-    setPercentComplete: (state, action) => {
+    setPercentComplete: (state, action: PayloadAction<string>) => {
       state.percentcomplete = action.payload;
     },
     setUploadObject: (state, action) => {
+      // 🛑 Get rid of uploadObject
       state.uploadobject = action.payload;
     },
-    setUploadCanceledTrue: (state) => {
-      state.uploadcanceled = true;
+    setUploadCancelledTrue: (state) => {
+      state.uploadcancelled = true;
     },
   },
 });
@@ -48,6 +66,6 @@ export const {
   setPercentComplete,
   clearLoadProgressMessage,
   setUploadObject,
-  setUploadCanceledTrue,
+  setUploadCancelledTrue,
 } = slice.actions;
 export default slice.reducer;

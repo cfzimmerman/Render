@@ -2,7 +2,7 @@ import { addToOtherUserGalleryData } from "../../../redux/shared/otheruserprofil
 import { PostType } from "../../../global/CommonTypes";
 
 const AddToOtherUserGallery = ({ dispatch, item, signedurl, thumbnailurl }) => {
-  const Post: PostType = {
+  const post: PostType = {
     id: item.id,
     contenttype: item.contenttype,
     cognitosub: item.cognitosub,
@@ -18,7 +18,7 @@ const AddToOtherUserGallery = ({ dispatch, item, signedurl, thumbnailurl }) => {
     title: item.Games === null ? null : item.Games.title,
   };
 
-  dispatch(addToOtherUserGalleryData(Post));
+  dispatch(addToOtherUserGalleryData(post));
 };
 
 export default AddToOtherUserGallery;

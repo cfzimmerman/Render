@@ -10,14 +10,14 @@ import {
 import { BlurView } from "expo-blur";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setErrormessageInactive } from "../../../../redux/shared/errormessage";
+import { setErrorMessageInactive } from "../../../../redux/shared/errormessage";
 
 import { Environment, Colors, GlobalStyles } from "../../../../global";
 import { RootStateType } from "../../../../redux";
 
 // Usage at the bottom
 
-function ErrormessageModal() {
+function ErrorMessageModal() {
   const errormessage = useSelector(
     (state: RootStateType) => state.errormessage
   );
@@ -29,12 +29,12 @@ function ErrormessageModal() {
       transparent
       visible={errormessage.isactive}
       onRequestClose={() => {
-        dispatch(setErrormessageInactive());
+        dispatch(setErrorMessageInactive());
       }}
     >
       <TouchableWithoutFeedback
         onPress={() => {
-          dispatch(setErrormessageInactive());
+          dispatch(setErrorMessageInactive());
         }}
       >
         <View style={styles.modalcontainer}>
@@ -100,19 +100,19 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ErrormessageModal;
+export default ErrorMessageModal;
 
 /* Example:
 
 import { useDispatch } from 'react-redux';
 
-import { setErrormessageActive } from '../../../redux/system/errormessage';
+import { setErrorMessageActive } from '../../../redux/system/errormessage';
 import { UserDialogue } from '../../../resources/project'
-import { ErrormessageModal } from '../../../resources/molecules';
+import { ErrorMessageModal } from '../../../resources/molecules';
 
 const Helper = () => {
     if (condition === met) {
-        dispatch(setErrormessageActive(UserDialogue('4').errormessage.systemerror))
+        dispatch(setErrorMessageActive(UserDialogue('4').errormessage.systemerror))
     }
 }
 
@@ -123,7 +123,7 @@ const Example = () => {
     Helper( dispatch );
     return (
         ...
-        <ErrormessageModal />
+        <ErrorMessageModal />
         ...
     )
 }

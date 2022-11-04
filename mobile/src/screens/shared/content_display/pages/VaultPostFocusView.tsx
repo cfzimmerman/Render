@@ -15,16 +15,16 @@ import { useDispatch, useSelector } from "react-redux";
 
 import ToPortrait from "../../general/operations/ToPortrait";
 import { Environment, Colors } from "../../../../global";
-import ChangeFocusView from "../../../home_vault/operations/ChangeFocusView";
-import ChangeLandscape from "../../../home_vault/operations/ChangeLandscape";
 import { VaultPostFullViewUsecaseTypes } from "../../../home_vault/pages/VaultPostFullView";
 import GestureHandler, {
   PinchGestureHandler,
 } from "react-native-gesture-handler";
 import { RootStateType } from "../../../../redux";
+import { setLandscapeActive } from "../../../../redux/shared/pageoptions";
+import { setFocusViewActive } from "../../../../redux/shared/vaultpostdata";
 
 const ExitFocusView = ({ navigation, dispatch, listener }) => {
-  ChangeFocusView({ dispatch, set: false });
+  dispatch(setFocusViewActive(false));
   ToPortrait(), ScreenOrientation.removeOrientationChangeListener(listener);
   navigation.goBack();
   ScreenOrientation.unlockAsync();
@@ -82,9 +82,9 @@ const VaultPostFocusView = ({ navigation, route }) => {
       change.orientationInfo.orientation === 3 ||
       change.orientationInfo.orientation === 4
     ) {
-      ChangeLandscape({ dispatch, set: true });
+      dispatch(setLandscapeActive(true));
     } else {
-      ChangeLandscape({ dispatch, set: false });
+      dispatch(setLandscapeActive(false));
     }
   });
 

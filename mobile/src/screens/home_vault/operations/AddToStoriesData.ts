@@ -1,6 +1,19 @@
 import { addStoriesSectionListObject } from "../../../redux/shared/homemain";
 import { PostType } from "../../../global/CommonTypes";
 
+export interface StoriesSectionListItemType {
+  displayname: string;
+  cognitosub: string;
+  previewurl: string;
+  viewed: boolean;
+  firstpostid: string;
+}
+
+export interface UpdateStoriesDataType {
+  newPost: PostType;
+  newSection: StoriesSectionListItemType;
+}
+
 const AddToStoriesData = ({
   dispatch,
   postItem,
@@ -10,7 +23,7 @@ const AddToStoriesData = ({
   previewurl,
   userid,
 }) => {
-  const newpost: PostType = {
+  const newPost: PostType = {
     id: postItem.id,
     cognitosub: postItem.cognitosub,
     contenttype: postItem.contenttype,
@@ -27,7 +40,7 @@ const AddToStoriesData = ({
     title: postItem.Games === null ? null : postItem.Games.title,
   };
 
-  const newsection = {
+  const newSection = {
     displayname,
     cognitosub: postItem.cognitosub,
     previewurl,
@@ -35,9 +48,9 @@ const AddToStoriesData = ({
     firstpostid: postItem.id,
   };
 
-  const object = {
-    newpost,
-    newsection,
+  const object: UpdateStoriesDataType = {
+    newPost,
+    newSection,
   };
 
   dispatch(addStoriesSectionListObject(object));

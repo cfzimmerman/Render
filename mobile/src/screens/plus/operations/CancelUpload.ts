@@ -2,15 +2,14 @@ import { Storage, API, graphqlOperation } from "aws-amplify";
 import { deletePosts } from "../../../graphql/mutations";
 
 import {
-  setLoadProgressActive,
   setLoadProgressInactive,
   setPercentComplete,
   setUploadObject,
-  setUploadCanceledTrue,
+  setUploadCancelledTrue,
 } from "../../../redux/shared/loadprogressmessage";
 
 async function CancelUpload({ dispatch, uploadobject }) {
-  dispatch(setUploadCanceledTrue());
+  dispatch(setUploadCancelledTrue());
 
   console.log("Cancel Upload");
 

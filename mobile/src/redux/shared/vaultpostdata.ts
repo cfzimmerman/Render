@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PostHeaderType, PostType } from "../../global/CommonTypes";
-import { AddVideoToFeedDataPropsType } from "../../screens/home_vault/operations/AddVideoToFeedData";
 
 import {
   InjectNewHeaderPostPropsType,
@@ -14,6 +13,7 @@ import {
   UpdateHeaderGameInput,
   UpdateNonHeaderGameInput,
 } from "../../screens/shared/game_tags/operations/ModifyPostGame";
+import { AddVideoToFeedDataType } from "../../screens/home_vault/operations/AddVideoToStories";
 
 interface InitialSliceType {
   vaultpostdata: PostHeaderType[];
@@ -81,10 +81,10 @@ const slice = createSlice({
     },
     addVideoToFeedData: (
       state,
-      action: PayloadAction<AddVideoToFeedDataPropsType>
+      action: PayloadAction<AddVideoToFeedDataType>
     ) => {
       state.vaultfeeddata[action.payload.index].signedurl =
-        action.payload.signedurl;
+        action.payload.signedURL;
     },
     setActivePost: (state, action: PayloadAction<number>) => {
       state.activepost = action.payload;
@@ -98,16 +98,10 @@ const slice = createSlice({
       state.options.active = false;
       state.options.changestatus = true;
     },
-    changeStatusFalse: (state) => {
-      state.options.changestatus = false;
+    setFocusViewActive: (state, action: PayloadAction<boolean>) => {
+      state.focusview = action.payload;
     },
-    setFocusViewTrue: (state) => {
-      state.focusview = true;
-    },
-    setFocusViewFalse: (state) => {
-      state.focusview = false;
-    },
-    setNextToken: (state, action: PayloadAction<string>) => {
+    setVaultNextToken: (state, action: PayloadAction<string>) => {
       state.nextToken = action.payload;
     },
     injectNewHeaderPost: (
@@ -293,10 +287,8 @@ export const {
   setActivePost,
   setOptionsActive,
   setOptionsInactive,
-  changeStatusFalse,
-  setFocusViewTrue,
-  setFocusViewFalse,
-  setNextToken,
+  setFocusViewActive,
+  setVaultNextToken,
   injectNewHeaderPost,
   injectNewTrailingPost,
   injectNewSection,

@@ -15,8 +15,8 @@ import {
   Colors,
   UserDialogue,
 } from "../../../global";
-import SystemmessageModal from "../../shared/general/components/SystemmessageModal";
-import ErrormessageModal from "../../shared/general/components/ErrormessageModal";
+import SystemMessageModal from "../../shared/general/components/SystemMessageModal";
+import ErrorMessageModal from "../../shared/general/components/ErrorMessageModal";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import DismissKeyboard from "../../shared/general/operations/DismissKeyboard";
@@ -24,8 +24,8 @@ import BackArrow from "../../shared/general/components/BackArrow";
 import PastyHalfbarButtons from "../../shared/general/components/PastyHalfbarButtons";
 import { DispatchType, RootStateType } from "../../../redux";
 import { CurrentUserType } from "../../../global/CommonTypes";
-import { setSystemmessageActive } from "../../../redux/shared/messagemodal";
-import { setErrormessageActive } from "../../../redux/shared/errormessage";
+import { setSystemMessageActive } from "../../../redux/shared/messagemodal";
+import { setErrorMessageActive } from "../../../redux/shared/errormessage";
 import { updateUsers } from "../../../graphql/mutations";
 import { setSetPassword } from "../../../redux/profilemain";
 
@@ -39,11 +39,11 @@ async function GetForgotPasswordCode({
   try {
     await Auth.forgotPassword(username);
     dispatch(
-      setSystemmessageActive(UserDialogue().systemmessage.forgotpasswordsent)
+      setSystemMessageActive(UserDialogue().systemmessage.forgotpasswordsent)
     );
   } catch (error) {
     dispatch(
-      setErrormessageActive(UserDialogue("11").errormessage.systemerror)
+      setErrorMessageActive(UserDialogue("11").errormessage.systemerror)
     );
     console.log("Error: " + error);
   }
@@ -85,12 +85,12 @@ async function ConfirmChangePassword({
     dispatch(setSetPassword(true));
     navigation.navigate("HomeVault");
     dispatch(
-      setSystemmessageActive(UserDialogue().systemmessage.newpasswordsaved)
+      setSystemMessageActive(UserDialogue().systemmessage.newpasswordsaved)
     );
   } catch (error) {
     console.log("Error: " + error);
     dispatch(
-      setSystemmessageActive(UserDialogue().systemmessage.incorrectpasswordcode)
+      setSystemMessageActive(UserDialogue().systemmessage.incorrectpasswordcode)
     );
   }
 }
@@ -264,8 +264,8 @@ const ForgotPassword = ({ navigation }) => {
             </View>
           </View>
         </SafeAreaView>
-        <SystemmessageModal />
-        <ErrormessageModal />
+        <SystemMessageModal />
+        <ErrorMessageModal />
       </View>
     </DismissKeyboard>
   );

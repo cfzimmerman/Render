@@ -9,7 +9,7 @@ import {
   ButtonMessagePropTypes,
   setButtonMessageActive,
   setButtonMessageInactive,
-  setSystemmessageActive,
+  setSystemMessageActive,
 } from "../../../../redux/shared/messagemodal";
 import { PostType } from "../../../../global/CommonTypes";
 import { UserDialogue } from "../../../../global";
@@ -91,7 +91,7 @@ async function GetUniversalPostData({ postID, dispatch, navigation }) {
       }
     } else {
       dispatch(
-        setSystemmessageActive(UserDialogue().systemmessage.postNotFound)
+        setSystemMessageActive(UserDialogue().systemmessage.postNotFound)
       );
       setTimeout(() => {
         navigation.navigate("HomeVault");

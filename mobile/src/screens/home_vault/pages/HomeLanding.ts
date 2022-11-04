@@ -221,7 +221,7 @@ function HomeLanding({ navigation }) {
         />
       </View>
 
-      <SystemmessageModal />
+      <SystemMessageModal />
     </SafeAreaView>
   );
   */

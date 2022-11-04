@@ -7,6 +7,17 @@ interface SetDeleteCommentPropsType {
   commentID: string;
 }
 
+interface InitialSliceTypes {
+  addcommentactive: boolean;
+  deletecomment: {
+    active: boolean;
+    commentID: string | null;
+  };
+  commentsdata: CommentType[];
+  commentsnexttoken: string | null;
+  fetchingcomments: boolean;
+}
+
 const slice = createSlice({
   name: "socialmain",
   initialState: {
@@ -18,13 +29,8 @@ const slice = createSlice({
     commentsdata: [],
     commentsnexttoken: null,
     fetchingcomments: false,
-  },
+  } as InitialSliceTypes,
   reducers: {
-    /*
-    setCurrentUser: (state, action: PayloadAction<CurrentUserType>) => {
-      state.currentuser = action.payload;
-    },
-    */
     setAddCommentActive: (state, action: PayloadAction<boolean>) => {
       state.addcommentactive = action.payload;
     },
