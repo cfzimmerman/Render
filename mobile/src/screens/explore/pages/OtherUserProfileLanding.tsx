@@ -34,9 +34,9 @@ function BackBar({ navigation }) {
     </SafeAreaView>
   );
 }
+
 // async function ChangeUserRelationship ({ index, action, dispatch, cognitosub, targetcognitosub, origin })
 // Supported actions: 'add', 'remove', 'approve', 'unrequest', 'reject'
-
 // Outputs: 'unauthenticated', 'user', 'outgoingpending', 'incomingpending', true, false
 
 function CorrectFriendButton({
@@ -132,7 +132,6 @@ function OtherUserProfileLanding({ navigation }) {
         onPress={() => console.log("Beep boop")}
       >
         <View style={GlobalStyles.shadow}>
-          {/* @ts-ignore 🛑 Fix this once otherUser Redux is updated */}
           <Image style={styles.userpfp} source={{ uri: otheruser.pfpurl }} />
         </View>
       </TouchableScale>
@@ -146,7 +145,6 @@ function OtherUserProfileLanding({ navigation }) {
               styles.displayname,
             ]}
           >
-            {/* @ts-ignore 🛑 Fix this once otherUser Redux is updated */}
             {otheruser.displayname}
           </Text>
           <Text
@@ -156,7 +154,6 @@ function OtherUserProfileLanding({ navigation }) {
               styles.gamertag,
             ]}
           >
-            {/* @ts-ignore 🛑 Fix this once otherUser Redux is updated */}
             {`@${otheruser.gamertag}`}
           </Text>
         </View>
@@ -172,10 +169,8 @@ function OtherUserProfileLanding({ navigation }) {
       >
         <CorrectFriendButton
           currentuserid={currentuser.id}
-          /* @ts-ignore 🛑 Fix this once otherUser Redux is updated */
           targetuserid={otheruser.id}
           currentusercognitosub={currentuser.cognitosub}
-          /* @ts-ignore 🛑 Fix this once otherUser Redux is updated */
           targetusercognitosub={otheruser.cognitosub}
           relationship={relationship}
           dispatch={dispatch}

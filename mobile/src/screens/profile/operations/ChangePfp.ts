@@ -113,10 +113,10 @@ async function ChangePfp({
     mediaTypes: ImagePicker.MediaTypeOptions.Images,
   });
 
-  // @ts-ignore 🛑 Fix this ts ignore
+  // @ts-ignore - VS Code specific error. Type and URI are included if not cancelled
   if (!result.cancelled && result.type === "image") {
     SetNewPfp({
-      // @ts-ignore 🛑 Fix this ts ignore
+      // @ts-ignore - VS Code specific error. Type and URI are included if not cancelled
       uri: result.uri,
       oldpfpkey: currentpfpkey,
       dispatch,
@@ -125,7 +125,7 @@ async function ChangePfp({
       localLibrary,
       syncPreference,
     });
-    // @ts-ignore 🛑 Fix this ts ignore
+    // @ts-ignore - VS Code specific error. Type and URI are included if not cancelled
   } else if (!result.cancelled && result.type === "video") {
     console.log("error: cannot select video");
   }

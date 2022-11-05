@@ -97,7 +97,6 @@ const OtherUserGalleryMain = ({ navigation }) => {
         })}
         ListEmptyComponent={() => (
           <OtherUserGalleryEmptyComponent
-            // @ts-ignore 🛑 FIX THIS LATER
             displayname={otheruser.displayname}
             fetchingotherusergallerydata={fetchingotherusergallerydata}
             gotOtherUserGalleryData={gotOtherUserGalleryData}

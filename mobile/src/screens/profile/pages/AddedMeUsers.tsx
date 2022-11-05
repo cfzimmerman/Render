@@ -50,9 +50,6 @@ const AddedMeUsers = ({ navigation }) => {
             navigation={navigation}
             currentuser={currentuser}
             origin="AddedMeUsers"
-            addbackusers={addbackusers}
-            // 🛑 Can this data field be removed totally?
-            addedmeusers={addbackusers}
           />
         )}
         numColumns={2}
