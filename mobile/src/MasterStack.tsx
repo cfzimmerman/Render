@@ -3,40 +3,31 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useDispatch } from "react-redux";
 
 import TabNav from "./TabNav";
-import {
-  OnboardingLanding,
-  SignupCode,
-  LoginCode,
-  DisplayName,
-  Gamertag,
-  Birthday,
-  TOS,
-} from "./screens/masterstack/auth";
-
+import OnboardingLanding from "./screens/shared/auth/pages/OnboardingLanding";
+import LoginCode from "./screens/shared/auth/pages/LoginCode";
+import DisplayName from "./screens/shared/auth/pages/DisplayName";
+import Gamertag from "./screens/shared/auth/pages/Gamertag";
+import Birthday from "./screens/shared/auth/pages/Birthday";
+import TOS from "./screens/shared/auth/pages/TOS";
 import VaultPostFullView, {
   VaultPostFullViewUsecaseTypes,
-} from "./screens/tabnav/vault/VaultPostFullView";
-import VaultPostFocusView from "./screens/tabnav/vault/VaultPostFocusView";
-import DeletePost from "./screens/tabnav/vault/DeletePost";
-import EditPost from "./screens/tabnav/plus/EditPost";
-import CommentsMain from "./screens/tabnav/social/CommentsMain";
-import AppStart from "./screens/masterstack/AppStart";
-import ForgotPassword from "./screens/tabnav/profile/ForgotPassword";
-import PostMultiDelete from "./screens/tabnav/homevault/PostMultiDelete";
-import SelectGame from "./screens/tabnav/homevault/GameTags/SelectGame";
-import HVSearchLanding from "./screens/tabnav/homevault/GameTags/HVSearchLanding";
-import HVGameDisplay from "./screens/tabnav/homevault/GameTags/HVGameDisplay";
-import GetStartedLanding from "./screens/masterstack/getstarted/GetStartedLanding";
-import PGLanding from "./screens/tabnav/explore/PGLanding";
+} from "./screens/home_vault/pages/VaultPostFullView";
+import VaultPostFocusView from "./screens/shared/content_display/pages/VaultPostFocusView";
+import DeletePost from "./screens/home_vault/pages/DeletePost";
+import EditPost from "./screens/plus/pages/EditPost";
+import CommentsMain from "./screens/shared/content_display/pages/CommentsMain";
+import AppStart from "./screens/shared/master_stack/operations/AppStart";
+import ForgotPassword from "./screens/profile/pages/ForgotPassword";
+import PostMultiDelete from "./screens/home_vault/pages/PostMultiDelete";
+import SelectGame from "./screens/shared/game_tags/pages/SelectGame";
+import HVSearchLanding from "./screens/shared/game_tags/pages/HVSearchLanding";
+import HVGameDisplay from "./screens/shared/game_tags/pages/HVGameDisplay";
+import GetStartedLanding from "./screens/shared/onboarding/pages/GetStartedLanding";
 import { useNavigation } from "@react-navigation/native";
 
 type RootStackParamList = {
   TabNav: undefined;
   OnboardingLanding: undefined;
-  SignupCode: {
-    email: string;
-    userid: string;
-  };
   LoginCode: {
     email: string;
   };
@@ -104,7 +95,6 @@ const MasterStack = () => {
         component={OnboardingLanding}
         options={{ gestureEnabled: false }}
       />
-      <Stack.Screen name="SignupCode" component={SignupCode} />
       <Stack.Screen name="LoginCode" component={LoginCode} />
       <Stack.Screen name="DisplayName" component={DisplayName} />
       <Stack.Screen name="Gamertag" component={Gamertag} />
