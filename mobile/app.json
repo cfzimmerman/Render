@@ -20,8 +20,12 @@
       "userInterfaceStyle": "automatic",
       "requireFullScreen": true,
       "bundleIdentifier": "com.render.render",
-      "buildNumber": "0.5.0",
-      "associatedDomains": ["applinks:app.render.game"]
+      "buildNumber": "0.5.1",
+      "associatedDomains": ["applinks:app.render.game"],
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Allow Render to access your photos.",
+        "NSPhotoLibraryAddUsageDescription": "Allow Render to save photos."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -44,7 +48,11 @@
           "category": ["BROWSABLE", "DEFAULT"]
         }
       ],
-      "versionCode": 8
+      "versionCode": 9,
+      "permissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -58,6 +66,11 @@
           "isAccessMediaLocationEnabled": false
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "67d7eaaf-57b6-47f6-978e-f78d3c185554"
+      }
+    }
   }
 }
