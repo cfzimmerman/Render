@@ -16,7 +16,13 @@ import { useIsFocused } from "@react-navigation/native";
 import { setTextActive } from "../../../../redux/shared/vaultpostdata";
 import ToPortrait from "../../general/operations/ToPortrait";
 import GetPostDimensions from "../../general/operations/GetPostDimensions";
-import { GlobalStyles, Environment, Colors, Icons } from "../../../../global";
+import {
+  GlobalStyles,
+  Environment,
+  Colors,
+  Icons,
+  UserDialogue,
+} from "../../../../global";
 
 import AddVideoToAddedFeed from "../../../home_vault/operations/AddVideoToAddedFeed";
 import AddVideoToFeedData from "../../../home_vault/operations/AddVideoToFeedData";
@@ -34,6 +40,9 @@ import { VaultPostFullViewUsecaseTypes } from "../../../home_vault/pages/VaultPo
 import AddVideoToHVGameSearchResults from "../../game_tags/operations/AddVideoToHVGameSearchResults";
 import EnterComments from "../operations/EnterComments";
 import AddVideoToPGPosts from "../../../explore/operations/AddVideoToPGPosts";
+import CopyToClipboard from "../../general/operations/CopyToClipboard";
+import CreateShareableLink from "../operations/CreateShareableLink";
+import { setSystemMessageActive } from "../../../../redux/shared/messagemodal";
 
 // SetOptions({ postid: abc, animateactive: true, animateinactive: false, newchangestatus: false, })
 
@@ -359,7 +368,14 @@ const FullViewContent = ({
                 })
               }
               onLongPress={() => {
-                console.log("LongPress");
+                CopyToClipboard(
+                  CreateShareableLink({ linkType: "post", itemID: item.id })
+                );
+                dispatch(
+                  setSystemMessageActive(
+                    UserDialogue().systemmessage.copiedPostLink
+                  )
+                );
               }}
             >
               <View style={[GlobalStyles.shadow, { backgroundColor: "black" }]}>

@@ -20,7 +20,8 @@
       "userInterfaceStyle": "automatic",
       "requireFullScreen": true,
       "bundleIdentifier": "com.render.render",
-      "buildNumber": "0.1.2"
+      "buildNumber": "0.5.0",
+      "associatedDomains": ["applinks:app.render.game"]
     },
     "android": {
       "adaptiveIcon": {
@@ -29,7 +30,21 @@
       },
       "userInterfaceStyle": "automatic",
       "package": "com.render.render",
-      "versionCode": 3
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "*.app.render.game",
+              "pathPrefix": "/records"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ],
+      "versionCode": 8
     },
     "web": {
       "favicon": "./assets/favicon.png"
