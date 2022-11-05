@@ -46,9 +46,6 @@ function AddedUsers({ navigation }) {
             navigation={navigation}
             currentuser={currentuser}
             origin="AddedUsers"
-            // 🛑 Again, figure out what the deal here is
-            addbackusers={addedusers}
-            addedmeusers={addedusers}
           />
         )}
         numColumns={2}

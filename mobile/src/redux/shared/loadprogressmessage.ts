@@ -10,7 +10,6 @@ interface GeneralMessageType {
 interface DefaultSliceType {
   general: GeneralMessageType;
   percentcomplete: string;
-  uploadobject: any;
   uploadcancelled: boolean;
 }
 
@@ -23,7 +22,6 @@ const slice = createSlice({
       description: " ",
     },
     percentcomplete: " ",
-    uploadobject: null,
     uploadcancelled: false,
   } as DefaultSliceType,
   reducers: {
@@ -50,10 +48,6 @@ const slice = createSlice({
     setPercentComplete: (state, action: PayloadAction<string>) => {
       state.percentcomplete = action.payload;
     },
-    setUploadObject: (state, action) => {
-      // 🛑 Get rid of uploadObject
-      state.uploadobject = action.payload;
-    },
     setUploadCancelledTrue: (state) => {
       state.uploadcancelled = true;
     },
@@ -65,7 +59,6 @@ export const {
   setLoadProgressInactive,
   setPercentComplete,
   clearLoadProgressMessage,
-  setUploadObject,
   setUploadCancelledTrue,
 } = slice.actions;
 export default slice.reducer;

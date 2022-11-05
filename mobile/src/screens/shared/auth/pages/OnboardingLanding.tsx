@@ -4,11 +4,10 @@ import {
   TextInput,
   StyleSheet,
   View,
-  Button,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
-import { GlobalStyles, Environment, Colors, Icons } from "../../../../global";
+import { GlobalStyles, Environment, Colors } from "../../../../global";
 
 import NextButton from "../components/NextButton";
 
@@ -16,7 +15,6 @@ import OnboardingLandingImage from "../../general/components/OnboardingLandingIm
 import OnboardingScreenTemplate from "../components/OnboardingScreenTemplate";
 import InitiateAuthFlow from "../operations/InitiateAuthFlow";
 
-import { Auth } from "aws-amplify";
 import { RootStateType } from "../../../../redux";
 import ErrorMessageModal from "../../general/components/ErrorMessageModal";
 
@@ -45,23 +43,6 @@ const OnboardingLanding = ({ navigation }) => {
 
   const dispatch = useDispatch();
 
-  // Triggers animation to display next button if an email address is likely present
-  // Email address is confirmed if an @ is present in the string
-  const CheckEmail = () => {
-    if (
-      input.includes("@") === true &&
-      input.includes(".") &&
-      isValid === false
-    ) {
-      setIsValid(true);
-    } else if (
-      (input.includes("@") === false || input.includes(".") === false) &&
-      isValid === true
-    ) {
-      setIsValid(false);
-    }
-  };
-
   // FRONTEND CONFIG: Data sent to OnboardingScreenTemplate to visually customize the screen
   const Items = {
     backgroundimg: onboardingassets.onboardinglanding,
@@ -77,6 +58,22 @@ const OnboardingLanding = ({ navigation }) => {
     password: `${Math.floor(Math.random() * 1000000)}#Rr`,
   };
 
+  const textChange = (text: string) => {
+    setInput(text);
+    if (
+      text.includes("@") === true &&
+      text.includes(".") &&
+      isValid === false
+    ) {
+      setIsValid(true);
+    } else if (
+      (text.includes("@") === false || text.includes(".") === false) &&
+      isValid === true
+    ) {
+      setIsValid(false);
+    }
+  };
+
   return (
     <OnboardingScreenTemplate options={Items}>
       <ErrorMessageModal />
@@ -88,9 +85,7 @@ const OnboardingLanding = ({ navigation }) => {
             autoCapitalize="none"
             placeholderTextColor={Colors.PrimaryOff}
             style={[styles.inputbox, GlobalStyles.h3text]}
-            onChangeText={setInput}
-            // @ts-ignore 🛑 Combine this with setInput for onChangeText
-            onKeyPress={CheckEmail()}
+            onChangeText={textChange}
             value={input}
             keyboardType="email-address"
           />

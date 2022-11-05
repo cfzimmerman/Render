@@ -46,8 +46,6 @@ function RelationUserTile({
   dispatch,
   currentuser,
   origin,
-  addbackusers,
-  addedmeusers,
 }) {
   return (
     <TouchableOpacity

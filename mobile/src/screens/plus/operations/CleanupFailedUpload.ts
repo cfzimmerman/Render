@@ -1,4 +1,6 @@
+import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { Storage, API, graphqlOperation } from "aws-amplify";
+import { PostsByContentKeyQuery } from "../../../API";
 import { deletePosts } from "../../../graphql/mutations";
 
 async function CleanupFailedUpload({
@@ -18,7 +20,7 @@ async function CleanupFailedUpload({
       Storage.remove(thumbnailname),
     ]);
   } else if (origin === "AddToDB") {
-    const postResult = await API.graphql(
+    const postResult = (await API.graphql(
       graphqlOperation(`
             query PostsByContentKey {
                 postsByContentKey (
@@ -30,9 +32,8 @@ async function CleanupFailedUpload({
                 }
             }
         `)
-    );
+    )) as GraphQLResult<PostsByContentKeyQuery>;
 
-    // @ts-ignore 🛑 Fix later
     if (postResult.data.postsByContentKey.items.length > 0) {
       await API.graphql(graphqlOperation(deletePosts, { id: contentkey }));
     }

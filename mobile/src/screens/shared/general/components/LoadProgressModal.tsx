@@ -48,7 +48,6 @@ const LoadProgressModal = () => {
             {loadprogressgeneral.description}
           </Text>
         </View>
-        {/* <HBButtonHolder uploadobject={uploadobject} imBoredArray={imBoredArray} imBored={imBored} dispatch={dispatch} percentcomplete={percentcomplete} /> */}
       </View>
     </Modal>
   );
