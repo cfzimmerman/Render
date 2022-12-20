@@ -49,6 +49,7 @@ export const SignIn: React.FC<{}> = () => {
         username: email,
         password,
       });
+      console.log("setting cognito user with func: ", setUser);
       setUser(cognitoUser);
       navigate(previousPage, { replace: true });
     } catch (err) {
@@ -109,17 +110,6 @@ export const SignIn: React.FC<{}> = () => {
     setAuthError(false);
     setVal(val);
   };
-
-  // TODO: Temp func, remove when render app is linked
-  // const signUp = async () => {
-  //   const pass = v4();
-  //   console.log('password: ', pass);
-  //   const result = await Auth.signUp({
-  //     username: email,
-  //     password: '123456789'
-  //   }).then(() => signOut()); // After signUp, we are going to signIn()
-  //   return result;
-  // };
 
   useEffect(() => {
     if (!titleRef || !titleRef.current) {

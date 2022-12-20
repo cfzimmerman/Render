@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { CognitoUser } from "@aws-amplify/auth";
 import { UserContext } from "../Context/UserContext";
 
@@ -12,7 +12,10 @@ export const AuthProvider: React.FC<Props> = (props) => {
 
   const signOut = () => setUser(null);
 
-  const userContext = { user, setUser, signOut }; // TODO: investigate eslint rule //
+  const userContext = useMemo(
+    () => ({ user, setUser, signOut }),
+    [user, setUser, signOut]
+  );
 
   return (
     <UserContext.Provider value={userContext}>{children}</UserContext.Provider>

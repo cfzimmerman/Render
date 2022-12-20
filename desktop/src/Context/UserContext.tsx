@@ -1,5 +1,5 @@
-import { CognitoUser } from '@aws-amplify/auth';
-import { createContext } from 'react';
+import { CognitoUser } from "@aws-amplify/auth";
+import { createContext } from "react";
 
 export interface UserContextObj {
   user: CognitoUser | null;
@@ -9,6 +9,8 @@ export interface UserContextObj {
 
 export const UserContext = createContext<UserContextObj>({
   user: null,
-  setUser: () => {},
-  signOut: () => {}
+  setUser: () => {
+    console.log("default method");
+  },
+  signOut: () => {},
 });

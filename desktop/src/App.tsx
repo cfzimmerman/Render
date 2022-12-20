@@ -21,10 +21,10 @@ const App: React.FC<{}> = () => (
   <AuthProvider>
     <div className={styles.App}>
       <Routes>
-        {/* <Route element={<RequireAuth />}>
+        <Route element={<RequireAuth />}>
           <Route path="/" element={<h1>logged in</h1>} />
-        </Route> */}
-        <Route path="/" element={<SignIn />} />
+        </Route>
+        <Route path="/login" element={<SignIn />} />
         <Route path="/not-found" element={<h1>Not found</h1>} />
         <Route path="/*" element={<h1>Not found</h1>} />
       </Routes>

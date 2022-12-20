@@ -9,6 +9,7 @@ export const RequireAuth = () => {
   const location = useLocation();
 
   if (!user) {
+    console.log("not logged in!");
     return <Navigate to="/login" state={{ from: location }} />;
   }
 
