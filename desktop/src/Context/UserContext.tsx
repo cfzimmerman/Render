@@ -9,8 +9,6 @@ export interface UserContextObj {
 
 export const UserContext = createContext<UserContextObj>({
   user: null,
-  setUser: () => {
-    console.log("default method");
-  },
-  signOut: () => {},
+  setUser: () => null,
+  signOut: () => null,
 });

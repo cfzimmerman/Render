@@ -128,7 +128,7 @@ export const SignIn: React.FC<{}> = () => {
             alt="Render-logo"
           />
           <div className={styles.signInContent}>
-            <h1>Save forever, share anywhere</h1>
+            <h2>Save forever, share anywhere</h2>
             {!user && !session && (
               <div className={styles.textFields}>
                 <TextInput
