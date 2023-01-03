@@ -13,6 +13,9 @@ export const mainConfig: Configuration = {
     rules,
   },
   resolve: {
+    fallback: {
+      fs: false,
+    },
     extensions: [".js", ".ts", ".jsx", ".tsx", ".css", ".json", ".module.css"],
   },
 };

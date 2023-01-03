@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { CognitoUser } from "@aws-amplify/auth";
-import { UserContext } from "../Context/UserContext";
+import { UserContext } from "../../../Context/UserContext";
 
 interface Props {
   children: React.ReactNode;
