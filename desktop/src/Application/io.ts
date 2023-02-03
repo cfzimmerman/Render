@@ -5,15 +5,18 @@ import open from "open";
 import chokidar from "chokidar";
 import { notifyFilesAdded } from "./notification";
 import { BrowserWindow } from "electron";
+import { FileDescriptor } from "./types";
 
 export interface FileObj {
   name: string;
   path: string;
 }
 
-const appDir = path.resolve(os.homedir(), "electron-app-files");
+// default storage directory
+export const appDir = path.resolve(os.homedir(), "electron-app-files");
 
-export const getFiles = () => {
+export const getFiles = (): FileDescriptor[] => {
+  console.log("getting files");
   const files = fs.readdirSync(appDir);
 
   return files.map((filename) => {
@@ -58,13 +61,23 @@ export const openFile = (filename: string) => {
 
   // open a file using default application
   if (fs.existsSync(filePath)) {
-    open(filePath);
+    // open(filePath);
+    const imgString = fs.readFileSync(filePath).toString("base64");
+    return `data:image/jpg;base64,${imgString}`;
   }
 };
 
 // watch files from the application's storage directory
-export const watchFiles = (win: BrowserWindow) => {
-  chokidar.watch(appDir).on("unlink", (filepath) => {
-    win.webContents.send("app:delete-file", path.parse(filepath).base);
+export const watchFiles = (filepath: string, win: BrowserWindow) => {
+  const sendUpdate = () => {
+    const files = getFiles();
+    win.webContents.send("app:update-files", files);
+  };
+
+  const watcher = chokidar.watch(filepath);
+  watcher.on("unlink", (unlinkPath) => {
+    win.webContents.send("app:delete-file", path.parse(unlinkPath).base);
+    sendUpdate();
   });
+  watcher.on("add", sendUpdate);
 };
