@@ -38,6 +38,7 @@ import {
   Bell,
   DownloadCloud,
   Tag,
+  Layers,
 } from "react-native-feather";
 import Environment from "./Environment";
 import Colors from "./Colors";
@@ -53,7 +54,7 @@ function BackButton() {
 
 const OriginalSizeIcons = {
   HomeIcon: Home,
-  ExploreIcon: Compass,
+  ExploreIcon: Search,
   PlusIcon: PlusSquare,
   VaultIcon: Lock,
   ProfileIcon: User,
@@ -75,7 +76,7 @@ const OriginalSizeIcons = {
   CurrentFriend: UserCheck,
   Play,
   Pause,
-  Social: Server,
+  Social: List,
   More: MoreVertical,
   Edit,
   Clock,
