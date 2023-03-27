@@ -76,7 +76,9 @@ async function NativeShare({ item, dispatch, setUserMessage }) {
 }
 
 const PostShareModal = ({ dispatch, item }) => {
-  const [userMessage, setUserMessage] = useState("Download content");
+  const [userMessage, setUserMessage] = useState(
+    "How would you like to export?"
+  );
 
   const shareactive = useSelector(
     (state: RootStateType) => state.vaultpostdata.shareactive
@@ -105,9 +107,6 @@ const PostShareModal = ({ dispatch, item }) => {
           <View style={[styles.modalbox, GlobalStyles.shadow]}>
             <Text style={[styles.header, GlobalStyles.h2text]}>
               {userMessage}
-            </Text>
-            <Text style={[styles.description, GlobalStyles.p1text]}>
-              Link share coming soon.
             </Text>
           </View>
           <View style={styles.sharebuttonwrapper}>
@@ -144,7 +143,7 @@ const styles = StyleSheet.create({
     width: Environment.FullBar,
     backgroundColor: Colors.Primary,
     borderRadius: Environment.StandardRadius,
-    padding: Environment.StandardPadding,
+    padding: Environment.LargePadding,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",

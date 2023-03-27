@@ -99,7 +99,9 @@ function TOS({ navigation }) {
         <View style={styles.inputbox}>
           <TouchableOpacity
             onPress={() => {
-              Linking.openURL("https://youtu.be/dQw4w9WgXcQ");
+              Linking.openURL(
+                "https://docs.google.com/document/d/1VHxlEPEX49tW-ngfh4MpbhOpt3AOMEjDfbnj-_2GpvU/edit?usp=sharing"
+              );
             }}
           >
             <Text style={[styles.tostext, GlobalStyles.p1text]}>
