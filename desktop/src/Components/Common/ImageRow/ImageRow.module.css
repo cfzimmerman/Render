@@ -1,0 +1,14 @@
+.row {
+  display: flex;
+  width: 80%;
+  max-height: 30%;
+  gap: 5%;
+  padding: 1rem;
+  background-color: #111b40;
+  border-radius: 1rem;
+  justify-content: space-between;
+}
+
+.rowContainer {
+  display: contents;
+}

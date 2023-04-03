@@ -1,0 +1,13 @@
+.button {
+  text-align: center;
+  height: var(--button-size);
+  font-size: var(--button-font-size);
+  border-radius: var(--default-border-radius);
+  background-color: var(--translucent-white);
+
+  transition: 0.3s ease-out;
+}
+
+.button:hover {
+  background-color: white;
+}
