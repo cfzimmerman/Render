@@ -1,7 +1,6 @@
 import path from "path";
 import fs from "fs-extra";
 import os from "os";
-import open from "open";
 import chokidar from "chokidar";
 import { notifyFilesAdded } from "./notification";
 import { BrowserWindow } from "electron";
@@ -17,9 +16,13 @@ export const appDir = path.resolve(os.homedir(), "electron-app-files");
 
 export const getFiles = (): FileDescriptor[] => {
   console.log("getting files");
-  const files = fs.readdirSync(appDir);
+  const files = fs.readdirSync(appDir, { withFileTypes: true });
 
-  return files.map((filename) => {
+  return files.map((file) => {
+    const { name: filename } = file;
+    if (!file.isFile()) {
+      return;
+    }
     const filePath = path.resolve(appDir, filename);
     const fileStats = fs.statSync(filePath);
 
@@ -27,6 +30,7 @@ export const getFiles = (): FileDescriptor[] => {
       name: filename,
       path: filePath,
       size: Number(fileStats.size / 1000).toFixed(1), // kb
+      image: openFile(filename),
     };
   });
 };
@@ -61,7 +65,6 @@ export const openFile = (filename: string) => {
 
   // open a file using default application
   if (fs.existsSync(filePath)) {
-    // open(filePath);
     const imgString = fs.readFileSync(filePath).toString("base64");
     return `data:image/jpg;base64,${imgString}`;
   }

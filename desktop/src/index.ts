@@ -1,6 +1,9 @@
 import { app, BrowserWindow, dialog, ipcMain, session } from "electron";
-import os from "os";
 import path from "path";
+import os from "os";
+import installExtension, {
+  REACT_DEVELOPER_TOOLS,
+} from "electron-devtools-installer";
 
 import * as io from "./Application/io";
 import { FileDescriptor } from "./Application/types";
@@ -30,32 +33,32 @@ const createWindow = async (): Promise<void> => {
 
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    height: 600,
-    width: 800,
+    height: 900,
+    width: 1200,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
   });
 
-  // try {
-  //   // wire up dev tools
-  //   // NOTE: Disabling usage of devtools installer at the moment. This extension installs the latest version of React Dev tools,
-  //   // which is currently broken with electron.
-  //   // const extension = await installExtension(REACT_DEVELOPER_TOOLS);
+  try {
+    // wire up dev tools
+    // NOTE: Disabling usage of devtools installer at the moment. This extension installs the latest version of React Dev tools,
+    // which is currently broken with electron.
+    // const extension = await installExtension(REACT_DEVELOPER_TOOLS);
 
-  //   // Workaround: See above comment
-  //   const reactDevToolsPath = path.join(
-  //     os.homedir(),
-  //     "AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi"
-  //   );
-  //   const extension = await session.defaultSession.loadExtension(
-  //     reactDevToolsPath
-  //   );
+    // Workaround: See above comment
+    const reactDevToolsPath = path.join(
+      os.homedir(),
+      "AppData/Roaming/Electron/extensions/fmkadmapgofadopljbjfkapdkoienihi"
+    );
+    const extension = await session.defaultSession.loadExtension(
+      reactDevToolsPath
+    );
 
-  //   console.log("Loaded devtools: ", extension.name);
-  // } catch (err) {
-  //   console.log("failed to load devtools: ", err);
-  // }
+    console.log("Loaded devtools: ", extension.name);
+  } catch (err) {
+    console.log("failed to load devtools: ", err);
+  }
 
   // TEMP
   console.log("test");
