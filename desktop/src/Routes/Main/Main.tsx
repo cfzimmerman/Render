@@ -1,15 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FileDescriptor } from "../../Application/types";
 import { ImageRow } from "../../Components/Common/ImageRow/ImageRow";
 import { TopBanner } from "../../Components/TopBanner/TopBanner";
-import { UserContext } from "../../Context/UserContext";
 import { splitArrayIntoChunks } from "../../Utils/array";
 import styles from "./Main.module.css";
+import { uploadWrapper } from "../../Utils/Storage";
 
 export const Main: React.FC<{}> = () => {
-  const { user, setUser } = useContext(UserContext);
   const [files, setFiles] = useState<FileDescriptor[]>([]);
-  const [file, setFile] = useState<string>("");
   const [imageBaseWidth, setImageBaseWidth] = useState<number>(
     window.innerWidth / 7
   );
@@ -26,6 +24,18 @@ export const Main: React.FC<{}> = () => {
   window.electron.onUpdateFiles((value) => {
     setFiles(value);
   });
+
+  const doUpload = async () => {
+    // Get files to upload
+    const fileStrings: string[] = [];
+    const fileMap: { [index: string]: FileDescriptor } = {};
+
+    files.forEach((file) => (fileMap[file.path] = file));
+    Object.entries(uploadFileMap).forEach(
+      (entry) => entry[1] && fileStrings.push(fileMap[entry[0]].image)
+    );
+    fileStrings.forEach((file) => uploadWrapper(file));
+  };
 
   const handleResize = () => {
     setImageBaseWidth(window.innerWidth / 7);
@@ -70,22 +80,12 @@ export const Main: React.FC<{}> = () => {
 
   useEffect(() => {
     console.log("updated files: ", files);
-    const t = async () => {
-      if (files && files.length) {
-        const img = await window.electron.loadFile(files[0].path);
-        console.log("img: ", img);
-        setFile(img);
-        // setFile(URL.createObjectURL(img));
-      }
-    };
-    t();
   }, [files]);
 
   return (
     <>
-      {/* <h1>Logged in!</h1> */}
       <TopBanner
-        readyToUpload={false}
+        doUpload={doUpload}
         clearUpload={() =>
           setUploadFileMap(
             Object.fromEntries(files.map((file) => [file.path, false]))

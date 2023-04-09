@@ -1,0 +1,230 @@
+type PostViewTracker @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  postsID: ID
+    @index(name: "byPosts")
+    @index(name: "postViewByPostID", queryField: "postViewByPostID", sortKeyFields: ["viewerID"])
+  Posts: Posts @belongsTo
+  viewerID: ID @index(name: "byUsers")
+  Users: Users @belongsTo
+}
+
+type GlobalData @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  createdAt: String!
+  usecase: String @index(name: "GDByUsecase", queryField: "GDByUsecase")
+  key: String
+  strA: String
+  strB: String
+  numA: Float
+  numB: Float
+}
+
+type Games @model @searchable @auth(rules: [{ allow: public }]) {
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime
+  igdbID: Int
+  title: String
+    @index(name: "gamesByTitle", queryField: "gamesByTitle", sortKeyFields: ["releaseDate"])
+  releaseDate: AWSDateTime
+  series: String
+  genre: String
+  theme: String
+  coverID: String
+  backgroundID: String
+  steamID: String
+  microsoftID: String
+  xboxMarketplaceID: String
+  gogID: String
+  egsID: String
+  twitchID: String
+  oculusID: String
+  playstationID: String
+  numUserGames: Int
+  type: String
+    @index(
+      name: "gamesByNumUserGames"
+      queryField: "gamesByNumUserGames"
+      sortKeyFields: ["numUserGames"]
+    )
+  #type: "games"
+  UserGames: [UserGames] @hasMany(indexName: "byGames", fields: ["id"])
+  Posts: [Posts] @hasMany(indexName: "postsByGames", fields: ["id"])
+}
+
+type UserGames @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  createdAt: String!
+  usersID: ID! @index(name: "byUsers", queryField: "userGamesByUsers", sortKeyFields: ["gamesID"])
+  gamesID: ID! @index(name: "byGames", queryField: "userGamesByGames", sortKeyFields: ["usersID"])
+  Users: Users @belongsTo(fields: ["usersID"])
+  Games: Games @belongsTo(fields: ["gamesID"])
+}
+
+type Notifications @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  createdAt: String!
+  code: Int
+  payload: String
+  postsID: ID
+    @index(
+      name: "byPosts"
+      queryField: "notificationsByCodeDate"
+      sortKeyFields: ["code", "createdAt"]
+    )
+    @index(name: "notificationsByCode", queryField: "notificationsByCode", sortKeyFields: ["code"])
+    @index(
+      name: "notificationsByPostsID"
+      queryField: "notificationsByPostsID"
+      sortKeyFields: ["createdAt"]
+    )
+  Posts: Posts @belongsTo(fields: ["postsID"])
+  UserNotifications: [UserNotifications] @hasMany(indexName: "byNotifications", fields: ["id"])
+}
+
+type UserNotifications @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  createdAt: String!
+  notificationsID: ID
+    @index(
+      name: "byNotifications"
+      queryField: "userNotificationsByNotifications"
+      sortKeyFields: ["createdAt"]
+    )
+  usersID: ID
+    @index(name: "byUsers", queryField: "userNotificationsByUsers", sortKeyFields: ["createdAt"])
+  Notifications: Notifications @belongsTo(fields: ["notificationsID"])
+  Users: Users @belongsTo(fields: ["usersID"])
+}
+
+type Comments @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  commenttext: String
+  postsID: ID
+    @index(name: "byPosts")
+    @index(
+      name: "commentsByCreatedDate"
+      queryField: "commentsByCreatedDate"
+      sortKeyFields: ["createdAt"]
+    )
+  Posts: Posts @belongsTo(fields: ["postsID"])
+  usersID: ID @index(name: "byUsers", queryField: "commentsByUsersID", sortKeyFields: ["createdAt"])
+  Users: Users @belongsTo(fields: ["usersID"])
+  createdAt: String!
+}
+
+type UserRelationships @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  createdAt: String!
+  senderID: ID
+    @index(name: "bySender")
+    @index(
+      name: "senderRelationshipsByDate"
+      queryField: "senderRelationshipsByDate"
+      sortKeyFields: ["createdAt"]
+    )
+    @index(name: "addedByCurrentUser", queryField: "addedByCurrentUser")
+    @index(name: "checkAddedUser", queryField: "checkAddedUser", sortKeyFields: ["receiverID"])
+  SenderUser: Users @belongsTo(fields: ["senderID"])
+  receiverID: ID
+    @index(name: "byReceiver")
+    @index(
+      name: "receiverRelationshipsByDate"
+      queryField: "receiverRelationshipsByDate"
+      sortKeyFields: ["createdAt"]
+    )
+  ReceiverUser: Users @belongsTo(fields: ["receiverID"])
+}
+
+type Posts @model @searchable @auth(rules: [{ allow: public }]) {
+  id: ID!
+  aspectratio: Float
+  cognitosub: String!
+    @index(
+      name: "postsByCreatedDate"
+      queryField: "postsByCreatedDate"
+      sortKeyFields: ["createdAt"]
+    )
+    @index(
+      name: "postsByPostedDate"
+      queryField: "postsByPostedDate"
+      sortKeyFields: ["publicpostdate"]
+    )
+    @index(
+      name: "postsByContentDate"
+      queryField: "postsByContentDate"
+      sortKeyFields: ["contentdate"]
+    )
+  contentdate: AWSDateTime
+  contentkey: String @index(name: "postsByContentKey", queryField: "postsByContentKey")
+  contentlastupdated: AWSDateTime
+  contenttype: String
+  createdAt: String!
+  deleteddate: AWSDateTime
+  posttext: String
+  publicpost: Boolean
+  publicpostdate: AWSDateTime
+  sizeinbytes: Int
+  thumbnailkey: String
+  type: String
+    @index(
+      name: "postsByPublicDate"
+      queryField: "postsByPublicDate"
+      sortKeyFields: ["publicpostdate"]
+    )
+  usersID: ID!
+    @index(name: "postsByUsers", queryField: "postsByUsers", sortKeyFields: ["contentdate"])
+    @index(
+      name: "postsByDeletedDate"
+      queryField: "postsByDeletedDate"
+      sortKeyFields: ["deleteddate"]
+    )
+    @index(
+      name: "postsByUserGames"
+      queryField: "postsByUserGames"
+      sortKeyFields: ["gamesID", "contentdate"]
+    )
+  gamesID: ID
+    @index(name: "postsByGames", queryField: "postsByGames", sortKeyFields: ["createdAt"])
+    @index(
+      name: "publicPostsByGames"
+      queryField: "publicPostsByGames"
+      sortKeyFields: ["publicpostdate"]
+    )
+  Users: Users @belongsTo(fields: ["usersID"])
+  Games: Games @belongsTo(fields: ["gamesID"])
+  Comments: [Comments] @hasMany(indexName: "byPosts", fields: ["id"])
+  Notifications: [Notifications] @hasMany(indexName: "byPosts", fields: ["id"])
+  PostViewTrackers: [PostViewTracker] @hasMany(indexName: "byPosts", fields: ["id"])
+}
+
+type Users @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  acceptedtos: Boolean
+  addedcount: Int
+  addedmecount: Int
+  birthday: AWSDate
+  updatedAt: String
+  cognitosub: String @index(name: "userByCognitosub", queryField: "userByCognitosub")
+  disablednotifications: String
+  displayname: String
+  email: AWSEmail @index(name: "userByEmail", queryField: "userByEmail")
+  emailconfirmed: Boolean
+  firstvaultupload: Boolean
+  fullyauthenticated: Boolean
+  fullyonboarded: Boolean
+  gamertag: String @index(name: "userByGamertag", queryField: "userByGamertag")
+  mostrecentpublicpost: AWSDateTime
+  pfp: String
+  setpassword: Boolean
+  storagesizeinbytes: Float
+  type: String
+    @index(name: "searchByGamertag", sortKeyFields: ["gamertag"], queryField: "searchByGamertag")
+  Comments: [Comments] @hasMany(indexName: "byUsers", fields: ["id"])
+  UserNotifications: [UserNotifications] @hasMany(indexName: "byUsers", fields: ["id"])
+  UserGames: [UserGames] @hasMany(indexName: "byUsers", fields: ["id"])
+  Posts: [Posts] @hasMany(indexName: "postsByUsers", fields: ["id"])
+  PostViewTrackers: [PostViewTracker] @hasMany(indexName: "byUsers", fields: ["id"])
+  SenderRelationships: [UserRelationships] @hasMany(indexName: "bySender", fields: ["id"])
+  ReceiverRelationships: [UserRelationships] @hasMany(indexName: "byReceiver", fields: ["id"])
+}

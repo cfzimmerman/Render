@@ -3,12 +3,12 @@ import { Button } from "../Common/Button/Button";
 import styles from "./TopBanner.module.css";
 
 interface Props {
-  readyToUpload: boolean;
+  doUpload: () => void;
   clearUpload: () => void;
 }
 
 export const TopBanner: React.FC<Props> = (props) => {
-  const { readyToUpload, clearUpload } = props;
+  const { doUpload, clearUpload } = props;
 
   return (
     <div className={styles.banner}>
@@ -18,7 +18,7 @@ export const TopBanner: React.FC<Props> = (props) => {
         classNames={[styles.clearButton]}
       />
       <Button
-        onClick={() => {}}
+        onClick={doUpload}
         text={"Upload"}
         classNames={[styles.clearButton, styles.uploadButton]}
       />
