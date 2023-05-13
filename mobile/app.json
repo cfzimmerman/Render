@@ -20,7 +20,7 @@
       "userInterfaceStyle": "automatic",
       "requireFullScreen": true,
       "bundleIdentifier": "com.render.render",
-      "buildNumber": "0.5.2",
+      "buildNumber": "0.5.3",
       "associatedDomains": ["applinks:app.render.game"],
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Allow Render to access your photos.",
@@ -48,7 +48,7 @@
           "category": ["BROWSABLE", "DEFAULT"]
         }
       ],
-      "versionCode": 10,
+      "versionCode": 11,
       "permissions": [
         "android.permission.READ_EXTERNAL_STORAGE",
         "android.permission.WRITE_EXTERNAL_STORAGE"
