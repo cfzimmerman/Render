@@ -9,7 +9,7 @@ import {
 import AppLoading from "expo-app-loading";
 
 import { Provider } from "react-redux";
-import Amplify, { Storage, Auth } from "aws-amplify";
+import { Amplify, Storage, Auth } from "aws-amplify";
 import { StorageChunkUpload } from "amplify-s3-chunk-upload";
 import { Credentials } from "@aws-amplify/core";
 import store from "./src/redux";
