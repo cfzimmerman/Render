@@ -116,7 +116,6 @@ async function GetVaultData({
       activemonth.unshift("empty");
       activemonth.pop();
     }
-
     userposts.forEach((item) => {
       const simpleDate = GetDate(item.contentdate);
 
@@ -129,7 +128,7 @@ async function GetVaultData({
         activemonth[0] != GetDate(item.contentdate)
       ) {
         // Add new month to section list
-        async function GetUrl({ item }: { item: GetPostsReturnType }) {
+        async function getUrl({ item }: { item: GetPostsReturnType }) {
           if (item.contenttype === "video") {
             const thumbnailAddress =
               FileSystem.documentDirectory + "LocalSync/" + item.thumbnailkey;
@@ -216,8 +215,7 @@ async function GetVaultData({
             }
           }
         }
-
-        GetUrl({ item });
+        getUrl({ item });
         activemonth.push(simpleDate);
         activemonth.shift();
       } else {
