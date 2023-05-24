@@ -24,7 +24,6 @@ const AddToCurrentMonth = ({
     coverID: item.Games === null ? null : item.Games.coverID,
     title: item.Games === null ? null : item.Games.title,
   };
-
   dispatch(addToLastVaultPostDataArray(Post));
 };
 
